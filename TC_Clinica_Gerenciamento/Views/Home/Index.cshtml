@@ -1,0 +1,18 @@
+﻿@using TC_Clinica_Gerenciamento.Models.Local;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@{
+    var user = Session["user"] as User;
+}
+
+@if (user != null)
+{
+    <h3>Bem Vindo @user.Nome</h3>
+    @Html.ActionLink("Logout", "Logout", "Login");
+}
+
+
