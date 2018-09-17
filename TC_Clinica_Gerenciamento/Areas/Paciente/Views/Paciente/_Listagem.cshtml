@@ -3,7 +3,8 @@
 @using TC_Clinica_Gerenciamento.Models.Local;
 
 @{
-    var user = Session["user"] as User;
+        var user = Session[TC_Clinica_Gerenciamento.Constants.ConstSessions.usuario] as 
+               TC_Clinica_Gerenciamento.Models.Servico.Usuario;
 }
 
 

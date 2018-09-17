@@ -15,7 +15,7 @@ namespace TC_Clinica_Gerenciamento.Areas.Funcionario.Controllers
 
         public ActionResult Listagem(bool getFromSession)
         {
-            if ((User)Session["user"] == null)
+            if ((Models.Servico.Usuario)Session[Constants.ConstSessions.usuario] == null)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
             string msgExibicao = string.Empty;

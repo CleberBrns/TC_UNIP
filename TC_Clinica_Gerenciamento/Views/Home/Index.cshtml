@@ -6,12 +6,13 @@
 
 <h2>Index</h2>
 @{
-    var user = Session["user"] as User;
+        var user = Session[TC_Clinica_Gerenciamento.Constants.ConstSessions.usuario] as 
+               TC_Clinica_Gerenciamento.Models.Servico.Usuario;
 }
 
 @if (user != null)
 {
-    <h3>Bem Vindo @user.Nome</h3>
+    <h3>Bem Vindo</h3>
     @Html.ActionLink("Logout", "Logout", "Login");
 }
 

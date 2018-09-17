@@ -5,7 +5,8 @@
 @{
     var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
     var listModalidades = (IList<DataSelectControl>)ViewBag.ListModalidades;
-    var user = Session["user"] as User;
+        var user = Session[TC_Clinica_Gerenciamento.Constants.ConstSessions.usuario] as 
+               TC_Clinica_Gerenciamento.Models.Servico.Usuario;
 }
 
 @if (user != null)

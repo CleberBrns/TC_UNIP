@@ -1,4 +1,4 @@
-﻿@using TC_Clinica_Gerenciamento.Models.Local
+﻿@model TC_Clinica_Gerenciamento.Models.Servico.Usuario
 
 @{
     ViewBag.Title = "Login";
@@ -13,17 +13,14 @@
                 <div class="divInputs">
                     <form>
                         <div class="form-group">
-                            <input type="text" name="nome" placeholder="Usuário" class="caixaTexto nome">
+                            <input type="text" name="Email" placeholder="Email" class="caixaTexto nome">
                         </div>
                         <div class="form-group">
-                            <input type="password" name="senha" placeholder="Senha" class="caixaTexto senha">
+                            <input type="password" name="Senha" placeholder="Senha" class="caixaTexto senha">
                         </div>
                         <div class="divBotoes">
                             <div class="form-group">
-                                <a href="" class="linkButton">Esqueci Minha Senha</a>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" name="login" id="btEntrar" class="btn btn-primary" value="Entrar">
+                                <input type="button" id="btEntrar" class="btn btn-primary" value="Entrar">
                             </div>
                         </div>
                     </form>
@@ -39,7 +36,33 @@
 
     $("#btEntrar").on("click", function () {
 
-        console.log($('.nome').val() + " - " + $('.senha').val());
+        debugger;
+            $.ajax({
+                url: "@Url.Action("Login", "Login")",
+                type: "GET",
+                data: $('form').serialize(),
+                success: function (result) {
+
+                    var retorno = result.mensagensRetorno;
+                    if (retorno.Status) {
+                        var url = href = '@Url.Action("Index", "Inicio", new { area = "Inicio" })';
+                            window.location.href = url;
+                    }
+                    else {
+                        swal({
+                            title: '',
+                            text: retorno.MensagemExibicao,
+                            type: 'warning',
+                            confirmButtonColor: '#10386B',
+                            allowOutsideClick: false
+                        });
+                        console.log(retorno.MensagemAnalise);
+                    }
+                   
+                },error: function (jqXHR, textStatus, errorThrown) {
+                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                }
+            });
 
     });
 

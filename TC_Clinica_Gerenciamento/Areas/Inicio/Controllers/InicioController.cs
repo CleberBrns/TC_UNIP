@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using TC_Clinica_Gerenciamento.Models.Local;
+﻿using System.Web.Mvc;
 
 namespace TC_Clinica_Gerenciamento.Areas.Inicio.Controllers
 {
@@ -12,7 +7,7 @@ namespace TC_Clinica_Gerenciamento.Areas.Inicio.Controllers
         // GET: Inicio/Inicio
         public ActionResult Index()
         {
-            if ((User)Session["user"] == null)
+            if ((Models.Servico.Usuario)Session[Constants.ConstSessions.usuario] == null)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
             return View();
