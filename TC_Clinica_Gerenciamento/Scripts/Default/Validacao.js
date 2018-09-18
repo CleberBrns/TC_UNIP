@@ -218,7 +218,7 @@ var validacao = {
         
         var showLogOnConsole = true;
 
-        if (jqXhr.responseJSON !== null) {
+        if (jqXhr.responseJSON != undefined && jqXhr.responseJSON !== null) {
             showLogOnConsole = false;
             console.log(jqXhr.responseJSON.MensagemAnalise);
             swal({                

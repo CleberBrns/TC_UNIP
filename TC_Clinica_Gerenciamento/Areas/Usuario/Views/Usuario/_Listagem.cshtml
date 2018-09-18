@@ -103,12 +103,13 @@
         modalEditar: function (elem) {
 
             var id = $(elem).attr("id-registro");
-
+            
             $.ajax({
                 url: "@Url.Action("ModalEditar", "Usuario")/",
                 type: "GET",
                 data: {id : id},
                 success: function (html) {
+                    debugger;
                     bootbox.dialog({
                         title: "Editar Usuário",
                         message: html
