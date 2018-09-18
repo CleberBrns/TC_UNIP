@@ -1,4 +1,4 @@
-﻿@using TC_Clinica_Gerenciamento.Models.Local;
+﻿@using TCC_Unip.Models.Local;
 
 @{
     ViewBag.Title = "Index";
@@ -6,8 +6,8 @@
 
 <h2>Index</h2>
 @{
-        var user = Session[TC_Clinica_Gerenciamento.Constants.ConstSessions.usuario] as 
-               TC_Clinica_Gerenciamento.Models.Servico.Usuario;
+        var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as 
+               TCC_Unip.Models.Servico.Usuario;
 }
 
 @if (user != null)

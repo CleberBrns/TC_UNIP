@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace TC_Clinica_Gerenciamento.Areas.Inicio.Controllers
+namespace TCC_Unip.Areas.Inicio.Controllers
 {
     public class InicioController : Controller
     {

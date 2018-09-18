@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace TC_Clinica_Gerenciamento
+namespace TCC_Unip
 {
     public class BundleConfig
     {

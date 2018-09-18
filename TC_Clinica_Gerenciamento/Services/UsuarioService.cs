@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using TC_Clinica_Gerenciamento.Models.Local;
-using TC_Clinica_Gerenciamento.Models.Servico;
-using TC_Clinica_Gerenciamento.ServicesAPI;
+using TCC_Unip.Models.Local;
+using TCC_Unip.Models.Servico;
+using TCC_Unip.ServicesAPI;
 
-namespace TC_Clinica_Gerenciamento.Services
+namespace TCC_Unip.Services
 {
     public class UsuarioService : Contracts.IServiceUsuario
     {
@@ -76,7 +76,7 @@ namespace TC_Clinica_Gerenciamento.Services
             result.value = retorno;
 
             if (string.IsNullOrEmpty(result.value.Email))
-                result.message = "Usuário Inválido ou Senha Incorreta";
+                result.errorMessage = "Usuário Inválido ou Senha Incorreta";
 
             return result;
         }

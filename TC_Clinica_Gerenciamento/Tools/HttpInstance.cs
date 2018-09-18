@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
 
-namespace TC_Clinica_Gerenciamento.Tools
+namespace TCC_Unip.Tools
 {
     public class HttpInstance
     {

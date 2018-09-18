@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using TC_Clinica_Gerenciamento.Models.Servico;
+using TCC_Unip.Models.Servico;
 
-namespace TC_Clinica_Gerenciamento.ServicesAPI
+namespace TCC_Unip.ServicesAPI
 {
     public class PacienteServiceApi : Contracts.IServiceApiBase<Paciente>
     {

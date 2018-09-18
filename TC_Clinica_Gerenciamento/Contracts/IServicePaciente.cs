@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using TC_Clinica_Gerenciamento.Models.Local;
-using TC_Clinica_Gerenciamento.Models.Servico;
+using TCC_Unip.Models.Local;
+using TCC_Unip.Models.Servico;
 
-namespace TC_Clinica_Gerenciamento.Contracts
+namespace TCC_Unip.Contracts
 {
     public interface IServicePaciente
     {

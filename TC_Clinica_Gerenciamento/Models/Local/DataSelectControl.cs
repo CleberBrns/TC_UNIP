@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace TC_Clinica_Gerenciamento.Models.Local
+namespace TCC_Unip.Models.Local
 {
     public class DataSelectControl
     {

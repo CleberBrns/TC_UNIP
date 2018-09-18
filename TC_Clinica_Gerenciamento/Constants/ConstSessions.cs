@@ -1,6 +1,6 @@
 ﻿
 
-namespace TC_Clinica_Gerenciamento.Constants
+namespace TCC_Unip.Constants
 {
     public class ConstSessions
     {        

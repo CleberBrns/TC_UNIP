@@ -1,13 +1,13 @@
-﻿@model TC_Clinica_Gerenciamento.Models.Servico.Usuario
+﻿@model TCC_Unip.Models.Servico.Usuario
 
-@using TC_Clinica_Gerenciamento.Models.Local;
+@using TCC_Unip.Models.Local;
 
 @{
     var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
     var listPerfil = (IList<DataSelectControl>)ViewBag.ListPerfil;
-    var listFuncionarios = (IList<TC_Clinica_Gerenciamento.Models.Servico.Funcionario>)ViewBag.ListFuncionarios;
-    var user = Session[TC_Clinica_Gerenciamento.Constants.ConstSessions.usuario] as 
-               TC_Clinica_Gerenciamento.Models.Servico.Usuario;
+    var listFuncionarios = (IList<TCC_Unip.Models.Servico.Funcionario>)ViewBag.ListFuncionarios;
+    var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as 
+               TCC_Unip.Models.Servico.Usuario;
 }
 
 @if (user != null)

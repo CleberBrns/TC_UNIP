@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using TC_Clinica_Gerenciamento.Models.Local;
+using TCC_Unip.Models.Local;
 
-namespace TC_Clinica_Gerenciamento.Contracts
+namespace TCC_Unip.Contracts
 {
     public interface IServiceApiBase<TModel>
     {

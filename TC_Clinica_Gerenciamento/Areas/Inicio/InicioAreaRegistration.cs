@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace TC_Clinica_Gerenciamento.Areas.Inicio
+namespace TCC_Unip.Areas.Inicio
 {
     public class InicioAreaRegistration : AreaRegistration
     {
@@ -19,7 +19,7 @@ namespace TC_Clinica_Gerenciamento.Areas.Inicio
                 "Inicio_default",
                 "Inicio/{controller}/{action}/{id}",
                 new { Area = "Inicio", Controller = "Inicio", action = "Index", id = UrlParameter.Optional },
-                new[] { "TC_Clinica_Gerenciamento.Areas.Inicio.Controllers" }
+                new[] { "TCC_Unip.Areas.Inicio.Controllers" }
             );
         }
     }

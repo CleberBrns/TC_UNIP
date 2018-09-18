@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace TC_Clinica_Gerenciamento
+namespace TCC_Unip
 {
     public class MvcApplication : System.Web.HttpApplication
     {

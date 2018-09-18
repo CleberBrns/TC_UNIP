@@ -2,7 +2,7 @@
 
 using Newtonsoft.Json;
 
-namespace TC_Clinica_Gerenciamento.Models.Servico
+namespace TCC_Unip.Models.Servico
 {
     public class Endereco
     {

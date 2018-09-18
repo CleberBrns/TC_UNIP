@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using TC_Clinica_Gerenciamento.Models.Local;
-using TC_Clinica_Gerenciamento.Services;
-using TC_Clinica_Gerenciamento.Util;
+using TCC_Unip.Models.Local;
+using TCC_Unip.Services;
+using TCC_Unip.Util;
 
-namespace TC_Clinica_Gerenciamento.Areas.Funcionario.Controllers
+namespace TCC_Unip.Areas.Funcionario.Controllers
 {
     public class FuncionarioController : Controller
     {

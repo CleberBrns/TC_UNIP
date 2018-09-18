@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using TC_Clinica_Gerenciamento.Models.Local;
+using TCC_Unip.Models.Local;
 
-namespace TC_Clinica_Gerenciamento.Constants
+namespace TCC_Unip.Constants
 {
     public class Constants
     {
@@ -10,6 +10,8 @@ namespace TC_Clinica_Gerenciamento.Constants
         public const string msgFalhaAoListar = "Falha ao listar!";
         public const string msgFalhaAoExcluir = "Falha ao excluir!";
         public const string msgFalhaAoCarregar = "Falha ao carregar!";
+        public const string msgFalhaAoAutenticar = "Falha ao autenticar!";
+        public const string msgFalhaPadrao = "Requição não atende ao método solicitado!";
         #endregion
 
         public List<DataSelectControl> ListStatus()

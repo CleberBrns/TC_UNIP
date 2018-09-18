@@ -1,6 +1,6 @@
-﻿using TC_Clinica_Gerenciamento.Models.Servico;
+﻿using TCC_Unip.Models.Servico;
 
-namespace TC_Clinica_Gerenciamento.Constants
+namespace TCC_Unip.Constants
 {
     public class ConstPermissoes
     {

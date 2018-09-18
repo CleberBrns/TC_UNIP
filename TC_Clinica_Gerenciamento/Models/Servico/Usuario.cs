@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 
-namespace TC_Clinica_Gerenciamento.Models.Servico
-{
+namespace TCC_Unip.Models.Servico
+{    
     public class Usuario
     {
         [JsonProperty(PropertyName = "email")]

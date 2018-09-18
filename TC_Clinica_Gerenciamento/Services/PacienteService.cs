@@ -5,11 +5,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Web;
-using TC_Clinica_Gerenciamento.Models.Local;
-using TC_Clinica_Gerenciamento.Models.Servico;
-using TC_Clinica_Gerenciamento.ServicesAPI;
+using TCC_Unip.Models.Local;
+using TCC_Unip.Models.Servico;
+using TCC_Unip.ServicesAPI;
 
-namespace TC_Clinica_Gerenciamento.Services
+namespace TCC_Unip.Services
 {
     public class PacienteService : Contracts.IServicePaciente
     {

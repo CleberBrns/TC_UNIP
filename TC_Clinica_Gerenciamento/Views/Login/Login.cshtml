@@ -1,4 +1,4 @@
-﻿@model TC_Clinica_Gerenciamento.Models.Servico.Usuario
+﻿@model TCC_Unip.Models.Servico.Usuario
 
 @{
     ViewBag.Title = "Login";
@@ -35,34 +35,33 @@
 <script>
 
     $("#btEntrar").on("click", function () {
+        
+        $.ajax({
+            url: "@Url.Action("Autenticar", "Login")",
+            type: "GET",
+            data: $('form').serialize(),
+            success: function (result) {
 
-        debugger;
-            $.ajax({
-                url: "@Url.Action("Login", "Login")",
-                type: "GET",
-                data: $('form').serialize(),
-                success: function (result) {
-
-                    var retorno = result.mensagensRetorno;
-                    if (retorno.Status) {
-                        var url = href = '@Url.Action("Index", "Inicio", new { area = "Inicio" })';
-                            window.location.href = url;
-                    }
-                    else {
-                        swal({
-                            title: '',
-                            text: retorno.MensagemExibicao,
-                            type: 'warning',
-                            confirmButtonColor: '#10386B',
-                            allowOutsideClick: false
-                        });
-                        console.log(retorno.MensagemAnalise);
-                    }
-                   
-                },error: function (jqXHR, textStatus, errorThrown) {
-                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                debugger;
+                var retorno = result.mensagensRetorno;
+                if (retorno.Status) {
+                    var url = href = '@Url.Action("Index", "Inicio", new { area = "Inicio" })';
+                    window.location.href = url;
                 }
-            });
+                else {
+                    swal({
+                        title: '',
+                        text: retorno.MensagemExibicao,
+                        type: 'warning',
+                        confirmButtonColor: '#10386B',
+                        allowOutsideClick: false
+                        });
+                    console.log(retorno.MensagemAnalise);
+                }                   
+            },error: function (jqXHR, textStatus, errorThrown) {
+                validacao.errorAjax(jqXHR, textStatus, errorThrown);
+            }
+        });
 
     });
 

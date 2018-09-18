@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace TC_Clinica_Gerenciamento.Areas.Usuario
+namespace TCC_Unip.Areas.Usuario
 {
     public class UsuarioAreaRegistration : AreaRegistration
     {
@@ -19,7 +19,7 @@ namespace TC_Clinica_Gerenciamento.Areas.Usuario
                 "Usuario_default",
                 "Usuario/{controller}/{action}/{id}",
                 new { Area = "Usuario", Controller = "Usuario", action = "Listagem", id = UrlParameter.Optional },
-                new[] { "TC_Clinica_Gerenciamento.Areas.Usuario.Controllers" }
+                new[] { "TCC_Unip.Areas.Usuario.Controllers" }
             );
         }
     }

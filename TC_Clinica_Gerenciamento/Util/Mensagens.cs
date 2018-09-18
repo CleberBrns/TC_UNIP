@@ -1,11 +1,13 @@
-﻿using TC_Clinica_Gerenciamento.Models.Local;
+﻿using TCC_Unip.Models.Local;
 
-namespace TC_Clinica_Gerenciamento.Util
+namespace TCC_Unip.Util
 {
     public class Mensagens
     {        
         public MensagensDeRetorno ConfiguraMensagemRetorno(string msgExibicao, string msgAnalise)
         {
+            msgExibicao = string.IsNullOrEmpty(msgExibicao) ? msgAnalise : msgExibicao;
+
             return new MensagensDeRetorno
             {
                 MensagemExibicao = msgExibicao,

@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using TC_Clinica_Gerenciamento.Models.Servico;
+using TCC_Unip.Models.Servico;
 
-namespace TC_Clinica_Gerenciamento.ServicesAPI
+namespace TCC_Unip.ServicesAPI
 {
     public class UsuarioServiceApi : Contracts.IServiceApiBase<Usuario>
     {
@@ -104,15 +105,25 @@ namespace TC_Clinica_Gerenciamento.ServicesAPI
 
         public Usuario Auth(Usuario model)
         {
+            var tipoAcao = "auth";
             var objAuth = new { email = model.Email, senha = model.Senha };
             var jsonModel = JsonConvert.SerializeObject(objAuth);
             var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
 
-            string action = string.Format("{0}{1}", BaseUrl, tipoModel);
-            HttpResponseMessage response = Tools.HttpInstance.GetHttpClientInstance().PutAsync(action, jsonContent).Result;
+            string action = string.Format("{0}{1}", BaseUrl, tipoModel + "/" + tipoAcao);
+            HttpResponseMessage response = Tools.HttpInstance.GetHttpClientInstance().PostAsync(action, jsonContent).Result;
 
             model = new Usuario();
-            model = JsonConvert.DeserializeObject<Usuario>(response.Content.ReadAsStringAsync().Result);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {                
+                var jsonObject = (JObject)JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result);
+                var usuario = (JObject)(jsonObject.Property("usuario").Value);
+                var funcionario = (JObject)(jsonObject.Property("funcionario").Value);
+
+                model = usuario.ToObject<Usuario>();
+                model.Funcionario = funcionario.ToObject<Funcionario>();
+            }
 
             return model;
         }

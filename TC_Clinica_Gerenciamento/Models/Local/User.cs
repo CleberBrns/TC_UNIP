@@ -1,5 +1,5 @@
 ﻿
-namespace TC_Clinica_Gerenciamento.Models.Local
+namespace TCC_Unip.Models.Local
 {
     public class User
     {

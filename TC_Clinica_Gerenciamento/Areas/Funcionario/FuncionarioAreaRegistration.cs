@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace TC_Clinica_Gerenciamento.Areas.Funcionario
+namespace TCC_Unip.Areas.Funcionario
 {
     public class FuncionarioAreaRegistration : AreaRegistration
     {
@@ -19,7 +19,7 @@ namespace TC_Clinica_Gerenciamento.Areas.Funcionario
                 "Funcionario_default",
                 "Funcionario/{controller}/{action}/{id}",
                 new { Area = "Funcionario", Controller = "Funcionario", action = "Listagem", id = UrlParameter.Optional },
-                new[] { "TC_Clinica_Gerenciamento.Areas.Funcionario.Controllers" }
+                new[] { "TCC_Unip.Areas.Funcionario.Controllers" }
             );
         }
     }
