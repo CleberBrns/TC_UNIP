@@ -1,0 +1,19 @@
+﻿@using TCC_Unip.Models.Local;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@{
+        var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as 
+               TCC_Unip.Models.Servico.Usuario;
+}
+
+@if (user != null)
+{
+    <h3>Bem Vindo</h3>
+    @Html.ActionLink("Logout", "Logout", "Login");
+}
+
+

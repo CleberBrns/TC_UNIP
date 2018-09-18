@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/datatables/css")
+    @Styles.Render("~/Content/SweetAlert2")
+
+
+    <style>
+        .modal-loading {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba( 53, 45, 45, 0.43 ) url('/Content/Images/page-loader.gif') 50% 50% no-repeat;
+        }
+
+        /* When the body has the loading class, we turn
+        the scrollbar off with overflow:hidden */
+        body.loading {
+            overflow: hidden;
+        }
+
+            /* Anytime the body has the loading class, our
+        modal element will be visible */
+            body.loading .modal-loading {
+                display: block;
+            }
+    </style>
+
+</head>
+<body>
+    <div class="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("Osteofit - Físio + Fitness", "Index", "Inicio", new { area = "Inicio" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+
+    <div class="container">
+        @RenderBody()
+
+    </div>
+
+    <div class="modal-loading"></div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/datatables/js")
+    @Scripts.Render("~/bundles/Default")
+    @Scripts.Render("~/bundles/bootbox")
+    @Scripts.Render("~/bundles/SweetAlert2")
+    @Scripts.Render("~/bundles/Jquery.Mask")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
