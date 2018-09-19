@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Web;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
 using TCC_Unip.ServicesAPI;
@@ -22,14 +24,29 @@ namespace TCC_Unip.Services
             return result;
         }
 
-        public ResultService<List<Usuario>> List()
+        public ResultService<List<Usuario>> List(bool getFromSession)
         {
             var result = new ResultService<List<Usuario>>();
 
-            var retorno = service.List();
-            result.value = retorno;
+            if (getFromSession)
+            {
+                result.value = GetListFromSession();
+
+                if (result.value == null)
+                    result.value = GetFromService();
+            }
+            else
+            {
+                var retorno = service.List();
+                result.value = retorno;               
+            }           
 
             return result;
+        }
+
+        private List<Usuario> GetFromService()
+        {
+            throw new NotImplementedException();
         }
 
         public ResultService<bool> Save(Usuario model)
@@ -82,6 +99,19 @@ namespace TCC_Unip.Services
         }
 
         #region Métodos Privados
+
+        private void AddListToSession(List<Usuario> list)
+        {
+            HttpContext.Current.Session[Constants.ConstSessions.listUsuarios] = list;
+        }
+
+        private List<Usuario> GetListFromSession()
+        {
+            if ((List<Usuario>)HttpContext.Current.Session[Constants.ConstSessions.listUsuarios] != null)
+                return (List<Usuario>)HttpContext.Current.Session[Constants.ConstSessions.listUsuarios];
+
+            return null;
+        }
 
         private ResultService<bool> SalvaUsuario(Usuario model)
         {

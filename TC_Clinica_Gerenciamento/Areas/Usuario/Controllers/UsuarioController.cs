@@ -28,26 +28,14 @@ namespace TCC_Unip.Areas.Usuario.Controllers
                 var list = new List<Models.Servico.Usuario>();
                 var resultService = new ResultService<List<Models.Servico.Usuario>>();
 
-                if (getFromSession)
-                {
-                    var retornoSession = GetListFromSession();
-
-                    if (retornoSession.Item2)
-                        list = retornoSession.Item1;
-                    else
-                        resultService = GetListFromService();
-                }
-                else                
-                    resultService = GetListFromService();                
+                resultService = _service.List(getFromSession);
+                if (!resultService.status)
+                    resultService.errorMessage = "Erro!";
 
                 msgExibicao = resultService.message;
                 msgAnalise = resultService.errorMessage;
-
-                if (list.Count <= 0)
-                    list = resultService.value;
-
-                Session[Constants.ConstSessions.listUsuarios] = list;
-
+                
+                list = resultService.value;
                 list = ConfiguraListaExibicao(list);
 
                 return PartialView("_Listagem", list);
@@ -218,16 +206,6 @@ namespace TCC_Unip.Areas.Usuario.Controllers
             }
 
             return list;
-        }
-
-        private ResultService<List<Models.Servico.Usuario>> GetListFromService()
-        {
-            var resultService = _service.List();
-
-            if (!resultService.status)
-                resultService.errorMessage = "Erro!";
-
-            return resultService;
         }
 
         private string[] NormalizaPermissoes(string[] permissoes)
