@@ -1,5 +1,5 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace TCC_Unip.Models.Servico
 {
@@ -17,6 +17,8 @@ namespace TCC_Unip.Models.Servico
         public string Status { get; set; }
         [JsonProperty(PropertyName = "endereco")]
         public Endereco Endereco { get; set; }
+        [JsonProperty(PropertyName = "consultas")]
+        public List<Consulta> Consultas { get; set; }
 
         public Paciente GetModelDefault()
         {

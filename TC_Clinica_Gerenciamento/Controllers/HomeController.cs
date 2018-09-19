@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using TCC_Unip.Models.Local;
+﻿using System.Web.Mvc;
+using TCC_Unip.Models.Servico;
 
 namespace TCC_Unip.Controllers
 {
@@ -11,7 +7,7 @@ namespace TCC_Unip.Controllers
     {
         public ActionResult Index()
         {
-            if ((User)Session["user"] == null)
+            if ((Usuario)Session[Constants.ConstSessions.usuario] == null)
                 return RedirectToAction("Login", "Login");
 
             return View();

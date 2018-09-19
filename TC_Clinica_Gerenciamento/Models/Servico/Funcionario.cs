@@ -18,7 +18,10 @@ namespace TCC_Unip.Models.Servico
         [JsonProperty(PropertyName = "modalidade")]
         public string[] Modalidade { get; set; }
         [JsonProperty(PropertyName = "endereco")]
-        public Endereco Endereco { get; set; }        
+        public Endereco Endereco { get; set; }
+
+        [JsonProperty(PropertyName = "consutas")]
+        public List<Consulta> Consultas { get; set; }
 
         public Funcionario GetModelDefault()
         {
