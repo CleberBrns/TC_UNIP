@@ -30,7 +30,7 @@ namespace TCC_Unip.Constants
                 new DataSelectControl { Name = "Osteopatia", Value = "Osteopatia"},
                 new DataSelectControl { Name = "Fisioterapia", Value = "Fisioterapia" },
                 new DataSelectControl { Name = "Pilates", Value = "Pilates" },
-                new DataSelectControl { Name = "Treinamento Funcional", Value = "Treinamento Funcional" },
+                new DataSelectControl { Name = "Treinamento Funcional", Value = "TreinamentoFuncional" },
                 new DataSelectControl { Name = "RPG", Value = "RPG" }
             };
         }

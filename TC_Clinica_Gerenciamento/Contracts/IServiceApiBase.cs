@@ -5,10 +5,10 @@ namespace TCC_Unip.Contracts
 {
     public interface IServiceApiBase<TModel>
     {
-        TModel Get(string cpf);
+        TModel Get(string id);
         List<TModel> List();
         bool Save(TModel model);
         bool Update(TModel model);
-        bool Delete(string cpf);
+        bool Delete(string id);
     }
 }
