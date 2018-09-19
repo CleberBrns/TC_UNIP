@@ -1,0 +1,55 @@
+﻿
+
+@using TCC_Unip.Models.Local;
+@{
+    var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as
+           TCC_Unip.Models.Servico.Usuario;
+}
+
+@if (user != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div style="text-align: right">
+                <button type="button" class="btn btn-primary" id="btnNovaConsulta">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Nova Consulta
+                </button>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <br />
+        </div>
+        <div class="col-md-12 col-sm-12" style="overflow-x:auto;">
+            <span>Listagem Agenda</span>
+        </div>
+    </div>
+}
+
+<script>
+
+    $("#btnNovaConsulta").on('click', function () {
+        AgendaListagem.modalCadastrar();
+    });
+
+    var AgendaListagem = {
+
+        modalCadastrar: function () {
+            $.ajax({
+                url: "@Url.Action("ModalCadastrar", "Agenda")",
+                type: "GET",
+                success: function (html) {
+                    bootbox.dialog({
+                        title: "Cadastrar Consulta",
+                        message: html
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                }
+            });
+        }
+
+    };
+
+</script>

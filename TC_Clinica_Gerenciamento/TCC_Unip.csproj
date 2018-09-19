@@ -134,6 +134,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Agenda\AgendaAreaRegistration.cs" />
+    <Compile Include="Areas\Agenda\Controllers\AgendaController.cs" />
     <Compile Include="Areas\Funcionario\Controllers\FuncionarioController.cs" />
     <Compile Include="Areas\Funcionario\FuncionarioAreaRegistration.cs" />
     <Compile Include="Areas\Inicio\Controllers\InicioController.cs" />
@@ -454,7 +456,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Areas\Paciente\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Paciente\Views\Paciente\_Listagem.cshtml" />
     <Content Include="Areas\Paciente\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Paciente\Views\Web.config" />
@@ -471,15 +472,18 @@
     <Content Include="Content\SweetAlert2\sweet-alert-combine.less" />
     <Content Include="Content\SweetAlert2\sweet-alert.less" />
     <Content Include="Areas\Funcionario\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Funcionario\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Funcionario\Views\Funcionario\_Listagem.cshtml" />
     <Content Include="Areas\Funcionario\Views\Web.config" />
     <Content Include="Areas\Funcionario\Views\Funcionario\_Gerenciar.cshtml" />
     <Content Include="Areas\Usuario\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Usuario\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Usuario\Views\Usuario\_Listagem.cshtml" />
     <Content Include="Areas\Usuario\Views\Web.config" />
     <Content Include="Areas\Usuario\Views\Usuario\_Gerenciar.cshtml" />
+    <Content Include="Areas\Agenda\Views\Web.config" />
+    <Content Include="Areas\Agenda\Views\Agenda\_Listagem.cshtml" />
+    <Content Include="Areas\Agenda\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Agenda\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Agenda\Views\Agenda\_Gerenciar.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

@@ -14,6 +14,7 @@ namespace TCC_Unip.Models.Servico
         public string DateTimeService { get; set; }
         public DateTime Data { get; set; }
         [JsonProperty(PropertyName = "valor")]
+        public string Horario { get; set; }
         public decimal Valor { get; set; }
         [JsonProperty(PropertyName = "modalidade")]
         public string Modalidade { get; set; }
