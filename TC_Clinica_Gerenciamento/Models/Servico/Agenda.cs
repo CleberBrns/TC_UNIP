@@ -18,5 +18,22 @@ namespace TCC_Unip.Models.Servico
         public decimal Valor { get; set; }
         [JsonProperty(PropertyName = "modalidade")]
         public string Modalidade { get; set; }
+
+        public Agenda GetModelDefault()
+        {
+            var modelFunc = new Funcionario();
+            var funcionario = modelFunc.GetModelDefault();
+
+            var modelPaciente = new Paciente();
+            var paciente = modelPaciente.GetModelDefault();
+
+            return new Agenda
+            {
+                DateTimeService = string.Empty,
+                Modalidade = string.Empty,
+                Funcionario = funcionario,
+                Paciente = paciente
+            };
+        }
     }
 }
