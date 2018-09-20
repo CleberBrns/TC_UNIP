@@ -113,7 +113,7 @@
         $('#data').datepicker({
             format: "dd/mm/yyyy",
             autoclose: true,
-            language: "pt-BR"
+            language: "pt-BR"            
         });
 
         $('#data').mask('99/99/9999', { placeholder: "dd/mm/aaaa" });
@@ -121,6 +121,11 @@
 
         $('#profissional').change(function () {
             gerenciarAgenda.CarregaModalidades(this.value);
+        });
+
+        $("#data").datepicker().on("changeDate", function (e) {
+            var dataSelecionada = e.format(0, "dd/mm/yyyy");
+            gerenciarAgenda.VerificaHorariosData(dataSelecionada);
         });
 
         var gerenciarAgenda = {
@@ -133,14 +138,33 @@
                 if (selected !== "0") {
                     $.getJSON("@Url.Action("GetModalidadesProfissional", "Agenda")",
                         { cpf: selected },
-                        function (data) {
-                        $.each(data, function () {
+                        function (result) {
+                            $.each(result, function () {
                             $('#modalidades').append('<option value=' +
                               this.Value + '>' + this.Name + '</option>');
                         });
                     }).fail(function (jqXHR, textStatus, errorThrown) {
                         validacao.errorAjax(jqXHR, textStatus, errorThrown);
                     });
+                }
+            },
+
+            VerificaHorariosData: function (data) {
+
+                var cpf = $('#profissional').val();
+
+                if (cpf !== "" && data !== "") {
+
+                     $.getJSON("@Url.Action("VerificaHorariosDataProfissional", "Agenda")",
+                        { cpf: cpf, data: data },
+                        function (result) {
+                            $.each(result, function () {
+                                var dt = result;
+                        });
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                    });
+
                 }
             }
         };

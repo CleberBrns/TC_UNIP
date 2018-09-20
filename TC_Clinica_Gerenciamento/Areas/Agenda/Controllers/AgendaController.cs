@@ -69,6 +69,26 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult VerificaHorariosDataProfissional(string cpf, string data)
+        {
+            string msgExibicao = string.Empty;
+            string msgAnalise = string.Empty;
+
+            try
+            {
+                var dataBusca = Convert.ToDateTime(data);
+                var consultasProfissiona = _agendaService.ConsultasPeriodoFuncionario(cpf, dataBusca, dataBusca);
+            }
+            catch (Exception ex)
+            {
+                msgExibicao = Constants.Constants.msgFalhaAoListar;
+                msgAnalise = ex.ToString();
+            }
+
+            var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
+            return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+        }
+
         #region Métods Privados   
 
         private List<Models.Servico.Paciente> GetListPacientes()

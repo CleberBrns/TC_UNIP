@@ -37,7 +37,7 @@ namespace TCC_Unip.Services
         {
             var result = new ResultService<Funcionario>();
 
-            var retorno = service.ConsultasPeriodoFuncionario(cpf, dateFrom.Date.ToString(), dateTo.Date.ToString());
+            var retorno = service.ConsultasPeriodoFuncionario(cpf, dateFrom.ToShortDateString(), dateTo.ToShortDateString());
             result.value = retorno;
 
             return result;
