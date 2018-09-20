@@ -54,7 +54,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
                 if (resultService.status)
                 {
                     var modalidadesProf = resultService.value.Modalidades;
-                    listModalidades.Where(l => modalidadesProf.Contains(l.Value)).ToList();
+                    listModalidades = listModalidades.Where(l => modalidadesProf.Contains(l.Value)).ToList();
                 }
 
                 return Json(listModalidades, JsonRequestBehavior.AllowGet);
