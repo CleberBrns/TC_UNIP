@@ -492,7 +492,6 @@
     <Content Include="Areas\Agenda\Views\Web.config" />
     <Content Include="Areas\Agenda\Views\Agenda\_Listagem.cshtml" />
     <Content Include="Areas\Agenda\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Agenda\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Agenda\Views\Agenda\_Gerenciar.cshtml" />
     <Content Include="Areas\Agenda\Views\Agenda\_Calendario.cshtml" />
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />

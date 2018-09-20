@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
@@ -27,12 +28,48 @@ namespace TCC_Unip.Areas.Agenda.Controllers
         public ActionResult ModalCadastrar()
         {
             ViewBag.ListPacientes = GetListPacientes();            
-            ViewBag.ListProfissionais = GetListFuncionarios();
-            ViewBag.ListModalidades = GetListModalidades();
+            ViewBag.ListProfissionais = GetListFuncionarios();            
             ViewBag.ListHorarios = GetListHorarios();
            
             return PartialView("_Gerenciar");
         }
+
+        public ActionResult GetModalidadesProfissional(string cpf)
+        {
+            string msgExibicao = string.Empty;
+            string msgAnalise = string.Empty;
+
+            try
+            {
+                var resultService = new ResultService<Models.Servico.Funcionario>();
+
+                resultService = _funcionarioService.Get(cpf);
+                if (!resultService.status)
+                    resultService.errorMessage = "Erro!";
+
+                msgExibicao = resultService.message;
+                msgAnalise = resultService.errorMessage;
+
+                var listModalidades = GetListModalidades();
+                if (resultService.status)
+                {
+                    var modalidadesProf = resultService.value.Modalidades;
+                    listModalidades.Where(l => modalidadesProf.Contains(l.Value)).ToList();
+                }
+
+                return Json(listModalidades, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                msgExibicao = Constants.Constants.msgFalhaAoListar;
+                msgAnalise = ex.ToString();
+            }
+
+            var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
+            return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+        }
+
+        #region Métods Privados   
 
         private List<Models.Servico.Paciente> GetListPacientes()
         {
@@ -52,6 +89,8 @@ namespace TCC_Unip.Areas.Agenda.Controllers
         private List<DataSelectControl> GetListHorarios()
         {
             return constants.ListHorariosConsultas();
-        }       
+        }
+
+        #endregion
     }
 }

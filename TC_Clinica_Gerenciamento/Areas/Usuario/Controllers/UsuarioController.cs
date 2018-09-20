@@ -195,7 +195,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
                     Nome = l.Nome,
                     Email = l.Email,
                     Cpf = l.Cpf,
-                    Modalidade = l.Modalidade
+                    Modalidades = l.Modalidades
                 }).ToList();
 
             return listExibicao;

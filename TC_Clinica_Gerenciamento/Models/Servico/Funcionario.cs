@@ -16,7 +16,7 @@ namespace TCC_Unip.Models.Servico
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
         [JsonProperty(PropertyName = "modalidade")]
-        public string[] Modalidade { get; set; }
+        public string[] Modalidades { get; set; }
         [JsonProperty(PropertyName = "endereco")]
         public Endereco Endereco { get; set; }
 
@@ -35,7 +35,7 @@ namespace TCC_Unip.Models.Servico
                 Nome = string.Empty,
                 Telefone = string.Empty,
                 Status = string.Empty,
-                Modalidade = new string[] { },
+                Modalidades = new string[] { },
                 Endereco = endereco
             };
         }
