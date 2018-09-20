@@ -73,22 +73,13 @@ namespace TCC_Unip.Areas.Usuario.Controllers
                 ViewBag.ListPerfil = GetListPerfil();
                 ViewBag.ListFuncionarios = GetListFuncionarios();
 
-                var usuario = GetFromSession(id);
-
-                if (usuario != null)
-                {
-                    return PartialView("_Gerenciar", usuario);
-                }
+                var resultService = _service.Get(id);
+                if (resultService.status)
+                    return PartialView("_Gerenciar", resultService.value);
                 else
                 {
-                    var resultService = _service.Get(id);
-                    if (resultService.status)
-                        return PartialView("_Gerenciar", resultService.value);
-                    else
-                    {
-                        msgExibicao = resultService.message;
-                        msgAnalise = "Erro!";
-                    }
+                    msgExibicao = resultService.message;
+                    msgAnalise = "Erro!";
                 }
 
             }
@@ -152,30 +143,6 @@ namespace TCC_Unip.Areas.Usuario.Controllers
         }
 
         #region Métodos Privados
-
-        private Models.Servico.Usuario GetFromSession(string id)
-        {
-            var listSession = GetListFromSession().Item1;
-
-            if (listSession.Count > 0)
-                return listSession.Where(l => l.Email == id).FirstOrDefault();
-
-            return null;
-        }
-
-        private Tuple<List<Models.Servico.Usuario>, bool> GetListFromSession()
-        {
-            var list = new List<Models.Servico.Usuario>();
-            var sessaoValida = false;
-
-            if ((List<Models.Servico.Usuario>)Session[Constants.ConstSessions.listUsuarios] != null)
-            {
-                list = (List<Models.Servico.Usuario>)Session[Constants.ConstSessions.listUsuarios];
-                sessaoValida = true;
-            }
-
-            return new Tuple<List<Models.Servico.Usuario>, bool>(list, sessaoValida);
-        }
 
         private List<Models.Servico.Usuario> ConfiguraListaExibicao(List<Models.Servico.Usuario> list)
         {

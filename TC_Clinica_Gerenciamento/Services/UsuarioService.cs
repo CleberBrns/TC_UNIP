@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
@@ -15,8 +16,12 @@ namespace TCC_Unip.Services
         {
             var result = new ResultService<Usuario>();
 
-            var retorno = service.Get(email);
-            result.value = retorno;
+            var retornoSession = GetFromSession(email);
+
+            if (retornoSession.Item2 && !string.IsNullOrEmpty(retornoSession.Item1.Email))
+                result.value = retornoSession.Item1;
+            else
+                result.value = service.Get(email);
 
             if (string.IsNullOrEmpty(result.value.Email))
                 result.errorMessage = "O Usuário não existe mais na base de dados do serviço!";
@@ -30,10 +35,14 @@ namespace TCC_Unip.Services
 
             if (getFromSession)
             {
-                result.value = GetListFromSession();
-
-                if (result.value == null)
-                    result.value = GetFromService();
+                var retornoSession = GetListFromSession();
+                /*Verifica se existia dados na session e se a mesma era válida.
+                  Caso a mesma seja válida é passado para o retorno da pesquisa, mesmo que esteja vazia.
+                  Caso não esteja criada, a busca é feita no serviço.*/
+                if (retornoSession.Item2)                
+                    result.value = retornoSession.Item1;                
+                else
+                    result.value = GetFromService();                    
             }
             else
             {
@@ -46,7 +55,9 @@ namespace TCC_Unip.Services
 
         private List<Usuario> GetFromService()
         {
-            throw new NotImplementedException();
+            var list = service.List();
+            AddListToSession(list);
+            return list;
         }
 
         public ResultService<bool> Save(Usuario model)
@@ -100,17 +111,39 @@ namespace TCC_Unip.Services
 
         #region Métodos Privados
 
+        private Tuple<Usuario, bool> GetFromSession(string email)
+        {
+            var sessionValida = false;
+            var model = new Usuario();
+
+            var retornolistFromSession = GetListFromSession();
+
+            if (retornolistFromSession.Item2 && retornolistFromSession.Item1.Count > 0)
+            {
+                sessionValida = true;
+                model = retornolistFromSession.Item1.Where(l => l.Email.Equals(email)).FirstOrDefault();
+            }
+
+            return new Tuple<Usuario, bool>(model, sessionValida);
+        }
+
         private void AddListToSession(List<Usuario> list)
         {
             HttpContext.Current.Session[Constants.ConstSessions.listUsuarios] = list;
         }
 
-        private List<Usuario> GetListFromSession()
+        private Tuple<List<Usuario>, bool> GetListFromSession()
         {
-            if ((List<Usuario>)HttpContext.Current.Session[Constants.ConstSessions.listUsuarios] != null)
-                return (List<Usuario>)HttpContext.Current.Session[Constants.ConstSessions.listUsuarios];
+            var sessionaValida = false;
+            var list = new List<Usuario>();
 
-            return null;
+            if ((List<Usuario>)HttpContext.Current.Session[Constants.ConstSessions.listUsuarios] != null)
+            {
+                sessionaValida = true;
+                list = (List<Usuario>)HttpContext.Current.Session[Constants.ConstSessions.listUsuarios];
+            }
+
+            return new Tuple<List<Usuario>, bool>(list, sessionaValida);
         }
 
         private ResultService<bool> SalvaUsuario(Usuario model)
