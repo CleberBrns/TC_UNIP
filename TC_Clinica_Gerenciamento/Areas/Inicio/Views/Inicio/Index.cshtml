@@ -62,6 +62,10 @@
 
 <script>
 
+    $(document).ready(function () {
+        funcoesIndexTabs.listaAgenda($(".abaAgenda"), true);
+    });    
+
     $('#tabs a').click(function (e) {
         e.preventDefault();
         funcoesIndexTabs.carregaDivDaTab(this);
@@ -88,6 +92,11 @@
             else if (tabName === 'tabUsuarios') {
                 if (carregado === undefined || carregado === "false") {
                     funcoesIndexTabs.listaUsuarios(object, true);                    
+                }
+            }
+            else if (tabName === 'tabAgenda') {
+                if (carregado === undefined || carregado === "false") {
+                    funcoesIndexTabs.listaAgenda(object, true);
                 }
             }
         },
@@ -152,9 +161,7 @@
             });
         },
 
-        listaUsuarios: function (object, getFromSession) {
-
-            
+        listaUsuarios: function (object, getFromSession) {            
 
             $.ajax({
                 url: "@Url.Action("Listagem", "Usuario", new { area = "Usuario" })",
@@ -182,7 +189,38 @@
                     validacao.errorAjax(jqXHR, textStatus, errorThrown);
                 }
             });
+        },
+
+        listaAgenda: function (object, getFromSession) {            
+
+            $.ajax({
+                url: "@Url.Action("Listagem", "Agenda", new { area = "Agenda" })",
+                data: { getFromSession: getFromSession},
+                type: "GET",
+                success: function (result) {
+                    
+                    if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
+                        $('#tabAgenda').html(result);
+                        $(object).attr("carregado", "true");
+                    }
+                    else {
+                        var retorno = result.mensagensRetorno;
+                        swal({
+                            title: '',
+                            text: retorno.MensagemExibicao,
+                            type: 'warning',
+                            confirmButtonColor: '#10386B',
+                            allowOutsideClick: false
+                        });
+                        console.log(retorno.MensagemAnalise);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                }
+            });
         }
+
     };
 
 </script>

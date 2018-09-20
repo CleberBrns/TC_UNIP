@@ -10,17 +10,18 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 {
     public class AgendaController : Controller
     {
+        Constants.Constants constants = new Constants.Constants();
         Mensagens mensagens = new Mensagens();
         AgendaService _agendaService = new AgendaService();
-        UsuarioService _serviceUsuario = new UsuarioService();
-        FuncionarioService _serviceFuncionario = new FuncionarioService();
+        PacienteService _pacienteService = new PacienteService();
+        FuncionarioService _funcionarioService = new FuncionarioService();
 
-        public ActionResult Listagem()
+        public ActionResult Listagem(bool getFromSession)
         {
             if ((Models.Servico.Usuario)Session[Constants.ConstSessions.usuario] == null)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
-            return View();
+            return PartialView("_Listagem");
         }
 
         public ActionResult ModalCadastrar()
@@ -29,28 +30,28 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             ViewBag.ListProfissionais = GetListFuncionarios();
             ViewBag.ListModalidades = GetListModalidades();
             ViewBag.ListHorarios = GetListHorarios();
-
-            var model = new Models.Servico.Agenda();
-            var defaultObj = model.GetModelDefault();
-            return PartialView("_Gerenciar", defaultObj);
+           
+            return PartialView("_Gerenciar");
         }
+
         private List<Models.Servico.Paciente> GetListPacientes()
         {
-            throw new NotImplementedException();
+            return _pacienteService.List().value;
         }
+
         private List<Models.Servico.Funcionario> GetListFuncionarios()
         {
-            throw new NotImplementedException();
+            return _funcionarioService.List().value;
         }
+
         private List<DataSelectControl> GetListModalidades()
-        {
-            var constants = new Constants.Constants();
+        {            
             return constants.ListModalidades();
         }
 
         private List<DataSelectControl> GetListHorarios()
         {
-            return new List<DataSelectControl>();
+            return constants.ListHorariosConsultas();
         }       
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TCC_Unip.Models.Local;
 
 namespace TCC_Unip.Constants
@@ -43,6 +44,41 @@ namespace TCC_Unip.Constants
                 new DataSelectControl { Name = "Recepcionista", Value = "RECEPCAO" },
                 new DataSelectControl { Name = "Profissional", Value = "PROFISSIONAL" }
             };
+        }
+
+        public List<DataSelectControl> ListHorariosConsultas()
+        {            
+            return GetHorariosDoDia();
+        }
+
+        private List<DataSelectControl> GetHorariosDoDia()
+        {
+            var listHorarios = new List<DataSelectControl>();
+            var startDate = DateTime.Today.AddHours(7);
+            var endDate = DateTime.Today.AddHours(21);
+
+            List<string> times = new List<string>();
+
+            var currentTime = startDate;
+            if (currentTime.Minute != 0 || currentTime.Second != 0)
+            {
+                //Pega a próxima hora
+                currentTime = currentTime.AddHours(1).AddMinutes(currentTime.Minute * -1);
+            }
+
+            while (currentTime <= endDate)
+            {
+                var horario = string.Format("{0:00}:00", currentTime.Hour);
+
+                listHorarios.Add(new DataSelectControl {
+                    Value = horario,
+                    Name = horario
+                });
+                
+                currentTime = currentTime.AddHours(1);
+            }
+
+            return listHorarios;
         }
     }
 }

@@ -10,12 +10,22 @@
         TCC_Unip.Models.Servico.Usuario;
 }
 
+<link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<script src="~/Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+<style type="text/css">
+    .datepicker {
+        background: #808080;   
+        color: #ffffff;
+    }
+</style>
+
 @if (user != null)
 {
-    @using (Html.BeginForm())
+    using (Html.BeginForm())
     {
         <div class="form-horizontal">
-            <input type="hidden" name="Id" id="Id" value=@Model.Id>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="campos" style="padding: 2% 0 2% 5%">
                 <div class="form-group">
@@ -24,18 +34,11 @@
                             @Html.Label("Paciente", htmlAttributes: new { @class = "control-label col-md-3" })
                         </div>
                         <div class="col-md-8">
-                            <select class="form-control" id="paciente" name="Paciente" style="width: 42%">
+                            <select class="form-control alinhamentoSelect" id="paciente" name="Paciente">
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listPacientes)
                                 {
-                                    if (Model.Paciente.Cpf == item.Cpf)
-                                    {
-                                        <option value="@item.Cpf" selected="selected">@item.Nome</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.Cpf">@item.Nome</option>
-                                    }
+                                    <option value="@item.Cpf">@item.Nome</option>
                                 }
                             </select>
                             <span class="field-validation-valid text-danger" id="validaPaciente" data-valmsg-replace="true"></span>
@@ -46,18 +49,11 @@
                             @Html.Label("Profissional", htmlAttributes: new { @class = "control-label col-md-3" })
                         </div>
                         <div class="col-md-8">
-                            <select class="form-control" id="profissional" name="Profissional" style="width: 42%">
+                            <select class="form-control alinhamentoSelect" id="profissional" name="Profissional">
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listProfissionais)
                                 {
-                                    if (Model.Funcionario.Cpf == item.Cpf)
-                                    {
-                                        <option value="@item.Cpf" selected="selected">@item.Nome</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.Cpf">@item.Nome</option>
-                                    }
+                                    <option value="@item.Cpf">@item.Nome</option>
                                 }
                             </select>
                             <span class="field-validation-valid text-danger" id="validaProfissional" data-valmsg-replace="true"></span>
@@ -68,11 +64,11 @@
                             @Html.Label("Modalidade", htmlAttributes: new { @class = "control-label col-md-3" })
                         </div>
                         <div class="col-md-8">
-                            <select class="form-control" id="modalidades" name="Modalidades" style="width: 42%">
+                            <select class="form-control alinhamentoSelect" id="modalidades" name="Modalidades" style="width: 60%">
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listModalidades)
-                                {                                    
-                                    <option value="@item.Value">@item.Name</option>                                    
+                                {
+                                    <option value="@item.Value">@item.Name</option>
                                 }
                             </select>
                             <span class="field-validation-valid text-danger" id="validaProfissional" data-valmsg-replace="true"></span>
@@ -80,8 +76,13 @@
                     </div>
                     <div class="form-group">
                         @Html.Label("Data", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" id="email" name="Data" value="@Model.Data" />
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control alinhamentoSelect" id="data" name="Data" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                </span>
+                            </div>
                             <span class="field-validation-valid text-danger" id="validaData" data-valmsg-replace="true"></span>
                         </div>
                     </div>
@@ -89,28 +90,21 @@
                         <div>
                             @Html.Label("Horário", htmlAttributes: new { @class = "control-label col-md-3" })
                         </div>
-                        <div class="col-md-8">
-                            <select class="form-control" id="horario" name="Horario" style="width: 42%">
+                        <div class="col-md-4">
+                            <select class="form-control alinhamentoSelect" id="horario" name="Horario">
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listHorarios)
                                 {
-                                    if (Model.Horario == item.Value)
-                                    {
-                                        <option value="@item.Value" selected="selected">@item.Name</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.Value">@item.Name</option>
-                                    }
+                                    <option value="@item.Value">@item.Name</option>
                                 }
                             </select>
                             <span class="field-validation-valid text-danger" id="validaPaciente" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.Label("Valor", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" id="content" name="Valor" value="@Model.Valor" />
+                        @Html.Label("Valor - R$", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-4">
+                            <input type="text" class="form-control alinhamentoSelect" id="valor" name="Valor" />
                             <span class="field-validation-valid text-danger" id="validaValor" data-valmsg-replace="true"></span>
                         </div>
                     </div>
@@ -118,4 +112,17 @@
             </div>
         </div>
     }
+
+    <script>
+
+        $('#data').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            language: "pt-BR"
+        });
+
+        $('#data').mask('99/99/9999', { placeholder: "dd/mm/aaaa" });
+        $('#valor').mask('000,00', { reverse: true });
+
+    </script>
 }
