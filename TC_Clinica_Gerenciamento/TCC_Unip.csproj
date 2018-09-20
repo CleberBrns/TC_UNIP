@@ -484,6 +484,7 @@
     <Content Include="Areas\Agenda\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Agenda\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Agenda\Views\Agenda\_Gerenciar.cshtml" />
+    <Content Include="Areas\Agenda\Views\Agenda\_Calendario.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
