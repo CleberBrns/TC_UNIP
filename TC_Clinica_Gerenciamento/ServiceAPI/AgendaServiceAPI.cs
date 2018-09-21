@@ -109,7 +109,10 @@ namespace TCC_Unip.ServiceAPI
 
         public bool Save(Agenda model)
         {
-            var jsonModel = JsonConvert.SerializeObject(model);
+            var agendaJS = new Models.Json.AgendaJS();
+            agendaJS = agendaJS.ConvertToJS(model);
+
+            var jsonModel = JsonConvert.SerializeObject(agendaJS);
             var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
             string action = string.Format("{0}{1}", BaseUrl, agenda);
 

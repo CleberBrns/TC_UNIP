@@ -16,7 +16,7 @@
                             <input type="text" name="Email" placeholder="Email" class="caixaTexto nome">
                         </div>
                         <div class="form-group">
-                            <input type="password" name="Senha" placeholder="Senha" class="caixaTexto senha">
+                            <input type="password" name="Senha" id="senha" placeholder="Senha" class="caixaTexto senha">
                         </div>
                         <div class="divBotoes">
                             <div class="form-group">
@@ -35,14 +35,23 @@
 <script>
 
     $("#btEntrar").on("click", function () {
-        
+        AutenticarUsuario();
+    });
+
+    $("#senha").keyup(function (e) {
+        if (e.keyCode === 13) {
+            AutenticarUsuario();
+        }
+    });
+
+    function AutenticarUsuario() {
+
         $.ajax({
             url: "@Url.Action("Autenticar", "Login")",
             type: "GET",
             data: $('form').serialize(),
             success: function (result) {
-
-                debugger;
+                
                 var retorno = result.mensagensRetorno;
                 if (retorno.Status) {
                     var url = href = '@Url.Action("Index", "Inicio", new { area = "Inicio" })';
@@ -62,7 +71,6 @@
                 validacao.errorAjax(jqXHR, textStatus, errorThrown);
             }
         });
-
-    });
+    }
 
 </script>

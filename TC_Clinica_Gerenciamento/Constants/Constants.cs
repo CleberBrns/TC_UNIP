@@ -9,6 +9,7 @@ namespace TCC_Unip.Constants
         #region Mensagens
         public const string msgFalhaAoSalvar = "Falha ao salvar!";
         public const string msgFalhaAoListar = "Falha ao listar!";
+        public const string msgFalhaAoListarHorarios = "Falha ao listar os horários disponíveis!";
         public const string msgFalhaAoExcluir = "Falha ao excluir!";
         public const string msgFalhaAoCarregar = "Falha ao carregar!";
         public const string msgFalhaAoAutenticar = "Falha ao autenticar!";

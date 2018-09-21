@@ -40,6 +40,9 @@ namespace TCC_Unip.Services
             var retorno = service.ConsultasPeriodoFuncionario(cpf, dateFrom.ToShortDateString(), dateTo.ToShortDateString());
             result.value = retorno;
 
+            if (string.IsNullOrEmpty(retorno.Cpf))
+                result.errorMessage = "Sem agenda!";
+
             return result;
         }
 
@@ -59,6 +62,9 @@ namespace TCC_Unip.Services
 
             if (model.Id == 0)
             {
+                model.Data = model.CombinaDataHora(model.Data, model.Horario);
+                model.DateTimeService = model.ToMilliseconds(model.Data);                
+
                 var retorno = service.Save(model);
                 result.value = retorno;
 

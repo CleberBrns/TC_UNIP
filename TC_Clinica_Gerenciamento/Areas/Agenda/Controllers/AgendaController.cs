@@ -78,6 +78,38 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             {
                 var dataBusca = Convert.ToDateTime(data);
                 var consultasProfissiona = _agendaService.ConsultasPeriodoFuncionario(cpf, dataBusca, dataBusca);
+
+                var listHorariosDisponiveis = GetListHorarios();
+                 
+                if (consultasProfissiona.status)                
+                    if (consultasProfissiona.value.Consultas.Count > 0)
+                    {
+                        
+                    }                
+
+                return Json(listHorariosDisponiveis, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                msgExibicao = Constants.Constants.msgFalhaAoListarHorarios;
+                msgAnalise = ex.ToString();
+            }
+
+            var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
+            return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Salvar(Models.Servico.Agenda model)
+        {
+            string msgExibicao = string.Empty;
+            string msgAnalise = string.Empty;
+
+            try
+            {
+                var resultService = _agendaService.Save(model);
+
+                msgExibicao = resultService.message;
+                msgAnalise = resultService.errorMessage;
             }
             catch (Exception ex)
             {
@@ -85,8 +117,10 @@ namespace TCC_Unip.Areas.Agenda.Controllers
                 msgAnalise = ex.ToString();
             }
 
+
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+
         }
 
         #region Métods Privados   

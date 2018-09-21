@@ -3,7 +3,6 @@
 @{
     var listPacientes = (IList<TCC_Unip.Models.Servico.Paciente>)ViewBag.ListPacientes;
     var listProfissionais = (IList<TCC_Unip.Models.Servico.Funcionario>)ViewBag.ListProfissionais;
-    var listHorarios = (IList<TCC_Unip.Models.Local.DataSelectControl>)ViewBag.ListHorarios;    
 
     var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as
         TCC_Unip.Models.Servico.Usuario;
@@ -15,7 +14,7 @@
 
 <style type="text/css">
     .datepicker {
-        background: #808080;   
+        background: #808080;
         color: #ffffff;
     }
 </style>
@@ -33,7 +32,7 @@
                             @Html.Label("Paciente", htmlAttributes: new { @class = "control-label col-md-3" })
                         </div>
                         <div class="col-md-8">
-                            <select class="form-control alinhamentoSelect" id="paciente" name="Paciente">
+                            <select class="form-control alinhamentoSelect" id="paciente" name="Paciente.Cpf">
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listPacientes)
                                 {
@@ -48,7 +47,7 @@
                             @Html.Label("Profissional", htmlAttributes: new { @class = "control-label col-md-3" })
                         </div>
                         <div class="col-md-8">
-                            <select class="form-control alinhamentoSelect" id="profissional" name="Profissional">
+                            <select class="form-control alinhamentoSelect" id="profissional" name="Funcionario.Cpf">
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listProfissionais)
                                 {
@@ -63,7 +62,7 @@
                             @Html.Label("Modalidade", htmlAttributes: new { @class = "control-label col-md-3" })
                         </div>
                         <div class="col-md-8">
-                            <select class="form-control alinhamentoSelect" id="modalidades" name="Modalidades" style="width: 60%">
+                            <select class="form-control alinhamentoSelect" id="modalidades" name="Modalidade" style="width: 60%">
                                 <option value="0">-- Selecione --</option>
                             </select>
                             <span class="field-validation-valid text-danger" id="validaProfissional" data-valmsg-replace="true"></span>
@@ -83,15 +82,11 @@
                     </div>
                     <div class="form-group">
                         <div>
-                            @Html.Label("Horário", htmlAttributes: new { @class = "control-label col-md-3" })
+                            @Html.Label("Horários", htmlAttributes: new { @class = "control-label col-md-3" })
                         </div>
                         <div class="col-md-4">
-                            <select class="form-control alinhamentoSelect" id="horario" name="Horario">
-                                <option value="0">-- Selecione --</option>
-                                @foreach (var item in listHorarios)
-                                {
-                                    <option value="@item.Value">@item.Name</option>
-                                }
+                            <select class="form-control alinhamentoSelect" id="horarios" name="Horario">
+                                <option value="0">-- Disponíveis --</option>
                             </select>
                             <span class="field-validation-valid text-danger" id="validaPaciente" data-valmsg-replace="true"></span>
                         </div>
@@ -105,15 +100,25 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="text-right col-md-12">
+                    <button type="button" class="btn btn-primary" id="btnRetornar" name="btnRetornar" onclick="gerenciarAgenda.CloseModal()">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Retornar
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnSalvar">
+                        Salvar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
         </div>
     }
 
-    <script>
+        <script>
 
         $('#data').datepicker({
             format: "dd/mm/yyyy",
             autoclose: true,
-            language: "pt-BR"            
+            language: "pt-BR"
         });
 
         $('#data').mask('99/99/9999', { placeholder: "dd/mm/aaaa" });
@@ -127,6 +132,16 @@
             var dataSelecionada = e.format(0, "dd/mm/yyyy");
             gerenciarAgenda.VerificaHorariosData(dataSelecionada);
         });
+
+        $("#btnSalvar").on('click', function () {
+            //if (pacienteGerenciar.validar())
+            gerenciarAgenda.Salvar();
+        });
+
+        $(".close").on('click', function () {
+            gerenciarAgenda.CloseModal();
+        });
+
 
         var gerenciarAgenda = {
 
@@ -151,23 +166,101 @@
 
             VerificaHorariosData: function (data) {
 
+                $('#horarios').empty();
+                $('#horarios').append('<option value=0>-- Selecione --</option>');
+
                 var cpf = $('#profissional').val();
 
                 if (cpf !== "" && data !== "") {
 
-                     $.getJSON("@Url.Action("VerificaHorariosDataProfissional", "Agenda")",
-                        { cpf: cpf, data: data },
-                        function (result) {
-                            $.each(result, function () {
-                                var dt = result;
-                        });
-                    }).fail(function (jqXHR, textStatus, errorThrown) {
-                        validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                    $.ajax({
+                        url: "@Url.Action("VerificaHorariosDataProfissional", "Agenda")",
+                        type: "POST",
+                        data: { cpf: cpf, data: data },
+                        success: function (result) {
+
+                            var retorno = result.mensagensRetorno;
+
+                            if (retorno !== undefined && retorno !== null) {
+
+                                swal({
+                                    title: '',
+                                    text: retorno.MensagemExibicao,
+                                    type: 'warning',
+                                    confirmButtonColor: '#10386B',
+                                    allowOutsideClick: false
+                                });
+                                console.log(retorno.MensagemAnalise);
+
+                            }
+                            else {
+                                $.each(result, function () {
+                                    $('#horarios').append('<option value=' +
+                                        this.Value + '>' + this.Name + '</option>');
+                                });
+                            }
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                        }
                     });
 
                 }
+            },
+
+            Salvar: function () {
+
+                //Ajuste para impedir multiplos cliques
+                event.preventDefault();
+                var that = $(this);
+                that.off('click');
+
+                $.ajax({
+                    url: "@Url.Action("Salvar", "Agenda")",
+                    type: "POST",
+                    data: $('form').serialize(),
+                    success: function (result) {
+
+                        var retorno = result.mensagensRetorno;
+
+                        if (retorno.Status) {
+                            swal({
+                                title: '',
+                                text: retorno.MensagemExibicao,
+                                type: 'success',
+                                confirmButtonColor: '#10386B',
+                                allowOutsideClick: false
+                            }).then(function () {
+                                //funcoesIndexTabs.listaPacientes($(".abaPacientes"), false);
+                                bootbox.hideAll();
+                            });
+                        }
+                        else {
+
+                            swal({
+                                title: '',
+                                text: retorno.MensagemExibicao,
+                                type: 'warning',
+                                confirmButtonColor: '#10386B',
+                                allowOutsideClick: false
+                            });
+                            console.log(retorno.MensagemAnalise);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                    }
+                }).always(function () {
+                    that.on('click', gerenciarAgenda.salvar); //Devolve a ação do botão
+                });
+
+            },
+
+            CloseModal: function () {
+                bootbox.hideAll();
             }
         };
 
-    </script>
+        </script>
 }
