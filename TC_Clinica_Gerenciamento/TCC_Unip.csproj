@@ -147,16 +147,21 @@
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Constants\ConstPermissoes.cs" />
     <Compile Include="Constants\ConstSessions.cs" />
-    <Compile Include="Contracts\IAgendaService.cs" />
-    <Compile Include="Contracts\IServiceUsuario.cs" />
-    <Compile Include="Contracts\IServiceFuncionario.cs" />
+    <Compile Include="Contracts\Service\IServiceAgenda.cs" />
+    <Compile Include="Contracts\Session\ISessionAgenda.cs" />
+    <Compile Include="Contracts\Session\ISessionBase.cs" />
+    <Compile Include="Contracts\Service\IServiceUsuario.cs" />
+    <Compile Include="Contracts\Service\IServiceFuncionario.cs" />
+    <Compile Include="Contracts\Session\ISessionFuncionario.cs" />
+    <Compile Include="Contracts\Session\ISessionPaciente.cs" />
+    <Compile Include="Contracts\Session\ISessionUsuario.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Contracts\IServiceApiBase.cs" />
-    <Compile Include="Contracts\IServicePaciente.cs" />
+    <Compile Include="Contracts\Service\IServiceApiBase.cs" />
+    <Compile Include="Contracts\Service\IServicePaciente.cs" />
     <Compile Include="Models\Json\AgendaJS.cs" />
     <Compile Include="Models\Json\PessoaJS.cs" />
     <Compile Include="Models\Local\MensagensDeRetorno.cs" />
@@ -177,6 +182,11 @@
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Services\FuncionarioService.cs" />
     <Compile Include="Services\PacienteService.cs" />
+    <Compile Include="Session\SessionAgenda.cs" />
+    <Compile Include="Session\SessionBase.cs" />
+    <Compile Include="Session\SessionFuncionario.cs" />
+    <Compile Include="Session\SessionPaciente.cs" />
+    <Compile Include="Session\SessionUsuario.cs" />
     <Compile Include="Tools\HttpInstance.cs" />
     <Compile Include="Util\Mensagens.cs" />
   </ItemGroup>

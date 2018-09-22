@@ -5,7 +5,7 @@ using TCC_Unip.Models.Servico;
 
 namespace TCC_Unip.Contracts
 {
-    interface IAgendaService
+    interface IServiceAgenda
     {
         ResultService<Agenda> Get(string id);
         ResultService<List<Agenda>> ListAgendasPeriodo(DateTime dateFrom, DateTime dateTo);

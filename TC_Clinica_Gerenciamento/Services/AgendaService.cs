@@ -6,7 +6,7 @@ using TCC_Unip.ServiceAPI;
 
 namespace TCC_Unip.Services
 {
-    public class AgendaService : Contracts.IAgendaService
+    public class AgendaService : Contracts.IServiceAgenda
     {
         AgendaServiceAPI service = new AgendaServiceAPI();
 
