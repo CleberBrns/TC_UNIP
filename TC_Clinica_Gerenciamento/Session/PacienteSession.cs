@@ -8,12 +8,12 @@ using TCC_Unip.Models.Servico;
 
 namespace TCC_Unip.Session
 {
-    public class SessionFuncionario : SessionBase<Funcionario>, ISessionFuncionario
+    public class PacienteSession : SessionBase<Paciente>, ISessionPaciente
     {
-        public Tuple<Funcionario, bool> GetFromListSession(string cpf, string session)
+        public Tuple<Paciente, bool> GetFromListSession(string cpf, string session)
         {
             var sessionValida = false;
-            var model = new Funcionario();
+            var model = new Paciente();
 
             var retornolistFromSession = this.GetListFromSession(session);
 
@@ -23,7 +23,7 @@ namespace TCC_Unip.Session
                 model = retornolistFromSession.Item1.Where(l => l.Cpf.Equals(cpf)).FirstOrDefault();
             }
 
-            return new Tuple<Funcionario, bool>(model, sessionValida);
+            return new Tuple<Paciente, bool>(model, sessionValida);
         }
     }
 }

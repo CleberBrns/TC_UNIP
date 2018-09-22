@@ -5,7 +5,7 @@ using TCC_Unip.Models.Servico;
 
 namespace TCC_Unip.Session
 {
-    public class SessionUsuario : SessionBase<Usuario>, ISessionUsuario
+    public class UsuarioSession : SessionBase<Usuario>, ISessionUsuario
     {
         public Tuple<Usuario, bool> GetFromListSession(string email, string session)
         {

@@ -3,7 +3,7 @@ using TCC_Unip.Models.Servico;
 
 namespace TCC_Unip.Session
 {
-    public class SessionAgenda : SessionBase<Agenda>, ISessionAgenda
+    public class AgendaSession : SessionBase<Agenda>, ISessionAgenda
     {
     }
 }

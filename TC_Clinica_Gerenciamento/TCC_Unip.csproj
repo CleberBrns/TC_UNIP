@@ -182,11 +182,11 @@
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Services\FuncionarioService.cs" />
     <Compile Include="Services\PacienteService.cs" />
-    <Compile Include="Session\SessionAgenda.cs" />
+    <Compile Include="Session\AgendaSession.cs" />
     <Compile Include="Session\SessionBase.cs" />
-    <Compile Include="Session\SessionFuncionario.cs" />
-    <Compile Include="Session\SessionPaciente.cs" />
-    <Compile Include="Session\SessionUsuario.cs" />
+    <Compile Include="Session\FuncionarioSession.cs" />
+    <Compile Include="Session\PacienteSession.cs" />
+    <Compile Include="Session\UsuarioSession.cs" />
     <Compile Include="Tools\HttpInstance.cs" />
     <Compile Include="Util\Mensagens.cs" />
   </ItemGroup>
