@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
 
-namespace TCC_Unip.Contracts
+namespace TCC_Unip.Contracts.Service
 {
     interface IServiceAgenda
     {

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using TCC_Unip.Contracts.API;
 using TCC_Unip.Models.Servico;
 
-namespace TCC_Unip.ServicesAPI
+namespace TCC_Unip.API
 {
-    public class PacienteServiceApi : Contracts.IServiceApiBase<Paciente>
+    public class PacienteAPI : IAPIBase<Paciente>
     {
         readonly string tipoModel = "paciente";
 

@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
-using TCC_Unip.ServicesAPI;
+using TCC_Unip.API;
 using TCC_Unip.Session;
+using TCC_Unip.Contracts.Service;
 
 namespace TCC_Unip.Services
 {
-    public class UsuarioService : Contracts.IServiceUsuario
+    public class UsuarioService : IServiceUsuario
     {
-        readonly UsuarioServiceApi service = new UsuarioServiceApi();
+        readonly UsuarioAPI service = new UsuarioAPI();
         readonly UsuarioSession session = new UsuarioSession();
         readonly string sessionName = Constants.ConstSessions.listUsuarios;
 

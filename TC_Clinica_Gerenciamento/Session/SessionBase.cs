@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using TCC_Unip.Contracts;
+using TCC_Unip.Contracts.Session;
 
 namespace TCC_Unip.SessionBase
 {

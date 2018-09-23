@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TCC_Unip.Contracts
+namespace TCC_Unip.Contracts.Session
 {
     public interface ISessionBase<TModel>
     {

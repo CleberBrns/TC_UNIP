@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using TCC_Unip.Contracts.API;
 using TCC_Unip.Models.Servico;
 
-namespace TCC_Unip.ServiceAPI
+namespace TCC_Unip.API
 {
-    public class AgendaServiceAPI : Contracts.IServiceApiBase<Agenda>
+    public class AgendaAPI : IAPIBase<Agenda>
     {
         readonly string agenda = "agenda";
         readonly string agendaPaciente = "agenda/paciente";

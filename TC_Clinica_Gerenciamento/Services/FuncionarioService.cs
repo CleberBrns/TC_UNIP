@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
-using TCC_Unip.ServicesAPI;
+using TCC_Unip.API;
+using TCC_Unip.Contracts.Service;
 
 namespace TCC_Unip.Services
 {
-    public class FuncionarioService : Contracts.IServiceFuncionario
+    public class FuncionarioService : IServiceFuncionario
     {
-        FuncionarioServiceApi service = new FuncionarioServiceApi();
+        FuncionarioAPI service = new FuncionarioAPI();
 
         public ResultService<Funcionario> Get(string cpf)
         {

@@ -1,21 +1,23 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using TCC_Unip.Contracts.API;
 using TCC_Unip.Models.Servico;
 
-namespace TCC_Unip.ServicesAPI
+namespace TCC_Unip.API
 {
-    public class FuncionarioServiceApi : Contracts.IServiceApiBase<Funcionario>
+    public class UsuarioAPI : IAPIBase<Usuario>
     {
-        readonly string tipoModel = "funcionario";
+        readonly string tipoModel = "usuario";
 
         #region Definições Url
 
         //Listar todos
         //GET BaseUrl 
 
-        //Listar id(cpf)
+        //Listar id(email)
         //GET BaseUrl + model/1
 
         //Apagar um
@@ -24,7 +26,7 @@ namespace TCC_Unip.ServicesAPI
         //Inserir um
         //POST BaseUrl + model
 
-        //Atualizar um por id(cpf)
+        //Atualizar um por id(email)
         //PUT BaseUrl + model/1
 
         #endregion
@@ -37,32 +39,32 @@ namespace TCC_Unip.ServicesAPI
             }
         }
 
-        public Funcionario Get(string cpf)
+        public Usuario Get(string email)
         {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, tipoModel, cpf);
+            string action = string.Format("{0}{1}/{2}", BaseUrl, tipoModel, email);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
             HttpResponseMessage response = Tools.HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
 
-            Funcionario model =
-               JsonConvert.DeserializeObject<Funcionario>(response.Content.ReadAsStringAsync().Result);
+            Usuario model =
+               JsonConvert.DeserializeObject<Usuario>(response.Content.ReadAsStringAsync().Result);
 
             return model;
         }
 
-        public List<Funcionario> List()
+        public List<Usuario> List()
         {
             string action = BaseUrl + tipoModel;
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
             HttpResponseMessage response = Tools.HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
 
-            List<Funcionario> listModel = 
-                JsonConvert.DeserializeObject<List<Funcionario>>(response.Content.ReadAsStringAsync().Result);
+            List<Usuario> listModel = 
+                JsonConvert.DeserializeObject<List<Usuario>>(response.Content.ReadAsStringAsync().Result);
 
             return listModel;
         }
 
-        public bool Save(Funcionario model)
+        public bool Save(Usuario model)
         {            
             var jsonModel = JsonConvert.SerializeObject(model);            
             var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
@@ -76,11 +78,11 @@ namespace TCC_Unip.ServicesAPI
             return false;
         }
 
-        public bool Update(Funcionario model)
+        public bool Update(Usuario model)
         {
             var jsonModel = JsonConvert.SerializeObject(model);
             var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}/{2}", BaseUrl, tipoModel, model.Cpf);
+            string action = string.Format("{0}{1}/{2}", BaseUrl, tipoModel, model.Email);
 
             HttpResponseMessage response = Tools.HttpInstance.GetHttpClientInstance().PutAsync(action, jsonContent).Result;
 
@@ -90,9 +92,9 @@ namespace TCC_Unip.ServicesAPI
             return false;
         }
 
-        public bool Delete(string cpf)
+        public bool Delete(string email)
         {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, tipoModel, cpf);
+            string action = string.Format("{0}{1}/{2}", BaseUrl, tipoModel, email);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, action);
             HttpResponseMessage response = Tools.HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
 
@@ -100,6 +102,31 @@ namespace TCC_Unip.ServicesAPI
                 return true;
 
             return false;
+        }
+
+        public Usuario Auth(Usuario model)
+        {
+            var tipoAcao = "auth";
+            var objAuth = new { email = model.Email, senha = model.Senha };
+            var jsonModel = JsonConvert.SerializeObject(objAuth);
+            var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
+
+            string action = string.Format("{0}{1}", BaseUrl, tipoModel + "/" + tipoAcao);
+            HttpResponseMessage response = Tools.HttpInstance.GetHttpClientInstance().PostAsync(action, jsonContent).Result;
+
+            model = new Usuario();
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {                
+                var jsonObject = (JObject)JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result);
+                var usuario = (JObject)(jsonObject.Property("usuario").Value);
+                var funcionario = (JObject)(jsonObject.Property("funcionario").Value);
+
+                model = usuario.ToObject<Usuario>();
+                model.Funcionario = funcionario.ToObject<Funcionario>();
+            }
+
+            return model;
         }
 
     }

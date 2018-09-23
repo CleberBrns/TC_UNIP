@@ -7,13 +7,14 @@ using System.Text;
 using System.Web;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
-using TCC_Unip.ServicesAPI;
+using TCC_Unip.API;
+using TCC_Unip.Contracts.Service;
 
 namespace TCC_Unip.Services
 {
-    public class PacienteService : Contracts.IServicePaciente
+    public class PacienteService : IServicePaciente
     {
-        PacienteServiceApi service = new PacienteServiceApi();
+        PacienteAPI service = new PacienteAPI();
 
         public ResultService<Paciente> Get(string cpf)
         {

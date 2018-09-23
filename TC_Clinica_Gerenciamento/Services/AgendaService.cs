@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
-using TCC_Unip.ServiceAPI;
+using TCC_Unip.API;
+using TCC_Unip.Contracts.Service;
 
 namespace TCC_Unip.Services
 {
-    public class AgendaService : Contracts.IServiceAgenda
+    public class AgendaService : IServiceAgenda
     {
-        AgendaServiceAPI service = new AgendaServiceAPI();
+        AgendaAPI service = new AgendaAPI();
 
         public ResultService<Agenda> Get(string id)
         {

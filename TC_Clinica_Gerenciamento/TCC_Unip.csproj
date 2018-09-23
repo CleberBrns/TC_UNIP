@@ -160,7 +160,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Contracts\Service\IServiceApiBase.cs" />
+    <Compile Include="Contracts\API\IApiBase.cs" />
     <Compile Include="Contracts\Service\IServicePaciente.cs" />
     <Compile Include="Models\Json\AgendaJS.cs" />
     <Compile Include="Models\Json\PessoaJS.cs" />
@@ -174,10 +174,10 @@
     <Compile Include="Models\Servico\Paciente.cs" />
     <Compile Include="Models\Servico\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceAPI\AgendaServiceAPI.cs" />
-    <Compile Include="ServiceAPI\UsuarioServiceAPI.cs" />
-    <Compile Include="ServiceAPI\FuncionarioServiceAPI.cs" />
-    <Compile Include="ServiceAPI\PacienteServiceAPI.cs" />
+    <Compile Include="API\AgendaAPI.cs" />
+    <Compile Include="API\UsuarioAPI.cs" />
+    <Compile Include="API\FuncionarioAPI.cs" />
+    <Compile Include="API\PacienteAPI.cs" />
     <Compile Include="Services\AgendaService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="Services\FuncionarioService.cs" />

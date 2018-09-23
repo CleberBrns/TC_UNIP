@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using TCC_Unip.Models.Local;
 
-namespace TCC_Unip.Contracts
+namespace TCC_Unip.Contracts.API
 {
-    public interface IServiceApiBase<TModel>
+    public interface IAPIBase<TModel>
     {
         TModel Get(string id);
         List<TModel> List();
