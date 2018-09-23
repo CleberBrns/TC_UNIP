@@ -34,7 +34,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
         public ActionResult ModalCadastrar()
         {
             ViewBag.ListPacientes = GetListPacientes();            
-            ViewBag.ListProfissionais = GetListFuncionarios();            
+            ViewBag.ListProfissionais = GetListProfissionais();            
             ViewBag.ListHorarios = GetListHorarios();
            
             return PartialView("_Gerenciar");
@@ -136,9 +136,9 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             return _pacienteService.List(true).value;
         }
 
-        private List<Models.Servico.Funcionario> GetListFuncionarios()
+        private List<Models.Servico.Funcionario> GetListProfissionais()
         {
-            return _funcionarioService.List(true).value;
+            return _funcionarioService.ListProfissionais(true).value;
         }
 
         private List<DataSelectControl> GetListModalidades()

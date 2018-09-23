@@ -5,6 +5,7 @@ using TCC_Unip.API;
 using TCC_Unip.Contracts.Service;
 using TCC_Unip.Session;
 using System;
+using System.Linq;
 
 namespace TCC_Unip.Services
 {
@@ -48,6 +49,34 @@ namespace TCC_Unip.Services
             }
             else
                 result.value = GetFromService();
+
+            return result;
+        }
+
+        public ResultService<List<Funcionario>> ListProfissionais(bool getFromSession)
+        {
+            var result = new ResultService<List<Funcionario>>();
+            var list = new List<Funcionario>();
+
+            if (getFromSession)
+            {                
+                var retornoSession = session.GetListFromSession(sessionName);
+                /*Verifica se existia dados na session e se a mesma era válida.
+                  Caso a mesma seja válida é passado para o retorno da pesquisa, mesmo que esteja vazia.
+                  Caso não esteja criada, a busca é feita no serviço.*/
+                if (retornoSession.Item2)
+                    list = retornoSession.Item1;
+                else
+                    list = GetFromService();
+            }
+            else
+                list = GetFromService();
+
+            /*Lista somente os Funcionários com Modalidades cadastradas, que são os Profissionais*/
+            if (list.Count > 0)            
+                list = list.Where(l => l.Modalidades.Length > 0).ToList();            
+
+            result.value = list;
 
             return result;
         }
