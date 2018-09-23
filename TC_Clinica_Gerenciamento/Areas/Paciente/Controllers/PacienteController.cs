@@ -22,6 +22,8 @@ namespace TCC_Unip.Areas.Paciente.Controllers
             if (!session.GetModelFromSession(sessionName).Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 

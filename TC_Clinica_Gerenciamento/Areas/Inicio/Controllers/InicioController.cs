@@ -13,6 +13,8 @@ namespace TCC_Unip.Areas.Inicio.Controllers
             if (!session.GetModelFromSession(sessionName).Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+
             return View();
         }
     }

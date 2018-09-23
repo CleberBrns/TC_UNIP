@@ -5,8 +5,7 @@
 @{
     var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
     var listModalidades = (IList<DataSelectControl>)ViewBag.ListModalidades;
-        var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as 
-               TCC_Unip.Models.Servico.Usuario;
+    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -131,9 +130,8 @@
             </div>
         </div>
     }
-}
 
-<script>
+    <script>
 
     var SPMaskBehavior = function (val) {
         return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
@@ -177,7 +175,7 @@
                             type: 'success',
                             confirmButtonColor: '#10386B',
                             allowOutsideClick: false
-                        }).then(function () {                            
+                        }).then(function () {
                             bootbox.hideAll();
                             funcoesIndexTabs.listaFuncionarios($(".abaFuncionarios"), false);
                         });
@@ -219,7 +217,7 @@
             var validaEndereco = $("#validaEndereco");
 
             var cep = $("#cep").val().trim();
-            var validaCep = $("#validaCep");           
+            var validaCep = $("#validaCep");
 
             var telefone = $("#telefone").val().trim();
             var validaTefone = $("#validaTefone");
@@ -260,4 +258,5 @@
 
     };
 
-</script>
+    </script>
+}

@@ -1,9 +1,5 @@
-﻿
-
-@using TCC_Unip.Models.Local;
-@{
-    var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as
-           TCC_Unip.Models.Servico.Usuario;
+﻿@{
+    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -25,9 +21,8 @@
             <span>Listagem Agenda</span>
         </div>
     </div>
-}
 
-<script>
+    <script>
 
     $("#btnNovaConsulta").on('click', function () {
         AgendaListagem.modalCadastrar();
@@ -53,4 +48,5 @@
 
     };
 
-</script>
+    </script>
+}

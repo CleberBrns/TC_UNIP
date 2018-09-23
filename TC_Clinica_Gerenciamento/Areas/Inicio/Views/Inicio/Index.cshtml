@@ -1,70 +1,72 @@
 ﻿@{
     ViewBag.Title = "Index";
+
+    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
 }
 
-<link href="~/Content/css/tabs.css" rel="stylesheet" />
+@if (user != null)
+{
+    <link href="~/Content/css/tabs.css" rel="stylesheet" />
 
-<div class="container" style="width: 80%">
-    <div class="row well">
-        <div style="padding: 2%">
-            <div class="divInputs">
-                <form>
-                    <ul id="tabs">
-                        <li>
-                            <a href="#" name="tabAgenda" class="abaAgenda" carregado="false">
-                                Agenda
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" name="tabPacientes" class="abaPacientes" carregado="false">
-                                Pacientes
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" name="tabFuncionarios" class="abaFuncionarios" carregado="false">
-                                Funcionários
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" name="tabCaixa" class="abaCaixa" carregado="false">
-                                Caixa
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" name="tabRecibos" class="abaRecibos" carregado="false">
-                                Recibos
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" name="tabUsuarios" class="abaUsuarios" carregado="false">
-                                Usuários
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div id="content">
-                        <div id="tabAgenda"></div>
-                        <div id="tabPacientes"></div>
-                        <div id="tabFuncionarios"></div>
-                        <div id="tabCaixa">Div Caixa</div>
-                        <div id="tabRecibos">Div Recibos</div>
-                        <div id="tabUsuarios"></div>
-                    </div>
-                </form>
+    <div class="container" style="width: 80%">
+        <div class="row well">
+            <div style="padding: 2%">
+                <div class="divInputs">
+                    <form>
+                        <ul id="tabs">
+                            <li>
+                                <a href="#" name="tabAgenda" class="abaAgenda" carregado="false">
+                                    Agenda
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" name="tabPacientes" class="abaPacientes" carregado="false">
+                                    Pacientes
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" name="tabFuncionarios" class="abaFuncionarios" carregado="false">
+                                    Funcionários
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" name="tabCaixa" class="abaCaixa" carregado="false">
+                                    Caixa
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" name="tabRecibos" class="abaRecibos" carregado="false">
+                                    Recibos
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" name="tabUsuarios" class="abaUsuarios" carregado="false">
+                                    Usuários
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="content">
+                            <div id="tabAgenda"></div>
+                            <div id="tabPacientes"></div>
+                            <div id="tabFuncionarios"></div>
+                            <div id="tabCaixa">Div Caixa</div>
+                            <div id="tabRecibos">Div Recibos</div>
+                            <div id="tabUsuarios"></div>
+                        </div>
+                    </form>
+                </div>
             </div>
-
         </div>
     </div>
-</div>
 
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Scripts/controllers/tabs.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/controllers/tabs.js"></script>
 
-<script>
+    <script>
 
     $(document).ready(function () {
         funcoesIndexTabs.listaAgenda($(".abaAgenda"), true);
-    });    
+    });
 
     $('#tabs a').click(function (e) {
         e.preventDefault();
@@ -74,24 +76,24 @@
     var funcoesIndexTabs = {
 
         carregaDivDaTab: function (object) {
-            
-            var carregado = $(object).attr("carregado"); 
+
+            var carregado = $(object).attr("carregado");
             var tabName = $(object).attr('name');
 
             if (tabName === 'tabPacientes') {
 
                 if (carregado === undefined || carregado === "false") {
-                    funcoesIndexTabs.listaPacientes(object, true);                    
+                    funcoesIndexTabs.listaPacientes(object, true);
                 }
             }
-            else if (tabName === 'tabFuncionarios') {                
+            else if (tabName === 'tabFuncionarios') {
                 if (carregado === undefined || carregado === "false") {
-                    funcoesIndexTabs.listaFuncionarios(object, true);                    
+                    funcoesIndexTabs.listaFuncionarios(object, true);
                 }
             }
             else if (tabName === 'tabUsuarios') {
                 if (carregado === undefined || carregado === "false") {
-                    funcoesIndexTabs.listaUsuarios(object, true);                    
+                    funcoesIndexTabs.listaUsuarios(object, true);
                 }
             }
             else if (tabName === 'tabAgenda') {
@@ -107,7 +109,7 @@
                 url: "@Url.Action("Listagem", "Paciente", new { area = "Paciente" })",
                 data: { getFromSession: getFromSession },
                 type: "GET",
-                success: function (result) {                    
+                success: function (result) {
 
                     if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
                         $('#tabPacientes').html(result);
@@ -132,12 +134,12 @@
         },
 
         listaFuncionarios: function (object, getFromSession) {
-                        
+
             $.ajax({
                 url: "@Url.Action("Listagem", "Funcionario", new { area = "Funcionario" })",
                 data: { getFromSession: getFromSession },
                 type: "GET",
-                success: function (result) {                  
+                success: function (result) {
 
                     if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
                         $('#tabFuncionarios').html(result);
@@ -161,14 +163,14 @@
             });
         },
 
-        listaUsuarios: function (object, getFromSession) {            
+        listaUsuarios: function (object, getFromSession) {
 
             $.ajax({
                 url: "@Url.Action("Listagem", "Usuario", new { area = "Usuario" })",
                 data: { getFromSession: getFromSession},
                 type: "GET",
                 success: function (result) {
-                    
+
                     if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
                         $('#tabUsuarios').html(result);
                         $(object).attr("carregado", "true");
@@ -191,14 +193,14 @@
             });
         },
 
-        listaAgenda: function (object, getFromSession) {            
+        listaAgenda: function (object, getFromSession) {
 
             $.ajax({
                 url: "@Url.Action("Listagem", "Agenda", new { area = "Agenda" })",
                 data: { getFromSession: getFromSession},
                 type: "GET",
                 success: function (result) {
-                    
+
                     if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
                         $('#tabAgenda').html(result);
                         $(object).attr("carregado", "true");
@@ -223,4 +225,5 @@
 
     };
 
-</script>
+    </script>
+}

@@ -4,8 +4,7 @@
 
 @{
     var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
-        var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as 
-               TCC_Unip.Models.Servico.Usuario;
+    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -54,7 +53,7 @@
                 <div class="form-group">
                     @Html.Label("Complemento", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="complemento" name="Endereco.Complemento" 
+                        <input type="text" class="form-control" id="complemento" name="Endereco.Complemento"
                                value="@Model.Endereco.Complemento" />
                         <span class="field-validation-valid text-danger" id="validaComplemento" data-valmsg-replace="true"></span>
                     </div>
@@ -101,9 +100,8 @@
             </div>
         </div>
     }
-}
 
-<script>
+    <script>
 
     var SPMaskBehavior = function (val) {
         return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
@@ -112,7 +110,8 @@
         onKeyPress: function (val, e, field, options) {
             field.mask(SPMaskBehavior.apply({}, arguments), options);
         }
-    };    
+    };
+
     $("#telefone").mask(SPMaskBehavior, spOptions);
 
     $("#cpf").mask("999.999.999-99");
@@ -137,9 +136,9 @@
                 type: "POST",
                 data: $('form').serialize(),
                 success: function (result) {
-                    
-                    var retorno = result.mensagensRetorno;                    
-                    
+
+                    var retorno = result.mensagensRetorno;
+
                     if (retorno.Status) {
                         swal({
                             title: '',
@@ -231,4 +230,5 @@
 
     };
 
-</script>
+    </script>
+}

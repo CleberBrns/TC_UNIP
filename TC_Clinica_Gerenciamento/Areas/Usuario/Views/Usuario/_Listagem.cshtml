@@ -1,10 +1,7 @@
 ﻿@model IList<TCC_Unip.Models.Servico.Usuario>
 
-@using TCC_Unip.Models.Local;
-
 @{
-        var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as 
-               TCC_Unip.Models.Servico.Usuario;
+    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
 }
 
 

@@ -1,17 +1,12 @@
 ﻿@model IList<TCC_Unip.Models.Servico.Paciente>
 
-@using TCC_Unip.Models.Local;
-
 @{
-        var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as 
-               TCC_Unip.Models.Servico.Usuario;
+    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
 }
-
 
 @if (user != null)
 {
     <div class="row">
-
         <div class="col-md-12">
             <div style="text-align: right">
                 <button type="button" class="btn btn-primary" id="btnNovoPaciente">
@@ -20,11 +15,9 @@
                 </button>
             </div>
         </div>
-
         <div class="col-md-12">
             <br />
         </div>
-
         <div class="col-md-12 col-sm-12" style="overflow-x:auto;">
             <table class="table table-striped" id="gridPaciente" carregado="false">
                 <thead>
@@ -52,7 +45,7 @@
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a class="btnExcluir" id-registro="@itemModel.Cpf" nome-registro="@itemModel.Nome" 
+                                <a class="btnExcluir" id-registro="@itemModel.Cpf" nome-registro="@itemModel.Nome"
                                    title="Excluir" onclick="pacienteListagem.excluir(this)" style="cursor: pointer;">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </a>
@@ -62,11 +55,9 @@
                 </tbody>
             </table>
         </div>
-
     </div>
-}
 
-<script>
+    <script>
 
     $("#gridPaciente").DataTable({
         language: {
@@ -155,7 +146,7 @@
                                     allowOutsideClick: false
                                 }).then(function () {
                                     bootbox.hideAll();
-                                    funcoesIndexTabs.listaPacientes($(".abaPacientes"), false);                                    
+                                    funcoesIndexTabs.listaPacientes($(".abaPacientes"), false);
                                 });
                             }
                             else {
@@ -168,7 +159,7 @@
                                     allowOutsideClick: false
                                 });
                                 console.log(retorno.MensagemAnalise);
-                            }   
+                            }
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             validacao.errorAjax(jqXHR, textStatus, errorThrown);
@@ -182,4 +173,5 @@
         }
     };
 
-</script>
+    </script>
+}

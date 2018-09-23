@@ -26,6 +26,8 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             if (!session.GetModelFromSession(sessionName).Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+
             return PartialView("_Listagem");
         }
 
