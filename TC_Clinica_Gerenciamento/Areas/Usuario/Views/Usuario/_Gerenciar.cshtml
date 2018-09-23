@@ -3,11 +3,11 @@
 @using TCC_Unip.Models.Local;
 
 @{
-      var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
-      var listPerfil = (IList<DataSelectControl>)ViewBag.ListPerfil;
-      var listFuncionarios = (IList<TCC_Unip.Models.Servico.Funcionario>)ViewBag.ListFuncionarios;
-      var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as
-                         TCC_Unip.Models.Servico.Usuario;
+    var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
+    var listPerfil = (IList<DataSelectControl>)ViewBag.ListPerfil;
+    var listFuncionarios = (IList<TCC_Unip.Models.Servico.Funcionario>)ViewBag.ListFuncionarios;
+    var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as
+                       TCC_Unip.Models.Servico.Usuario;
 }
 
 @if (user != null)
@@ -39,7 +39,7 @@
                                             if (Model.Cpf == item.Cpf)
                                             {
                                                 <option value="@item.Cpf" email="@item.Email"
-                                                        modalidade="@item.Modalidade.FirstOrDefault()"
+                                                        modalidade="@item.Modalidades.FirstOrDefault()"
                                                         selected="selected">
                                                     @item.Nome
                                                 </option>
@@ -47,7 +47,7 @@
                                             else
                                             {
                                                 <option value="@item.Cpf" email="@item.Email"
-                                                        modalidade="@item.Modalidade.FirstOrDefault()">
+                                                        modalidade="@item.Modalidades.FirstOrDefault()">
                                                     @item.Nome
                                                 </option>
                                             }
@@ -74,8 +74,17 @@
                         }
                         else
                         {
-                            <input type="text" class="form-control" id="cpf" name="Cpf"
-                                   disabled="disabled" value="@Model.Cpf" style="width: 40%" />
+                            if (user.Permissoes.FirstOrDefault().Equals(TCC_Unip.Constants.ConstPermissoes.profissional))
+                            {
+                                <input type="text" class="form-control" id="cpf" name="Cpf"
+                                       value="@Model.Cpf" style="width: 40%" />
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" id="cpf" name="Cpf"
+                                       disabled="disabled" value="@Model.Cpf" style="width: 40%" />
+                            }
+
                         }
                         <span class="field-validation-valid text-danger" id="validaCpf" data-valmsg-replace="true"></span>
                     </div>
