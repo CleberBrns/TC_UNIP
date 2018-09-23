@@ -1,21 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
 using TCC_Unip.Services;
+using TCC_Unip.Session;
 using TCC_Unip.Util;
 
 namespace TCC_Unip.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Login
+        readonly UsuarioService service = new UsuarioService();
+        readonly UsuarioSession session = new UsuarioSession();
+        readonly string sessionName = Constants.ConstSessions.usuario;
+
         public ActionResult Login()
-        {
-            if ((Usuario)Session[Constants.ConstSessions.usuario] != null)
+        {            
+            if (!session.GetModelFromSession(sessionName).Item2)
                 return RedirectToAction("Index", "Inicio");            
 
             return View();
@@ -45,7 +46,7 @@ namespace TCC_Unip.Controllers
                         resultService = _service.Auth(model);
 
                     if (resultService.status)
-                        Session[Constants.ConstSessions.usuario] = model;
+                        session.AddModelToSession(model, sessionName);                        
 
                     msgExibicao = resultService.message;
                     msgAnalise = resultService.errorMessage;
@@ -69,9 +70,8 @@ namespace TCC_Unip.Controllers
 
         public ActionResult Logout()
         {
-            if ((Usuario)Session[Constants.ConstSessions.usuario] != null)
-                Session[Constants.ConstSessions.usuario] = null;
-
+            //Remove todas as sessões criadas
+            Session.RemoveAll();
             return RedirectToAction("Index", "Home");
         }
     }

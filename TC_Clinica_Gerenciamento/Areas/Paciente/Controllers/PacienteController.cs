@@ -4,18 +4,22 @@ using System.Linq;
 using System.Web.Mvc;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Services;
+using TCC_Unip.Session;
 using TCC_Unip.Util;
 
 namespace TCC_Unip.Areas.Paciente.Controllers
 {
     public class PacienteController : Controller
     {
-        Mensagens mensagens = new Mensagens();
-        PacienteService _service = new PacienteService();
-        
+        readonly Mensagens mensagens = new Mensagens();
+        readonly PacienteService _service = new PacienteService();
+
+        readonly UsuarioSession session = new UsuarioSession();
+        readonly string sessionName = Constants.ConstSessions.usuario;
+
         public ActionResult Listagem(bool getFromSession)
         {
-            if ((Models.Servico.Usuario)Session[Constants.ConstSessions.usuario] == null)
+            if (!session.GetModelFromSession(sessionName).Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
             string msgExibicao = string.Empty;

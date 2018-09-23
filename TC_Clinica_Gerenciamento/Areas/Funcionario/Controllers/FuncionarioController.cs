@@ -4,18 +4,22 @@ using System.Linq;
 using System.Web.Mvc;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Services;
+using TCC_Unip.Session;
 using TCC_Unip.Util;
 
 namespace TCC_Unip.Areas.Funcionario.Controllers
 {
     public class FuncionarioController : Controller
     {
-        Mensagens mensagens = new Mensagens();
-        FuncionarioService _service = new FuncionarioService();
+        readonly Mensagens mensagens = new Mensagens();
+        readonly FuncionarioService _service = new FuncionarioService();
+
+        readonly UsuarioSession session = new UsuarioSession();
+        readonly string sessionName = Constants.ConstSessions.usuario;
 
         public ActionResult Listagem(bool getFromSession)
         {
-            if ((Models.Servico.Usuario)Session[Constants.ConstSessions.usuario] == null)
+            if (!session.GetModelFromSession(sessionName).Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
             string msgExibicao = string.Empty;

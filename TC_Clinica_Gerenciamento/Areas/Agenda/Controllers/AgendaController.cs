@@ -5,21 +5,25 @@ using System.Web.Mvc;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
 using TCC_Unip.Services;
+using TCC_Unip.Session;
 using TCC_Unip.Util;
 
 namespace TCC_Unip.Areas.Agenda.Controllers
 {
     public class AgendaController : Controller
     {
-        Constants.Constants constants = new Constants.Constants();
-        Mensagens mensagens = new Mensagens();
-        AgendaService _agendaService = new AgendaService();
-        PacienteService _pacienteService = new PacienteService();
-        FuncionarioService _funcionarioService = new FuncionarioService();
+        readonly Constants.Constants constants = new Constants.Constants();
+        readonly Mensagens mensagens = new Mensagens();
+        readonly AgendaService _agendaService = new AgendaService();
+        readonly PacienteService _pacienteService = new PacienteService();
+        readonly FuncionarioService _funcionarioService = new FuncionarioService();
+
+        readonly UsuarioSession session = new UsuarioSession();
+        readonly string sessionName = Constants.ConstSessions.usuario;
 
         public ActionResult Listagem(bool getFromSession)
         {
-            if ((Models.Servico.Usuario)Session[Constants.ConstSessions.usuario] == null)
+            if (!session.GetModelFromSession(sessionName).Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
             return PartialView("_Listagem");
