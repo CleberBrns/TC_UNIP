@@ -16,7 +16,7 @@ namespace TCC_Unip.Controllers
 
         public ActionResult Login()
         {            
-            if (!session.GetModelFromSession(sessionName).Item2)
+            if (session.GetModelFromSession(sessionName).Item2)
                 return RedirectToAction("Index", "Inicio");            
 
             return View();

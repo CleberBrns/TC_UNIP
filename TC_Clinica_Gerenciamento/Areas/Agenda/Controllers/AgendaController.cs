@@ -28,7 +28,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
             ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
 
-            return PartialView("_Listagem");
+            return PartialView("_Index");
         }
 
         public ActionResult ModalCadastrar()

@@ -502,7 +502,7 @@
     <Content Include="Areas\Usuario\Views\Web.config" />
     <Content Include="Areas\Usuario\Views\Usuario\_Gerenciar.cshtml" />
     <Content Include="Areas\Agenda\Views\Web.config" />
-    <Content Include="Areas\Agenda\Views\Agenda\_Listagem.cshtml" />
+    <Content Include="Areas\Agenda\Views\Agenda\_Index.cshtml" />
     <Content Include="Areas\Agenda\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Agenda\Views\Agenda\_Gerenciar.cshtml" />
     <Content Include="Areas\Agenda\Views\Agenda\_Calendario.cshtml" />
