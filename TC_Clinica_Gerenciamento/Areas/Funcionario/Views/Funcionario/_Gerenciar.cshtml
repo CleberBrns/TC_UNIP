@@ -26,7 +26,23 @@
                 <div class="form-group">
                     @Html.Label("CPF", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="cpf" name="Cpf" value="@Model.Cpf" style="width: 40%" />
+                        @if (string.IsNullOrEmpty(Model.Cpf))
+                        {
+                            <input type="text" class="form-control" id="cpf" name="Cpf" value="@Model.Cpf" style="width: 40%" />
+                        }
+                        else
+                        {
+                            if (user.Permissoes.FirstOrDefault().Equals(TCC_Unip.Constants.ConstPermissoes.profissional))
+                            {
+                                <input type="text" class="form-control" id="cpf" name="Cpf"
+                                       value="@Model.Cpf" style="width: 40%" />
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" id="cpf" name="Cpf"
+                                       disabled="disabled" value="@Model.Cpf" style="width: 40%" />
+                            }
+                        }
                         <span class="field-validation-valid text-danger" id="validaCpf" data-valmsg-replace="true"></span>
                     </div>
                 </div>
