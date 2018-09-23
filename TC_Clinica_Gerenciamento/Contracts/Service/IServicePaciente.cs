@@ -7,7 +7,7 @@ namespace TCC_Unip.Contracts.Service
     public interface IServicePaciente
     {
         ResultService<Paciente> Get(string cpf);
-        ResultService<List<Paciente>> List();
+        ResultService<List<Paciente>> List(bool getFromSession);
         ResultService<bool> Save(Paciente model);        
         ResultService<bool> Delete(string cpf);
     }

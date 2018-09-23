@@ -127,12 +127,12 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         private List<Models.Servico.Paciente> GetListPacientes()
         {
-            return _pacienteService.List().value;
+            return _pacienteService.List(true).value;
         }
 
         private List<Models.Servico.Funcionario> GetListFuncionarios()
         {
-            return _funcionarioService.List().value;
+            return _funcionarioService.List(true).value;
         }
 
         private List<DataSelectControl> GetListModalidades()

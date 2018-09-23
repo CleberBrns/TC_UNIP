@@ -23,33 +23,16 @@ namespace TCC_Unip.Areas.Paciente.Controllers
 
             try
             {
-                var list = new List<Models.Servico.Paciente>();
-                var resultService = new ResultService<List<Models.Servico.Paciente>>();
+                var list = new List<Models.Servico.Paciente>();               
 
-                if (getFromSession)
-                {
-                    var retornoSession = GetListFromSession();
-
-                    if (retornoSession.Item2)
-                        list = retornoSession.Item1;
-                    else
-                        resultService = GetListFromService();
-                }
-                else
-                    resultService = GetListFromService();
+                var resultService = _service.List(getFromSession);
+                list = resultService.value;               
 
                 msgExibicao = resultService.message;
-                msgAnalise = resultService.errorMessage;
-
-                if (list.Count <= 0)
-                    list = resultService.value;
-
-                Session[Constants.ConstSessions.listPacientes] = list;
+                msgAnalise = resultService.errorMessage;               
 
                 list = ConfiguraListaExibicao(list);
-
                 return PartialView("_Listagem", list);
-
             }
             catch (Exception ex)
             {
@@ -80,22 +63,16 @@ namespace TCC_Unip.Areas.Paciente.Controllers
             {
                 ViewBag.ListStatus = GetListStatus();
 
-                var paciente = GetFromSession(id);
+                var resultService = _service.Get(id);
 
-                if (paciente != null)
-                    return PartialView("_Gerenciar", paciente);
+                if (resultService.status)
+                    return PartialView("_Gerenciar", resultService.value);
                 else
                 {
-                    var resultService = _service.Get(id);
+                    msgExibicao = resultService.message;
+                    msgAnalise = "Erro!";
+                }
 
-                    if (resultService.status)
-                        return PartialView("_Gerenciar", resultService.value);
-                    else
-                    {
-                        msgExibicao = resultService.message;
-                        msgAnalise = "Erro!";
-                    }
-                }                         
             }
             catch (Exception ex)
             {
@@ -155,40 +132,6 @@ namespace TCC_Unip.Areas.Paciente.Controllers
         }
 
         #region Métodos Privados
-
-        private Models.Servico.Paciente GetFromSession(string id)
-        {
-            var listSession = GetListFromSession().Item1;
-
-            if (listSession.Count > 0)
-                return listSession.Where(l => l.Cpf == id).FirstOrDefault();
-
-            return null;
-        }
-
-        private Tuple<List<Models.Servico.Paciente>, bool> GetListFromSession()
-        {
-            var list = new List<Models.Servico.Paciente>();
-            var sessaoValida = false;
-
-            if ((List<Models.Servico.Paciente>)Session[Constants.ConstSessions.listPacientes] != null)
-            {
-                list = (List<Models.Servico.Paciente>)Session[Constants.ConstSessions.listPacientes];
-                sessaoValida = true;
-            }
-
-            return new Tuple<List<Models.Servico.Paciente>, bool>(list, sessaoValida);
-        }
-
-        private ResultService<List<Models.Servico.Paciente>> GetListFromService()
-        {
-            var resultService = _service.List();
-
-            if (!resultService.status)
-                resultService.errorMessage = "Erro!";
-
-            return resultService;
-        }
 
         private List<Models.Servico.Paciente> ConfiguraListaExibicao(List<Models.Servico.Paciente> list)
         {            

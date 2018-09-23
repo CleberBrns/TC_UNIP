@@ -25,17 +25,14 @@ namespace TCC_Unip.Areas.Usuario.Controllers
 
             try
             {
-                var list = new List<Models.Servico.Usuario>();
-                var resultService = new ResultService<List<Models.Servico.Usuario>>();
+                var list = new List<Models.Servico.Usuario>();               
 
-                resultService = _service.List(getFromSession);
-                if (!resultService.status)
-                    resultService.errorMessage = "Erro!";
+                var resultService = _service.List(getFromSession);
+                list = resultService.value;
 
                 msgExibicao = resultService.message;
-                msgAnalise = resultService.errorMessage;
-                
-                list = resultService.value;
+                msgAnalise = resultService.errorMessage;                
+               
                 list = ConfiguraListaExibicao(list);
 
                 return PartialView("_Listagem", list);
@@ -190,7 +187,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
         private List<Models.Servico.Funcionario> GetListFuncionarios()
         {
             var listExibicao =
-                _serviceFuncionario.List().value.Select(l => new Models.Servico.Funcionario
+                _serviceFuncionario.List(true).value.Select(l => new Models.Servico.Funcionario
                 {
                     Nome = l.Nome,
                     Email = l.Email,

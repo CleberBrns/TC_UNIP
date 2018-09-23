@@ -4,12 +4,16 @@ using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
 using TCC_Unip.API;
 using TCC_Unip.Contracts.Service;
+using TCC_Unip.Session;
 
 namespace TCC_Unip.Services
 {
     public class AgendaService : IServiceAgenda
     {
-        AgendaAPI service = new AgendaAPI();
+        readonly AgendaAPI service = new AgendaAPI();
+        readonly AgendaSession session = new AgendaSession();
+        readonly string sessionAgenda = Constants.ConstSessions.listAgenda;
+        readonly string sessionConsultas = Constants.ConstSessions.listConsultas;
 
         public ResultService<Agenda> Get(string id)
         {

@@ -7,7 +7,7 @@ namespace TCC_Unip.Contracts.Service
     public interface IServiceFuncionario
     {
         ResultService<Funcionario> Get(string cpf);
-        ResultService<List<Funcionario>> List();
+        ResultService<List<Funcionario>> List(bool getFromSession);
         ResultService<bool> Save(Funcionario model);        
         ResultService<bool> Delete(string cpf);
     }

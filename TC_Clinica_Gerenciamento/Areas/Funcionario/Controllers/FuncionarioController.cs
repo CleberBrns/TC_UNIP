@@ -24,32 +24,16 @@ namespace TCC_Unip.Areas.Funcionario.Controllers
             try
             {
                 var list = new List<Models.Servico.Funcionario>();
-                var resultService = new ResultService<List<Models.Servico.Funcionario>>();
 
-                if (getFromSession)
-                {
-                    var retornoSession = GetListFromSession();
-
-                    if (retornoSession.Item2)
-                        list = retornoSession.Item1;
-                    else
-                        resultService = GetListFromService();
-                }
-                else
-                    resultService = GetListFromService();
+                var resultService = _service.List(getFromSession);
+                list = resultService.value;
 
                 msgExibicao = resultService.message;
                 msgAnalise = resultService.errorMessage;
 
-                if (list.Count <= 0)
-                    list = resultService.value;
-
-                Session[Constants.ConstSessions.listFuncionarios] = list;
-
                 list = ConfiguraListaExibicao(list);
 
                 return PartialView("_Listagem", list);
-
             }
             catch (Exception ex)
             {
@@ -82,22 +66,16 @@ namespace TCC_Unip.Areas.Funcionario.Controllers
                 ViewBag.ListStatus = GetListStatus();
                 ViewBag.ListModalidades = GetListModalidades();
 
-                var funcionario = GetFromSession(id);
+                var resultService = _service.Get(id);
 
-                if (funcionario != null)                
-                    return PartialView("_Gerenciar", funcionario);                
+                if (resultService.status)
+                    return PartialView("_Gerenciar", resultService.value);
                 else
                 {
-                    var resultService = _service.Get(id);
-
-                    if (resultService.status)
-                        return PartialView("_Gerenciar", resultService.value);
-                    else
-                    {
-                        msgExibicao = resultService.message;
-                        msgAnalise = "Erro!";
-                    }
+                    msgExibicao = resultService.message;
+                    msgAnalise = "Erro!";
                 }
+
             }
             catch (Exception ex)
             {
@@ -157,40 +135,6 @@ namespace TCC_Unip.Areas.Funcionario.Controllers
         }
 
         #region Métodos Privados
-
-        private Models.Servico.Funcionario GetFromSession(string id)
-        {
-            var listSession = GetListFromSession().Item1;
-
-            if (listSession.Count > 0)
-                return listSession.Where(l => l.Cpf == id).FirstOrDefault();
-
-            return null;
-        }
-
-        private Tuple<List<Models.Servico.Funcionario>, bool> GetListFromSession()
-        {
-            var list = new List<Models.Servico.Funcionario>();
-            var sessaoValida = false;
-
-            if ((List<Models.Servico.Funcionario>)Session[Constants.ConstSessions.listFuncionarios] != null)
-            {
-                list = (List<Models.Servico.Funcionario>)Session[Constants.ConstSessions.listFuncionarios];
-                sessaoValida = true;
-            }
-
-            return new Tuple<List<Models.Servico.Funcionario>, bool>(list, sessaoValida);
-        }
-
-        private ResultService<List<Models.Servico.Funcionario>> GetListFromService()
-        {
-            var resultService = _service.List();
-
-            if (!resultService.status)
-                resultService.errorMessage = "Erro!";
-
-            return resultService;
-        }
 
         private List<Models.Servico.Funcionario> ConfiguraListaExibicao(List<Models.Servico.Funcionario> list)
         {

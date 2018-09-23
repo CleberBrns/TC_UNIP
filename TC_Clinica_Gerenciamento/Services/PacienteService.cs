@@ -1,27 +1,29 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Web;
+﻿using System.Collections.Generic;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
 using TCC_Unip.API;
 using TCC_Unip.Contracts.Service;
+using TCC_Unip.Session;
+using System;
 
 namespace TCC_Unip.Services
 {
     public class PacienteService : IServicePaciente
     {
-        PacienteAPI service = new PacienteAPI();
+        readonly PacienteAPI service = new PacienteAPI();
+        readonly PacienteSession session = new PacienteSession();
+        readonly string sessionName = Constants.ConstSessions.listPacientes;
 
         public ResultService<Paciente> Get(string cpf)
         {
             var result = new ResultService<Paciente>();
 
-            var retorno = service.Get(cpf);
-            result.value = retorno;
+            var retornoSession = session.GetFromListSession(cpf, sessionName);
+
+            if (retornoSession.Item2 && !string.IsNullOrEmpty(retornoSession.Item1.Cpf))
+                result.value = retornoSession.Item1;
+            else
+                result.value = service.Get(cpf);
 
             if (string.IsNullOrEmpty(result.value.Cpf))
                 result.message = "O paciente não existe mais na base de dados do serviço!";
@@ -29,12 +31,23 @@ namespace TCC_Unip.Services
             return result;
         }
 
-        public ResultService<List<Paciente>> List()
+        public ResultService<List<Paciente>> List(bool getFromSession)
         {
             var result = new ResultService<List<Paciente>>();
 
-            var retorno = service.List();
-            result.value = retorno;
+            if (getFromSession)
+            {
+                var retornoSession = session.GetListFromSession(sessionName);
+                /*Verifica se existia dados na session e se a mesma era válida.
+                  Caso a mesma seja válida é passado para o retorno da pesquisa, mesmo que esteja vazia.
+                  Caso não esteja criada, a busca é feita no serviço.*/
+                if (retornoSession.Item2)
+                    result.value = retornoSession.Item1;
+                else
+                    result.value = GetFromService();
+            }
+            else                
+                result.value = GetFromService();            
 
             return result;
         }
@@ -45,7 +58,6 @@ namespace TCC_Unip.Services
             string msgErro = string.Empty;
 
             var result = new ResultService<bool>();
-
             var registroExistente = service.Get(model.Cpf);
 
             if (string.IsNullOrEmpty(registroExistente.Nome))
@@ -73,8 +85,7 @@ namespace TCC_Unip.Services
             result.errorMessage = msgErro;
 
             return result;
-        }
-        
+        }       
 
         public ResultService<bool> Delete(string cpf)
         {
@@ -91,5 +102,15 @@ namespace TCC_Unip.Services
             return result;
         }
 
+        #region Métodos Privados
+
+        private List<Paciente> GetFromService()
+        {
+            var list = service.List();
+            session.AddListToSession(list, sessionName);
+            return list;
+        }
+
+        #endregion
     }
 }

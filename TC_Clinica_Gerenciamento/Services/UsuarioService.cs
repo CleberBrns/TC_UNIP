@@ -45,20 +45,10 @@ namespace TCC_Unip.Services
                 else
                     result.value = GetFromService();                    
             }
-            else
-            {
-                var retorno = service.List();
-                result.value = retorno;               
-            }           
+            else  
+                result.value = GetFromService();                     
 
             return result;
-        }
-
-        private List<Usuario> GetFromService()
-        {
-            var list = service.List();
-            session.AddListToSession(list, sessionName);
-            return list;
         }
 
         public ResultService<bool> Save(Usuario model)
@@ -117,5 +107,16 @@ namespace TCC_Unip.Services
 
             return result;
         }
+
+        #region Métodos Privados
+
+        private List<Usuario> GetFromService()
+        {
+            var list = service.List();
+            session.AddListToSession(list, sessionName);
+            return list;
+        }
+
+        #endregion
     }
 }
