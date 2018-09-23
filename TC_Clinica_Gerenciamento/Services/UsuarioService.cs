@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
 using TCC_Unip.ServicesAPI;
+using TCC_Unip.Session;
 
 namespace TCC_Unip.Services
 {
     public class UsuarioService : Contracts.IServiceUsuario
     {
-        UsuarioServiceApi service = new UsuarioServiceApi();
+        readonly UsuarioServiceApi service = new UsuarioServiceApi();
+        readonly UsuarioSession session = new UsuarioSession();
+        readonly string sessionName = Constants.ConstSessions.listUsuarios;
 
         public ResultService<Usuario> Get(string email)
         {
             var result = new ResultService<Usuario>();
 
-            var retornoSession = GetFromSession(email);
+            var retornoSession = session.GetFromListSession(email, sessionName);
 
             if (retornoSession.Item2 && !string.IsNullOrEmpty(retornoSession.Item1.Email))
                 result.value = retornoSession.Item1;
@@ -35,7 +35,7 @@ namespace TCC_Unip.Services
 
             if (getFromSession)
             {
-                var retornoSession = GetListFromSession();
+                var retornoSession = session.GetListFromSession(sessionName);
                 /*Verifica se existia dados na session e se a mesma era válida.
                   Caso a mesma seja válida é passado para o retorno da pesquisa, mesmo que esteja vazia.
                   Caso não esteja criada, a busca é feita no serviço.*/
@@ -56,7 +56,7 @@ namespace TCC_Unip.Services
         private List<Usuario> GetFromService()
         {
             var list = service.List();
-            AddListToSession(list);
+            session.AddListToSession(list, sessionName);
             return list;
         }
 
@@ -66,7 +66,15 @@ namespace TCC_Unip.Services
 
             var registroExistente = service.Get(model.Email);
             if (string.IsNullOrEmpty(registroExistente.Email))
-                result = SalvaUsuario(model);
+            {
+                var retorno = service.Save(model);
+                result.value = retorno;
+
+                if (result.value)
+                    result.message = "Usuário salvo com sucesso!";
+                else
+                    result.errorMessage = "Falha ao salvar o Usuário!";
+            }
             else
             {
                 var retorno = service.Update(model);
@@ -108,59 +116,5 @@ namespace TCC_Unip.Services
 
             return result;
         }
-
-        #region Métodos Privados
-
-        private Tuple<Usuario, bool> GetFromSession(string email)
-        {
-            var sessionValida = false;
-            var model = new Usuario();
-
-            var retornolistFromSession = GetListFromSession();
-
-            if (retornolistFromSession.Item2 && retornolistFromSession.Item1.Count > 0)
-            {
-                sessionValida = true;
-                model = retornolistFromSession.Item1.Where(l => l.Email.Equals(email)).FirstOrDefault();
-            }
-
-            return new Tuple<Usuario, bool>(model, sessionValida);
-        }
-
-        private void AddListToSession(List<Usuario> list)
-        {
-            HttpContext.Current.Session[Constants.ConstSessions.listUsuarios] = list;
-        }
-
-        private Tuple<List<Usuario>, bool> GetListFromSession()
-        {
-            var sessionaValida = false;
-            var list = new List<Usuario>();
-
-            if ((List<Usuario>)HttpContext.Current.Session[Constants.ConstSessions.listUsuarios] != null)
-            {
-                sessionaValida = true;
-                list = (List<Usuario>)HttpContext.Current.Session[Constants.ConstSessions.listUsuarios];
-            }
-
-            return new Tuple<List<Usuario>, bool>(list, sessionaValida);
-        }
-
-        private ResultService<bool> SalvaUsuario(Usuario model)
-        {
-            var result = new ResultService<bool>();
-            var retorno = service.Save(model);
-            result.value = retorno;
-
-            if (result.value)
-                result.message = "Usuário salvo com sucesso!";
-            else
-                result.errorMessage = "Falha ao salvar o Usuário!";
-
-            return result;
-        }
-
-        #endregion
-
     }
 }

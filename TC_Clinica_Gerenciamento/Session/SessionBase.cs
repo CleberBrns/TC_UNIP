@@ -3,57 +3,52 @@ using System.Collections.Generic;
 using System.Web;
 using TCC_Unip.Contracts;
 
-namespace TCC_Unip.Session
+namespace TCC_Unip.SessionBase
 {
     public class SessionBase<TModel> : ISessionBase<TModel>
         where TModel : class, new()
     {
-        public void AddModelToSession(TModel model, string session)
+        public void AddModelToSession(TModel model, string sessionName)
         {
-            HttpContext.Current.Session[session] = model;
+            HttpContext.Current.Session[sessionName] = model;
         }
 
-        public void AddListToSession(List<TModel> list, string session)
+        public void AddListToSession(List<TModel> list, string sessionName)
         {
-            HttpContext.Current.Session[session] = list;
+            HttpContext.Current.Session[sessionName] = list;
         }
 
-        public Tuple<TModel, bool> GetModelFromSession(string session)
+        public Tuple<TModel, bool> GetModelFromSession(string sessionName)
         {
-            var sessionaValida = false;
+            var sessionNameaValida = false;
             var model = new TModel();
 
-            if ((TModel)HttpContext.Current.Session[session] != null)
+            if ((TModel)HttpContext.Current.Session[sessionName] != null)
             {
-                sessionaValida = true;
-                model = (TModel)HttpContext.Current.Session[session];
+                sessionNameaValida = true;
+                model = (TModel)HttpContext.Current.Session[sessionName];
             }
 
-            return new Tuple<TModel, bool>(model, sessionaValida);
+            return new Tuple<TModel, bool>(model, sessionNameaValida);
         }
 
-        public Tuple<List<TModel>, bool> GetListFromSession(string session)
+        public Tuple<List<TModel>, bool> GetListFromSession(string sessionName)
         {
-            var sessionaValida = false;
+            var sessionNameaValida = false;
             var list = new List<TModel>();
 
-            if ((List<TModel>)HttpContext.Current.Session[session] != null)
+            if ((List<TModel>)HttpContext.Current.Session[sessionName] != null)
             {
-                sessionaValida = true;
-                list = (List<TModel>)HttpContext.Current.Session[session];
+                sessionNameaValida = true;
+                list = (List<TModel>)HttpContext.Current.Session[sessionName];
             }
 
-            return new Tuple<List<TModel>, bool>(list, sessionaValida);
+            return new Tuple<List<TModel>, bool>(list, sessionNameaValida);
         }
 
-        public void RemoveFromSession(string session)
+        public void RemoveFromSession(string sessionName)
         {
-            HttpContext.Current.Session.Remove(session);
-        }
-
-        public void RemoveAllSessions()
-        {
-            HttpContext.Current.Session.RemoveAll();
+            HttpContext.Current.Session.Remove(sessionName);
         }
     }
 }

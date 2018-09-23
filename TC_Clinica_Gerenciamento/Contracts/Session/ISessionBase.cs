@@ -5,11 +5,10 @@ namespace TCC_Unip.Contracts
 {
     public interface ISessionBase<TModel>
     {
-        Tuple<TModel, bool> GetModelFromSession(string session);
-        Tuple<List<TModel>, bool> GetListFromSession(string session);
-        void AddModelToSession(TModel model, string session);
-        void AddListToSession(List<TModel> list, string session);
-        void RemoveFromSession(string session);
-        void RemoveAllSessions();
+        Tuple<TModel, bool> GetModelFromSession(string sessionName);
+        Tuple<List<TModel>, bool> GetListFromSession(string sessionName);
+        void AddModelToSession(TModel model, string sessionName);
+        void AddListToSession(List<TModel> list, string sessionName);
+        void RemoveFromSession(string sessionName);        
     }
 }
