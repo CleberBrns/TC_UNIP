@@ -4,6 +4,8 @@
 
 @if (user != null)
 {
+    <link href="~/Content/css/tabs.css" rel="stylesheet" />
+
     <div class="row">
         <div class="col-md-12">
             <div style="text-align: right">
@@ -17,24 +19,64 @@
             <span>Opções Pesquisa</span>
             <br />
         </div>
-        <div class="col-md-12 col-sm-12" style="overflow-x:auto;">
-            <span>Listagem Agenda</span>
+        <div class="col-md-12 col-sm-12" style="padding-top: 2%">
+            <div>
+                <form>
+                    <ul id="abasAgenda">
+                        <li>
+                            <a href="#" name="abaCalendario" class="abaCalendario" carregado="false">
+                                Calendário
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" name="abaGridConsultas" class="abaGridConsultas" carregado="false">
+                                Listagem
+                            </a>
+                        </li>
+                    </ul>
+                    <div id="conteudoAgenda" class="conteudoAgenda">
+                        <div id="abaCalendario">Div Calendário</div>
+                        <div id="abaGridConsultas">Div Listagem</div>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
+    </div>    
 
     <script>
 
+        $(document).ready(function () {
+            $("#conteudo").find("[id^='aba']").hide(); // Hide all conteudo
+            $("#abas li:first").attr("id", "current"); // Activate the first aba
+            $("#conteudo #abaAgenda").fadeIn(); // Show first aba's conteudo
+
+            $('#abas a').click(function (e) {
+                e.preventDefault();
+
+                if ($(this).closest("li").attr("id") === "current") { //detection for current aba
+                    return;
+                }
+                else {
+
+                    $("#conteudo").find("[id^='aba']").hide(); // Hide all conteudo
+                    $("#abas li").attr("id", ""); //Reset id's
+                    $(this).parent().attr("id", "current"); // Activate this
+                    $('#' + $(this).attr('name')).fadeIn(); // Show conteudo for the current aba
+                }
+            });
+        });
+
     $("#btnNovaConsulta").on('click', function () {
-        AgendaListagem.modalCadastrar();
+        agendaListagem.modalCadastrar();
     });
 
-    var AgendaListagem = {
+    var agendaListagem = {
 
         modalCadastrar: function () {
             $.ajax({
                 url: "@Url.Action("ModalCadastrar", "Agenda")",
                 type: "GET",
-                success: function (html) {                    
+                success: function (html) {
                     bootbox.dialog({
                         title: "Cadastrar Consulta",
                         message: html
