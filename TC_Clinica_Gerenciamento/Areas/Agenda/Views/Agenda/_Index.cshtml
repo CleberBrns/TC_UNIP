@@ -3,8 +3,8 @@
 }
 
 @if (user != null)
-{
-    <link href="~/Content/css/tabs.css" rel="stylesheet" />
+{    
+    <link href="~/Content/css/tabsAgenda.css" rel="stylesheet" />
 
     <div class="row">
         <div class="col-md-12">
@@ -22,7 +22,7 @@
         <div class="col-md-12 col-sm-12" style="padding-top: 2%">
             <div>
                 <form>
-                    <ul id="abasAgenda">
+                    <ul id="abas">
                         <li>
                             <a href="#" name="abaCalendario" class="abaCalendario" carregado="false">
                                 Calendário
@@ -34,7 +34,7 @@
                             </a>
                         </li>
                     </ul>
-                    <div id="conteudoAgenda" class="conteudoAgenda">
+                    <div id="conteudo">
                         <div id="abaCalendario">Div Calendário</div>
                         <div id="abaGridConsultas">Div Listagem</div>
                     </div>
@@ -48,7 +48,7 @@
         $(document).ready(function () {
             $("#conteudo").find("[id^='aba']").hide(); // Hide all conteudo
             $("#abas li:first").attr("id", "current"); // Activate the first aba
-            $("#conteudo #abaAgenda").fadeIn(); // Show first aba's conteudo
+            $("#conteudo #abaCalendario").fadeIn(); // Show first aba's conteudo
 
             $('#abas a').click(function (e) {
                 e.preventDefault();

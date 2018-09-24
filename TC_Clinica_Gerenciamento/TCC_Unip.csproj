@@ -204,7 +204,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\styleImportant.css" />
-    <Content Include="Content\css\tabs.css" />
+    <Content Include="Content\css\tabsAgenda.css" />
+    <Content Include="Content\css\tabsInicio.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.min.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap4.css" />
