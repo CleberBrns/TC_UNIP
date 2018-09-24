@@ -63,7 +63,7 @@ namespace TCC_Unip.API
 
         public List<Agenda> ListAgendasPeriodo(string dateFrom, string dateTo)
         {
-            var parametros = string.Format("{0}", dateFrom + "/" + dateTo);
+            var parametros = string.Format("{0}", "from/" + dateFrom + "/to/" + dateTo);
             string action = string.Format("{0}{1}", BaseUrl, agenda + "/" + parametros);
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
@@ -79,7 +79,7 @@ namespace TCC_Unip.API
         public Paciente ConsultasPeriodoPaciente(string cpf, string dateFrom, string dateTo)
         {
             //https://clinica-unip.herokuapp.com/clinica/agenda/paciente/88888888888/from/12/09/2018/to/15/09/2018
-            var parametros = "/" + cpf + "/" + dateFrom + "/" + dateTo;
+            var parametros = "/" + cpf + "/from/" + dateFrom + "/to/" + dateTo;
             string action = string.Format("{0}{1}{2}", BaseUrl, agendaPaciente, parametros);
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
@@ -95,7 +95,7 @@ namespace TCC_Unip.API
         public Funcionario ConsultasPeriodoFuncionario(string cpf, string dateFrom, string dateTo)
         {
             //https://clinica-unip.herokuapp.com/clinica/agenda/funcionario/88888888888/from/12/09/2018/to/15/09/2018
-            var parametros = "/" + cpf + "/" + dateFrom + "/" + dateTo;
+            var parametros = "/" + cpf + "/from/" + dateFrom + "/to/" + dateTo;
             string action = string.Format("{0}{1}{2}", BaseUrl, agendaFuncionario, parametros);
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);

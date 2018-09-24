@@ -34,7 +34,7 @@
             $.ajax({
                 url: "@Url.Action("ModalCadastrar", "Agenda")",
                 type: "GET",
-                success: function (html) {
+                success: function (html) {                    
                     bootbox.dialog({
                         title: "Cadastrar Consulta",
                         message: html

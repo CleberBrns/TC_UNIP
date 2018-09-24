@@ -41,7 +41,10 @@ namespace TCC_Unip.Controllers
                 if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.Senha))
                 {
                     if (model.Email.Trim() == usuarioMaster.Email && model.Senha.Trim() == usuarioMaster.Senha)
+                    {
                         resultService.status = true;
+                        model = usuarioMaster;
+                    }
                     else
                         resultService = _service.Auth(model);
 

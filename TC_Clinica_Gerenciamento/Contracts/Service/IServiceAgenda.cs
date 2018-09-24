@@ -8,7 +8,8 @@ namespace TCC_Unip.Contracts.Service
     public interface IServiceAgenda
     {
         ResultService<Agenda> Get(string id);
-        ResultService<List<Agenda>> ListAgendasPeriodo(DateTime dateFrom, DateTime dateTo);
+        ResultService<List<Agenda>> ListAgendaPeriodo(DateTime dateFrom, DateTime dateTo);
+        ResultService<List<Agenda>> ListAgendaDoDia();
         ResultService<Paciente> ConsultasPeriodoPaciente(string cpf, DateTime dateFrom, DateTime dateTo);
         ResultService<Funcionario> ConsultasPeriodoFuncionario(string cpf, DateTime dateFrom, DateTime dateTo);
         ResultService<bool> Save(Agenda model);

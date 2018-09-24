@@ -28,11 +28,15 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
             ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
 
+            var listTeste = _agendaService.ListAgendaDoDia();
+
             return PartialView("_Index");
         }
 
         public ActionResult ModalCadastrar()
         {
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+
             ViewBag.ListPacientes = GetListPacientes();            
             ViewBag.ListProfissionais = GetListProfissionais();            
             ViewBag.ListHorarios = GetListHorarios();
@@ -47,9 +51,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
             try
             {
-                var resultService = new ResultService<Models.Servico.Funcionario>();
-
-                resultService = _funcionarioService.Get(cpf);
+                var resultService = _funcionarioService.Get(cpf);
                 if (!resultService.status)
                     resultService.errorMessage = "Erro!";
 
@@ -87,6 +89,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
                 var listHorariosDisponiveis = GetListHorarios();
                  
+                //TO DO - Remover os horários das consultas existentes do Profissional
                 if (consultasProfissiona.status)                
                     if (consultasProfissiona.value.Consultas.Count > 0)
                     {
