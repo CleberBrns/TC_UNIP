@@ -3,7 +3,7 @@ var validacao = {
 
     campoNulo: function (value, fieldErro) {
         if (value === null || value === undefined || value === "") {
-            $(fieldErro).html("Campo de preenchimento obrigatório!");
+            $(fieldErro).html("Preenchimento obrigatório!");
             return true;
         }
 

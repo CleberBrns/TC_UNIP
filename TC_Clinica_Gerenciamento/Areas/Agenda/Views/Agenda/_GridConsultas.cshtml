@@ -31,7 +31,7 @@
                         <td>@itemModel.Data.ToShortDateString()</td>
                         <td>@itemModel.Horario</td>
                         <td>@itemModel.Funcionario.Nome</td>
-                        <td>@itemModel.Valor</td>
+                        <td>R$ @itemModel.Valor</td>
                         <td class="text-center">
                             <a class="btnEditar" id-registro="@itemModel.Id" title="Editar" onclick="agendaListagem.modalEditar(this)"
                                style="cursor: pointer;">
@@ -40,7 +40,7 @@
                         </td>
                         <td class="text-center">
                             <a class="btnExcluir" id-registro="@itemModel.Id"
-                               nome-registro="'Dia ' + @itemModel.Data + ' e Hora: ' + @itemModel.Horario"
+                               nome-registro="Dia @itemModel.Data.ToShortDateString() as @itemModel.Horario h"
                                title="Excluir" onclick="agendaListagem.excluir(this)" style="cursor: pointer;">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </a>
@@ -121,7 +121,7 @@
                                     allowOutsideClick: false
                                 }).then(function () {
                                     bootbox.hideAll();
-                                    //funcoesIndexTabs.listaconsultas($(".abaAgenda"), false);
+                                    listagemAgenda.listaAgendaGrid($(".abaGridConsultas"), false);
                                 });
                             }
                             else {

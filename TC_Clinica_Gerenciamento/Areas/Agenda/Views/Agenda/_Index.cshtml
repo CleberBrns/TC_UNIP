@@ -67,15 +67,15 @@
         });
 
     $("#btnNovaConsulta").on('click', function () {
-        agenda.modalCadastrar();
+        listagemAgenda.modalCadastrar();
     });
 
     $('#abas a').click(function (e) {
         e.preventDefault();
-        agenda.carregaDivDaTab(this);
+        listagemAgenda.carregaDivDaTab(this);
     });
 
-    var agenda = {
+    var listagemAgenda = {
 
         modalCadastrar: function () {
             $.ajax({
@@ -101,12 +101,12 @@
             if (tabName === 'abaCalendario') {
 
                 if (carregado === undefined || carregado === "false") {
-                    agenda.listaAgendaCalendario(object, true);
+                    listagemAgenda.listaAgendaCalendario(object, true);
                 }
             }
             else if (tabName === 'abaGridConsultas') {
                 if (carregado === undefined || carregado === "false") {
-                    agenda.listaAgendaGrid(object, true);
+                    listagemAgenda.listaAgendaGrid(object, true);
                 }
             }
 
@@ -118,7 +118,7 @@
 
         listaAgendaGrid: function (object, getFromSession) {
 
-            agenda.getAgendaDoDia(object, getFromSession);
+            listagemAgenda.getAgendaDoDia(object, getFromSession);
         },
 
         getAgendaDoDia: function (object, getFromSession) {
@@ -127,8 +127,7 @@
                 url: "@Url.Action("ListaAgendaDoDia", "Agenda")",
                 data: { getFromSession: getFromSession },
                 type: "GET",
-                success: function (result) {
-                    debugger;
+                success: function (result) {                   
                     if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
                         $('#abaGridConsultas').html(result);
                         $(object).attr("carregado", "true");

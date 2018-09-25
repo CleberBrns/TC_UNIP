@@ -64,13 +64,13 @@
                             <select class="form-control alinhamentoSelect" id="modalidades" name="Modalidade" style="width: 60%">
                                 <option value="0">-- Selecione --</option>
                             </select>
-                            <span class="field-validation-valid text-danger" id="validaProfissional" data-valmsg-replace="true"></span>
+                            <span class="field-validation-valid text-danger" id="validaModalidades" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.Label("Data", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-4">
-                            <div class="input-group">
+                        <div class="col-md-6">
+                            <div class="input-group" style="width: 60%">
                                 <input type="text" class="form-control alinhamentoSelect" id="data" name="Data" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
@@ -87,13 +87,13 @@
                             <select class="form-control alinhamentoSelect" id="horarios" name="Horario">
                                 <option value="0">-- Disponíveis --</option>
                             </select>
-                            <span class="field-validation-valid text-danger" id="validaPaciente" data-valmsg-replace="true"></span>
+                            <span class="field-validation-valid text-danger" id="validaHorarios" data-valmsg-replace="true"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.Label("Valor - R$", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-4">
-                            <input type="text" class="form-control alinhamentoSelect" id="valor" name="Valor" value="100,00" />
+                        <div class="col-md-6">
+                            <input type="text" class="form-control alinhamentoSelect" id="valor" style="width: 60%" name="Valor" />
                             <span class="field-validation-valid text-danger" id="validaValor" data-valmsg-replace="true"></span>
                         </div>
                     </div>
@@ -133,8 +133,8 @@
         });
 
         $("#btnSalvar").on('click', function () {
-            //if (pacienteGerenciar.validar())
-            gerenciarAgenda.Salvar();
+            if (gerenciarAgenda.Validar())
+                gerenciarAgenda.Salvar();
         });
 
         $(".close").on('click', function () {
@@ -231,7 +231,7 @@
                                 confirmButtonColor: '#10386B',
                                 allowOutsideClick: false
                             }).then(function () {
-                                agenda.listaAgendaGrid($(".abaGridConsultas"), false);
+                                listagemAgenda.listaAgendaGrid($(".abaGridConsultas"), false);
                                 bootbox.hideAll();
                             });
                         }
@@ -254,6 +254,49 @@
                     that.on('click', gerenciarAgenda.salvar); //Devolve a ação do botão
                 });
 
+            },
+
+            Validar: function () {
+
+                var ehValido = true;
+
+                var paciente = $("#paciente").val().trim();
+                var validaPaciente = $("#validaPaciente");
+
+                var profissional = $("#profissional").val().trim();
+                var validaProfissional = $("#validaProfissional");
+
+                var modalidades = $("#modalidades").val().trim();
+                var validaModalidades = $("#validaModalidades");
+
+                var data = $("#data").val().trim();
+                var validaData = $("#validaData");
+
+                var horarios = $("#horarios").val().trim();
+                var validaHorarios = $("#validaHorarios");
+
+                var valor = $("#valor").val().trim();
+                var validaValor = $("#validaValor");
+
+                if (validacao.selectSelecionado(paciente, validaPaciente, "Selecione um Paciente"))
+                    ehValido = false;
+
+                if (validacao.selectSelecionado(profissional, validaProfissional, "Selecione um Profissional"))
+                    ehValido = false;
+
+                if (validacao.selectSelecionado(modalidades, validaModalidades, "Selecione uma Modalidade"))
+                    ehValido = false;
+
+                if (validacao.campoNulo(data, validaData))
+                    ehValido = false;
+
+                if (validacao.selectSelecionado(horarios, validaHorarios, "Selecione um Horário"))
+                    ehValido = false;
+
+                if (validacao.campoNulo(valor, validaValor))
+                    ehValido = false;
+
+                return ehValido;
             },
 
             CloseModal: function () {
