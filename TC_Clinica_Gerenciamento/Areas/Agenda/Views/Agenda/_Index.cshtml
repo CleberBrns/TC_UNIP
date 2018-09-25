@@ -3,8 +3,10 @@
 }
 
 @if (user != null)
-{    
+{
     <link href="~/Content/css/tabsAgenda.css" rel="stylesheet" />
+    <link href="~/Content/fullcalendar.min.css" rel="stylesheet" />
+    <link href="~/Content/fullcalendar.print.min.css" rel="stylesheet" />
 
     <div class="row">
         <div class="col-md-12">
@@ -14,10 +16,6 @@
                     Nova Consulta
                 </button>
             </div>
-        </div>
-        <div class="col-md-12">
-            <span>Opções Pesquisa</span>
-            <br />
         </div>
         <div class="col-md-12 col-sm-12" style="padding-top: 2%">
             <div>
@@ -35,17 +33,22 @@
                         </li>
                     </ul>
                     <div id="conteudo">
-                        <div id="abaCalendario">Div Calendário</div>
+                        <div id="abaCalendario"></div>
                         <div id="abaGridConsultas"></div>
                     </div>
                 </form>
             </div>
         </div>
-    </div>    
+    </div>
+
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/fullcalendar.min.js"></script>
+    <script src="~/Scripts/locale/pt-br.js"></script>
 
     <script>
 
         $(document).ready(function () {
+            //Abas
             $("#conteudo").find("[id^='aba']").hide(); // Hide all conteudo
             $("#abas li:first").attr("id", "current"); // Activate the first aba
             $("#conteudo #abaCalendario").fadeIn(); // Show first aba's conteudo
@@ -64,6 +67,12 @@
                     $('#' + $(this).attr('name')).fadeIn(); // Show conteudo for the current aba
                 }
             });
+            //End Abas
+
+            //Calendário
+            listagemAgenda.configuraCalendario();
+            //End Calendário
+
         });
 
     $("#btnNovaConsulta").on('click', function () {
@@ -76,6 +85,13 @@
     });
 
     var listagemAgenda = {
+
+        configuraCalendario: function () {
+            //$("#abaCalendario").fullCalendar("destroy");
+            $("#abaCalendario").fullCalendar({
+                
+            });
+        },
 
         modalCadastrar: function () {
             $.ajax({
@@ -127,7 +143,7 @@
                 url: "@Url.Action("ListaAgendaDoDia", "Agenda")",
                 data: { getFromSession: getFromSession },
                 type: "GET",
-                success: function (result) {                   
+                success: function (result) {
                     if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
                         $('#abaGridConsultas').html(result);
                         $(object).attr("carregado", "true");
