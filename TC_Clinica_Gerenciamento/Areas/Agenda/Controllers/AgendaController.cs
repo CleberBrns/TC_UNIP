@@ -31,6 +31,32 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             return PartialView("_Index");
         }
 
+        public ActionResult ListaAgendaDoDia(bool getFromSession)
+        {
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+
+            string msgExibicao = string.Empty;
+            string msgAnalise = string.Empty;
+
+            try
+            {
+                var resultService = _agendaService.ListAgendaDoDia(getFromSession);                
+
+                msgExibicao = resultService.message;
+                msgAnalise = resultService.errorMessage;
+
+                return PartialView("_GridConsultas", resultService.value);
+            }
+            catch (Exception ex)
+            {
+                msgExibicao = Constants.Constants.msgFalhaAoListar;
+                msgAnalise = ex.ToString();
+            }
+
+            var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
+            return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult ModalCadastrar()
         {
             ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
@@ -123,7 +149,6 @@ namespace TCC_Unip.Areas.Agenda.Controllers
                 msgExibicao = Constants.Constants.msgFalhaAoListar;
                 msgAnalise = ex.ToString();
             }
-
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);

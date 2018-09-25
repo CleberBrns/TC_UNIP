@@ -14,6 +14,7 @@ namespace TCC_Unip.Services
         readonly AgendaAPI service = new AgendaAPI();
         readonly AgendaSession session = new AgendaSession();
         readonly string sessionAgenda = Constants.ConstSessions.listAgenda;
+        readonly string sessionAgendaDoDia = Constants.ConstSessions.listAgendaDoDia;
         readonly string sessionConsultas = Constants.ConstSessions.listConsultas;
 
         public ResultService<Agenda> Get(string id)
@@ -29,12 +30,22 @@ namespace TCC_Unip.Services
             return result;
         }
 
-        public ResultService<List<Agenda>> ListAgendaDoDia()
+        public ResultService<List<Agenda>> ListAgendaDoDia(bool getFromSession)
         {
-            var result = new ResultService<List<Agenda>>();
-            var retorno = service.ListAgendasPeriodo(DateTime.Now.ToShortDateString(), DateTime.Now.ToShortDateString());
+            var list = new List<Agenda>();
+            var result = new ResultService<List<Agenda>>();           
 
-            var list = ConfiguraAgendaService(retorno);
+            var retornoSession = session.GetListFromSession(sessionAgendaDoDia);
+
+            if (retornoSession.Item2)            
+                list = retornoSession.Item1;            
+            else
+            {
+                list = service.ListAgendasPeriodo(DateTime.Now.ToShortDateString(), DateTime.Now.ToShortDateString());
+                session.AddListToSession(list, sessionAgendaDoDia);
+            }            
+
+            list = ConfiguraAgendaService(list);
             result.value = list;
 
             return result;

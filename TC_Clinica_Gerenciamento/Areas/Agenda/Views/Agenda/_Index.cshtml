@@ -36,7 +36,7 @@
                     </ul>
                     <div id="conteudo">
                         <div id="abaCalendario">Div Calendário</div>
-                        <div id="abaGridConsultas">Div Listagem</div>
+                        <div id="abaGridConsultas"></div>
                     </div>
                 </form>
             </div>
@@ -67,10 +67,15 @@
         });
 
     $("#btnNovaConsulta").on('click', function () {
-        agendaListagem.modalCadastrar();
+        agenda.modalCadastrar();
     });
 
-    var agendaListagem = {
+    $('#abas a').click(function (e) {
+        e.preventDefault();
+        agenda.carregaDivDaTab(this);
+    });
+
+    var agenda = {
 
         modalCadastrar: function () {
             $.ajax({
@@ -86,8 +91,66 @@
                     validacao.errorAjax(jqXHR, textStatus, errorThrown);
                 }
             });
-        }
+        },
 
+        carregaDivDaTab: function (object) {
+
+            var carregado = $(object).attr("carregado");
+            var tabName = $(object).attr('name');
+
+            if (tabName === 'abaCalendario') {
+
+                if (carregado === undefined || carregado === "false") {
+                    agenda.listaAgendaCalendario(object, true);
+                }
+            }
+            else if (tabName === 'abaGridConsultas') {
+                if (carregado === undefined || carregado === "false") {
+                    agenda.listaAgendaGrid(object, true);
+                }
+            }
+
+        },
+
+        listaAgendaCalendario: function (object, getFromSession) {
+
+        },
+
+        listaAgendaGrid: function (object, getFromSession) {
+
+            agenda.getAgendaDoDia(object, getFromSession);
+        },
+
+        getAgendaDoDia: function (object, getFromSession) {
+
+            $.ajax({
+                url: "@Url.Action("ListaAgendaDoDia", "Agenda")",
+                data: { getFromSession: getFromSession },
+                type: "GET",
+                success: function (result) {
+                    debugger;
+                    if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
+                        $('#abaGridConsultas').html(result);
+                        $(object).attr("carregado", "true");
+                    }
+                    else {
+                        var retorno = result.mensagensRetorno;
+                        swal({
+                            title: '',
+                            text: retorno.MensagemExibicao,
+                            type: 'warning',
+                            confirmButtonColor: '#10386B',
+                            allowOutsideClick: false
+                        });
+                        console.log(retorno.MensagemAnalise);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                }
+            });
+
+        }
     };
 
     </script>
