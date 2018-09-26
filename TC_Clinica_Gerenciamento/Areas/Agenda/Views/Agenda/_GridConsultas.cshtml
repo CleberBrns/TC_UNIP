@@ -4,28 +4,71 @@
     var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
 }
 
+<link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<script src="~/Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+<style type="text/css">
+    .datepicker {
+        background: #808080;
+        color: #ffffff;
+    }
+</style>
+
 @if (user != null)
 {
-    <div class="row">
-        <div class="col-md-12">
-            <br />
+<div class="row">
+
+    <div class="form-inline">
+
+        <div class="col-md-10">
+            <div style="display:inline-flex; width: 100%;">
+                <div>
+                    <label class="control-label">Exibir De</label>
+                </div>
+                <div class="input-group" style="padding-left: 2%; padding-right: 2%; width: 30%">
+                    <div>
+                        <input class="form-control dataPesquisa alinhamentoSelect" type="text">
+                    </div>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                    </span>
+                </div>
+                <div>
+                    <label class="control-label">Até</label>
+                </div>
+                <div class="input-group" style="padding-left: 2%; padding-right: 2%; width: 30%">
+                    <div>
+                        <input class="form-control dataPesquisa alinhamentoSelect" type="text">
+                    </div>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                    </span>
+                </div>                
+                <div>
+                    <input type="button" class="btn btn-primary" id="btnVincular" value="Ok" />
+                </div>
+            </div>
         </div>
-        <div class="col-md-12 col-sm-12" style="overflow-x:auto;">
-            <table class="table table-striped" id="gridAgenda" carregada="false">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Data</th>
-                        <th>Hora</th>
-                        <th>Prossional</th>
-                        <th>Valor</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var itemModel in Model)
-                    {
+        
+    </div>
+
+    <div class="col-md-12 col-sm-12" style="overflow-x:auto; padding-top: 5%">
+        <table class="table table-striped" id="gridAgenda" carregada="false">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Prossional</th>
+                    <th>Valor</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var itemModel in Model)
+                {
                     <tr>
                         <td>@itemModel.Funcionario.Nome</td>
                         <td>@itemModel.Data.ToShortDateString()</td>
@@ -46,13 +89,22 @@
                             </a>
                         </td>
                     </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     </div>
+</div>
 
     <script>
+
+
+        $('.dataPesquisa').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            language: "pt-BR"
+        });
+
+        $('.dataPesquisa').mask('99/99/9999', { placeholder: "dd/mm/aaaa" });
 
     $("#gridAgenda").DataTable({
         language: {
