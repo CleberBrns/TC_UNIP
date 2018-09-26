@@ -21,6 +21,11 @@ namespace TCC_Unip.Areas.Agenda.Controllers
         readonly UsuarioSession session = new UsuarioSession();
         readonly string sessionName = Constants.ConstSessions.usuario;
 
+        public ActionResult Calendario()
+        {
+            return View("_Calendario");
+        }
+
         public ActionResult Listagem(bool getFromSession)
         {
             if (!session.GetModelFromSession(sessionName).Item2)

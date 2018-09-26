@@ -5,8 +5,6 @@
 @if (user != null)
 {
     <link href="~/Content/css/tabsAgenda.css" rel="stylesheet" />
-    <link href="~/Content/fullcalendar.min.css" rel="stylesheet" />
-    <link href="~/Content/fullcalendar.print.min.css" rel="stylesheet" />
 
     <div class="row">
         <div class="col-md-12">
@@ -33,17 +31,15 @@
                         </li>
                     </ul>
                     <div id="conteudo">
-                        <div id="abaCalendario"></div>
+                        <div id="abaCalendario">
+                            <div>@Html.Partial("_Calendario")</div>
+                        </div>
                         <div id="abaGridConsultas"></div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-    <script src="~/Scripts/moment.min.js"></script>
-    <script src="~/Scripts/fullcalendar.min.js"></script>
-    <script src="~/Scripts/locale/pt-br.js"></script>
 
     <script>
 
@@ -69,10 +65,6 @@
             });
             //End Abas
 
-            //Calendário
-            listagemAgenda.configuraCalendario();
-            //End Calendário
-
         });
 
     $("#btnNovaConsulta").on('click', function () {
@@ -85,13 +77,6 @@
     });
 
     var listagemAgenda = {
-
-        configuraCalendario: function () {
-            //$("#abaCalendario").fullCalendar("destroy");
-            $("#abaCalendario").fullCalendar({
-                
-            });
-        },
 
         modalCadastrar: function () {
             $.ajax({
@@ -114,8 +99,7 @@
             var carregado = $(object).attr("carregado");
             var tabName = $(object).attr('name');
 
-            if (tabName === 'abaCalendario') {
-
+            if (tabName === 'abaCalendario') {               
                 if (carregado === undefined || carregado === "false") {
                     listagemAgenda.listaAgendaCalendario(object, true);
                 }

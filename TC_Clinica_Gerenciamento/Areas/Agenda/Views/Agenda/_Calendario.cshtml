@@ -1,1 +1,22 @@
 ﻿
+
+<link href="~/Content/fullcalendar.min.css" rel="stylesheet" />
+<link href="~/Content/fullcalendar.print.min.css" rel="stylesheet" />
+
+<div id="calendario"></div>
+
+
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/fullcalendar.min.js"></script>
+<script src="~/Scripts/locale/pt-br.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $("#calendario").fullCalendar("destroy");
+        $('#calendario').fullCalendar({
+            header: false
+        });
+
+    });
+</script>
