@@ -51,10 +51,10 @@ namespace TCC_Unip.Services
             return result;
         }
 
-        public ResultService<List<Agenda>> ListAgendaPeriodo(DateTime dateFrom, DateTime dateTo)
+        public ResultService<List<Agenda>> ListAgendaPeriodo(string dateFrom, string dateTo)
         {
             var result = new ResultService<List<Agenda>>();
-            var retorno = service.ListAgendasPeriodo(dateFrom.ToShortDateString(), dateTo.ToShortDateString());
+            var retorno = service.ListAgendasPeriodo(dateFrom.Trim(), dateTo.Trim());
 
             var list = ConfiguraAgendaService(retorno);
             result.value = list;

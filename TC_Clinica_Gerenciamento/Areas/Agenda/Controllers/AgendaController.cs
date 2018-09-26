@@ -40,7 +40,33 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
             try
             {
-                var resultService = _agendaService.ListAgendaDoDia(getFromSession);                
+                var resultService = _agendaService.ListAgendaDoDia(getFromSession);
+
+                msgExibicao = resultService.message;
+                msgAnalise = resultService.errorMessage;
+
+                return PartialView("_GridConsultas", resultService.value);
+            }
+            catch (Exception ex)
+            {
+                msgExibicao = Constants.Constants.msgFalhaAoListar;
+                msgAnalise = ex.ToString();
+            }
+
+            var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
+            return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ListaConsultasPorDatas(string dataInicio, string dataFim)
+        {
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+
+            string msgExibicao = string.Empty;
+            string msgAnalise = string.Empty;
+
+            try
+            {
+                var resultService = _agendaService.ListAgendaPeriodo(dataInicio, dataFim);
 
                 msgExibicao = resultService.message;
                 msgAnalise = resultService.errorMessage;

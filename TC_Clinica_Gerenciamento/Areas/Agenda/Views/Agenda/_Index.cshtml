@@ -99,7 +99,7 @@
             var carregado = $(object).attr("carregado");
             var tabName = $(object).attr('name');
 
-            if (tabName === 'abaCalendario') {               
+            if (tabName === 'abaCalendario') {
                 if (carregado === undefined || carregado === "false") {
                     listagemAgenda.listaAgendaCalendario(object, true);
                 }
@@ -148,7 +148,78 @@
                     validacao.errorAjax(jqXHR, textStatus, errorThrown);
                 }
             });
+        },
 
+        getAgendaPorDatas: function (dataInicio, dataFim) {
+
+            if (listagemAgenda.validaBuscaPorDatas(dataInicio, dataFim)) {
+
+                $.ajax({
+                    url: "@Url.Action("ListaConsultasPorDatas", "Agenda")",
+                    data: { dataInicio: dataInicio, dataFim: dataFim },
+                    type: "GET",
+                    success: function (result) {
+                        if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
+                            $('#abaGridConsultas').html(result);
+                            $(object).attr("carregado", "true");
+                        }
+                        else {
+                            var retorno = result.mensagensRetorno;
+                            swal({
+                                title: '',
+                                text: retorno.MensagemExibicao,
+                                type: 'warning',
+                                confirmButtonColor: '#10386B',
+                                allowOutsideClick: false
+                            });
+                            console.log(retorno.MensagemAnalise);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                    }
+                });
+            }            
+        },
+
+        validaBuscaPorDatas: function (dataOne, dataTwo) {
+            var ehValido = true;
+
+            if (dataOne !== undefined && dataOne !== "" && dataTwo !== undefined && dataTwo !== "") {
+
+                var arrDataUm = dataOne.split("/");
+                var dataUm = new Date(arrDataUm[2], arrDataUm[1] - 1, arrDataUm[0]);
+
+                var arrDataDois = dataTwo.split("/");
+                var dataDois = new Date(arrDataDois[2], arrDataDois[1] - 1, arrDataDois[0]);
+
+                if (dataUm > dataDois) {
+
+                    swal({
+                        title: '',
+                        text: "A Data incial não pode ser maior que a final.",
+                        type: 'warning',
+                        confirmButtonColor: '#10386B',
+                        allowOutsideClick: false
+                    });
+
+                    ehValido = false;
+                }
+
+                return ehValido;
+            }
+            else {
+
+                swal({
+                    title: '',
+                    text: "Para realizar a pesquisa, os campos de Data devem ser ambos preenchidos.",
+                    type: 'warning',
+                    confirmButtonColor: '#10386B',
+                    allowOutsideClick: false
+                });
+
+                return false;
+            }            
         }
     };
 
