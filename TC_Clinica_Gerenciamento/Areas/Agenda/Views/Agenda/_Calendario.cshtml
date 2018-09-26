@@ -1,7 +1,13 @@
 ﻿
 
 <link href="~/Content/fullcalendar.min.css" rel="stylesheet" />
-<link href="~/Content/fullcalendar.print.min.css" rel="stylesheet" />
+
+<style>
+    .fc-today {
+        background-color: #ccc !important;
+        font-weight: bold;
+    } 
+</style>
 
 <div id="calendario"></div>
 
@@ -13,9 +19,12 @@
 <script>
     $(document).ready(function () {
 
-        $("#calendario").fullCalendar("destroy");
         $('#calendario').fullCalendar({
-            header: false
+            header: {
+                left: 'prev,next,today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            }
         });
 
     });
