@@ -33,39 +33,41 @@
                     <div id="conteudo">
                         <div id="abaCalendario">
                             <div>@Html.Partial("_Calendario")</div>
-                        </div>
-                        <div class="form-inline">
-                            <div class="col-md-10">
-                                <div style="display:inline-flex; width: 100%;">
-                                    <div>
-                                        <label class="control-label">Exibir De</label>
-                                    </div>
-                                    <div class="input-group" style="padding-left: 2%; padding-right: 2%; width: 30%">
+                        </div>                        
+                        <div id="abaGridConsultas">
+                            <div class="form-inline">
+                                <div class="col-md-10" style="margin-left: 14%">
+                                    <div style="display:inline-flex; width: 100%;">
                                         <div>
-                                            <input class="form-control dataPesquisa alinhamentoSelect" type="text" id="dataInicio">
+                                            <label class="control-label">Exibir De</label>
                                         </div>
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <label class="control-label">Até</label>
-                                    </div>
-                                    <div class="input-group" style="padding-left: 2%; padding-right: 2%; width: 30%">
+                                        <div class="input-group" style="padding-left: 2%; padding-right: 2%; width: 30%">
+                                            <div>
+                                                <input class="form-control dataPesquisa alinhamentoSelect" type="text" id="dataInicio">
+                                            </div>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                            </span>
+                                        </div>
                                         <div>
-                                            <input class="form-control dataPesquisa alinhamentoSelect" type="text" id="dataFim">
+                                            <label class="control-label">Até</label>
                                         </div>
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <input type="button" class="btn btn-primary" id="btPesquisar" value="Ok" />
+                                        <div class="input-group" style="padding-left: 2%; padding-right: 2%; width: 30%">
+                                            <div>
+                                                <input class="form-control dataPesquisa alinhamentoSelect" type="text" id="dataFim">
+                                            </div>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <input type="button" class="btn btn-primary" id="btPesquisar" value="Ok" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div id="divGridConsultas"></div>
                         </div>
-                        <div id="abaGridConsultas"></div>
                     </div>
                 </form>
             </div>
@@ -160,7 +162,7 @@
                 type: "GET",
                 success: function (result) {
                     if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
-                        $('#abaGridConsultas').html(result);
+                        $('#divGridConsultas').html(result);
                         $(object).attr("carregado", "true");
                     }
                     else {
@@ -191,7 +193,7 @@
                     type: "GET",
                     success: function (result) {
                         if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
-                            $('#abaGridConsultas').html(result);
+                            $('#divGridConsultas').html(result);
                             $(object).attr("carregado", "true");
                         }
                         else {
