@@ -43,6 +43,7 @@ namespace TCC_Unip.Controllers
                     if (model.Email.Trim() == usuarioMaster.Email && model.Senha.Trim() == usuarioMaster.Senha)
                     {
                         resultService.status = true;
+                        //resultService.message = "Ok";//Msg somente para validar o redirect
                         model = usuarioMaster;
                     }
                     else

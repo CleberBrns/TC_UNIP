@@ -6,8 +6,6 @@ namespace TCC_Unip.Util
     {        
         public MensagensDeRetorno ConfiguraMensagemRetorno(string msgExibicao, string msgAnalise)
         {
-            msgExibicao = string.IsNullOrEmpty(msgExibicao) ? msgAnalise : msgExibicao;
-
             return new MensagensDeRetorno
             {
                 MensagemExibicao = msgExibicao,

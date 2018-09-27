@@ -131,8 +131,9 @@
                     var id = $(elem).attr("id-registro");
 
                     $.ajax({
-                        url: "@Url.Action("Excluir", "Paciente")/" + id,
+                        url: "@Url.Action("Excluir", "Paciente")/",
                         type: "POST",
+                        data: { id: id },
                         success: function (result) {
 
                             var retorno = result.mensagensRetorno;

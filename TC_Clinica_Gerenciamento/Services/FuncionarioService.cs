@@ -84,10 +84,7 @@ namespace TCC_Unip.Services
         public ResultService<bool> Save(Funcionario model)
         {
             string msg = string.Empty;
-            string msgErro = string.Empty;
-
             var result = new ResultService<bool>();
-
             var registroExistente = service.Get(model.Cpf);
 
             if (string.IsNullOrEmpty(registroExistente.Nome))
@@ -111,8 +108,7 @@ namespace TCC_Unip.Services
                     msg = "Falha ao atualizar o Funcionário!";
             }
 
-            result.message = msg;
-            result.errorMessage = msgErro;
+            result.message = msg;           
 
             return result;
         }       

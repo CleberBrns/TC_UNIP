@@ -25,7 +25,7 @@ namespace TCC_Unip.Services
             result.value = retorno;
 
             if (string.IsNullOrEmpty(result.value.Modalidade))
-                result.errorMessage = "A Consulta não existe mais na base de dados do serviço!";
+                result.message = "A Consulta não existe mais na base de dados do serviço!";
 
             return result;
         }
@@ -68,7 +68,7 @@ namespace TCC_Unip.Services
             var retorno = service.ConsultasPeriodoFuncionario(cpf, dateFrom.ToShortDateString(), dateTo.ToShortDateString());           
 
             if (string.IsNullOrEmpty(retorno.Cpf))
-                result.errorMessage = "Sem agenda!";
+                result.message = "Sem agenda!";
             else                
                 retorno.Consultas = ConfiguraConsultaService(retorno.Consultas);
 
@@ -83,7 +83,7 @@ namespace TCC_Unip.Services
             var retorno = service.ConsultasPeriodoPaciente(cpf, dateFrom.ToShortDateString(), dateTo.ToShortDateString());
 
             if (!string.IsNullOrEmpty(retorno.Cpf))
-                result.errorMessage = "Sem agenda!";
+                result.message = "Sem agenda!";
             else
                 retorno.Consultas = ConfiguraConsultaService(retorno.Consultas);
 
@@ -107,7 +107,7 @@ namespace TCC_Unip.Services
                 if (result.value)
                     result.message = "Consulta salva com sucesso!";
                 else
-                    result.errorMessage = "Falha ao salvar a Consulta!";
+                    result.message = "Falha ao salvar a Consulta!";
             }
             else
             {
@@ -117,7 +117,7 @@ namespace TCC_Unip.Services
                 if (result.value)
                     result.message = "Consulta atualizada com sucesso!";
                 else
-                    result.errorMessage = "Falha ao atualizar a Consulta!";
+                    result.message = "Falha ao atualizar a Consulta!";
             }
 
             return result;
@@ -133,7 +133,7 @@ namespace TCC_Unip.Services
             if (result.value)
                 result.message = "Consulta excluída com sucesso!";
             else
-                result.errorMessage = "Falha ao excluir a Consulta!";
+                result.message = "Falha ao excluir a Consulta!";
 
             return result;
         }

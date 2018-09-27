@@ -81,8 +81,7 @@ namespace TCC_Unip.Services
                     msg = "Falha ao atualizar o paciente!";
             }
 
-            result.message = msg;
-            result.errorMessage = msgErro;
+            result.message = msg;           
 
             return result;
         }       

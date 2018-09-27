@@ -162,8 +162,9 @@
                     var id = $(elem).attr("id-registro");
 
                     $.ajax({
-                        url: "@Url.Action("Excluir", "Agenda")/" + id,
+                        url: "@Url.Action("Excluir", "Agenda")/",
                         type: "POST",
+                        data: { id: id },
                         success: function (result) {
 
                             var retorno = result.mensagensRetorno;

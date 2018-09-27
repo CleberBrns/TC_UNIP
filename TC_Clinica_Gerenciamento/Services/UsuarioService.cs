@@ -25,7 +25,7 @@ namespace TCC_Unip.Services
                 result.value = service.Get(email);
 
             if (string.IsNullOrEmpty(result.value.Email))
-                result.errorMessage = "O Usuário não existe mais na base de dados do serviço!";
+                result.message = "O Usuário não existe mais na base de dados do serviço!";
 
             return result;
         }
@@ -64,7 +64,7 @@ namespace TCC_Unip.Services
                 if (result.value)
                     result.message = "Usuário salvo com sucesso!";
                 else
-                    result.errorMessage = "Falha ao salvar o Usuário!";
+                    result.message = "Falha ao salvar o Usuário!";
             }
             else
             {
@@ -74,7 +74,7 @@ namespace TCC_Unip.Services
                 if (result.value)
                     result.message = "Usuário atualizado com sucesso!";
                 else
-                    result.errorMessage = "Falha ao atualizar o Usuário!";
+                    result.message = "Falha ao atualizar o Usuário!";
             }
 
             return result;
@@ -90,7 +90,7 @@ namespace TCC_Unip.Services
             if (result.value)
                 result.message = "Usuário excluído com sucesso!";
             else
-                result.errorMessage = "Falha ao excluir o Usuário!";
+                result.message = "Falha ao excluir o Usuário!";
 
             return result;
         }
@@ -103,7 +103,7 @@ namespace TCC_Unip.Services
             result.value = retorno;
 
             if (string.IsNullOrEmpty(result.value.Email))
-                result.errorMessage = "Usuário Inválido ou Senha Incorreta";
+                result.message = "Usuário Inválido ou Senha Incorreta";
 
             return result;
         }
