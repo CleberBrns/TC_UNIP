@@ -118,20 +118,20 @@
                         {
                             <div class="checkbox">
                                 <label>
-                                    @if (Model.Modalidade.Length > 0)
+                                    @if (Model.Modalidades.Length > 0)
                                     {
-                                        if (Model.Modalidade.Contains(item.Value))
+                                        if (Model.Modalidades.Contains(item.Value))
                                         {
-                                            <input type="checkbox" name="Modalidade" checked="checked" value="@item.Value" /> @item.Name
+                                            <input type="checkbox" name="Modalidades" checked="checked" value="@item.Value" /> @item.Name
                                         }
                                         else
                                         {
-                                            <input type="checkbox" name="Modalidade" value="@item.Value" /> @item.Name
+                                            <input type="checkbox" name="Modalidades" value="@item.Value" /> @item.Name
                                         }
                                     }
                                     else
                                     {
-                                        <input type="checkbox" name="Modalidade" value="@item.Value" /> @item.Name
+                                        <input type="checkbox" name="Modalidades" value="@item.Value" /> @item.Name
                                     }
                                 </label>
                             </div>

@@ -111,7 +111,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
                 var resultService = _service.Save(model);
 
                 msgExibicao = resultService.message;
-                msgAnalise = resultService.errorMessage;
+                msgAnalise = resultService.value ? resultService.errorMessage : "Falha";
             }
             catch (Exception ex)
             {
@@ -134,7 +134,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
                 var resultService = _service.Delete(id);
 
                 msgExibicao = resultService.message;
-                msgAnalise = resultService.errorMessage;
+                msgAnalise = resultService.value ? resultService.errorMessage : "Falha";
             }
             catch (Exception ex)
             {
