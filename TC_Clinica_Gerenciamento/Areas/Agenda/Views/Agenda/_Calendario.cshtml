@@ -20,13 +20,84 @@
 <script>
     $(document).ready(function () {
 
-        $('#calendario').fullCalendar({
-            header: {
-                left: 'prev,next,today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            }
-        });
+        var eventos = [];
+        calendario.carregaAgendaDoMesAtual();
 
     });
+
+    var calendario = {
+
+        configuraCalendario: function (events) {
+
+            $('#calendario').fullCalendar('destroy');
+            $('#calendario').fullCalendar({
+                timeFormat: 'H:mm',
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                eventLimit: true,
+                eventColor: '#378006',
+                events: events,
+                eventClick: function (calEvent, jsEvent, view) {
+
+                    alert('Event: ' + calEvent.title);
+                    alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+                    alert('View: ' + view.name);
+
+                    // change the border color just for fun
+                    $(this).css('border-color', 'red');
+
+                }
+            });
+
+        },
+
+        carregaAgendaDoMesAtual: function (object, getFromSession) {
+
+            var eventos = [];
+
+            $.ajax({
+                url: "@Url.Action("GetCalendarioAgendaMesAtual", "Agenda")",
+                //data: { getFromSession: getFromSession },
+                type: "GET",
+                success: function (result) {
+                    
+                    if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
+                        $.each(result.agendaCalendario, function (i, event) {
+                            eventos.push({
+                                id: event.IdConsulta,
+                                title: event.Titulo,
+                                description: event.Descricao,
+                                start: moment(event.ComecaEm),
+                                end: moment(event.TerminaEm),
+                                color: event.CorEvento
+                            });
+                        });
+
+                        calendario.configuraCalendario(eventos);
+                    }
+                    else {
+                        var retorno = result.mensagensRetorno;
+                        swal({
+                            title: '',
+                            text: retorno.MensagemExibicao,
+                            type: 'warning',
+                            confirmButtonColor: '#10386B',
+                            allowOutsideClick: false
+                        });
+                        console.log(retorno.MensagemAnalise);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                }
+            });
+
+        }
+
+    };
+
+
 </script>

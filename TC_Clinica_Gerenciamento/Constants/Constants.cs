@@ -56,7 +56,7 @@ namespace TCC_Unip.Constants
         {
             var listHorarios = new List<DataSelectControl>();
             var startDate = DateTime.Today.AddHours(7);
-            var endDate = DateTime.Today.AddHours(21);
+            var endDate = DateTime.Today.AddHours(20);
 
             List<string> times = new List<string>();
 

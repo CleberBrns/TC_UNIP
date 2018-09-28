@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web.Mvc;
 using TCC_Unip.Models.Local;
@@ -55,6 +56,53 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCalendarioAgendaMesAtual()
+        {
+            string msgExibicao = string.Empty;
+            string msgAnalise = string.Empty;
+
+            try
+            {
+                var agendaCalendario = GetAgendaMesAtualCalendario();
+
+                return Json(new { agendaCalendario }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                msgExibicao = Constants.Constants.msgFalhaAoListar;
+                msgAnalise = ex.ToString();
+            }
+
+            var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
+            return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+
+        }
+
+        private List<EventoCalendario> GetAgendaMesAtualCalendario()
+        {
+            var incioMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var fimMes = incioMes.AddMonths(1).AddDays(-1);
+
+            var listAgendaDoMes = _agendaService.ListAgendaPeriodo(incioMes.ToShortDateString(), fimMes.ToShortDateString()).value;
+
+            var list = listAgendaDoMes.Select(l =>
+                                       new EventoCalendario
+                                       {
+                                           IdConsulta = l.Id,
+                                           Titulo = l.Modalidade +
+                                                    ", Paciente " +
+                                                    l.Paciente.Nome +
+                                                    ", Profissional " +
+                                                    l.Funcionario.Nome,
+                                           Descricao = "Teste Descrição",
+                                           ComecaEm = l.FromMilliseconds(l.DateTimeService),
+                                           TerminaEm = l.FromMilliseconds(l.DateTimeService).AddHours(1),
+                                           CorEvento = Color.Blue.ToString()
+                                       }).ToList();
+
+            return list;
         }
 
         public ActionResult ListaConsultasPorDatas(string dataInicio, string dataFim)
@@ -178,7 +226,6 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
-
         }
 
         #region Métods Privados   
