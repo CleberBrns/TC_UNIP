@@ -184,8 +184,9 @@
 
     $("#funcionarios").on('change', function () {
 
+        
         var selecionado = $(this).find(':selected');
-        if (selecionado.val() != "0") {
+        if (selecionado.val() !== "0") {
             var cpf = selecionado.attr("value");
             var email = selecionado.attr("email");
             var permissao = selecionado.attr("modalidade");
@@ -203,8 +204,8 @@
     var UsuarioGerenciar = {
 
         permissaoProfissional: function (permissao) {
-            if (permissao != "") {
-                $('#perfil option[value="Profissional"]').prop("selected", true);
+            if (permissao !== undefined && permissao !== "") {
+                $('#perfil option[value="PROFISSIONAL"]').prop("selected", true);
                 $("#perfil").prop('disabled', true);
             }
             else {

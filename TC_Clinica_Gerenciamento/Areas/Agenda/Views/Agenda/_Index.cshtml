@@ -218,7 +218,7 @@
         validaBuscaPorDatas: function (dataOne, dataTwo) {
             var ehValido = true;
 
-            if (dataOne !== undefined && dataOne !== "" && dataTwo !== undefined && dataTwo !== "") {
+            if ((dataOne !== undefined && dataOne !== "") && (dataTwo !== undefined && dataTwo !== "")) {
 
                 var arrDataUm = dataOne.split("/");
                 var dataUm = new Date(arrDataUm[2], arrDataUm[1] - 1, arrDataUm[0]);

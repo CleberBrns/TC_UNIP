@@ -1,14 +1,12 @@
 ﻿@model IList<TCC_Unip.Models.Servico.Usuario>
-
+@using TCC_Unip.Models.Local;
 @{
-    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
+    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;    
 }
-
 
 @if (user != null)
 {
     <div class="row">
-
         <div class="col-md-12">
             <div style="text-align: right">
                 <button type="button" class="btn btn-primary" id="btnNovoUsuario">
@@ -17,16 +15,14 @@
                 </button>
             </div>
         </div>
-
         <div class="col-md-12">
             <br />
         </div>
-
         <div class="col-md-12 col-sm-12" style="overflow-x:auto;">
             <table class="table table-striped" id="gridUsuario" carregado="false">
                 <thead>
                     <tr>
-                        <th>Nome</th>
+                        @*<th>Nome</th>*@
                         <th>E-mail</th>
                         <th>Perfil</th>
                         <th>Situação</th>
@@ -38,7 +34,7 @@
                     @foreach (var itemModel in Model)
                     {
                         <tr>
-                            <td>@itemModel.Funcionario.Nome</td>
+                            @*<td>@itemModel.Funcionario.Nome</td>*@
                             <td>@itemModel.Email</td>
                             <td>@itemModel.Permissoes.FirstOrDefault()</td>
                             <td>@itemModel.Status</td>
@@ -49,7 +45,7 @@
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a class="btnExcluir" id-registro="@itemModel.Email" nome-registro="@itemModel.Funcionario.Nome"
+                                <a class="btnExcluir" id-registro="@itemModel.Email" nome-registro="@itemModel.Email"
                                    title="Excluir" onclick="UsuarioListagem.excluir(this)" style="cursor: pointer;">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </a>
@@ -59,10 +55,8 @@
                 </tbody>
             </table>
         </div>
-
     </div>
 }
-
 <script>
 
     $("#gridUsuario").DataTable({
@@ -70,7 +64,7 @@
             url: "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
         },
         "columnDefs": [
-            { "targets": [4, 5], "orderable": false, "searchable": false }
+            { "targets": [3, 4], "orderable": false, "searchable": false }
         ],
         "aaSorting": []
     });
@@ -100,13 +94,13 @@
         modalEditar: function (elem) {
 
             var id = $(elem).attr("id-registro");
-            
+
             $.ajax({
                 url: "@Url.Action("ModalEditar", "Usuario")/",
                 type: "GET",
                 data: {id : id},
                 success: function (html) {
-                    debugger;
+
                     bootbox.dialog({
                         title: "Editar Usuário",
                         message: html
@@ -122,7 +116,7 @@
             var nome = $(elem).attr("nome-registro");
 
             swal({
-                title: 'Você confirma a exclusão do Usuário ' + nome + '?',
+                title: 'Você confirma a exclusão do Usuário de Email ' + nome + '?',
                 text: '',
                 type: 'question',
                 showCancelButton: true,
@@ -152,7 +146,7 @@
                                     type: 'success',
                                     confirmButtonColor: '#10386B',
                                     allowOutsideClick: false
-                                }).then(function () {                                    
+                                }).then(function () {
                                     bootbox.hideAll();
                                     funcoesIndexTabs.listaUsuarios($(".abaUsuarios"), false);
                                 });

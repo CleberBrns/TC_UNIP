@@ -169,7 +169,7 @@
 
                 var cpf = $('#profissional').val();
 
-                if (cpf !== "" && data !== "") {
+                if ((cpf !== undefined && cpf !== "") && (data !== undefined && data !== "")) {
 
                     $.ajax({
                         url: "@Url.Action("VerificaHorariosDataProfissional", "Agenda")",

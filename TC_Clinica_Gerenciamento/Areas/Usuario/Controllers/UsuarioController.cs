@@ -23,7 +23,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
             if (!session.GetModelFromSession(sessionName).Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;            
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
@@ -153,6 +153,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
             //Seleciona somente os itens há serem exibidos para melhor performance
             if (list != null && list.Count > 0)
             {
+                var listPerfil = GetListPerfil();
                 var modelFuncionario = new Models.Servico.Funcionario();
                 var newFuncionario = modelFuncionario.GetModelDefault();
 
@@ -167,7 +168,9 @@ namespace TCC_Unip.Areas.Usuario.Controllers
                 {
                     Cpf = l.Cpf,
                     Email = l.Email,
-                    Permissoes = l.Permissoes,
+                    Permissoes = listPerfil.Where(lp => lp.Value == l.Permissoes.FirstOrDefault())
+                                           .Select(p => p.Name)
+                                           .ToArray(),
                     Status = l.Status,
                     Funcionario = new Models.Servico.Funcionario
                     {
