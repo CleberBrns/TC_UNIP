@@ -58,14 +58,14 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetCalendarioAgendaMesAtual()
+        public JsonResult GetCalendarioAgendaMesAtual(bool getFromSession)
         {
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
             try
             {
-                var agendaCalendario = GetAgendaMesAtualCalendario();
+                var agendaCalendario = GetAgendaMesAtualCalendario(getFromSession);
 
                 return Json(new { agendaCalendario }, JsonRequestBehavior.AllowGet);
             }
@@ -80,31 +80,6 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         }
 
-        private List<EventoCalendario> GetAgendaMesAtualCalendario()
-        {
-            var incioMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            var fimMes = incioMes.AddMonths(1).AddDays(-1);
-
-            var listAgendaDoMes = _agendaService.ListAgendaPeriodo(incioMes.ToShortDateString(), fimMes.ToShortDateString()).value;
-
-            var list = listAgendaDoMes.Select(l =>
-                                       new EventoCalendario
-                                       {
-                                           IdConsulta = l.Id,
-                                           Titulo = l.Modalidade +
-                                                    ", Paciente " +
-                                                    l.Paciente.Nome +
-                                                    ", Profissional " +
-                                                    l.Funcionario.Nome,
-                                           Descricao = "Teste Descrição",
-                                           ComecaEm = l.FromMilliseconds(l.DateTimeService),
-                                           TerminaEm = l.FromMilliseconds(l.DateTimeService).AddHours(1),
-                                           CorEvento = Color.Blue.ToString()
-                                       }).ToList();
-
-            return list;
-        }
-
         public ActionResult ListaConsultasPorDatas(string dataInicio, string dataFim)
         {
             ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
@@ -114,7 +89,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
             try
             {
-                var resultService = _agendaService.ListAgendaPeriodo(dataInicio, dataFim);
+                var resultService = _agendaService.ListAgendaPeriodo(dataInicio, dataFim, false);
 
                 msgExibicao = resultService.message;
                 msgAnalise = resultService.errorMessage;
@@ -140,6 +115,12 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             ViewBag.ListHorarios = GetListHorarios();
            
             return PartialView("_Gerenciar");
+        }
+        
+        public ActionResult ModalVisualizar(EventoCalendario evento)
+        {
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            return PartialView("_Visualizar", evento);
         }
 
         public ActionResult GetModalidadesProfissional(string cpf)
@@ -228,7 +209,59 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
         }
 
-        #region Métods Privados   
+        #region Métods Privados
+
+        private List<EventoCalendario> GetAgendaMesAtualCalendario(bool getFromSession)
+        {
+            var incioMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var fimMes = incioMes.AddMonths(1).AddDays(-1);
+
+            var listAgendaDoMes = _agendaService.ListAgendaPeriodo(incioMes.ToShortDateString(), 
+                                                                   fimMes.ToShortDateString(),
+                                                                   getFromSession).value;
+
+            var list = listAgendaDoMes.Select(l =>
+                                       new EventoCalendario
+                                       {
+                                           IdConsulta = l.Id,
+                                           Titulo = l.Modalidade,
+                                           Descricao = GetDescricaoEvento(l),
+                                           ComecaEm = l.FromMilliseconds(l.DateTimeService),
+                                           TerminaEm = l.FromMilliseconds(l.DateTimeService).AddHours(1),
+                                           CorEvento = GetCorEvento(l.FromMilliseconds(l.DateTimeService))
+                                       }).ToList();
+
+            return list;
+        }
+
+        private string GetTituloEvento(Models.Servico.Agenda agenda)
+        {
+            var paciente = agenda.Paciente.Nome.Substring(0, Math.Min(8, agenda.Paciente.Nome.Length));
+            var profissional = agenda.Funcionario.Nome.Substring(0, Math.Min(8, agenda.Funcionario.Nome.Length));
+            var titulo = agenda.Modalidade + ", " + paciente + ", " + profissional;
+
+            return titulo;
+        }
+
+        private string GetDescricaoEvento(Models.Servico.Agenda agenda)
+        {
+            return "Sessão de " + agenda.Modalidade + ", " +
+                   " agendada para o Paciente " + agenda.Paciente.Nome +
+                   " com o Profissional " + agenda.Funcionario.Nome;                 
+        }
+
+        private string GetCorEvento(DateTime dataEvento)
+        {
+            var cor = Color.Green.ToString();
+
+            var dataAtual = DateTime.Now;
+            if (dataEvento.Date == dataAtual.Date)            
+                cor = Color.Yellow.ToString();            
+            else if (dataEvento.Date < dataAtual)            
+                cor = Color.Red.ToString();
+
+            return cor;            
+        }
 
         private List<Models.Servico.Paciente> GetListPacientes()
         {

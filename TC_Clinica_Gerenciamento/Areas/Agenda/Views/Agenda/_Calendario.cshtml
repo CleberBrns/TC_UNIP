@@ -8,6 +8,9 @@
         background-color: #ccc !important;
         font-weight: bold;
     }
+    .fc-event {
+        cursor: pointer;
+    }
 </style>
 
 <div id="calendario"></div>
@@ -21,11 +24,30 @@
     $(document).ready(function () {
 
         var eventos = [];
-        calendario.carregaAgendaDoMesAtual();
+        calendario.carregaAgendaDoMesAtual(true);
 
     });
 
     var calendario = {
+
+        visualizarEvento: function (evento) {
+
+            $.ajax({
+                url: "@Url.Action("ModalVisualizar", "Agenda")",
+                type: "POST",
+                data: { evento: evento },
+                success: function (html) {
+                        bootbox.dialog({
+                            title: "Dados Consulta",
+                            message: html
+                        });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                }
+            });
+
+        },
 
         configuraCalendario: function (events) {
 
@@ -42,28 +64,31 @@
                 events: events,
                 eventClick: function (calEvent, jsEvent, view) {
 
-                    alert('Event: ' + calEvent.title);
-                    alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-                    alert('View: ' + view.name);
+                    var evento = {
+                        IdConsulta: calEvent.id,
+                        Titulo: calEvent.title,
+                        Descricao: calEvent.description,
+                        ComecaEm: calEvent.start.format("DD-MM-YYYY HH:mm"),
+                        TerminaEm: calEvent.end.format("DD-MM-YYYY HH:mm")
+                    };
 
-                    // change the border color just for fun
-                    $(this).css('border-color', 'red');
-
+                    debugger;
+                    calendario.visualizarEvento(evento);
                 }
             });
 
         },
 
-        carregaAgendaDoMesAtual: function (object, getFromSession) {
+        carregaAgendaDoMesAtual: function (getFromSession) {
 
             var eventos = [];
 
             $.ajax({
                 url: "@Url.Action("GetCalendarioAgendaMesAtual", "Agenda")",
-                //data: { getFromSession: getFromSession },
+                data: { getFromSession: getFromSession },
                 type: "GET",
                 success: function (result) {
-                    
+
                     if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
                         $.each(result.agendaCalendario, function (i, event) {
                             eventos.push({

@@ -13,7 +13,7 @@ namespace TCC_Unip.Services
     {
         readonly AgendaAPI service = new AgendaAPI();
         readonly AgendaSession session = new AgendaSession();
-        readonly string sessionAgenda = Constants.ConstSessions.listAgenda;
+        readonly string sessionAgendaPeriodos = Constants.ConstSessions.listAgendaPeriodos;
         readonly string sessionAgendaDoDia = Constants.ConstSessions.listAgendaDoDia;
         readonly string sessionConsultas = Constants.ConstSessions.listConsultas;
 
@@ -53,20 +53,11 @@ namespace TCC_Unip.Services
             return result;
         }
 
-        private List<Agenda> GetAgendaDoDia()
-        {
-            var list = service.ListAgendasPeriodo(DateTime.Now.ToShortDateString(), DateTime.Now.ToShortDateString());
-
-            if (list.Count > 0)
-                session.AddListToSession(list, sessionAgendaDoDia);
-
-            return list;
-        }
-
-        public ResultService<List<Agenda>> ListAgendaPeriodo(string dateFrom, string dateTo)
+        public ResultService<List<Agenda>> ListAgendaPeriodo(string dateFrom, string dateTo, bool getFromSession)
         {
             var result = new ResultService<List<Agenda>>();
-            var retorno = service.ListAgendasPeriodo(dateFrom.Trim(), dateTo.Trim());
+            var retorno = GetAgendaPeriodo(dateFrom.Trim(), dateTo.Trim(), 
+                                           getFromSession ? sessionAgendaPeriodos : string.Empty);
 
             var list = ConfiguraAgendaService(retorno);
             result.value = list;
@@ -151,6 +142,36 @@ namespace TCC_Unip.Services
         }
 
         #region Métodos Privados
+
+        private List<Agenda> GetAgendaDoDia()
+        {
+            return GetAgendaPeriodo(DateTime.Now.ToLongDateString(), DateTime.Now.ToLongDateString(), sessionAgendaDoDia);
+        }
+
+        private List<Agenda> GetAgendaPeriodo(string dataDe, string dataAte, string sessionAgenda)
+        {
+            var list = new List<Agenda>();
+
+            var getFromSession = !string.IsNullOrEmpty(sessionAgenda);
+
+            if (getFromSession)
+            {
+                var retornoSession = session.GetListFromSession(sessionAgenda);
+
+                if (retornoSession.Item2)
+                    list = retornoSession.Item1;
+                else
+                    list = service.ListAgendasPeriodo(dataDe, dataAte);
+
+                if (!string.IsNullOrEmpty(sessionAgenda))
+                    if (list.Count > 0)
+                        session.AddListToSession(list, sessionAgenda);
+            }
+            else            
+                list = service.ListAgendasPeriodo(dataDe, dataDe);            
+
+            return list;
+        }
 
         /// <summary>
         /// Configura a DataHora(salvo com long) retornado da service, 
