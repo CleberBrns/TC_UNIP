@@ -22,12 +22,14 @@ namespace TCC_Unip.Areas.Agenda.Controllers
         readonly UsuarioSession session = new UsuarioSession();
         readonly string sessionName = Constants.ConstSessions.usuario;
 
+        #region Grid
+
         public ActionResult Listagem(bool getFromSession)
         {
             if (!session.GetModelFromSession(sessionName).Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;           
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
 
             return PartialView("_Index");
         }
@@ -58,28 +60,6 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetCalendarioAgendaMesAtual(bool getFromSession)
-        {
-            string msgExibicao = string.Empty;
-            string msgAnalise = string.Empty;
-
-            try
-            {
-                var agendaCalendario = GetAgendaMesAtualCalendario(getFromSession);
-
-                return Json(new { agendaCalendario }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                msgExibicao = Constants.Constants.msgFalhaAoListar;
-                msgAnalise = ex.ToString();
-            }
-
-            var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
-            return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
-
-        }
-
         public ActionResult ListaConsultasPorDatas(string dataInicio, string dataFim)
         {
             ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
@@ -106,22 +86,35 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ModalCadastrar()
-        {
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+        #endregion
 
-            ViewBag.ListPacientes = GetListPacientes();            
-            ViewBag.ListProfissionais = GetListProfissionais();            
-            ViewBag.ListHorarios = GetListHorarios();
-           
-            return PartialView("_Gerenciar");
-        }
-        
-        public ActionResult ModalVisualizar(EventoCalendario evento)
+        #region Calendário
+
+        public JsonResult GetCalendarioAgendaMesAtual(bool getFromSession)
         {
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
-            return PartialView("_Visualizar", evento);
+            string msgExibicao = string.Empty;
+            string msgAnalise = string.Empty;
+
+            try
+            {
+                var agendaCalendario = GetAgendaMesAtualCalendario(getFromSession);
+
+                return Json(new { agendaCalendario }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                msgExibicao = Constants.Constants.msgFalhaAoListar;
+                msgAnalise = ex.ToString();
+            }
+
+            var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
+            return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+
         }
+
+        #endregion
+
+        #region Modal Gerenciar
 
         public ActionResult GetModalidadesProfissional(string cpf)
         {
@@ -172,7 +165,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
                 //if (consultasProfissiona.status)                
                 //    if (consultasProfissiona.value.Consultas.Count > 0)
                 //    {
-                        
+
                 //    }
 
 
@@ -206,6 +199,82 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             {
                 msgExibicao = Constants.Constants.msgFalhaAoListar;
                 msgAnalise = ex.ToString();
+            }
+
+            var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
+            return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        public ActionResult ModalCadastrar()
+        {
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+
+            ViewBag.ListPacientes = GetListPacientes();            
+            ViewBag.ListProfissionais = GetListProfissionais();            
+            ViewBag.ListHorarios = GetListHorarios();
+           
+            return PartialView("_Gerenciar");
+        }
+        
+        public ActionResult ModalEditar(string id)
+        {
+            string msgExibicao = string.Empty;
+            string msgAnalise = string.Empty;
+
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+
+            ViewBag.ListPacientes = GetListPacientes();
+            ViewBag.ListProfissionais = GetListProfissionais();
+            ViewBag.ListHorarios = GetListHorarios();
+
+            try
+            {
+                var resultService = _agendaService.Get(id);
+
+                if (resultService.status)
+                    return PartialView("_Gerenciar", resultService.value);
+                else
+                {
+                    msgExibicao = resultService.message;
+                    msgAnalise = "Erro!";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                msgExibicao = Constants.Constants.msgFalhaAoCarregar;
+                msgAnalise = ex.Message;
+            }
+
+            var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
+            return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ModalVisualizar(EventoCalendario evento)
+        {
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            return PartialView("_Visualizar", evento);
+        }
+
+        [HttpPost]
+        public ActionResult Excluir(string id)
+        {
+            string msgExibicao = string.Empty;
+            string msgAnalise = string.Empty;
+
+            try
+            {
+                var resultService = _agendaService.Delete(id);
+
+                msgExibicao = resultService.message;
+                msgAnalise = resultService.value ? resultService.errorMessage : "Falha";
+            }
+            catch (Exception ex)
+            {
+                msgExibicao = Constants.Constants.msgFalhaAoExcluir;
+                msgAnalise = ex.Message;
             }
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);

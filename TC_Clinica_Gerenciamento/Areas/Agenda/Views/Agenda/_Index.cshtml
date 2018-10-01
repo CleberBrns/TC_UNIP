@@ -157,13 +157,13 @@
         },
 
         modalEditar: function (elem) {
-
+            
             var id = $(elem).attr("id-registro");
 
             $.ajax({
-                url: "@Url.Action("ModalEditar", "Consulta")/",
+                url: "@Url.Action("ModalEditar", "Agenda")/",
                 type: "GET",
-                data: {id : id},
+                data: { id: id },
                 success: function (html) {
                     bootbox.dialog({
                         title: "Editar Consulta",
@@ -221,6 +221,7 @@
                                 }).then(function () {
                                     bootbox.hideAll();
                                     indexAgenda.listaAgendaGrid($(".abaGridConsultas"), false);
+                                    calendarioAgenda.carregaCalendarioDoMesAtual(false);
                                 });
                             }
                             else {

@@ -35,7 +35,22 @@
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listPacientes)
                                 {
-                                    <option value="@item.Cpf">@item.Nome</option>
+                                    if (Model.Paciente != null && !string.IsNullOrEmpty(Model.Paciente.Cpf))
+                                    {
+                                        if (Model.Paciente.Cpf == item.Cpf)
+                                        {
+                                            <option value="@item.Cpf" selected="selected">@item.Nome</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Cpf">@item.Nome</option>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Cpf">@item.Nome</option>
+                                    }
                                 }
                             </select>
                             <span class="field-validation-valid text-danger" id="validaPaciente" data-valmsg-replace="true"></span>
@@ -50,7 +65,22 @@
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listProfissionais)
                                 {
-                                    <option value="@item.Cpf">@item.Nome</option>
+                                    if (Model.Funcionario != null && !string.IsNullOrEmpty(Model.Funcionario.Cpf))
+                                    {
+                                        if (Model.Funcionario.Cpf == item.Cpf)
+                                        {
+                                            <option value="@item.Cpf" selected="selected">@item.Nome</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Cpf">@item.Nome</option>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Cpf">@item.Nome</option>
+                                    }
                                 }
                             </select>
                             <span class="field-validation-valid text-danger" id="validaProfissional" data-valmsg-replace="true"></span>
@@ -71,7 +101,8 @@
                         @Html.Label("Data", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-6">
                             <div class="input-group" style="width: 60%">
-                                <input type="text" class="form-control alinhamentoSelect" id="data" name="Data" />
+                                <input type="text" class="form-control alinhamentoSelect" id="data" name="Data" 
+                                       value="@Model.Data.ToShortDateString()" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                                 </span>
@@ -93,7 +124,8 @@
                     <div class="form-group">
                         @Html.Label("Valor - R$", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-6">
-                            <input type="text" class="form-control alinhamentoSelect" id="valor" style="width: 60%" name="Valor" />
+                            <input type="text" class="form-control alinhamentoSelect" id="valor" style="width: 60%" name="Valor"
+                                   value="@Model.Valor"/>
                             <span class="field-validation-valid text-danger" id="validaValor" data-valmsg-replace="true"></span>
                         </div>
                     </div>
@@ -230,7 +262,7 @@
                                 confirmButtonColor: '#10386B',
                                 allowOutsideClick: false
                             }).then(function () {
-                                //indexAgenda.listaAgendaGrid($(".abaGridConsultas"), false);
+                                indexAgenda.listaAgendaGrid($(".abaGridConsultas"), false);
                                 calendarioAgenda.carregaCalendarioDoMesAtual(false);
                                 bootbox.hideAll();
                             });
