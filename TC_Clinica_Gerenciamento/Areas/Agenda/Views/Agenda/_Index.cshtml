@@ -101,15 +101,34 @@
         });
 
     $("#btnNovaConsulta").on('click', function () {
-        listagemAgenda.modalCadastrar();
+        indexAgenda.modalCadastrar();
     });
 
     $('#abas a').click(function (e) {
         e.preventDefault();
-        listagemAgenda.carregaDivDaTab(this);
+        indexAgenda.carregaDivDaTab(this);
     });
 
-    var listagemAgenda = {
+    var indexAgenda = {
+
+        visualizarEventoCalendario: function (evento) {
+
+            $.ajax({
+                url: "@Url.Action("ModalVisualizar", "Agenda")",
+                type: "POST",
+                data: { evento: evento },
+                success: function (html) {
+                        bootbox.dialog({
+                            title: "Dados Consulta",
+                            message: html
+                        });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                }
+            });
+
+        },
 
         modalCadastrar: function () {
             $.ajax({
@@ -134,12 +153,12 @@
 
             if (tabName === 'abaCalendario') {
                 if (carregado === undefined || carregado === "false") {
-                    listagemAgenda.listaAgendaCalendario(object, true);
+                    indexAgenda.listaAgendaCalendario(object, true);
                 }
             }
             else if (tabName === 'abaGridConsultas') {
                 if (carregado === undefined || carregado === "false") {
-                    listagemAgenda.listaAgendaGrid(object, true);
+                    indexAgenda.listaAgendaGrid(object, true);
                 }
             }
 
@@ -151,7 +170,96 @@
 
         listaAgendaGrid: function (object, getFromSession) {
 
-            listagemAgenda.getAgendaDoDia(object, getFromSession);
+            indexAgenda.getAgendaDoDia(object, getFromSession);
+        },
+
+        modalEditar: function (elem) {
+
+            var id = $(elem).attr("id-registro");
+
+            $.ajax({
+                url: "@Url.Action("ModalEditar", "Consulta")/",
+                type: "GET",
+                data: {id : id},
+                success: function (html) {
+                    bootbox.dialog({
+                        title: "Editar Consulta",
+                        message: html
+                    });
+                },error: function (jqXHR, textStatus, errorThrown) {
+                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                }
+            });
+        },
+
+        excluir: function (elem, fromCalendario) {           
+
+            var tituloExclusao = '';
+
+            if (fromCalendario) {
+                tituloExclusao = 'Você confirma a exclusão da consulta da consulta?';
+            }
+            else {
+                var nome = $(elem).attr("nome-registro");
+                tituloExclusao = 'Você confirma a exclusão da consulta do ' + nome + '?';
+            }
+
+            swal({
+                title: tituloExclusao,
+                text: '',
+                type: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#10386B',
+                confirmButtonText: 'Ok',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                allowOutsideClick: false
+            }).then((willDelete) => {
+
+                if (willDelete.value) {
+
+                    var id = $(elem).attr("id-registro");
+
+                    $.ajax({
+                        url: "@Url.Action("Excluir", "Agenda")/",
+                        type: "POST",
+                        data: { id: id },
+                        success: function (result) {
+
+                            var retorno = result.mensagensRetorno;
+
+                            if (retorno.Status) {
+                                swal({
+                                    title: '',
+                                    text: retorno.MensagemExibicao,
+                                    type: 'success',
+                                    confirmButtonColor: '#10386B',
+                                    allowOutsideClick: false
+                                }).then(function () {
+                                    bootbox.hideAll();
+                                    indexAgenda.listaAgendaGrid($(".abaGridConsultas"), false);
+                                });
+                            }
+                            else {
+
+                                swal({
+                                    title: '',
+                                    text: retorno.MensagemExibicao,
+                                    type: 'warning',
+                                    confirmButtonColor: '#10386B',
+                                    allowOutsideClick: false
+                                });
+                                console.log(retorno.MensagemAnalise);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                        }
+                    });
+
+                }
+
+            });
         },
 
         getAgendaDoDia: function (object, getFromSession) {
@@ -185,7 +293,7 @@
 
         getAgendaPorDatas: function (dataInicio, dataFim) {
 
-            if (listagemAgenda.validaBuscaPorDatas(dataInicio, dataFim)) {
+            if (indexAgenda.validaBuscaPorDatas(dataInicio, dataFim)) {
 
                 $.ajax({
                     url: "@Url.Action("ListaConsultasPorDatas", "Agenda")",

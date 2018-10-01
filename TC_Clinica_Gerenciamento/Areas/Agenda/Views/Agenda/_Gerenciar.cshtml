@@ -230,7 +230,8 @@
                                 confirmButtonColor: '#10386B',
                                 allowOutsideClick: false
                             }).then(function () {
-                                listagemAgenda.listaAgendaGrid($(".abaGridConsultas"), false);
+                                //indexAgenda.listaAgendaGrid($(".abaGridConsultas"), false);
+                                calendario.carregaAgendaDoMesAtual(false);
                                 bootbox.hideAll();
                             });
                         }

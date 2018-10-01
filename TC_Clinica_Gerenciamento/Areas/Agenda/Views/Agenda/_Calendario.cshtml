@@ -28,26 +28,7 @@
 
     });
 
-    var calendario = {
-
-        visualizarEvento: function (evento) {
-
-            $.ajax({
-                url: "@Url.Action("ModalVisualizar", "Agenda")",
-                type: "POST",
-                data: { evento: evento },
-                success: function (html) {
-                        bootbox.dialog({
-                            title: "Dados Consulta",
-                            message: html
-                        });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
-                }
-            });
-
-        },
+    var calendario = {        
 
         configuraCalendario: function (events) {
 
@@ -71,9 +52,8 @@
                         ComecaEm: calEvent.start.format("DD-MM-YYYY HH:mm"),
                         TerminaEm: calEvent.end.format("DD-MM-YYYY HH:mm")
                     };
-
-                    debugger;
-                    calendario.visualizarEvento(evento);
+                    
+                    indexAgenda.visualizarEventoCalendario(evento);
                 }
             });
 
@@ -97,7 +77,8 @@
                                 description: event.Descricao,
                                 start: moment(event.ComecaEm),
                                 end: moment(event.TerminaEm),
-                                color: event.CorEvento
+                                color: event.CorEvento,
+                                backgroundColor: event.CorEvento
                             });
                         });
 

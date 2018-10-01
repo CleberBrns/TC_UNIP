@@ -163,17 +163,20 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
             try
             {
-                var dataBusca = Convert.ToDateTime(data);
-                var consultasProfissiona = _agendaService.ConsultasPeriodoFuncionario(cpf, dataBusca, dataBusca);
+                //TO DO - Remover os horários das consultas existentes do Profissional
+                //var dataBusca = Convert.ToDateTime(data);
+                //var consultasProfissiona = _agendaService.ConsultasPeriodoFuncionario(cpf, dataBusca, dataBusca);
+
+                //var listHorariosDisponiveis = GetListHorarios();
+
+                //if (consultasProfissiona.status)                
+                //    if (consultasProfissiona.value.Consultas.Count > 0)
+                //    {
+                        
+                //    }
+
 
                 var listHorariosDisponiveis = GetListHorarios();
-                 
-                //TO DO - Remover os horários das consultas existentes do Profissional
-                if (consultasProfissiona.status)                
-                    if (consultasProfissiona.value.Consultas.Count > 0)
-                    {
-                        
-                    }                
 
                 return Json(listHorariosDisponiveis, JsonRequestBehavior.AllowGet);
             }
