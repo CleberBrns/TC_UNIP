@@ -21,12 +21,6 @@
 <script src="~/Scripts/locale/pt-br.js"></script>
 
 <script>
-    $(document).ready(function () {
-
-        var eventos = [];
-        calendario.carregaAgendaDoMesAtual(true);
-
-    });
 
     var calendario = {        
 
@@ -53,57 +47,11 @@
                         TerminaEm: calEvent.end.format("DD-MM-YYYY HH:mm")
                     };
                     
-                    indexAgenda.visualizarEventoCalendario(evento);
+                    calendarioAgenda.visualizarEventoCalendario(evento);
                 }
             });
-
-        },
-
-        carregaAgendaDoMesAtual: function (getFromSession) {
-
-            var eventos = [];
-
-            $.ajax({
-                url: "@Url.Action("GetCalendarioAgendaMesAtual", "Agenda")",
-                data: { getFromSession: getFromSession },
-                type: "GET",
-                success: function (result) {
-
-                    if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
-                        $.each(result.agendaCalendario, function (i, event) {
-                            eventos.push({
-                                id: event.IdConsulta,
-                                title: event.Titulo,
-                                description: event.Descricao,
-                                start: moment(event.ComecaEm),
-                                end: moment(event.TerminaEm),
-                                color: event.CorEvento,
-                                backgroundColor: event.CorEvento
-                            });
-                        });
-
-                        calendario.configuraCalendario(eventos);
-                    }
-                    else {
-                        var retorno = result.mensagensRetorno;
-                        swal({
-                            title: '',
-                            text: retorno.MensagemExibicao,
-                            type: 'warning',
-                            confirmButtonColor: '#10386B',
-                            allowOutsideClick: false
-                        });
-                        console.log(retorno.MensagemAnalise);
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
-                }
-            });
-
         }
 
     };
-
 
 </script>

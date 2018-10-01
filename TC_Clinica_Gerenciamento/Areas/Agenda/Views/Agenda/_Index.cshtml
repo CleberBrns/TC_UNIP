@@ -98,6 +98,8 @@
             });
             //End Abas
 
+            calendarioAgenda.carregaCalendarioDoMesAtual(true);
+
         });
 
     $("#btnNovaConsulta").on('click', function () {
@@ -110,25 +112,6 @@
     });
 
     var indexAgenda = {
-
-        visualizarEventoCalendario: function (evento) {
-
-            $.ajax({
-                url: "@Url.Action("ModalVisualizar", "Agenda")",
-                type: "POST",
-                data: { evento: evento },
-                success: function (html) {
-                        bootbox.dialog({
-                            title: "Dados Consulta",
-                            message: html
-                        });
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
-                }
-            });
-
-        },
 
         modalCadastrar: function () {
             $.ajax({
@@ -192,7 +175,7 @@
             });
         },
 
-        excluir: function (elem, fromCalendario) {           
+        excluir: function (elem, fromCalendario) {
 
             var tituloExclusao = '';
 
@@ -320,7 +303,7 @@
                         validacao.errorAjax(jqXHR, textStatus, errorThrown);
                     }
                 });
-            }            
+            }
         },
 
         validaBuscaPorDatas: function (dataOne, dataTwo) {
@@ -360,9 +343,74 @@
                 });
 
                 return false;
-            }            
+            }
         }
     };
+
+        var calendarioAgenda = {
+
+            carregaCalendarioDoMesAtual: function (getFromSession) {
+
+                var eventos = [];
+
+                $.ajax({
+                    url: "@Url.Action("GetCalendarioAgendaMesAtual", "Agenda")",
+                    data: { getFromSession: getFromSession },
+                    type: "GET",
+                    success: function (result) {
+
+                        if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
+                            $.each(result.agendaCalendario, function (i, event) {
+                                eventos.push({
+                                    id: event.IdConsulta,
+                                    title: event.Titulo,
+                                    description: event.Descricao,
+                                    start: moment(event.ComecaEm),
+                                    end: moment(event.TerminaEm),
+                                    color: event.CorEvento,
+                                    backgroundColor: event.CorEvento
+                                });
+                            });
+
+                            calendario.configuraCalendario(eventos);
+                        }
+                        else {
+                            var retorno = result.mensagensRetorno;
+                            swal({
+                                title: '',
+                                text: retorno.MensagemExibicao,
+                                type: 'warning',
+                                confirmButtonColor: '#10386B',
+                                allowOutsideClick: false
+                            });
+                            console.log(retorno.MensagemAnalise);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                    }
+                });
+            },
+
+            visualizarEventoCalendario: function (evento) {
+
+                $.ajax({
+                    url: "@Url.Action("ModalVisualizar", "Agenda")",
+                    type: "POST",
+                    data: { evento: evento },
+                    success: function (html) {
+                            bootbox.dialog({
+                                title: "Dados Consulta",
+                                message: html
+                            });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                    }
+                });
+            }
+
+        };
 
     </script>
 }

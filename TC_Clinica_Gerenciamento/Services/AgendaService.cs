@@ -168,7 +168,7 @@ namespace TCC_Unip.Services
                         session.AddListToSession(list, sessionAgenda);
             }
             else            
-                list = service.ListAgendasPeriodo(dataDe, dataDe);            
+                list = service.ListAgendasPeriodo(dataDe, dataAte);            
 
             return list;
         }
