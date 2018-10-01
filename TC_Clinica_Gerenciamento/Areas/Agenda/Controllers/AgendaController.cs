@@ -214,8 +214,10 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             ViewBag.ListPacientes = GetListPacientes();            
             ViewBag.ListProfissionais = GetListProfissionais();            
             ViewBag.ListHorarios = GetListHorarios();
+
+            var model = new Models.Servico.Agenda();
            
-            return PartialView("_Gerenciar");
+            return PartialView("_Gerenciar", model.GetModelDefault());
         }
         
         public ActionResult ModalEditar(string id)
@@ -223,18 +225,25 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
-
-            ViewBag.ListPacientes = GetListPacientes();
-            ViewBag.ListProfissionais = GetListProfissionais();
-            ViewBag.ListHorarios = GetListHorarios();
+            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;         
 
             try
             {
                 var resultService = _agendaService.Get(id);
 
                 if (resultService.status)
-                    return PartialView("_Gerenciar", resultService.value);
+                {
+                    var model = resultService.value;
+                    ViewBag.ListPacientes = GetListPacientes();
+                    ViewBag.ListProfissionais = GetListProfissionais();
+                    ViewBag.ListHorarios = GetListHorarios();
+                    ViewBag.ListModalidades = GetListModalidadesProfissional(model.Funcionario.Cpf);
+
+                    model.Data = model.FromMilliseconds(model.DateTimeService);
+                    model.Horario = model.Data.ToShortTimeString();
+
+                    return PartialView("_Gerenciar", model);
+                }
                 else
                 {
                     msgExibicao = resultService.message;
@@ -250,6 +259,22 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+        }
+
+        private List<DataSelectControl> GetListModalidadesProfissional(string cpf)
+        {
+            var resultService = _funcionarioService.Get(cpf);
+
+            var listModalidades = new List<DataSelectControl>();
+            if (resultService.status)
+            {
+                listModalidades = GetListModalidades();
+
+                var modalidadesProf = resultService.value.Modalidades;
+                listModalidades = listModalidades.Where(l => modalidadesProf.Contains(l.Value)).ToList();
+            }
+
+            return listModalidades;
         }
 
         public ActionResult ModalVisualizar(EventoCalendario evento)

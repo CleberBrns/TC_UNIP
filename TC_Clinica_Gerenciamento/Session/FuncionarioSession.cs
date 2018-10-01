@@ -16,9 +16,9 @@ namespace TCC_Unip.Session
             var retornolistFromSession = this.GetListFromSession(sessionName);
 
             if (retornolistFromSession.Item2 && retornolistFromSession.Item1.Count > 0)
-            {
-                sessionValida = true;
+            {                
                 model = retornolistFromSession.Item1.Where(l => l.Cpf.Equals(cpf)).FirstOrDefault();
+                sessionValida = model != null;
             }
 
             return new Tuple<Funcionario, bool>(model, sessionValida);

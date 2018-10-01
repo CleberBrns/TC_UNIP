@@ -56,10 +56,5 @@ namespace TCC_Unip.Models.Servico
         {
             return DateTime.Parse(data.ToString("dd/MM/yyyy") + " " + hora);
         }
-
-        public DateTime ConfiguraDataFromService(string data)
-        {            
-            return new DateTime(Convert.ToInt64(data.Trim()));
-        }
     }
 }

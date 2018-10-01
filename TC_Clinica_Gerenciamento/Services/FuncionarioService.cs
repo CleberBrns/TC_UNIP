@@ -21,13 +21,16 @@ namespace TCC_Unip.Services
 
             var retornoSession = session.GetFromListSession(cpf, sessionName);
 
-            if (retornoSession.Item2 && !string.IsNullOrEmpty(retornoSession.Item1.Cpf))
+            if (retornoSession.Item2)
                 result.value = retornoSession.Item1;
             else
                 result.value = service.Get(cpf);
 
             if (string.IsNullOrEmpty(result.value.Cpf))
+            {
                 result.message = "O Funcionário não existe mais na base de dados do serviço!";
+                result.errorMessage = "Inexistente";
+            }
 
             return result;
         }
