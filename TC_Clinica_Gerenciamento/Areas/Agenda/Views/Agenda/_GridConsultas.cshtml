@@ -4,17 +4,6 @@
     var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
 }
 
-<link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
-<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
-<script src="~/Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
-
-<style type="text/css">
-    .datepicker {
-        background: #808080;
-        color: #ffffff;
-    }
-</style>
-
 @if (user != null)
 {
     <div class="row">
@@ -63,15 +52,6 @@
 
     <script>
 
-
-        $('.dataPesquisa').datepicker({
-            format: "dd/mm/yyyy",
-            autoclose: true,
-            language: "pt-BR"
-        });
-
-        $('.dataPesquisa').mask('99/99/9999', { placeholder: "dd/mm/aaaa" });
-
     $("#gridAgenda").DataTable({
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
@@ -81,14 +61,6 @@
         ],
         "aaSorting": []
     });
-
-    $("#btPesquisar").on('click', function () {
-        indexAgenda.getAgendaPorDatas($("#dataInicio").val(), $("#dataFim").val());
-    });
-
-    var agendaListagem = {
-
-    };
 
     </script>
 }

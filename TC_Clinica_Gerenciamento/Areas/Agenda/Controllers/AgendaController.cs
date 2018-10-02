@@ -90,14 +90,39 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         #region Calendário
 
-        public JsonResult GetCalendarioAgendaMesAtual(bool getFromSession)
+        public JsonResult GetAgendaCalendarioDatas(string dataInicio, string dataFim)
         {
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
             try
             {
-                var agendaCalendario = GetAgendaMesAtualCalendario(getFromSession);
+                var agendaCalendario = GetAgendaCalendarioPorDatas(dataInicio, dataFim, false);
+                return Json(new { agendaCalendario }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                msgExibicao = Constants.Constants.msgFalhaAoListar;
+                msgAnalise = ex.ToString();
+            }
+
+            var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
+            return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetAgendaCalendarioMesAtual(bool getFromSession)
+        {
+            string msgExibicao = string.Empty;
+            string msgAnalise = string.Empty;
+
+            try
+            {
+                var inicioMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                var fimMes = inicioMes.AddMonths(1).AddDays(-1);
+
+                var agendaCalendario = GetAgendaCalendarioPorDatas(inicioMes.ToShortDateString(), 
+                                                                   fimMes.ToShortDateString(), 
+                                                                   getFromSession);
 
                 return Json(new { agendaCalendario }, JsonRequestBehavior.AllowGet);
             }
@@ -109,7 +134,6 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
-
         }
 
         #endregion
@@ -308,14 +332,9 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         #region Métods Privados
 
-        private List<EventoCalendario> GetAgendaMesAtualCalendario(bool getFromSession)
+        private List<EventoCalendario> GetAgendaCalendarioPorDatas(string dataIncio, string dataFim, bool getFromSession)
         {
-            var incioMes = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            var fimMes = incioMes.AddMonths(1).AddDays(-1);
-
-            var listAgendaDoMes = _agendaService.ListAgendaPeriodo(incioMes.ToShortDateString(), 
-                                                                   fimMes.ToShortDateString(),
-                                                                   getFromSession).value;
+            var listAgendaDoMes = _agendaService.ListAgendaPeriodo(dataIncio,dataFim,getFromSession).value;
 
             var list = listAgendaDoMes.Select(l =>
                                        new EventoCalendario

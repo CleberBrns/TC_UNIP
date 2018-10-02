@@ -26,11 +26,11 @@
 
         configuraCalendario: function (events) {
 
-            $('#calendario').fullCalendar('destroy');
+            //$('#calendario').fullCalendar('destroy');
             $('#calendario').fullCalendar({
                 timeFormat: 'H:mm',
                 header: {
-                    left: 'prev,next today',
+                    left: 'customPrevButton,customNextButton  today',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
@@ -48,8 +48,32 @@
                     };
                     
                     calendarioAgenda.visualizarEventoCalendario(evento);
+                },
+                customButtons: {
+                    customPrevButton: {
+                        text: '<',
+                        click: function () {                            
+                            $('#calendario').fullCalendar('prev');
+                            calendario.carregaPorDatas();
+                        }                        
+                    },
+                    customNextButton: {
+                        text: '>',
+                        click: function () {
+                            $('#calendario').fullCalendar('next');
+                            calendario.carregaPorDatas();
+                        }
+                    }
                 }
             });
+        },
+
+        carregaPorDatas: function () {
+
+            var dataInicio = $('#calendario').fullCalendar('getView').start.format('DD/MM/YYYY');
+            var dataFim = $('#calendario').fullCalendar('getView').end.format('DD/MM/YYYY');
+
+            calendarioAgenda.carregaCalendarioPorDatas(dataInicio, dataFim);
         }
 
     };
