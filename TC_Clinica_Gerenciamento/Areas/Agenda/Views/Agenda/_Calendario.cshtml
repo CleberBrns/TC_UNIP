@@ -11,9 +11,12 @@
     .fc-event {
         cursor: pointer;
     }
+    .fc-day-header {
+        /*background-color: #ddd;*/
+    }   
 </style>
 
-<div id="calendario"></div>
+<div id="calendario" class="calendario"></div>
 
 
 <script src="~/Scripts/moment.min.js"></script>
@@ -34,17 +37,20 @@
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
-                eventLimit: true,
+                eventLimit: true,                
                 eventColor: '#378006',
                 events: events,
+                dayClick: function (date, jsEvent, view, resourceObj) {
+                    console.log('Date: ' + date.format("DD/MM/YYYY"));
+                },
                 eventClick: function (calEvent, jsEvent, view) {
 
                     var evento = {
                         IdConsulta: calEvent.id,
                         Titulo: calEvent.title,
                         Descricao: calEvent.description,
-                        ComecaEm: calEvent.start.format("DD-MM-YYYY HH:mm"),
-                        TerminaEm: calEvent.end.format("DD-MM-YYYY HH:mm")
+                        ComecaEm: calEvent.start.format("DD/MM/YYYY HH:mm"),
+                        TerminaEm: calEvent.end.format("DD/MM/YYYY HH:mm")
                     };
                     
                     calendarioAgenda.visualizarEventoCalendario(evento);
