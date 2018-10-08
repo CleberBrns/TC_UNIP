@@ -28,8 +28,7 @@
     var calendario = {        
 
         configuraCalendario: function (events) {
-
-            //$('#calendario').fullCalendar('destroy');
+            
             $('#calendario').fullCalendar({
                 timeFormat: 'H:mm',
                 header: {
@@ -60,26 +59,33 @@
                         text: '<',
                         click: function () {                            
                             $('#calendario').fullCalendar('prev');
-                            calendario.carregaPorDatas();
+                            calendario.carregaPorMes();
                         }                        
                     },
                     customNextButton: {
                         text: '>',
-                        click: function () {
+                        click: function () {                            
                             $('#calendario').fullCalendar('next');
-                            calendario.carregaPorDatas();
+                            calendario.carregaPorMes();
                         }
                     }
                 }
             });
         },
 
-        carregaPorDatas: function () {
+        atualizaCalendario: function (eventos) {
+            $("#calendario").fullCalendar('removeEvents');
+            $("#calendario").fullCalendar('addEventSource', eventos);
+            $("#calendario").fullCalendar('rerenderEvents');
+        },
 
-            var dataInicio = $('#calendario').fullCalendar('getView').start.format('DD/MM/YYYY');
-            var dataFim = $('#calendario').fullCalendar('getView').end.format('DD/MM/YYYY');
+        carregaPorMes: function () {
+           
+            var moment = $('#calendario').fullCalendar('getDate');
+            var dataInicio = moment.format("L");
 
-            calendarioAgenda.carregaCalendarioPorDatas(dataInicio, dataFim);
+            calendarioAgenda.carregaCalendarioMes(dataInicio);
+            $('#calendario').fullCalendar('refetchEvents');
         }
 
     };

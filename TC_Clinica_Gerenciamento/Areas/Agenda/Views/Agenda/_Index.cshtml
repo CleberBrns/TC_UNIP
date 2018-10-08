@@ -311,7 +311,7 @@
                         success: function (result) {
                             if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
                                 $('#divGridConsultas').html(result);
-                                $(object).attr("carregado", "true");
+                                //$(object).attr("carregado", "true");
                             }
                             else {
                                 var retorno = result.mensagensRetorno;
@@ -376,16 +376,16 @@
 
         var calendarioAgenda = {
 
-            carregaCalendarioPorDatas: function (dataInicio, dataFim) {
+            carregaCalendarioMes: function (dataInicio) {
 
                 var eventos = [];
 
                 $.ajax({
-                    url: "@Url.Action("GetAgendaCalendarioDatas", "Agenda")",
-                    data: { dataInicio: dataInicio, dataFim: dataFim},
+                    url: "@Url.Action("GetAgendaCalendarioPorMes", "Agenda")",
+                    data: { dataInicio: dataInicio},
                     type: "GET",
                     success: function (result) {
-
+                        
                         if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
                             $.each(result.agendaCalendario, function (i, event) {
                                 eventos.push({
@@ -399,7 +399,7 @@
                                 });
                             });
 
-                            calendario.configuraCalendario(eventos);
+                            calendario.atualizaCalendario(eventos);
                         }
                         else {
                             var retorno = result.mensagensRetorno;

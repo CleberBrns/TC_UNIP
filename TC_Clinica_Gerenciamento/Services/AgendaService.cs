@@ -197,7 +197,7 @@ namespace TCC_Unip.Services
                                        })
                                        .ToList();
 
-            return listaConfigurada;
+            return listaConfigurada.OrderBy(l => l.Data).ToList();
         }
 
         /// <summary>

@@ -90,13 +90,16 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         #region Calendário
 
-        public JsonResult GetAgendaCalendarioDatas(string dataInicio, string dataFim)
+        public JsonResult GetAgendaCalendarioPorMes(string dataInicio)
         {
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
             try
             {
+                var inicioMes = Convert.ToDateTime(dataInicio).Date;
+                var dataFim = inicioMes.AddMonths(1).AddDays(-1).ToShortDateString();
+
                 var agendaCalendario = GetAgendaCalendarioPorDatas(dataInicio, dataFim, false);
                 return Json(new { agendaCalendario }, JsonRequestBehavior.AllowGet);
             }
@@ -347,7 +350,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
                                            CorEvento = GetCorEvento(l.FromMilliseconds(l.DateTimeService))
                                        }).ToList();
 
-            return list;
+            return list.OrderBy(l => l.ComecaEm).ToList();
         }
 
         private string GetTituloEvento(Models.Servico.Agenda agenda)
