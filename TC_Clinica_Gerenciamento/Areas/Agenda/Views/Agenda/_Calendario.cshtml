@@ -59,35 +59,31 @@
                         text: '<',
                         click: function () {                            
                             $('#calendario').fullCalendar('prev');
-                            calendario.carregaPorMes();
+                            var moment = $('#calendario').fullCalendar('getDate');
+                            var dataInicio = moment.format("L");
+
+                            calendarioAgenda.carregaCalendarioMes(dataInicio);
                         }                        
                     },
                     customNextButton: {
                         text: '>',
                         click: function () {                            
                             $('#calendario').fullCalendar('next');
-                            calendario.carregaPorMes();
+
+                            var moment = $('#calendario').fullCalendar('getDate');
+                            var dataInicio = moment.format("L");
+
+                            calendarioAgenda.carregaCalendarioMes(dataInicio);                            
                         }
                     }
                 }
             });
         },
-
         atualizaCalendario: function (eventos) {
             $("#calendario").fullCalendar('removeEvents');
             $("#calendario").fullCalendar('addEventSource', eventos);
             $("#calendario").fullCalendar('rerenderEvents');
-        },
-
-        carregaPorMes: function () {
-           
-            var moment = $('#calendario').fullCalendar('getDate');
-            var dataInicio = moment.format("L");
-
-            calendarioAgenda.carregaCalendarioMes(dataInicio);
-            $('#calendario').fullCalendar('refetchEvents');
         }
-
     };
 
 </script>
