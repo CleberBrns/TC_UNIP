@@ -250,11 +250,11 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             if (!string.IsNullOrEmpty(data))
                 model.Data = Convert.ToDateTime(data);
             else
-                model.Data = DateTime.Now.Date;
+                model.Data = ConfiguraDataExibir();
            
             return PartialView("_Gerenciar", model);
         }
-        
+
         public ActionResult ModalEditar(string id)
         {
             string msgExibicao = string.Empty;
@@ -342,6 +342,19 @@ namespace TCC_Unip.Areas.Agenda.Controllers
         }
 
         #region Métods Privados
+
+        private DateTime ConfiguraDataExibir()
+        {
+            var data = DateTime.Now.Date;
+
+            //Ajuste para listar a Segunda-Feira, caso o dia atual seja em um final de semana
+            if (data.DayOfWeek == DayOfWeek.Saturday)
+                data = data.AddDays(2);
+            else if (data.DayOfWeek == DayOfWeek.Sunday)
+                data = data.AddDays(1);
+
+            return data;
+        }
 
         private List<EventoCalendario> GetAgendaCalendarioPorDatas(string dataIncio, string dataFim, bool getFromSession)
         {
