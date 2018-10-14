@@ -140,7 +140,7 @@
                         </div>
                         <div class="col-md-4">
                             <select class="form-control alinhamentoSelect" id="horarios" name="Horario">
-                                <option value="0">-- Disponíveis --</option>
+                                <option value="0">-- Selecione --</option>
                                 @foreach (var item in listHorarios)
                                 {
                                     if (Model.Horario == item.Value)
@@ -298,7 +298,7 @@
                                 allowOutsideClick: false
                             }).then(function () {
                                 indexAgenda.listaAgendaGrid($(".abaGridConsultas"), false);
-                                calendarioAgenda.carregaCalendarioDoMesAtual(false);
+                                calendarioAgenda.carregaCalendarioMes($("#data").val());
                                 bootbox.hideAll();
                             });
                         }

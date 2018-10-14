@@ -90,17 +90,19 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         #region Calendário
 
-        public JsonResult GetAgendaCalendarioPorMes(string dataInicio)
+        public JsonResult GetAgendaCalendarioPorMes(string dataSelecionada)
         {
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
             try
             {
-                var inicioMes = Convert.ToDateTime(dataInicio).Date;
+                var data = Convert.ToDateTime(dataSelecionada).Date;
+
+                var inicioMes = new DateTime(data.Year, data.Month, 1);
                 var dataFim = inicioMes.AddMonths(1).AddDays(-1).ToShortDateString();
 
-                var agendaCalendario = GetAgendaCalendarioPorDatas(dataInicio, dataFim, false);
+                var agendaCalendario = GetAgendaCalendarioPorDatas(inicioMes.ToShortDateString(), dataFim, false);
                 return Json(new { agendaCalendario }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -234,7 +236,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         #endregion
 
-        public ActionResult ModalCadastrar()
+        public ActionResult ModalCadastrar(string data = null)
         {
             ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
 
@@ -243,8 +245,14 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             ViewBag.ListHorarios = GetListHorarios();
 
             var model = new Models.Servico.Agenda();
+            model = model.GetModelDefault();
+
+            if (!string.IsNullOrEmpty(data))
+                model.Data = Convert.ToDateTime(data);
+            else
+                model.Data = DateTime.Now.Date;
            
-            return PartialView("_Gerenciar", model.GetModelDefault());
+            return PartialView("_Gerenciar", model);
         }
         
         public ActionResult ModalEditar(string id)

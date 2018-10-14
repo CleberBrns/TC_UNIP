@@ -138,10 +138,11 @@
 
         var indexAgenda = {
 
-            modalCadastrar: function () {
+            modalCadastrar: function (dataSelecionada) {
                 $.ajax({
                     url: "@Url.Action("ModalCadastrar", "Agenda")",
                     type: "GET",
+                    data: { data: dataSelecionada},
                     success: function (html) {
                         bootbox.dialog({
                             title: "Cadastrar Consulta",
@@ -376,13 +377,35 @@
 
         var calendarioAgenda = {
 
+            addNovaConsulta: function (dataSelecionada) {
+
+                swal({
+                    title: '',
+                    text: 'Deseja dicionar nova consulta?',
+                    type: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#10386B',
+                    confirmButtonText: 'Ok',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    allowOutsideClick: false
+                }).then((okClick) => {
+
+                    if (okClick.value) {       
+                        indexAgenda.modalCadastrar(dataSelecionada);
+                    }
+
+                });
+
+            },
+
             carregaCalendarioMes: function (dataInicio) {
 
                 var eventos = [];
 
                 $.ajax({
                     url: "@Url.Action("GetAgendaCalendarioPorMes", "Agenda")",
-                    data: { dataInicio: dataInicio},
+                    data: { dataSelecionada: dataInicio},
                     type: "GET",
                     success: function (result) {
                         

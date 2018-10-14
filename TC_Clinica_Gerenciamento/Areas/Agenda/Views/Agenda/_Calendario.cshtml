@@ -25,6 +25,9 @@
 
 <script>
 
+    var qtdClicks = 0;
+    var dataClicada;
+
     var calendario = {        
 
         configuraCalendario: function (events) {
@@ -39,8 +42,20 @@
                 eventLimit: true,                
                 eventColor: '#378006',
                 events: events,
-                dayClick: function (date, jsEvent, view, resourceObj) {
-                    console.log('Date: ' + date.format("DD/MM/YYYY"));
+                dayClick: function (date, jsEvent, view) {
+
+                    if (dataClicada === date.format("DD/MM/YYYY")) {
+                        qtdClicks++;
+                    }
+                    else {
+                        dataClicada = date.format("DD/MM/YYYY");
+                    }                    
+
+                    if (qtdClicks > 0) {
+                        
+                        qtdClicks = 0;
+                        calendarioAgenda.addNovaConsulta(date.format("DD/MM/YYYY"));
+                    }
                 },
                 eventClick: function (calEvent, jsEvent, view) {
 
