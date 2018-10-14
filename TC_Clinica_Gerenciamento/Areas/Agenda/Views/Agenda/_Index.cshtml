@@ -399,7 +399,7 @@
                                 });
                             });
 
-                            calendario.atualizaCalendario(eventos);
+                            calendarioAgenda.atualizaCalendario(eventos);
                         }
                         else {
                             var retorno = result.mensagensRetorno;
@@ -479,6 +479,12 @@
                         validacao.errorAjax(jqXHR, textStatus, errorThrown);
                     }
                 });
+            },
+
+            atualizaCalendario: function (eventos) {
+                $("#calendario").fullCalendar('removeEvents');
+                $("#calendario").fullCalendar('addEventSource', eventos);
+                $("#calendario").fullCalendar('rerenderEvents');
             }
 
         };
