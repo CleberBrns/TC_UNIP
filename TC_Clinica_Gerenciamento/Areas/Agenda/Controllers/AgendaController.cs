@@ -314,8 +314,15 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         public ActionResult ModalVisualizar(EventoCalendario evento)
         {
+            evento.DiaDaSemana = GetDiaDaSemana(evento.ComecaEm);
             ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
             return PartialView("_Visualizar", evento);
+        }
+
+        private string GetDiaDaSemana(DateTime comecaEm)
+        {
+            var culture = new System.Globalization.CultureInfo("pt-BR");
+            return culture.TextInfo.ToTitleCase(culture.DateTimeFormat.GetDayName(comecaEm.DayOfWeek));           
         }
 
         [HttpPost]
