@@ -16,7 +16,7 @@ var validacao = {
             return true;
 
         if (value.length > count) {
-            $(fieldErro).html("O máximo de caracter(es) permitido(s) é " + count + " !");
+            $(fieldErro).html("O máximo de caracteres permitidos é " + count + " !");
             return true;
         }
         return false;
@@ -27,7 +27,7 @@ var validacao = {
             return true;
 
         if (value.length < count) {            
-            $(fieldErro).html("O mínimo de caracter(es) deve ser de " + count + " !");
+            $(fieldErro).html("O mínimo de caracteres deve ser de " + count + " !");
             return true;
         }
         else {

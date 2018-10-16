@@ -15,10 +15,13 @@
 
             @if (!string.IsNullOrEmpty(Model.Cpf))
             {
-                <input type="hidden" name="Id" value=@Model.Cpf>
-                <input type="hidden" name="Cpf" value=@Model.Cpf>
+                <input type="hidden" name="Id" value=@Model.Cpf>                
             }
-            
+            @if (!string.IsNullOrEmpty(Model.Nome))
+            {
+                <input type="hidden" name="Nome" value='@Model.Nome'>
+            }
+
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="campos" style="padding: 2% 0 2% 5%">
                 <div class="form-group">
@@ -45,16 +48,8 @@
                         }
                         else
                         {
-                            if (user.Permissoes.FirstOrDefault().Equals(TCC_Unip.Constants.ConstPermissoes.profissional))
-                            {
-                                <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf"
-                                       value="@Model.Cpf" style="width: 40%" />
-                            }
-                            else
-                            {
-                                <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf"
-                                       disabled="disabled" value="@Model.Cpf" style="width: 40%" />
-                            }
+                            <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf"
+                                   value="@Model.Cpf" style="width: 40%" />
                         }
                         <span class="field-validation-valid text-danger" id="validaCpf" data-valmsg-replace="true"></span>
                     </div>
@@ -221,7 +216,7 @@
             var validaCep = $("#validaCep");
 
             var telefone = $("#telefone").val().trim();
-            var validaTefone = $("#validaTefone");
+            var validaTelefone = $("#validaTelefone");
 
             var status = $("#status").val();
             var validaStatus = $("#validaStatus");
@@ -231,6 +226,9 @@
                 ehValido = false;
 
             if (validacao.campoNulo(cpf, validaCpf))
+                ehValido = false;
+
+            if (validacao.minLenght(cpf, validaCpf, 14))
                 ehValido = false;
 
             if (validacao.campoNulo(email, validaEmail))
@@ -245,7 +243,13 @@
             if (validacao.campoNulo(cep, validaCep))
                 ehValido = false;
 
+            if (validacao.minLenght(cep, validaCep, 9))
+                ehValido = false;
+
             if (validacao.campoNulo(telefone, validaTelefone))
+                ehValido = false;
+
+            if (validacao.minLenght(telefone, validaTelefone, 14))
                 ehValido = false;
 
             if (validacao.selectSelecionado(status, validaStatus, "Selecione uma Situação"))

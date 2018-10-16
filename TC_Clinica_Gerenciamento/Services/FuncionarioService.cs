@@ -98,7 +98,7 @@ namespace TCC_Unip.Services
             }
             else
             {
-                var registroExistente = serviceApi.Get(model.Cpf);
+                var registroExistente = serviceApi.Get(model.Id);
 
                 if (string.IsNullOrEmpty(registroExistente.Nome))
                 {

@@ -11,6 +11,7 @@ namespace TCC_Unip.Models.Servico
         public string Email { get; set; }
         [JsonProperty(PropertyName = "cpf")]
         public string Cpf { get; set; }
+        public string Id { get; set; }
         [JsonProperty(PropertyName = "telefone")]
         public string Telefone { get; set; }
         [JsonProperty(PropertyName = "status")]
