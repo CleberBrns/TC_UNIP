@@ -203,9 +203,10 @@
 
             excluir: function (elem, fromCalendario) {
 
+                var dataRecarregar = $(elem).attr("data-registro");
                 var tituloExclusao = '';
 
-                if (fromCalendario) {
+                if (fromCalendario) {                    
                     tituloExclusao = 'Você confirma a exclusão da consulta da consulta?';
                 }
                 else {
@@ -247,7 +248,7 @@
                                     }).then(function () {
                                         bootbox.hideAll();
                                         indexAgenda.listaAgendaGrid($(".abaGridConsultas"), false);
-                                        calendarioAgenda.carregaCalendarioDoMesAtual(false);
+                                        calendarioAgenda.carregaCalendarioMes(dataRecarregar);
                                     });
                                 }
                                 else {

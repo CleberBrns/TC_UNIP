@@ -108,34 +108,42 @@ namespace TCC_Unip.Services
         {
             var result = new ResultService<bool>();
 
-            if (model.Id == 0)
+            if (model.Valor < 100)
             {
-                model.Data = model.CombinaDataHora(model.Data, model.Horario);
-                model.DateTimeService = model.ToMilliseconds(model.Data);                
-
-                var retorno = service.Save(model);
-                result.Value = retorno;
-
-                if (result.Value)
-                    result.Message = "Consulta salva com sucesso!";
-                else
-                {
-                    result.Message = "Falha ao salvar a Consulta!";
-                    result.Status = false;
-                }                    
+                result.Message = "O valor mínimo da sessão é de R$100!";
+                result.Status = false;
             }
             else
             {
-                var retorno = service.Update(model);
-                result.Value = retorno;
+                if (model.Id == 0)
+                {
+                    model.Data = model.CombinaDataHora(model.Data, model.Horario);
+                    model.DateTimeService = model.ToMilliseconds(model.Data);
 
-                if (result.Value)
-                    result.Message = "Consulta atualizada com sucesso!";
+                    var retorno = service.Save(model);
+                    result.Value = retorno;
+
+                    if (result.Value)
+                        result.Message = "Consulta salva com sucesso!";
+                    else
+                    {
+                        result.Message = "Falha ao salvar a Consulta!";
+                        result.Status = false;
+                    }
+                }
                 else
                 {
-                    result.Message = "Falha ao atualizar a Consulta!";
-                    result.Status = false;
-                }                    
+                    var retorno = service.Update(model);
+                    result.Value = retorno;
+
+                    if (result.Value)
+                        result.Message = "Consulta atualizada com sucesso!";
+                    else
+                    {
+                        result.Message = "Falha ao atualizar a Consulta!";
+                        result.Status = false;
+                    }
+                }
             }
 
             return result;
@@ -163,7 +171,7 @@ namespace TCC_Unip.Services
 
         private List<Agenda> GetAgendaDoDia()
         {
-            return GetAgendaPeriodo(DateTime.Now.ToLongDateString(), DateTime.Now.ToLongDateString(), sessionAgendaDoDia);
+            return GetAgendaPeriodo(DateTime.Now.ToShortDateString(), DateTime.Now.ToShortDateString(), string.Empty);
         }
 
         private List<Agenda> GetAgendaPeriodo(string dataDe, string dataAte, string sessionAgenda)

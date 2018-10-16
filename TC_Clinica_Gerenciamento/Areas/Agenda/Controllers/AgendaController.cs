@@ -335,7 +335,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
                 var resultService = _agendaService.Delete(id);
 
                 msgExibicao = resultService.Message;
-                msgAnalise = resultService.Value ? "Falha" : string.Empty;
+                msgAnalise = !resultService.Status ? "Falha" : string.Empty;
             }
             catch (Exception ex)
             {

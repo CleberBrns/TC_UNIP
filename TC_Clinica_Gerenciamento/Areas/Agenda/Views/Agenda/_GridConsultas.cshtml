@@ -25,7 +25,7 @@
                     @foreach (var itemModel in Model)
                     {
                         <tr>
-                            <td>@itemModel.Funcionario.Nome</td>
+                            <td>@itemModel.Paciente.Nome</td>
                             <td>@itemModel.Data.ToShortDateString()</td>
                             <td>@itemModel.Horario</td>
                             <td>@itemModel.Funcionario.Nome</td>
@@ -39,6 +39,7 @@
                             <td class="text-center">
                                 <a class="btnExcluir" id-registro="@itemModel.Id"
                                    nome-registro="Dia @itemModel.Data.ToShortDateString() as @itemModel.Horario h"
+                                   data-registro="@itemModel.Data.ToShortDateString()"
                                    title="Excluir" onclick="indexAgenda.excluir(this, false)" style="cursor: pointer;">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </a>
