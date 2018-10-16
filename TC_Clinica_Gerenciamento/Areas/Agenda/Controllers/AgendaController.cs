@@ -45,10 +45,10 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             {
                 var resultService = _agendaService.ListAgendaDoDia(getFromSession);
 
-                msgExibicao = resultService.message;
-                msgAnalise = resultService.errorMessage;
+                msgExibicao = resultService.Message;
+                msgAnalise = !resultService.Status ? "Falha!" : string.Empty;
 
-                return PartialView("_GridConsultas", resultService.value);
+                return PartialView("_GridConsultas", resultService.Value);
             }
             catch (Exception ex)
             {
@@ -71,10 +71,10 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             {
                 var resultService = _agendaService.ListAgendaPeriodo(dataInicio, dataFim, false);
 
-                msgExibicao = resultService.message;
-                msgAnalise = resultService.errorMessage;
+                msgExibicao = resultService.Message;
+                msgAnalise = !resultService.Status ? "Falha!" : string.Empty;
 
-                return PartialView("_GridConsultas", resultService.value);
+                return PartialView("_GridConsultas", resultService.Value);
             }
             catch (Exception ex)
             {
@@ -153,16 +153,15 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             try
             {
                 var resultService = _funcionarioService.Get(cpf);
-                if (!resultService.status)
-                    resultService.errorMessage = "Erro!";
+                if (!resultService.Status)
+                    msgAnalise = "Erro!";
 
-                msgExibicao = resultService.message;
-                msgAnalise = resultService.errorMessage;
+                msgExibicao = resultService.Message;                
 
                 var listModalidades = GetListModalidades();
-                if (resultService.status)
+                if (resultService.Status)
                 {
-                    var modalidadesProf = resultService.value.Modalidades;
+                    var modalidadesProf = resultService.Value.Modalidades;
                     listModalidades = listModalidades.Where(l => modalidadesProf.Contains(l.Value)).ToList();
                 }
 
@@ -221,8 +220,8 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             {
                 var resultService = _agendaService.Save(model);
 
-                msgExibicao = resultService.message;
-                msgAnalise = resultService.errorMessage;
+                msgExibicao = resultService.Message;
+                msgAnalise = !resultService.Status ? "Falha!" : string.Empty;
             }
             catch (Exception ex)
             {
@@ -266,9 +265,9 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             {
                 var resultService = _agendaService.Get(id);
 
-                if (resultService.status)
+                if (resultService.Status)
                 {
-                    var model = resultService.value;
+                    var model = resultService.Value;
                     ViewBag.ListPacientes = GetListPacientes();
                     ViewBag.ListProfissionais = GetListProfissionais();
                     ViewBag.ListHorarios = GetListHorarios();
@@ -281,7 +280,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
                 }
                 else
                 {
-                    msgExibicao = resultService.message;
+                    msgExibicao = resultService.Message;
                     msgAnalise = "Erro!";
                 }
 
@@ -301,11 +300,11 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             var resultService = _funcionarioService.Get(cpf);
 
             var listModalidades = new List<DataSelectControl>();
-            if (resultService.status)
+            if (resultService.Status)
             {
                 listModalidades = GetListModalidades();
 
-                var modalidadesProf = resultService.value.Modalidades;
+                var modalidadesProf = resultService.Value.Modalidades;
                 listModalidades = listModalidades.Where(l => modalidadesProf.Contains(l.Value)).ToList();
             }
 
@@ -335,8 +334,8 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             {
                 var resultService = _agendaService.Delete(id);
 
-                msgExibicao = resultService.message;
-                msgAnalise = resultService.value ? resultService.errorMessage : "Falha";
+                msgExibicao = resultService.Message;
+                msgAnalise = resultService.Value ? "Falha" : string.Empty;
             }
             catch (Exception ex)
             {
@@ -365,7 +364,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         private List<EventoCalendario> GetAgendaCalendarioPorDatas(string dataIncio, string dataFim, bool getFromSession)
         {
-            var listAgendaDoMes = _agendaService.ListAgendaPeriodo(dataIncio,dataFim,getFromSession).value;
+            var listAgendaDoMes = _agendaService.ListAgendaPeriodo(dataIncio,dataFim,getFromSession).Value;
 
             var list = listAgendaDoMes.Select(l =>
                                        new EventoCalendario
@@ -412,12 +411,12 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         private List<Models.Servico.Paciente> GetListPacientes()
         {
-            return _pacienteService.List(true).value;
+            return _pacienteService.List(true).Value;
         }
 
         private List<Models.Servico.Funcionario> GetListProfissionais()
         {
-            return _funcionarioService.ListProfissionais(true).value;
+            return _funcionarioService.ListProfissionais(true).Value;
         }
 
         private List<DataSelectControl> GetListModalidades()

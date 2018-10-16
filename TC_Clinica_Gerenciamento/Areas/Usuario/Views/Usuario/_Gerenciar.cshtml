@@ -60,7 +60,7 @@
                 <div class="form-group">
                     @Html.Label("E-mail", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="email" name="Email" value="@Model.Email" />
+                        <input type="text" autocomplete="off" class="form-control" id="email" name="Email" value="@Model.Email" />
                         <span class="field-validation-valid text-danger" id="validaEmail" data-valmsg-replace="true"></span>
                     </div>
                 </div>
@@ -69,18 +69,18 @@
                     <div class="col-md-8">
                         @if (string.IsNullOrEmpty(Model.Cpf))
                         {
-                            <input type="text" class="form-control" id="cpf" name="Cpf" value="@Model.Cpf" style="width: 40%" />
+                            <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf" value="@Model.Cpf" style="width: 40%" />
                         }
                         else
                         {
                             if (user.Permissoes.FirstOrDefault().Equals(TCC_Unip.Constants.ConstPermissoes.profissional))
                             {
-                                <input type="text" class="form-control" id="cpf" name="Cpf"
+                                <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf"
                                        value="@Model.Cpf" style="width: 40%" />
                             }
                             else
                             {
-                                <input type="text" class="form-control" id="cpf" name="Cpf"
+                                <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf"
                                        disabled="disabled" value="@Model.Cpf" style="width: 40%" />
                             }
                         }

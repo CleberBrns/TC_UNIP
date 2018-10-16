@@ -32,10 +32,9 @@ namespace TCC_Unip.Areas.Paciente.Controllers
                 var list = new List<Models.Servico.Paciente>();               
 
                 var resultService = _service.List(getFromSession);
-                list = resultService.value;               
+                list = resultService.Value;               
 
-                msgExibicao = resultService.message;
-                msgAnalise = resultService.errorMessage;               
+                msgExibicao = resultService.Message;                
 
                 list = ConfiguraListaExibicao(list);
                 return PartialView("_Listagem", list);
@@ -74,11 +73,11 @@ namespace TCC_Unip.Areas.Paciente.Controllers
 
                 var resultService = _service.Get(id);
 
-                if (resultService.status)
-                    return PartialView("_Gerenciar", resultService.value);
+                if (resultService.Status)
+                    return PartialView("_Gerenciar", resultService.Value);
                 else
                 {
-                    msgExibicao = resultService.message;
+                    msgExibicao = resultService.Message;
                     msgAnalise = "Erro!";
                 }
 
@@ -104,8 +103,8 @@ namespace TCC_Unip.Areas.Paciente.Controllers
             {                
                 var resultService = _service.Save(model);
 
-                msgExibicao = resultService.message;
-                msgAnalise = resultService.value ? resultService.errorMessage : "Falha";
+                msgExibicao = resultService.Message;
+                msgAnalise = !resultService.Status ? "Falha!" : string.Empty;
             }
             catch (Exception ex)
             {               
@@ -127,8 +126,8 @@ namespace TCC_Unip.Areas.Paciente.Controllers
             {                
                 var resultService = _service.Delete(id);
 
-                msgExibicao = resultService.message;
-                msgAnalise = resultService.value ? resultService.errorMessage : "Falha";
+                msgExibicao = resultService.Message;
+                msgAnalise = !resultService.Status ? "Falha" : string.Empty;
             }
             catch (Exception ex)
             {

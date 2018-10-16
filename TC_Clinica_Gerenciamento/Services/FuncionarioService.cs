@@ -11,7 +11,8 @@ namespace TCC_Unip.Services
 {
     public class FuncionarioService : IServiceFuncionario
     {
-        readonly FuncionarioAPI service = new FuncionarioAPI();
+        readonly FuncionarioAPI serviceApi = new FuncionarioAPI();
+        readonly PacienteAPI servicePacApi = new PacienteAPI();
         readonly FuncionarioSession session = new FuncionarioSession();
         readonly string sessionName = Constants.ConstSessions.listFuncionarios;
 
@@ -22,14 +23,14 @@ namespace TCC_Unip.Services
             var retornoSession = session.GetFromListSession(cpf, sessionName);
 
             if (retornoSession.Item2)
-                result.value = retornoSession.Item1;
+                result.Value = retornoSession.Item1;
             else
-                result.value = service.Get(cpf);
+                result.Value = serviceApi.Get(cpf);
 
-            if (string.IsNullOrEmpty(result.value.Cpf))
+            if (string.IsNullOrEmpty(result.Value.Cpf))
             {
-                result.message = "O Funcionário não existe mais na base de dados do serviço!";
-                result.errorMessage = "Inexistente";
+                result.Message = "O Funcionário não existe mais na base de dados do serviço!";
+                result.Status = false;
             }
 
             return result;
@@ -46,12 +47,12 @@ namespace TCC_Unip.Services
                   Caso a mesma seja válida é passado para o retorno da pesquisa, mesmo que esteja vazia.
                   Caso não esteja criada, a busca é feita no serviço.*/
                 if (retornoSession.Item2)
-                    result.value = retornoSession.Item1;
+                    result.Value = retornoSession.Item1;
                 else
-                    result.value = GetFromService();
+                    result.Value = GetFromService();
             }
             else
-                result.value = GetFromService();
+                result.Value = GetFromService();
 
             return result;
         }
@@ -79,7 +80,7 @@ namespace TCC_Unip.Services
             if (list.Count > 0)            
                 list = list.Where(l => l.Modalidades.Length > 0).ToList();            
 
-            result.value = list;
+            result.Value = list;
 
             return result;
         }
@@ -88,30 +89,46 @@ namespace TCC_Unip.Services
         {
             string msg = string.Empty;
             var result = new ResultService<bool>();
-            var registroExistente = service.Get(model.Cpf);
 
-            if (string.IsNullOrEmpty(registroExistente.Nome))
+            var cpfExisteEmOutrosCadastros = ValidaExistenciaCPF(model);
+
+            if (cpfExisteEmOutrosCadastros.Item2)
             {
-                var retorno = service.Save(model);
-                result.value = retorno;
-
-                if (result.value)
-                    msg = "Funcionário salvo com sucesso!";
-                else
-                    msg = "Falha ao salvar o Funcionário!";
+                result = cpfExisteEmOutrosCadastros.Item1;
             }
             else
             {
-                var retorno = service.Update(model);
-                result.value = retorno;
+                var registroExistente = serviceApi.Get(model.Cpf);
 
-                if (result.value)
-                    msg = "Funcionário atualizado com sucesso!";
+                if (string.IsNullOrEmpty(registroExistente.Nome))
+                {
+                    var retorno = serviceApi.Save(model);
+                    result.Value = retorno;
+
+                    if (result.Value)
+                        msg = "Funcionário salvo com sucesso!";
+                    else
+                    {
+                        msg = "Falha ao salvar o Funcionário!";
+                        result.Status = false;
+                    }
+                }
                 else
-                    msg = "Falha ao atualizar o Funcionário!";
-            }
+                {
+                    var retorno = serviceApi.Update(model);
+                    result.Value = retorno;
 
-            result.message = msg;           
+                    if (result.Value)
+                        msg = "Funcionário atualizado com sucesso!";
+                    else
+                    {
+                        msg = "Falha ao atualizar o Funcionário!";
+                        result.Status = false;
+                    }
+                }
+
+                result.Message = msg;
+            }            
 
             return result;
         }       
@@ -120,22 +137,52 @@ namespace TCC_Unip.Services
         {
             var result = new ResultService<bool>();
 
-            var retorno = service.Delete(cpf);
-            result.value = retorno;
+            var retorno = serviceApi.Delete(cpf);
+            result.Value = retorno;
 
-            if (result.value)
-                result.message = "Funcionário excluído com sucesso!";
+            if (result.Value)
+                result.Message = "Funcionário excluído com sucesso!";
             else
-                result.message = "Falha ao excluir o Funcionário!";
+            {
+                result.Message = "Falha ao excluir o Funcionário!";
+                result.Status = false;
+            }                
 
             return result;
         }
 
         #region Métodos Privados
 
+        private Tuple<ResultService<bool>, bool> ValidaExistenciaCPF(Funcionario model)
+        {
+            var result = new ResultService<bool>();
+
+            var cpfExistente = false;
+            var funcionario = serviceApi.Get(model.Cpf);
+            var paciente = servicePacApi.Get(model.Cpf);
+
+            if (!string.IsNullOrEmpty(paciente.Cpf))
+            {
+                result.Message = "Cpf vinculado a um Paciente. Não é permitido sua utilização";
+                result.Status = false;
+                cpfExistente = true;
+            }
+            else if (!string.IsNullOrEmpty(funcionario.Cpf))
+            {
+                if (model.Nome != funcionario.Nome)
+                {
+                    result.Message = "Cpf vinculado a outro Funcionário. Não é permitido sua utilização";
+                    result.Status = false;
+                    cpfExistente = true;
+                }
+            }
+
+            return new Tuple<ResultService<bool>, bool>(result, cpfExistente);
+        }
+
         private List<Funcionario> GetFromService()
         {
-            var list = service.List();
+            var list = serviceApi.List();
             session.AddListToSession(list, sessionName);
             return list;
         }

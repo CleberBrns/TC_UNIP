@@ -22,10 +22,13 @@ namespace TCC_Unip.Services
             var result = new ResultService<Agenda>();
 
             var retorno = service.Get(id);
-            result.value = retorno;
+            result.Value = retorno;
 
-            if (string.IsNullOrEmpty(result.value.Modalidade))
-                result.message = "A Consulta não existe mais na base de dados do serviço!";
+            if (string.IsNullOrEmpty(result.Value.Modalidade))
+            {
+                result.Status = false;
+                result.Message = "A Consulta não existe mais na base de dados do serviço!";
+            }                
 
             return result;
         }
@@ -48,7 +51,7 @@ namespace TCC_Unip.Services
                 list = GetAgendaDoDia();              
 
             list = ConfiguraAgendaService(list);
-            result.value = list;
+            result.Value = list;
 
             return result;
         }
@@ -60,7 +63,7 @@ namespace TCC_Unip.Services
                                            getFromSession ? sessionAgendaPeriodos : string.Empty);
 
             var list = ConfiguraAgendaService(retorno);
-            result.value = list;
+            result.Value = list;
 
             return result;
         }
@@ -71,11 +74,14 @@ namespace TCC_Unip.Services
             var retorno = service.ConsultasPeriodoFuncionario(cpf, dateFrom.ToShortDateString(), dateTo.ToShortDateString());           
 
             if (string.IsNullOrEmpty(retorno.Cpf))
-                result.errorMessage = "Sem agenda!";
+            {
+                result.Message = "Sem agenda!";
+                result.Status = false;
+            }                
             else                
                 retorno.Consultas = ConfiguraConsultaService(retorno.Consultas);
 
-            result.value = retorno;
+            result.Value = retorno;
 
             return result;
         }
@@ -86,11 +92,14 @@ namespace TCC_Unip.Services
             var retorno = service.ConsultasPeriodoPaciente(cpf, dateFrom.ToShortDateString(), dateTo.ToShortDateString());
 
             if (!string.IsNullOrEmpty(retorno.Cpf))
-                result.message = "Sem agenda!";
+            {
+                result.Message = "Sem agenda!";
+                result.Status = false;
+            }                
             else
                 retorno.Consultas = ConfiguraConsultaService(retorno.Consultas);
 
-            result.value = retorno;
+            result.Value = retorno;
 
             return result;
         }
@@ -105,22 +114,28 @@ namespace TCC_Unip.Services
                 model.DateTimeService = model.ToMilliseconds(model.Data);                
 
                 var retorno = service.Save(model);
-                result.value = retorno;
+                result.Value = retorno;
 
-                if (result.value)
-                    result.message = "Consulta salva com sucesso!";
+                if (result.Value)
+                    result.Message = "Consulta salva com sucesso!";
                 else
-                    result.message = "Falha ao salvar a Consulta!";
+                {
+                    result.Message = "Falha ao salvar a Consulta!";
+                    result.Status = false;
+                }                    
             }
             else
             {
                 var retorno = service.Update(model);
-                result.value = retorno;
+                result.Value = retorno;
 
-                if (result.value)
-                    result.message = "Consulta atualizada com sucesso!";
+                if (result.Value)
+                    result.Message = "Consulta atualizada com sucesso!";
                 else
-                    result.message = "Falha ao atualizar a Consulta!";
+                {
+                    result.Message = "Falha ao atualizar a Consulta!";
+                    result.Status = false;
+                }                    
             }
 
             return result;
@@ -131,12 +146,15 @@ namespace TCC_Unip.Services
             var result = new ResultService<bool>();
 
             var retorno = service.Delete(id);
-            result.value = retorno;
+            result.Value = retorno;
 
-            if (result.value)
-                result.message = "Consulta excluída com sucesso!";
+            if (result.Value)
+                result.Message = "Consulta excluída com sucesso!";
             else
-                result.message = "Falha ao excluir a Consulta!";
+            {
+                result.Message = "Falha ao excluir a Consulta!";
+                result.Status = false;
+            }                
 
             return result;
         }

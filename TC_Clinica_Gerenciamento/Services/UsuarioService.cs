@@ -4,12 +4,13 @@ using TCC_Unip.Models.Servico;
 using TCC_Unip.API;
 using TCC_Unip.Session;
 using TCC_Unip.Contracts.Service;
+using System;
 
 namespace TCC_Unip.Services
 {
     public class UsuarioService : IServiceUsuario
     {
-        readonly UsuarioAPI service = new UsuarioAPI();
+        readonly UsuarioAPI serviceApi = new UsuarioAPI();
         readonly UsuarioSession session = new UsuarioSession();
         readonly string sessionName = Constants.ConstSessions.listUsuarios;
 
@@ -20,13 +21,16 @@ namespace TCC_Unip.Services
             var retornoSession = session.GetFromListSession(email, sessionName);
 
             if (retornoSession.Item2 && !string.IsNullOrEmpty(retornoSession.Item1.Email))
-                result.value = retornoSession.Item1;
+                result.Value = retornoSession.Item1;
             else
-                result.value = service.Get(email);
+                result.Value = serviceApi.Get(email);
 
-            if (string.IsNullOrEmpty(result.value.Email))
-                result.message = "O Usuário não existe mais na base de dados do serviço!";
-
+            if (string.IsNullOrEmpty(result.Value.Email))
+            {
+                result.Message = "O Usuário não existe mais na base de dados do serviço!";
+                result.Status = false;
+            }
+                
             return result;
         }
 
@@ -41,12 +45,12 @@ namespace TCC_Unip.Services
                   Caso a mesma seja válida é passado para o retorno da pesquisa, mesmo que esteja vazia.
                   Caso não esteja criada, a busca é feita no serviço.*/
                 if (retornoSession.Item2)                
-                    result.value = retornoSession.Item1;                
+                    result.Value = retornoSession.Item1;                
                 else
-                    result.value = GetFromService();                    
+                    result.Value = GetFromService();                    
             }
             else  
-                result.value = GetFromService();                     
+                result.Value = GetFromService();                     
 
             return result;
         }
@@ -55,26 +59,41 @@ namespace TCC_Unip.Services
         {
             var result = new ResultService<bool>();
 
-            var registroExistente = service.Get(model.Email);
-            if (string.IsNullOrEmpty(registroExistente.Email))
-            {
-                var retorno = service.Save(model);
-                result.value = retorno;
+            var emailExisteEmOutroUsuario = ValidaExistenciaEmail(model);
 
-                if (result.value)
-                    result.message = "Usuário salvo com sucesso!";
-                else
-                    result.message = "Falha ao salvar o Usuário!";
+            if (emailExisteEmOutroUsuario.Item2)
+            {
+                result = emailExisteEmOutroUsuario.Item1;
             }
             else
             {
-                var retorno = service.Update(model);
-                result.value = retorno;
+                var registroExistente = serviceApi.Get(model.Email);
+                if (string.IsNullOrEmpty(registroExistente.Email))
+                {
+                    var retorno = serviceApi.Save(model);
+                    result.Value = retorno;
 
-                if (result.value)
-                    result.message = "Usuário atualizado com sucesso!";
+                    if (result.Value)
+                        result.Message = "Usuário salvo com sucesso!";
+                    else
+                    {
+                        result.Message = "Falha ao salvar o Usuário!";
+                        result.Status = false;
+                    }
+                }
                 else
-                    result.message = "Falha ao atualizar o Usuário!";
+                {
+                    var retorno = serviceApi.Update(model);
+                    result.Value = retorno;
+
+                    if (result.Value)
+                        result.Message = "Usuário atualizado com sucesso!";
+                    else
+                    {
+                        result.Message = "Falha ao atualizar o Usuário!";
+                        result.Status = false;
+                    }
+                }
             }
 
             return result;
@@ -84,14 +103,17 @@ namespace TCC_Unip.Services
         {
             var result = new ResultService<bool>();
 
-            var retorno = service.Delete(cpf);
-            result.value = retorno;
+            var retorno = serviceApi.Delete(cpf);
+            result.Value = retorno;
 
-            if (result.value)
-                result.message = "Usuário excluído com sucesso!";
+            if (result.Value)
+                result.Message = "Usuário excluído com sucesso!";
             else
-                result.message = "Falha ao excluir o Usuário!";
-
+            {
+                result.Message = "Falha ao excluir o Usuário!";
+                result.Status = false;
+            }
+                
             return result;
         }
 
@@ -99,20 +121,43 @@ namespace TCC_Unip.Services
         {
             var result = new ResultService<Usuario>();
 
-            var retorno = service.Auth(model);
-            result.value = retorno;
+            var retorno = serviceApi.Auth(model);
+            result.Value = retorno;
 
-            if (string.IsNullOrEmpty(result.value.Email))
-                result.message = "Usuário Inválido ou Senha Incorreta";
+            if (string.IsNullOrEmpty(result.Value.Email))
+            {
+                result.Message = "Usuário Inválido ou Senha Incorreta";
+                result.Status = false;
+            }                
 
             return result;
         }
 
         #region Métodos Privados
 
+        private Tuple<ResultService<bool>, bool> ValidaExistenciaEmail(Usuario model)
+        {
+            var result = new ResultService<bool>();
+
+            var emailExistente = false;            
+            var usuario = serviceApi.Get(model.Email);
+
+            if (!string.IsNullOrEmpty(model.Email))
+            {
+                if (model.Cpf != model.Cpf)
+                {
+                    result.Message = "E-mail vinculado a outro Usuário. Não é permitido sua utilização";
+                    result.Status = false;
+                    emailExistente = true;
+                }
+            }
+
+            return new Tuple<ResultService<bool>, bool>(result, emailExistente);
+        }
+
         private List<Usuario> GetFromService()
         {
-            var list = service.List();
+            var list = serviceApi.List();
             session.AddListToSession(list, sessionName);
             return list;
         }

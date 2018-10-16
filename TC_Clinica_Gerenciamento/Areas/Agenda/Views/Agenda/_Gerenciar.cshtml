@@ -125,7 +125,7 @@
                         @Html.Label("Data", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-6">
                             <div class="input-group" style="width: 60%">
-                                <input type="text" class="form-control alinhamentoSelect" id="data" name="Data"
+                                <input type="text" autocomplete="off" class="form-control alinhamentoSelect" id="data" name="Data"
                                        value="@Model.Data.ToShortDateString()" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
@@ -159,7 +159,7 @@
                     <div class="form-group">
                         @Html.Label("Valor - R$", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-6">
-                            <input type="text" class="form-control alinhamentoSelect" id="valor" style="width: 60%" name="Valor"
+                            <input type="text" autocomplete="off" class="form-control alinhamentoSelect" id="valor" style="width: 60%" name="Valor"
                                    value="@Model.Valor" />
                             <span class="field-validation-valid text-danger" id="validaValor" data-valmsg-replace="true"></span>
                         </div>

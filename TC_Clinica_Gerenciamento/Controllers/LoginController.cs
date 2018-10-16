@@ -34,7 +34,7 @@ namespace TCC_Unip.Controllers
             string msgAnalise = string.Empty;
 
             var resultService = new ResultService<Usuario>();
-            resultService.status = false;
+            resultService.Status = false;
 
             try
             {
@@ -42,18 +42,17 @@ namespace TCC_Unip.Controllers
                 {
                     if (model.Email.Trim() == usuarioMaster.Email && model.Senha.Trim() == usuarioMaster.Senha)
                     {
-                        resultService.status = true;
+                        resultService.Status = true;
                         //resultService.message = "Ok";//Msg somente para validar o redirect
                         model = usuarioMaster;
                     }
                     else
                         resultService = _service.Auth(model);
 
-                    if (resultService.status)
+                    if (resultService.Status)
                         session.AddModelToSession(model, sessionName);                        
 
-                    msgExibicao = resultService.message;
-                    msgAnalise = resultService.errorMessage;
+                    msgExibicao = resultService.Message;                    
                 }
                 else
                 {

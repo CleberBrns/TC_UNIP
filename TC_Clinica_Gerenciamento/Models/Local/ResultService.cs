@@ -4,21 +4,8 @@ namespace TCC_Unip.Models.Local
     public class ResultService<T>
         where T : new()
     {
-        private bool _status;
-        public string message { get; set; }
-        public string errorMessage { get; set; }
-        public bool status
-        {
-            get
-            {
-                _status = string.IsNullOrWhiteSpace(errorMessage);
-                return _status;
-            }
-            set
-            {
-                _status = value;
-            }
-        }
-        public T value { get; set; }
+        public string Message { get; set; }
+        public bool Status { get; set; } = true;
+        public T Value { get; set; }
     }
 }
