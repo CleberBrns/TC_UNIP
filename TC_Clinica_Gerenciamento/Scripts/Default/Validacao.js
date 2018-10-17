@@ -252,6 +252,14 @@ var validacao = {
                 confirmButtonColor: "#10386B",
                 allowOutsideClick: false
             });
+        } else if (jqXhr.status === 401.0) {
+            swal({
+                title: "",
+                text: "Acesso negado ao Perfil para esta ação",
+                type: "warning",
+                confirmButtonColor: "#10386B",
+                allowOutsideClick: false
+            });
         } else if (textStatus === "parsererror") {
             swal({
                 title: "",
