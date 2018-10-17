@@ -217,7 +217,15 @@ namespace TCC_Unip.Areas.Usuario.Controllers
         private List<DataSelectControl> GetListPerfil()
         {
             var constants = new Constants.Constants();
-            return constants.ListPermissoesPerfil();
+            var listPerfil = constants.ListPermissoesPerfil();
+
+            var usuario = session.GetModelFromSession(sessionName).Item1;
+
+            //Não lista o Perfil Administrador caso o usuário não seja um Administrador
+            if (!usuario.Permissoes.FirstOrDefault().Equals(Constants.ConstPermissoes.administracao))
+                listPerfil = listPerfil.Where(l => l.Value != Constants.ConstPermissoes.administracao).ToList();            
+
+            return listPerfil;            
         }
 
         #endregion
