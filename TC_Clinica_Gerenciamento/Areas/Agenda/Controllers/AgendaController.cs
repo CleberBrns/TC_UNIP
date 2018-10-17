@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Web.Mvc;
+using TCC_Unip.Controllers;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Models.Servico;
 using TCC_Unip.Services;
@@ -11,32 +12,30 @@ using TCC_Unip.Util;
 
 namespace TCC_Unip.Areas.Agenda.Controllers
 {
-    public class AgendaController : Controller
+    public class AgendaController : BaseOneController
     {
         readonly Constants.Constants constants = new Constants.Constants();
         readonly Mensagens mensagens = new Mensagens();
         readonly AgendaService _agendaService = new AgendaService();
         readonly PacienteService _pacienteService = new PacienteService();
-        readonly FuncionarioService _funcionarioService = new FuncionarioService();
-
-        readonly UsuarioSession session = new UsuarioSession();
-        readonly string sessionName = Constants.ConstSessions.usuario;
+        readonly FuncionarioService _funcionarioService = new FuncionarioService();       
 
         #region Grid
 
         public ActionResult Listagem(bool getFromSession)
         {
-            if (!session.GetModelFromSession(sessionName).Item2)
+            var userInfo = GetUsuarioSession();
+            if (!userInfo.Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = userInfo.Item1;
 
             return PartialView("_Index");
         }
 
         public ActionResult ListaAgendaDoDia(bool getFromSession)
         {
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = GetUsuarioSession().Item1;
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
@@ -62,7 +61,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         public ActionResult ListaConsultasPorDatas(string dataInicio, string dataFim)
         {
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = GetUsuarioSession().Item1;
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
@@ -237,7 +236,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         public ActionResult ModalCadastrar(string data = null)
         {
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = GetUsuarioSession().Item1;
 
             ViewBag.ListPacientes = GetListPacientes();            
             ViewBag.ListProfissionais = GetListProfissionais();            
@@ -259,7 +258,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;         
+            ViewBag.Usuario = GetUsuarioSession().Item1;         
 
             try
             {
@@ -314,7 +313,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
         public ActionResult ModalVisualizar(EventoCalendario evento)
         {
             evento.DiaDaSemana = GetDiaDaSemana(evento.ComecaEm);
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = GetUsuarioSession().Item1;
             return PartialView("_Visualizar", evento);
         }
 

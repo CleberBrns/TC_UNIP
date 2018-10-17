@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using TCC_Unip.Controllers;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Services;
 using TCC_Unip.Session;
 using TCC_Unip.Util;
 
 namespace TCC_Unip.Areas.Funcionario.Controllers
-{
-    public class FuncionarioController : Controller
+{    
+    public class FuncionarioController : BaseOneController
     {
         readonly Mensagens mensagens = new Mensagens();
         readonly FuncionarioService _service = new FuncionarioService();
 
-        readonly UsuarioSession session = new UsuarioSession();
-        readonly string sessionName = Constants.ConstSessions.usuario;
-
         public ActionResult Listagem(bool getFromSession)
         {
-            if (!session.GetModelFromSession(sessionName).Item2)
+            var userInfo = GetUsuarioSession();
+
+            if (!userInfo.Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = userInfo.Item1;
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
@@ -53,7 +53,7 @@ namespace TCC_Unip.Areas.Funcionario.Controllers
 
         public ActionResult ModalCadastrar()
         {
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = GetUsuarioSession().Item1;
 
             ViewBag.ListStatus = GetListStatus();
             ViewBag.ListModalidades = GetListModalidades();
@@ -66,7 +66,7 @@ namespace TCC_Unip.Areas.Funcionario.Controllers
         [HttpGet]
         public ActionResult ModalEditar(string id)
         {
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = GetUsuarioSession().Item1;
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
