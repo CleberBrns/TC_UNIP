@@ -1,19 +1,18 @@
 ﻿using System.Web.Mvc;
-using TCC_Unip.Session;
+using TCC_Unip.Controllers;
 
 namespace TCC_Unip.Areas.Inicio.Controllers
 {
-    public class InicioController : Controller
+    public class InicioController : BaseController
     {
-        readonly UsuarioSession session = new UsuarioSession();
-        readonly string sessionName = Constants.ConstSessions.usuario;
-
         public ActionResult Index()
         {
-            if (!session.GetModelFromSession(sessionName).Item2)
+            var userInfo = GetUsuarioSession();
+
+            if (!userInfo.Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = userInfo.Item1;
 
             return View();
         }

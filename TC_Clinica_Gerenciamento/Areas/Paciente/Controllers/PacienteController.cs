@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using TCC_Unip.Controllers;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Services;
 using TCC_Unip.Session;
@@ -9,20 +10,18 @@ using TCC_Unip.Util;
 
 namespace TCC_Unip.Areas.Paciente.Controllers
 {
-    public class PacienteController : Controller
+    public class PacienteController : BaseController
     {
         readonly Mensagens mensagens = new Mensagens();
         readonly PacienteService _service = new PacienteService();
 
-        readonly UsuarioSession session = new UsuarioSession();
-        readonly string sessionName = Constants.ConstSessions.usuario;
-
         public ActionResult Listagem(bool getFromSession)
         {
-            if (!session.GetModelFromSession(sessionName).Item2)
+            var userInfo = GetUsuarioSession();
+            if (userInfo.Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = userInfo.Item1;
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
@@ -51,7 +50,7 @@ namespace TCC_Unip.Areas.Paciente.Controllers
 
         public ActionResult ModalCadastrar()
         {
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = GetUsuarioSession();
             ViewBag.ListStatus = GetListStatus();
 
             var model = new Models.Servico.Paciente();
@@ -62,7 +61,7 @@ namespace TCC_Unip.Areas.Paciente.Controllers
         [HttpGet]
         public ActionResult ModalEditar(string id)
         {
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = GetUsuarioSession();
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;

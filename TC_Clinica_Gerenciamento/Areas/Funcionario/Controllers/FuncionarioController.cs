@@ -10,7 +10,7 @@ using TCC_Unip.Util;
 
 namespace TCC_Unip.Areas.Funcionario.Controllers
 {    
-    public class FuncionarioController : BaseOneController
+    public class FuncionarioController : BaseController
     {
         readonly Mensagens mensagens = new Mensagens();
         readonly FuncionarioService _service = new FuncionarioService();

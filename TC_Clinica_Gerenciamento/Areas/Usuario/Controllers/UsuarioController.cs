@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using TCC_Unip.Controllers;
 using TCC_Unip.Models.Local;
 using TCC_Unip.Services;
 using TCC_Unip.Session;
@@ -9,21 +10,20 @@ using TCC_Unip.Util;
 
 namespace TCC_Unip.Areas.Usuario.Controllers
 {
-    public class UsuarioController : Controller
+    public class UsuarioController : BaseController
     {
         readonly Mensagens mensagens = new Mensagens();
         readonly UsuarioService _service = new UsuarioService();
         readonly FuncionarioService _serviceFuncionario = new FuncionarioService();
 
-        readonly UsuarioSession session = new UsuarioSession();
-        readonly string sessionName = Constants.ConstSessions.usuario;
-
         public ActionResult Listagem(bool getFromSession)
         {
-            if (!session.GetModelFromSession(sessionName).Item2)
+            var userInfo = GetUsuarioSession();
+
+            if (!userInfo.Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;            
+            ViewBag.Usuario = userInfo.Item1;            
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
@@ -54,7 +54,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
 
         public ActionResult ModalCadastrar()
         {
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = GetUsuarioSession();
             ViewBag.ListStatus = GetListStatus();
             ViewBag.ListPerfil = GetListPerfil();
             ViewBag.ListFuncionarios = GetListFuncionarios();
@@ -67,7 +67,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
         [HttpGet]
         public ActionResult ModalEditar(string id)
         {
-            ViewBag.Usuario = session.GetModelFromSession(sessionName).Item1;
+            ViewBag.Usuario = GetUsuarioSession();
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
@@ -219,7 +219,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
             var constants = new Constants.Constants();
             var listPerfil = constants.ListPermissoesPerfil();
 
-            var usuario = session.GetModelFromSession(sessionName).Item1;
+            var usuario = GetUsuarioSession().Item1;
 
             //Não lista o Perfil Administrador caso o usuário não seja um Administrador
             if (!usuario.Permissoes.FirstOrDefault().Equals(Constants.ConstPermissoes.administracao))

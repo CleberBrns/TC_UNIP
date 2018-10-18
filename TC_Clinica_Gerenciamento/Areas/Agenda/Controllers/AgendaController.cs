@@ -12,7 +12,7 @@ using TCC_Unip.Util;
 
 namespace TCC_Unip.Areas.Agenda.Controllers
 {
-    public class AgendaController : BaseOneController
+    public class AgendaController : BaseController
     {
         readonly Constants.Constants constants = new Constants.Constants();
         readonly Mensagens mensagens = new Mensagens();

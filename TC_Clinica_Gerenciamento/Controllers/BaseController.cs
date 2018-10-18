@@ -6,7 +6,7 @@ using TCC_Unip.Session;
 
 namespace TCC_Unip.Controllers
 {
-    public class BaseOneController : Controller
+    public class BaseController : Controller
     {
         public Tuple<Usuario, bool> GetUsuarioSession()
         {

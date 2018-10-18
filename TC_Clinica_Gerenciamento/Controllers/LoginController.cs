@@ -8,7 +8,7 @@ using TCC_Unip.Util;
 
 namespace TCC_Unip.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         readonly UsuarioService service = new UsuarioService();
         readonly UsuarioSession session = new UsuarioSession();
@@ -16,7 +16,7 @@ namespace TCC_Unip.Controllers
 
         public ActionResult Login()
         {            
-            if (session.GetModelFromSession(sessionName).Item2)
+            if (GetUsuarioSession().Item2)
                 return RedirectToAction("Index", "Inicio");            
 
             return View();
@@ -42,8 +42,7 @@ namespace TCC_Unip.Controllers
                 {
                     if (model.Email.Trim() == usuarioMaster.Email && model.Senha.Trim() == usuarioMaster.Senha)
                     {
-                        resultService.Status = true;
-                        //resultService.message = "Ok";//Msg somente para validar o redirect
+                        resultService.Status = true;                        
                         model = usuarioMaster;
                     }
                     else

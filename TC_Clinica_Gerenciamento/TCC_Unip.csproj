@@ -155,7 +155,7 @@
     <Compile Include="Contracts\Session\ISessionFuncionario.cs" />
     <Compile Include="Contracts\Session\ISessionPaciente.cs" />
     <Compile Include="Contracts\Session\ISessionUsuario.cs" />
-    <Compile Include="Controllers\BaseOneController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
