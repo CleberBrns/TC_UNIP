@@ -50,7 +50,7 @@ namespace TCC_Unip.Areas.Paciente.Controllers
 
         public ActionResult ModalCadastrar()
         {
-            ViewBag.Usuario = GetUsuarioSession();
+            ViewBag.Usuario = GetUsuarioSession().Item1;
             ViewBag.ListStatus = GetListStatus();
 
             var model = new Models.Servico.Paciente();
@@ -61,7 +61,7 @@ namespace TCC_Unip.Areas.Paciente.Controllers
         [HttpGet]
         public ActionResult ModalEditar(string id)
         {
-            ViewBag.Usuario = GetUsuarioSession();
+            ViewBag.Usuario = GetUsuarioSession().Item1;
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;

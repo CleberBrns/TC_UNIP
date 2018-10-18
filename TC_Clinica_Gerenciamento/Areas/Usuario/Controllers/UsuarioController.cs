@@ -54,7 +54,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
 
         public ActionResult ModalCadastrar()
         {
-            ViewBag.Usuario = GetUsuarioSession();
+            ViewBag.Usuario = GetUsuarioSession().Item1;
             ViewBag.ListStatus = GetListStatus();
             ViewBag.ListPerfil = GetListPerfil();
             ViewBag.ListFuncionarios = GetListFuncionarios();
@@ -67,7 +67,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
         [HttpGet]
         public ActionResult ModalEditar(string id)
         {
-            ViewBag.Usuario = GetUsuarioSession();
+            ViewBag.Usuario = GetUsuarioSession().Item1;
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
