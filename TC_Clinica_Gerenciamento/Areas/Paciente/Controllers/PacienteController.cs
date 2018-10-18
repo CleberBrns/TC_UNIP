@@ -18,7 +18,7 @@ namespace TCC_Unip.Areas.Paciente.Controllers
         public ActionResult Listagem(bool getFromSession)
         {
             var userInfo = GetUsuarioSession();
-            if (userInfo.Item2)
+            if (!userInfo.Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
 
             ViewBag.Usuario = userInfo.Item1;
@@ -31,7 +31,7 @@ namespace TCC_Unip.Areas.Paciente.Controllers
                 var list = new List<Models.Servico.Paciente>();               
 
                 var resultService = _service.List(getFromSession);
-                list = resultService.Value;               
+                list = resultService.Value;
 
                 msgExibicao = resultService.Message;                
 

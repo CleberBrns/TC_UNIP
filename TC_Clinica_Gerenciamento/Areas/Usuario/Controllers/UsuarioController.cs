@@ -40,6 +40,17 @@ namespace TCC_Unip.Areas.Usuario.Controllers
 
                 list = ConfiguraListaExibicao(list);
 
+                //Não lista os usuários com perfil Administracao, quando o usuário logado não for um Administrador
+                if (!Constants.ConstPermissoes.administracao.Contains(userInfo.Item1.Permissoes.FirstOrDefault()))
+                {
+                    if (list.Count > 0)
+                    {
+                        list = list.Where(l =>
+                            l.Permissoes.FirstOrDefault() != Constants.ConstPermissoes.administracao)
+                                   .ToList();
+                    }
+                }
+
                 return PartialView("_Listagem", list);
             }
             catch (Exception ex)
@@ -168,8 +179,11 @@ namespace TCC_Unip.Areas.Usuario.Controllers
                 {
                     Cpf = l.Cpf,
                     Email = l.Email,
-                    Permissoes = listPerfil.Where(lp => lp.Value == l.Permissoes.FirstOrDefault())
+                    PermissaoExibicao = listPerfil.Where(lp => lp.Value == l.Permissoes.FirstOrDefault())
                                            .Select(p => p.Name)
+                                           .FirstOrDefault(),
+                    Permissoes = listPerfil.Where(lp => lp.Value == l.Permissoes.FirstOrDefault())
+                                           .Select(p => p.Value)
                                            .ToArray(),
                     Status = l.Status,
                     Funcionario = new Models.Servico.Funcionario

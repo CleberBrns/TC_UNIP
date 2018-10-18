@@ -36,7 +36,7 @@
                         <tr>
                             @*<td>@itemModel.Funcionario.Nome</td>*@
                             <td>@itemModel.Email</td>
-                            <td>@itemModel.Permissoes.FirstOrDefault()</td>
+                            <td>@itemModel.PermissaoExibicao</td>
                             <td>@itemModel.Status</td>
                             <td class="text-center">
                                 <a class="btnEditar" id-registro="@itemModel.Email" title="Editar" onclick="UsuarioListagem.modalEditar(this)"

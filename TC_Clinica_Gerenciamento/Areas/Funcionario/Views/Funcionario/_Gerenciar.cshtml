@@ -256,7 +256,7 @@
             if (validacao.campoNulo(cpf, validaCpf))
                 ehValido = false;
 
-            if (validacao.minLenght(cpf, validaCpf, 14))
+            if (validacao.minLenght(cpf, validaCpf, 14, "Cpf inválido!"))
                 ehValido = false;
 
             if (validacao.campoNulo(email, validaEmail))
@@ -271,13 +271,13 @@
             if (validacao.campoNulo(cep, validaCep))
                 ehValido = false;
 
-            if (validacao.minLenght(cep, validaCep, 9))
+            if (validacao.minLenght(cep, validaCep, 9, "Cep inválido!"))
                 ehValido = false;
 
             if (validacao.campoNulo(telefone, validaTelefone))
                 ehValido = false;
 
-            if (validacao.minLenght(telefone, validaTelefone, 14))
+            if (validacao.minLenght(telefone, validaTelefone, 14, "Telefone inválido!"))
                 ehValido = false;
 
             if (validacao.selectSelecionado(status, validaStatus, "Selecione uma Situação"))

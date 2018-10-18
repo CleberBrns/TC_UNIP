@@ -14,6 +14,7 @@ namespace TCC_Unip.Models.Servico
         public string Status { get; set; }
         [JsonProperty(PropertyName = "permissoes")]
         public string[] Permissoes { get; set; }
+        public string PermissaoExibicao { get; set; }
         [JsonProperty(PropertyName = "funcionario")]
         public Funcionario Funcionario { get; set; }        
 

@@ -11,23 +11,33 @@ var validacao = {
         return false;
     },
 
-    maxLenght: function (value, fieldErro, count) {
+    maxLenght: function (value, fieldErro, count, msg) {
         if (validacao.campoNulo(value, fieldErro))
             return true;
 
         if (value.length > count) {
-            $(fieldErro).html("O máximo de caracteres permitidos é " + count + " !");
+
+            if (msg === null || msg === "" || msg === undefined) {
+                msg = "O máximo de caracteres permitidos é " + count + " !";
+            }
+
+            $(fieldErro).html(msg);
             return true;
         }
         return false;
     },
 
-    minLenght: function (value, fieldErro, count) {
+    minLenght: function (value, fieldErro, count, msg) {
         if (validacao.campoNulo(value, fieldErro))
             return true;
 
-        if (value.length < count) {            
-            $(fieldErro).html("O mínimo de caracteres deve ser de " + count + " !");
+        if (value.length < count) {
+
+            if (msg === null || msg === "" || msg === undefined) {
+                msg = "O mínimo de caracteres deve ser de " + count + " !";
+            }
+
+            $(fieldErro).html(msg);
             return true;
         }
         else {

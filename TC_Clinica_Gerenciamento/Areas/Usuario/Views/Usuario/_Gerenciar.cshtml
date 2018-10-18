@@ -14,10 +14,15 @@
     using (Html.BeginForm())
     {
         <div class="form-horizontal">
-            <input type="hidden" name="Id" id="Id" value=@Model.Email>
-            <input type="hidden" name="Cpf" id="hddCpf" value="@Model.Cpf">
-            <input type="hidden" name="Email" id="hddEmail" value="@Model.Email">
+
+            @if (!string.IsNullOrEmpty(Model.Email))
+            {
+                <input type="hidden" name="Id" id="Id" value=@Model.Email>
+                <input type="hidden" name="Cpf" id="hddCpf" value="@Model.Cpf">
+                <input type="hidden" name="Email" id="hddEmail" value="@Model.Email">
+            }
             <input type="hidden" name="Permissoes" id="hddPermissao">
+
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="campos" style="padding: 2% 0 2% 5%">
                 <div class="form-group">
@@ -184,7 +189,7 @@
 
     $("#funcionarios").on('change', function () {
 
-        
+
         var selecionado = $(this).find(':selected');
         if (selecionado.val() !== "0") {
             var cpf = selecionado.attr("value");
@@ -304,6 +309,9 @@
                 ehValido = false;
 
             if (validacao.campoNulo(cpf, validaCpf))
+                ehValido = false;
+
+            if (validacao.minLenght(cpf, validaCpf, 14, "Cpf inválido!"))
                 ehValido = false;
 
             if (validacao.campoNulo(senha, validaSenha))
