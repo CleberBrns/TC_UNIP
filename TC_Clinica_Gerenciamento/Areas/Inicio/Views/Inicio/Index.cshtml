@@ -1,4 +1,7 @@
-﻿@{
+﻿
+@using TCC_Unip.Constants;
+
+@{
     ViewBag.Title = "Index";
 
     var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
@@ -19,16 +22,19 @@
                                     Agenda
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" name="tabPacientes" class="abaPacientes" carregado="false">
-                                    Pacientes
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" name="tabFuncionarios" class="abaFuncionarios" carregado="false">
-                                    Funcionários
-                                </a>
-                            </li>
+                            @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+                            {
+                                <li>
+                                    <a href="#" name="tabPacientes" class="abaPacientes" carregado="false">
+                                        Pacientes
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" name="tabFuncionarios" class="abaFuncionarios" carregado="false">
+                                        Funcionários
+                                    </a>
+                                </li>
+                            }
                             <li>
                                 <a href="#" name="tabCaixa" class="abaCaixa" carregado="false">
                                     Caixa
@@ -39,19 +45,28 @@
                                     Recibos
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" name="tabUsuarios" class="abaUsuarios" carregado="false">
-                                    Usuários
-                                </a>
-                            </li>
+                            @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+                            {
+                                <li>
+                                    <a href="#" name="tabUsuarios" class="abaUsuarios" carregado="false">
+                                        Usuários
+                                    </a>
+                                </li>
+                            }
                         </ul>
                         <div id="content">
                             <div id="tabAgenda"></div>
-                            <div id="tabPacientes"></div>
-                            <div id="tabFuncionarios"></div>
+                            @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+                            {
+                                <div id="tabPacientes"></div>
+                                <div id="tabFuncionarios"></div>
+                            }
                             <div id="tabCaixa">Div Caixa</div>
                             <div id="tabRecibos">Div Recibos</div>
-                            <div id="tabUsuarios"></div>
+                            @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+                            {
+                                <div id="tabUsuarios"></div>
+                            }
                         </div>
                     </form>
                 </div>

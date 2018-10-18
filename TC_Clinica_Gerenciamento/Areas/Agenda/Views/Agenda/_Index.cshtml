@@ -1,4 +1,6 @@
-﻿@{
+﻿@using TCC_Unip.Constants;
+
+@{
     var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
 }
 
@@ -17,14 +19,17 @@
     </style>
 
     <div class="row">
-        <div class="col-md-12">
-            <div style="text-align: right">
-                <button type="button" class="btn btn-primary" id="btnNovaConsulta">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Nova Consulta
-                </button>
+        @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+        {
+            <div class="col-md-12">
+                <div style="text-align: right">
+                    <button type="button" class="btn btn-primary" id="btnNovaConsulta">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Nova Consulta
+                    </button>
+                </div>
             </div>
-        </div>
+        }
         <div class="col-md-12 col-sm-12" style="padding-top: 2%">
             <div>
                 <form>
@@ -121,7 +126,7 @@
 
             calendarioAgenda.carregaCalendarioDoMesAtual(true);
 
-        });        
+        });
 
         $("#btnNovaConsulta").on('click', function () {
             indexAgenda.modalCadastrar();
@@ -206,7 +211,7 @@
                 var dataRecarregar = $(elem).attr("data-registro");
                 var tituloExclusao = '';
 
-                if (fromCalendario) {                    
+                if (fromCalendario) {
                     tituloExclusao = 'Você confirma a exclusão da consulta da consulta?';
                 }
                 else {
@@ -392,7 +397,7 @@
                     allowOutsideClick: false
                 }).then((okClick) => {
 
-                    if (okClick.value) {       
+                    if (okClick.value) {
                         indexAgenda.modalCadastrar(dataSelecionada);
                     }
 
@@ -409,7 +414,7 @@
                     data: { dataSelecionada: dataInicio},
                     type: "GET",
                     success: function (result) {
-                        
+
                         if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
                             $.each(result.agendaCalendario, function (i, event) {
                                 eventos.push({

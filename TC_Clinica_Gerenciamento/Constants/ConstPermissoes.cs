@@ -7,6 +7,7 @@ namespace TCC_Unip.Constants
         public const string administracao = "ADMINISTRACAO";
         public const string recepcao = "RECEPCAO";
         public const string profissional = "PROFISSIONAL";
+        public const string gerenciamento = "ADMINISTRACAO,RECEPCAO";
 
         public Usuario GetUsuarioMaster()
         {

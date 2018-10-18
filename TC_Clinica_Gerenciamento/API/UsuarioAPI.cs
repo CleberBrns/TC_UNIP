@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -104,8 +105,10 @@ namespace TCC_Unip.API
             return false;
         }
 
-        public Usuario Auth(Usuario model)
+        public Tuple<Usuario, bool> Auth(Usuario model)
         {
+            var statusAuth = false;
+
             var tipoAcao = "auth";
             var objAuth = new { email = model.Email, senha = model.Senha };
             var jsonModel = JsonConvert.SerializeObject(objAuth);
@@ -117,16 +120,26 @@ namespace TCC_Unip.API
             model = new Usuario();
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {                
+            {
+                statusAuth = true;
                 var jsonObject = (JObject)JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result);
-                var usuario = (JObject)(jsonObject.Property("usuario").Value);
-                var funcionario = (JObject)(jsonObject.Property("funcionario").Value);
 
-                model = usuario.ToObject<Usuario>();
-                model.Funcionario = funcionario.ToObject<Funcionario>();
+                var objUsuario = jsonObject.Property("usuario").Value;
+                if (objUsuario.HasValues)
+                {
+                    var usuario = (JObject)(jsonObject.Property("usuario").Value);
+                    model = usuario.ToObject<Usuario>();
+                }                
+
+                var objFuncionario = jsonObject.Property("funcionario").Value;
+                if (objFuncionario.HasValues)
+                {
+                    var funcionario = (JObject)(objFuncionario);
+                    model.Funcionario = funcionario.ToObject<Funcionario>();
+                }               
             }
 
-            return model;
+            return new Tuple<Usuario, bool>(model, statusAuth);
         }
 
     }

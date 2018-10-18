@@ -122,13 +122,21 @@ namespace TCC_Unip.Services
             var result = new ResultService<Usuario>();
 
             var retorno = serviceApi.Auth(model);
-            result.Value = retorno;
 
-            if (string.IsNullOrEmpty(result.Value.Email))
+            if (retorno.Item2)
+            {
+                result.Value = retorno.Item1;
+                if (string.IsNullOrEmpty(result.Value.Email))
+                {
+                    result.Message = "Falha ao recuperar o retorno da API!";
+                    result.Status = false;
+                }                
+            }
+            else
             {
                 result.Message = "Usuário Inválido ou Senha Incorreta";
                 result.Status = false;
-            }                
+            }                        
 
             return result;
         }
