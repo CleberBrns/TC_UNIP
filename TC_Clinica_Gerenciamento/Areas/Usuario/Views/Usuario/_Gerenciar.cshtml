@@ -309,6 +309,9 @@
             if (validacao.campoNulo(senha, validaSenha))
                 ehValido = false;
 
+            if (validacao.minLenght(senha, validaSenha, 6))
+                ehValido = false;
+
             if (validacao.campoNulo(confirmaSenha, validaConfirmaSenha))
                 ehValido = false;
 

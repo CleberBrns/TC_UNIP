@@ -56,7 +56,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
         {
             ViewBag.Usuario = GetUsuarioSession().Item1;
             ViewBag.ListStatus = GetListStatus();
-            ViewBag.ListPerfil = GetListPerfil();
+            ViewBag.ListPerfil = GetListPerfil(true);
             ViewBag.ListFuncionarios = GetListFuncionarios();
 
             var model = new Models.Servico.Usuario();
@@ -74,7 +74,7 @@ namespace TCC_Unip.Areas.Usuario.Controllers
             try
             {
                 ViewBag.ListStatus = GetListStatus();
-                ViewBag.ListPerfil = GetListPerfil();
+                ViewBag.ListPerfil = GetListPerfil(true);
                 ViewBag.ListFuncionarios = GetListFuncionarios();
 
                 var resultService = _service.Get(id);
@@ -214,16 +214,18 @@ namespace TCC_Unip.Areas.Usuario.Controllers
             return constants.ListStatus();
         }
 
-        private List<DataSelectControl> GetListPerfil()
+        private List<DataSelectControl> GetListPerfil(bool filtroPerfil = false)
         {
             var constants = new Constants.Constants();
             var listPerfil = constants.ListPermissoesPerfil();
 
-            var usuario = GetUsuarioSession().Item1;
-
-            //Não lista o Perfil Administrador caso o usuário não seja um Administrador
-            if (!usuario.Permissoes.FirstOrDefault().Equals(Constants.ConstPermissoes.administracao))
-                listPerfil = listPerfil.Where(l => l.Value != Constants.ConstPermissoes.administracao).ToList();            
+            if (filtroPerfil)
+            {
+                var usuario = GetUsuarioSession().Item1;
+                //Não lista o Perfil Administrador caso o usuário não seja um Administrador
+                if (!usuario.Permissoes.FirstOrDefault().Equals(Constants.ConstPermissoes.administracao))
+                    listPerfil = listPerfil.Where(l => l.Value != Constants.ConstPermissoes.administracao).ToList();
+            }
 
             return listPerfil;            
         }

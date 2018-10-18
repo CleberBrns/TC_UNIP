@@ -14,7 +14,12 @@ namespace TCC_Unip.Constants
             {
                 Email = "master@tcunip.com.br",
                 Senha = "@dmin56784321",
-                Permissoes = new string[] { administracao }
+                Permissoes = new string[] { administracao },
+                Funcionario = new Funcionario
+                {
+                    Nome = "Administrador do Sistema",
+                    Status = "Ativo"                    
+                }
             };
         }
 

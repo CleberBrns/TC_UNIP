@@ -42,16 +42,20 @@ namespace TCC_Unip.Controllers
                 {
                     if (model.Email.Trim() == usuarioMaster.Email && model.Senha.Trim() == usuarioMaster.Senha)
                     {
-                        resultService.Status = true;                        
+                        resultService.Status = true;
                         model = usuarioMaster;
                     }
                     else
+                    {
                         resultService = _service.Auth(model);
+                        model = resultService.Value;
+                    }
 
                     if (resultService.Status)
                         session.AddModelToSession(model, sessionName);                        
 
-                    msgExibicao = resultService.Message;                    
+                    msgExibicao = resultService.Message;
+                    msgAnalise = !resultService.Status ? "Falha" : string.Empty;
                 }
                 else
                 {
