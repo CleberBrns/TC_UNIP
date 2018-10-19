@@ -44,10 +44,12 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             {
                 var resultService = _agendaService.ListAgendaDoDia(getFromSession);
 
+                var list = FiltraListaPorPerfil(resultService.Value);
+
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha!" : string.Empty;
 
-                return PartialView("_GridConsultas", resultService.Value);
+                return PartialView("_GridConsultas", list);
             }
             catch (Exception ex)
             {
@@ -70,10 +72,12 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             {
                 var resultService = _agendaService.ListAgendaPeriodo(dataInicio, dataFim, false);
 
+                var list = FiltraListaPorPerfil(resultService.Value);
+
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha!" : string.Empty;
 
-                return PartialView("_GridConsultas", resultService.Value);
+                return PartialView("_GridConsultas", list);
             }
             catch (Exception ex)
             {
@@ -294,22 +298,6 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
         }
 
-        private List<DataSelectControl> GetListModalidadesProfissional(string cpf)
-        {
-            var resultService = _funcionarioService.Get(cpf);
-
-            var listModalidades = new List<DataSelectControl>();
-            if (resultService.Status)
-            {
-                listModalidades = GetListModalidades();
-
-                var modalidadesProf = resultService.Value.Modalidades;
-                listModalidades = listModalidades.Where(l => modalidadesProf.Contains(l.Value)).ToList();
-            }
-
-            return listModalidades;
-        }
-
         public ActionResult ModalVisualizar(EventoCalendario evento)
         {
             evento.DiaDaSemana = GetDiaDaSemana(evento.ComecaEm);
@@ -348,6 +336,38 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         #region Métods Privados
 
+        /// <summary>
+        /// O acesso do Profissional lista apenas as consultas marcadas com o mesmo
+        /// </summary>
+        /// <param name="listAgenda"></param>
+        /// <returns></returns>
+        private List<Models.Servico.Agenda> FiltraListaPorPerfil(List<Models.Servico.Agenda> listAgenda)
+        {
+            if (listAgenda.Count > 0 && 
+                Constants.ConstPermissoes.profissional.Equals(GetUsuarioSession().Item1.Permissoes.FirstOrDefault()))
+            {
+                listAgenda = listAgenda.Where(l => l.Funcionario.Cpf.Equals(GetUsuarioSession().Item1.Cpf)).ToList();
+            }
+
+            return listAgenda;
+        }
+
+        private List<DataSelectControl> GetListModalidadesProfissional(string cpf)
+        {
+            var resultService = _funcionarioService.Get(cpf);
+
+            var listModalidades = new List<DataSelectControl>();
+            if (resultService.Status)
+            {
+                listModalidades = GetListModalidades();
+
+                var modalidadesProf = resultService.Value.Modalidades;
+                listModalidades = listModalidades.Where(l => modalidadesProf.Contains(l.Value)).ToList();
+            }
+
+            return listModalidades;
+        }
+
         private DateTime ConfiguraDataExibir()
         {
             var data = DateTime.Now.Date;
@@ -363,7 +383,8 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         private List<EventoCalendario> GetAgendaCalendarioPorDatas(string dataIncio, string dataFim, bool getFromSession)
         {
-            var listAgendaDoMes = _agendaService.ListAgendaPeriodo(dataIncio,dataFim,getFromSession).Value;
+            var resultService = _agendaService.ListAgendaPeriodo(dataIncio,dataFim,getFromSession);
+            var listAgendaDoMes = FiltraListaPorPerfil(resultService.Value);
 
             var list = listAgendaDoMes.Select(l =>
                                        new EventoCalendario

@@ -1,4 +1,6 @@
-﻿@model IList<TCC_Unip.Models.Servico.Agenda>
+﻿@using TCC_Unip.Constants;
+
+@model IList<TCC_Unip.Models.Servico.Agenda>
 
 @{
     var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
@@ -17,19 +19,25 @@
                         <th>Hora</th>
                         <th>Prossional</th>
                         <th>Valor</th>
-                        <th></th>
-                        <th></th>
+                        @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+                        {
+                            <th></th>
+                            <th></th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var itemModel in Model)
                     {
-                        <tr>
-                            <td>@itemModel.Paciente.Nome</td>
-                            <td>@itemModel.Data.ToShortDateString()</td>
-                            <td>@itemModel.Horario</td>
-                            <td>@itemModel.Funcionario.Nome</td>
-                            <td>R$ @itemModel.Valor</td>
+                    <tr>
+                        <td>@itemModel.Paciente.Nome</td>
+                        <td>@itemModel.Data.ToShortDateString()</td>
+                        <td>@itemModel.Horario</td>
+                        <td>@itemModel.Funcionario.Nome</td>
+                        <td>R$ @itemModel.Valor</td>
+                        @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+
+                        {
                             <td class="text-center">
                                 <a class="btnEditar" id-registro="@itemModel.Id" title="Editar" onclick="indexAgenda.modalEditar(this)"
                                    style="cursor: pointer;">
@@ -44,7 +52,8 @@
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </a>
                             </td>
-                        </tr>
+                        }
+                    </tr>
                     }
                 </tbody>
             </table>
@@ -53,15 +62,15 @@
 
     <script>
 
-    $("#gridAgenda").DataTable({
-        language: {
-            url: "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
-        },
-        "columnDefs": [
-            { "targets": [5, 6], "orderable": false, "searchable": false }
-        ],
-        "aaSorting": []
-    });
+        $("#gridAgenda").DataTable({
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+            },
+            "columnDefs": [
+                { "targets": [5, 6], "orderable": false, "searchable": false }
+            ],
+            "aaSorting": []
+        });
 
     </script>
 }
