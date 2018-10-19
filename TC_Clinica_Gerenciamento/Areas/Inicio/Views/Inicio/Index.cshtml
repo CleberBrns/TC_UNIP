@@ -53,6 +53,11 @@
                                     </a>
                                 </li>
                             }
+                            <li>
+                                <a href="#" name="tabSair" title="Sair do Sistema">
+                                    Sair <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                                </a>
+                            </li>
                         </ul>
                         <div id="content">
                             <div id="tabAgenda"></div>
@@ -67,6 +72,7 @@
                             {
                                 <div id="tabUsuarios"></div>
                             }
+                            <div id="tabSair"></div>
                         </div>
                     </form>
                 </div>
@@ -115,6 +121,9 @@
                 if (carregado === undefined || carregado === "false") {
                     funcoesIndexTabs.listaAgenda(object, true);
                 }
+            }
+            else if (tabName === 'tabSair') {
+                funcoesIndexTabs.logOut();
             }
         },
 
@@ -236,8 +245,12 @@
                     validacao.errorAjax(jqXHR, textStatus, errorThrown);
                 }
             });
-        }
+        },
 
+        logOut: function () {
+            var url = href = "@Url.Action("Logout", "Login", new { area = ""  })";
+            window.location.href = url;
+        }
     };
 
     </script>
