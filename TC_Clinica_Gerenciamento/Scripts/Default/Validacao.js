@@ -228,7 +228,7 @@ var validacao = {
         
         var showLogOnConsole = true;
 
-        if (jqXhr.responseJSON != undefined && jqXhr.responseJSON !== null) {
+        if (jqXhr.responseJSON !== undefined && jqXhr.responseJSON !== null) {
             showLogOnConsole = false;
             console.log(jqXhr.responseJSON.MensagemAnalise);
             swal({                
@@ -238,7 +238,7 @@ var validacao = {
                 confirmButtonColor: "#10386B",
                 allowOutsideClick: false
             });
-        } else if (jqXhr.status === 0) {
+        } else if (jqXhr.status === 0 || jqXhr.status === 408) {
             swal({
                 title: "",
                 text: "Faça login novamente ou verifique sua rede",

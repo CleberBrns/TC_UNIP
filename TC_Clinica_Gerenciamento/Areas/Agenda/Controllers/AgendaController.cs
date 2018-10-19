@@ -27,7 +27,7 @@ namespace TCC_Unip.Areas.Agenda.Controllers
             var userInfo = GetUsuarioSession();
             if (!userInfo.Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
-
+          
             ViewBag.Usuario = userInfo.Item1;
 
             return PartialView("_Index");
@@ -216,6 +216,8 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         public ActionResult Salvar(Models.Servico.Agenda model)
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
@@ -240,8 +242,9 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         public ActionResult ModalCadastrar(string data = null)
         {
-            ViewBag.Usuario = GetUsuarioSession().Item1;
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
+            ViewBag.Usuario = GetUsuarioSession().Item1;
             ViewBag.ListPacientes = GetListPacientes();            
             ViewBag.ListProfissionais = GetListProfissionais();            
             ViewBag.ListHorarios = GetListHorarios();
@@ -259,6 +262,8 @@ namespace TCC_Unip.Areas.Agenda.Controllers
 
         public ActionResult ModalEditar(string id)
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
@@ -314,6 +319,8 @@ namespace TCC_Unip.Areas.Agenda.Controllers
         [HttpPost]
         public ActionResult Excluir(string id)
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 

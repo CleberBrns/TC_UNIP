@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using TCC_Unip.Models.Servico;
@@ -14,10 +15,16 @@ namespace TCC_Unip.Controllers
             return sessionUsuario.GetModelFromSession(Constants.ConstSessions.usuario);
         }
 
-        public void AutorizaAcesso(string permissaoUsuario, string permissaoAcesso)
+        public void ValidaAutorizaoAcessoUsuario(string permissaoAcesso)
         {
-            if (!permissaoAcesso.Contains(permissaoUsuario))            
-                BadRequestCustomizado((int)HttpStatusCode.Unauthorized);            
+            var userInfo = GetUsuarioSession();
+            if (userInfo.Item2)
+            {
+                if (!permissaoAcesso.Contains(userInfo.Item1.Permissoes.FirstOrDefault()))
+                    BadRequestCustomizado((int)HttpStatusCode.Unauthorized);
+            }
+            else
+                BadRequestCustomizado((int)HttpStatusCode.RequestTimeout);
         }
 
         public void BadRequestCustomizado(int statusCode)

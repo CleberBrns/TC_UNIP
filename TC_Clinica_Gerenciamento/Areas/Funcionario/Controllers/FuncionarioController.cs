@@ -17,6 +17,8 @@ namespace TCC_Unip.Areas.Funcionario.Controllers
 
         public ActionResult Listagem(bool getFromSession)
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             var userInfo = GetUsuarioSession();
 
             if (!userInfo.Item2)
@@ -53,6 +55,8 @@ namespace TCC_Unip.Areas.Funcionario.Controllers
 
         public ActionResult ModalCadastrar()
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             ViewBag.Usuario = GetUsuarioSession().Item1;
 
             ViewBag.ListStatus = GetListStatus();
@@ -66,6 +70,8 @@ namespace TCC_Unip.Areas.Funcionario.Controllers
         [HttpGet]
         public ActionResult ModalEditar(string id)
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             ViewBag.Usuario = GetUsuarioSession().Item1;
 
             string msgExibicao = string.Empty;
@@ -101,6 +107,8 @@ namespace TCC_Unip.Areas.Funcionario.Controllers
         [HttpPost]
         public ActionResult Salvar(Models.Servico.Funcionario model)
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
@@ -124,6 +132,8 @@ namespace TCC_Unip.Areas.Funcionario.Controllers
         [HttpPost]
         public ActionResult Excluir(string id)
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 

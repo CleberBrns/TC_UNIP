@@ -17,6 +17,8 @@ namespace TCC_Unip.Areas.Paciente.Controllers
 
         public ActionResult Listagem(bool getFromSession)
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             var userInfo = GetUsuarioSession();
             if (!userInfo.Item2)
                 return RedirectToAction("Login", "Login", new { area = "" });
@@ -50,6 +52,8 @@ namespace TCC_Unip.Areas.Paciente.Controllers
 
         public ActionResult ModalCadastrar()
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             ViewBag.Usuario = GetUsuarioSession().Item1;
             ViewBag.ListStatus = GetListStatus();
 
@@ -61,6 +65,8 @@ namespace TCC_Unip.Areas.Paciente.Controllers
         [HttpGet]
         public ActionResult ModalEditar(string id)
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             ViewBag.Usuario = GetUsuarioSession().Item1;
 
             string msgExibicao = string.Empty;
@@ -95,6 +101,8 @@ namespace TCC_Unip.Areas.Paciente.Controllers
         [HttpPost]
         public ActionResult Salvar(Models.Servico.Paciente model)
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
@@ -118,6 +126,8 @@ namespace TCC_Unip.Areas.Paciente.Controllers
         [HttpPost]
         public ActionResult Excluir(string id)
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
