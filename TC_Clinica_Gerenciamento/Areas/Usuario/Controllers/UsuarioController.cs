@@ -210,16 +210,39 @@ namespace TCC_Unip.Areas.Usuario.Controllers
 
         private List<Models.Servico.Funcionario> GetListFuncionarios()
         {
-            var listExibicao =
-                _serviceFuncionario.List(true).Value.Select(l => new Models.Servico.Funcionario
+            var listFuncionarios = _serviceFuncionario.List(true).Value;
+
+            if (listFuncionarios.Count > 0)
+            {
+                var emailsUsuariosCadastrados = GetEmailsFuncionariosCadastrados();
+
+                if (emailsUsuariosCadastrados.Length > 0)
+                {
+                    //Remove os funcionários que já foram cadastrados
+                    listFuncionarios = listFuncionarios.Where(l => !emailsUsuariosCadastrados.Contains(l.Email))
+                                                       .ToList();
+                }
+
+                listFuncionarios = listFuncionarios.Select(l => new Models.Servico.Funcionario
                 {
                     Nome = l.Nome,
                     Email = l.Email,
                     Cpf = l.Cpf,
                     Modalidades = l.Modalidades
                 }).ToList();
+            }
 
-            return listExibicao;
+            return listFuncionarios;
+        }
+
+        private string[] GetEmailsFuncionariosCadastrados()
+        {
+            var emailsUsuariosCadastrados = new string[] { };
+            var resultService = _service.List(true);
+            if (resultService.Status)            
+                emailsUsuariosCadastrados = resultService.Value.Select(x => x.Email).ToArray();            
+
+            return emailsUsuariosCadastrados;
         }
 
         private List<DataSelectControl> GetListStatus()

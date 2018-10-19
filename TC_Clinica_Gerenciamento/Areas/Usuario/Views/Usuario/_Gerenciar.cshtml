@@ -240,10 +240,19 @@
             var that = $(this);
             that.off('click');
 
+            var dadosSalvar = {
+
+                Email: $("#email").val().trim(),
+                Cpf: $("#cpf").val().trim(),
+                Senha: $("#senha").val().trim(),
+                Permissoes: $("#perfil").val().trim(),
+                Status: $("#status").val().trim()                
+            };
+
             $.ajax({
                 url: "@Url.Action("Salvar", "Usuario")",
                 type: "POST",
-                data: $('form').serialize(),
+                data: { model: dadosSalvar },
                 success: function (result) {
 
                     var retorno = result.mensagensRetorno;
