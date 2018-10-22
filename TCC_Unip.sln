@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCC_Unip", "TC_Clinica_Gerenciamento\TCC_Unip.csproj", "{5329546D-2E3B-4BBB-A727-5DD6173DF58A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Model", "0.Model", "{1D7004B8-48CD-4DC6-8855-A312CDAC7A6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcUnip.Model", "TcUnip.Model\TcUnip.Model.csproj", "{7B1C239C-0AD3-4A46-B7FD-E69AC34A4074}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{5329546D-2E3B-4BBB-A727-5DD6173DF58A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5329546D-2E3B-4BBB-A727-5DD6173DF58A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5329546D-2E3B-4BBB-A727-5DD6173DF58A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B1C239C-0AD3-4A46-B7FD-E69AC34A4074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B1C239C-0AD3-4A46-B7FD-E69AC34A4074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B1C239C-0AD3-4A46-B7FD-E69AC34A4074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B1C239C-0AD3-4A46-B7FD-E69AC34A4074}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7B1C239C-0AD3-4A46-B7FD-E69AC34A4074} = {1D7004B8-48CD-4DC6-8855-A312CDAC7A6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44C65A0B-F40F-44E2-B215-9999CBE848BE}
