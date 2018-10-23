@@ -54,7 +54,7 @@ namespace TcUnip.ServiceApi.Pessoa
         }
 
         public List<Usuario> List()
-        {
+        {            
             string action = BaseUrl + tipoModel;
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
