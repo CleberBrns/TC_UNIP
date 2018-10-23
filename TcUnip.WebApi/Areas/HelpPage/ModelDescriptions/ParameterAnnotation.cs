@@ -1,6 +1,6 @@
 using System;
 
-namespace TcUnip.WebApi.Areas.HelpPage.ModelDescriptions
+namespace TcUnip.Api.Areas.HelpPage.ModelDescriptions
 {
     public class ParameterAnnotation
     {

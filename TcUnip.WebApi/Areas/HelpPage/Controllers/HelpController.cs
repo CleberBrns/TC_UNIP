@@ -1,10 +1,10 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using TcUnip.WebApi.Areas.HelpPage.ModelDescriptions;
-using TcUnip.WebApi.Areas.HelpPage.Models;
+using TcUnip.Api.Areas.HelpPage.ModelDescriptions;
+using TcUnip.Api.Areas.HelpPage.Models;
 
-namespace TcUnip.WebApi.Areas.HelpPage.Controllers
+namespace TcUnip.Api.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

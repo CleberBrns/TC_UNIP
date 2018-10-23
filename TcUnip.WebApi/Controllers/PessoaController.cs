@@ -1,9 +1,9 @@
 ﻿using System.Web.Http;
 using TcUnip.Model.Pessoa;
 using TcUnip.Service.Contract.Pessoa;
-using TcUnip.WebApi.Results;
+using TcUnip.Api.Results;
 
-namespace TcUnip.WebApi.Controllers
+namespace TcUnip.Api.Controllers
 {
     public class PessoaController : ApiController
     {

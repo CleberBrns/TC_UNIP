@@ -1,7 +1,7 @@
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace TcUnip.WebApi.Areas.HelpPage
+namespace TcUnip.Api.Areas.HelpPage
 {
     public class HelpPageAreaRegistration : AreaRegistration
     {

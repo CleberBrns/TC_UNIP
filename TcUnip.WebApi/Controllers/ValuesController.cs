@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace TcUnip.WebApi.Controllers
+namespace TcUnip.Api.Controllers
 {
     public class ValuesController : ApiController
     {

@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcUnip.Service.Contract", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcUnip.ServiceApi", "TcUnip.ServiceApi\TcUnip.ServiceApi.csproj", "{6A5B306A-E212-46D5-A438-9725E8F72C6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcUnip.WebApi", "TcUnip.WebApi\TcUnip.WebApi.csproj", "{DE6C7563-2250-407F-85C2-58CAAA1EDBDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcUnip.Api", "TcUnip.WebApi\TcUnip.Api.csproj", "{DE6C7563-2250-407F-85C2-58CAAA1EDBDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

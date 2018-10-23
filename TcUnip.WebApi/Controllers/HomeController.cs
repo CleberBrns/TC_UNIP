@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace TcUnip.WebApi.Controllers
+namespace TcUnip.Api.Controllers
 {
     public class HomeController : Controller
     {

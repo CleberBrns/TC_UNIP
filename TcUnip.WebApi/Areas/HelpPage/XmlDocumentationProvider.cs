@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Xml.XPath;
-using TcUnip.WebApi.Areas.HelpPage.ModelDescriptions;
+using TcUnip.Api.Areas.HelpPage.ModelDescriptions;
 
-namespace TcUnip.WebApi.Areas.HelpPage
+namespace TcUnip.Api.Areas.HelpPage
 {
     /// <summary>
     /// A custom <see cref="IDocumentationProvider"/> that reads the API documentation from an XML documentation file.

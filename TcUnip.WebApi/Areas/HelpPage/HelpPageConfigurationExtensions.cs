@@ -11,10 +11,10 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using TcUnip.WebApi.Areas.HelpPage.ModelDescriptions;
-using TcUnip.WebApi.Areas.HelpPage.Models;
+using TcUnip.Api.Areas.HelpPage.ModelDescriptions;
+using TcUnip.Api.Areas.HelpPage.Models;
 
-namespace TcUnip.WebApi.Areas.HelpPage
+namespace TcUnip.Api.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace TcUnip.WebApi.Areas.HelpPage.ModelDescriptions
+namespace TcUnip.Api.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {

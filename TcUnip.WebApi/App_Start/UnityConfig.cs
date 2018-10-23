@@ -5,7 +5,7 @@ using TcUnip.Service.Contract.Pessoa;
 using TcUnip.Service.Pessoa;
 using Unity;
 
-namespace TcUnip.WebApi
+namespace TcUnip.Api
 {
     /// <summary>
     /// Specifies the Unity configuration for the main container.

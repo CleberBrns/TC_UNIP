@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
 
-namespace TcUnip.WebApi.Results
+namespace TcUnip.Api.Results
 {
     public class InvalidListMessageResult : IHttpActionResult
     {
