@@ -5,10 +5,10 @@ using TcUnip.Service.Contract.Calendario;
 
 namespace TcUnip.Api.Controllers
 {
-    public class CalendarioController : ApiController
+    public class AgendaController : ApiController
     {
         readonly IAgendaService _agendaService;
-        public CalendarioController(IAgendaService agendaService)
+        public AgendaController(IAgendaService agendaService)
         {
             this._agendaService = agendaService;
         }
