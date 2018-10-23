@@ -8,7 +8,7 @@ using TcUnip.ServiceApi.Common;
 
 namespace TcUnip.ServiceApi.Pessoa
 {
-    public class PacienteAPI : IServiceAPIBase<Paciente>
+    public class PacienteApi : IServiceAPIBase<Paciente>
     {
         readonly string tipoModel = "paciente";
 

@@ -10,7 +10,7 @@ using TcUnip.ServiceApi.Common;
 
 namespace TcUnip.ServiceApi.Pessoa
 {
-    public class UsuarioAPI : IServiceAPIBase<Usuario>
+    public class UsuarioApi : IServiceAPIBase<Usuario>
     {
         readonly string tipoModel = "usuario";
 
