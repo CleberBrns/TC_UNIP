@@ -11,8 +11,8 @@ namespace TcUnip.Service.Contract.Calendario
         Result<Agenda> Get(string id);
         Result<List<Agenda>> ListAgendaPeriodo(string dateFrom, string dateTo, bool getFromSession);
         Result<List<Agenda>> ListAgendaDoDia(bool getFromSession);
-        Result<Paciente> ConsultasPeriodoPaciente(string cpf, DateTime dateFrom, DateTime dateTo);
-        Result<Funcionario> ConsultasPeriodoFuncionario(string cpf, DateTime dateFrom, DateTime dateTo);
+        Result<Paciente> ConsultasPeriodoPaciente(string cpf, string dateFrom, string dateTo);
+        Result<Funcionario> ConsultasPeriodoFuncionario(string cpf, string dateFrom, string dateTo);
         Result<bool> Save(Agenda model);
         Result<bool> Delete(string id);
     }

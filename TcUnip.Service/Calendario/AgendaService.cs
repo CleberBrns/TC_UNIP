@@ -16,8 +16,7 @@ namespace TcUnip.Service.Calendario
         readonly AgendaApi service = new AgendaApi();
         readonly AgendaSN session = new AgendaSN();
         readonly string sessionAgendaPeriodos = ConstSessions.listAgendaPeriodos;
-        readonly string sessionAgendaDoDia = ConstSessions.listAgendaDoDia;
-        readonly string sessionConsultas = ConstSessions.listConsultas;
+        readonly string sessionAgendaDoDia = ConstSessions.listAgendaDoDia;        
 
         public Result<Agenda> Get(string id)
         {
@@ -70,10 +69,10 @@ namespace TcUnip.Service.Calendario
             return result;
         }
 
-        public Result<Funcionario> ConsultasPeriodoFuncionario(string cpf, DateTime dateFrom, DateTime dateTo)
+        public Result<Funcionario> ConsultasPeriodoFuncionario(string cpf, string dateFrom, string dateTo)
         {
             var result = new Result<Funcionario>();
-            var retorno = service.ConsultasPeriodoFuncionario(cpf, dateFrom.ToShortDateString(), dateTo.ToShortDateString());           
+            var retorno = service.ConsultasPeriodoFuncionario(cpf, dateFrom, dateTo);
 
             if (string.IsNullOrEmpty(retorno.Cpf))
             {
@@ -88,10 +87,10 @@ namespace TcUnip.Service.Calendario
             return result;
         }
 
-        public Result<Paciente> ConsultasPeriodoPaciente(string cpf, DateTime dateFrom, DateTime dateTo)
+        public Result<Paciente> ConsultasPeriodoPaciente(string cpf, string dateFrom, string dateTo)
         {
             var result = new Result<Paciente>();
-            var retorno = service.ConsultasPeriodoPaciente(cpf, dateFrom.ToShortDateString(), dateTo.ToShortDateString());
+            var retorno = service.ConsultasPeriodoPaciente(cpf, dateFrom, dateTo);
 
             if (!string.IsNullOrEmpty(retorno.Cpf))
             {
