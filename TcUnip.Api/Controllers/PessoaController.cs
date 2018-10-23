@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
 using TcUnip.Api.Results;
 using TcUnip.Model.Pessoa;
 using TcUnip.Service.Contract.Pessoa;
@@ -138,6 +139,12 @@ namespace TcUnip.Api.Controllers
                 return new InvalidListMessageResult(retorno.Message);
 
             return Ok(retorno);
+        }
+
+        [Route("api/Get")]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
         }
 
         [HttpGet]
