@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcUnip.ServiceApi", "TcUnip
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcUnip.Api", "TcUnip.WebApi\TcUnip.Api.csproj", "{DE6C7563-2250-407F-85C2-58CAAA1EDBDD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Presentation", "2.Presentation", "{9951CD2E-D464-4718-B509-FF5751103A3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcUnip.Web", "TcUnip.Web\TcUnip.Web.csproj", "{5720C659-AE8A-4FA7-9D25-C59C0B4E818A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +53,10 @@ Global
 		{DE6C7563-2250-407F-85C2-58CAAA1EDBDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE6C7563-2250-407F-85C2-58CAAA1EDBDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE6C7563-2250-407F-85C2-58CAAA1EDBDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5720C659-AE8A-4FA7-9D25-C59C0B4E818A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5720C659-AE8A-4FA7-9D25-C59C0B4E818A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5720C659-AE8A-4FA7-9D25-C59C0B4E818A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5720C659-AE8A-4FA7-9D25-C59C0B4E818A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +67,7 @@ Global
 		{5E9F759F-6C82-4A72-9365-2E2005628BC3} = {77A86174-31F4-47E9-8AC6-31454EB5055B}
 		{6A5B306A-E212-46D5-A438-9725E8F72C6A} = {77A86174-31F4-47E9-8AC6-31454EB5055B}
 		{DE6C7563-2250-407F-85C2-58CAAA1EDBDD} = {77A86174-31F4-47E9-8AC6-31454EB5055B}
+		{5720C659-AE8A-4FA7-9D25-C59C0B4E818A} = {9951CD2E-D464-4718-B509-FF5751103A3C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44C65A0B-F40F-44E2-B215-9999CBE848BE}
