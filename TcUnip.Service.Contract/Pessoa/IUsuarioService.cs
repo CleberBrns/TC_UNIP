@@ -7,7 +7,7 @@ namespace TcUnip.Service.Contract.Pessoa
     public interface IUsuarioService
     {
         Result<Usuario> Get(string email);
-        Result<List<Usuario>> List(bool getFromSession);
+        Result<List<Usuario>> List();
         Result<bool> Save(Usuario model);
         Result<bool> Delete(string email);
         Result<Usuario> Auth(Usuario model);

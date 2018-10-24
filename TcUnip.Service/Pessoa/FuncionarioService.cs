@@ -3,7 +3,6 @@ using System;
 using System.Linq;
 using TcUnip.Service.Contract.Pessoa;
 using TcUnip.ServiceApi.Pessoa;
-using TcUnip.Session.Pessoa;
 using TcUnip.Model.Pessoa;
 using TcUnip.Model.Common;
 
@@ -12,20 +11,13 @@ namespace TcUnip.Service.Pessoa
     public class FuncionarioService : IFuncionarioService
     {
         readonly FuncionarioApi serviceApi = new FuncionarioApi();
-        readonly PacienteApi servicePacApi = new PacienteApi();
-        readonly FuncionarioSN session = new FuncionarioSN();
-        readonly string sessionName = Constants.ConstSessions.listFuncionarios;
+        readonly PacienteApi servicePacApi = new PacienteApi();        
 
         public Result<Funcionario> Get(string cpf)
         {
             var result = new Result<Funcionario>();
 
-            var retornoSession = session.GetFromListSession(cpf, sessionName);
-
-            if (retornoSession.Item2)
-                result.Value = retornoSession.Item1;
-            else
-                result.Value = serviceApi.Get(cpf);
+            result.Value = serviceApi.Get(cpf);
 
             if (string.IsNullOrEmpty(result.Value.Cpf))
             {
@@ -36,49 +28,22 @@ namespace TcUnip.Service.Pessoa
             return result;
         }
 
-        public Result<List<Funcionario>> List(bool getFromSession)
+        public Result<List<Funcionario>> List()
         {
             var result = new Result<List<Funcionario>>();
-
-            if (getFromSession)
-            {
-                var retornoSession = session.GetListFromSession(sessionName);
-                /*Verifica se existia dados na session e se a mesma era válida.
-                  Caso a mesma seja válida é passado para o retorno da pesquisa, mesmo que esteja vazia.
-                  Caso não esteja criada, a busca é feita no serviço.*/
-                if (retornoSession.Item2)
-                    result.Value = retornoSession.Item1;
-                else
-                    result.Value = GetFromService();
-            }
-            else
-                result.Value = GetFromService();
+            result.Value = GetFromService();
 
             return result;
         }
 
-        public Result<List<Funcionario>> ListProfissionais(bool getFromSession)
+        public Result<List<Funcionario>> ListProfissionais()
         {
             var result = new Result<List<Funcionario>>();
-            var list = new List<Funcionario>();
 
-            if (getFromSession)
-            {                
-                var retornoSession = session.GetListFromSession(sessionName);
-                /*Verifica se existia dados na session e se a mesma era válida.
-                  Caso a mesma seja válida é passado para o retorno da pesquisa, mesmo que esteja vazia.
-                  Caso não esteja criada, a busca é feita no serviço.*/
-                if (retornoSession.Item2)
-                    list = retornoSession.Item1;
-                else
-                    list = GetFromService();
-            }
-            else
-                list = GetFromService();
-
+            var list = GetFromService();
             /*Lista somente os Funcionários com Modalidades cadastradas, que são os Profissionais*/
-            if (list.Count > 0)            
-                list = list.Where(l => l.Modalidades.Length > 0).ToList();            
+            if (list.Count > 0)
+                list = list.Where(l => l.Modalidades.Length > 0).ToList();
 
             result.Value = list;
 
@@ -128,10 +93,10 @@ namespace TcUnip.Service.Pessoa
                 }
 
                 result.Message = msg;
-            }            
+            }
 
             return result;
-        }       
+        }
 
         public Result<bool> Delete(string cpf)
         {
@@ -146,7 +111,7 @@ namespace TcUnip.Service.Pessoa
             {
                 result.Message = "Falha ao excluir o Funcionário!";
                 result.Status = false;
-            }                
+            }
 
             return result;
         }
@@ -182,9 +147,7 @@ namespace TcUnip.Service.Pessoa
 
         private List<Funcionario> GetFromService()
         {
-            var list = serviceApi.List();
-            session.AddListToSession(list, sessionName);
-            return list;
+            return serviceApi.List();
         }
 
         #endregion

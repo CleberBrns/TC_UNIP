@@ -2,29 +2,19 @@
 using System.Collections.Generic;
 using TcUnip.Model.Common;
 using TcUnip.Model.Pessoa;
-using TcUnip.Service.Constants;
 using TcUnip.Service.Contract.Pessoa;
 using TcUnip.ServiceApi.Pessoa;
-using TcUnip.Session.Pessoa;
 
 namespace TcUnip.Service.Pessoa
 {
     public class UsuarioService : IUsuarioService
     {
         readonly UsuarioApi serviceApi = new UsuarioApi();
-        readonly UsuarioSN session = new UsuarioSN();
-        readonly string sessionName = ConstSessions.listUsuarios;
 
         public Result<Usuario> Get(string email)
         {
             var result = new Result<Usuario>();
-
-            var retornoSession = session.GetFromListSession(email, sessionName);
-
-            if (retornoSession.Item2 && !string.IsNullOrEmpty(retornoSession.Item1.Email))
-                result.Value = retornoSession.Item1;
-            else
-                result.Value = serviceApi.Get(email);
+            result.Value = serviceApi.Get(email);
 
             if (string.IsNullOrEmpty(result.Value.Email))
             {
@@ -35,23 +25,10 @@ namespace TcUnip.Service.Pessoa
             return result;
         }
 
-        public Result<List<Usuario>> List(bool getFromSession)
+        public Result<List<Usuario>> List()
         {
             var result = new Result<List<Usuario>>();
-
-            if (getFromSession)
-            {
-                var retornoSession = session.GetListFromSession(sessionName);
-                /*Verifica se existia dados na session e se a mesma era válida.
-                  Caso a mesma seja válida é passado para o retorno da pesquisa, mesmo que esteja vazia.
-                  Caso não esteja criada, a busca é feita no serviço.*/
-                if (retornoSession.Item2)                
-                    result.Value = retornoSession.Item1;                
-                else
-                    result.Value = GetFromService();                    
-            }
-            else  
-                result.Value = GetFromService();                     
+            result.Value = serviceApi.List();
 
             return result;
         }
@@ -162,13 +139,6 @@ namespace TcUnip.Service.Pessoa
             }
 
             return new Tuple<Result<bool>, bool>(result, emailExistente);
-        }
-
-        private List<Usuario> GetFromService()
-        {
-            var list = serviceApi.List();
-            session.AddListToSession(list, sessionName);
-            return list;
         }
 
         #endregion

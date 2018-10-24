@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using TcUnip.Service.Constants;
 using TcUnip.Service.Contract.Pessoa;
 using TcUnip.ServiceApi.Pessoa;
-using TcUnip.Session.Pessoa;
 using TcUnip.Model.Common;
 using TcUnip.Model.Pessoa;
 
@@ -13,19 +11,11 @@ namespace TcUnip.Service.Pessoa
     {
         readonly PacienteApi serviceApi = new PacienteApi();
         readonly FuncionarioApi serviceFuncApi = new FuncionarioApi();
-        readonly PacienteSN session = new PacienteSN();
-        readonly string sessionName = ConstSessions.listPacientes;
 
         public Result<Paciente> Get(string cpf)
         {
             var result = new Result<Paciente>();
-
-            var retornoSession = session.GetFromListSession(cpf, sessionName);
-
-            if (retornoSession.Item2 && !string.IsNullOrEmpty(retornoSession.Item1.Cpf))
-                result.Value = retornoSession.Item1;
-            else
-                result.Value = serviceApi.Get(cpf);
+            result.Value = serviceApi.Get(cpf);
 
             if (string.IsNullOrEmpty(result.Value.Cpf))
             {
@@ -36,23 +26,10 @@ namespace TcUnip.Service.Pessoa
             return result;
         }
 
-        public Result<List<Paciente>> List(bool getFromSession)
+        public Result<List<Paciente>> List()
         {
             var result = new Result<List<Paciente>>();
-
-            if (getFromSession)
-            {
-                var retornoSession = session.GetListFromSession(sessionName);
-                /*Verifica se existia dados na session e se a mesma era válida.
-                  Caso a mesma seja válida é passado para o retorno da pesquisa, mesmo que esteja vazia.
-                  Caso não esteja criada, a busca é feita no serviço.*/
-                if (retornoSession.Item2)
-                    result.Value = retornoSession.Item1;
-                else
-                    result.Value = GetFromService();
-            }
-            else                
-                result.Value = GetFromService();            
+            result.Value = GetFromService();
 
             return result;
         }
@@ -158,7 +135,6 @@ namespace TcUnip.Service.Pessoa
         private List<Paciente> GetFromService()
         {
             var list = serviceApi.List();
-            session.AddListToSession(list, sessionName);
             return list;
         }
 

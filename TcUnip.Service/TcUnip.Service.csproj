@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calendario\AgendaService.cs" />
-    <Compile Include="Constants\ConstSessions.cs" />
     <Compile Include="Pessoa\FuncionarioService.cs" />
     <Compile Include="Pessoa\PacienteService.cs" />
     <Compile Include="Pessoa\UsuarioService.cs" />
@@ -60,10 +59,6 @@
     <ProjectReference Include="..\TcUnip.ServiceApi\TcUnip.ServiceApi.csproj">
       <Project>{6A5B306A-E212-46D5-A438-9725E8F72C6A}</Project>
       <Name>TcUnip.ServiceApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TcUnip.Session\TcUnip.Session.csproj">
-      <Project>{868AA813-E259-401D-BA73-7AC1D8DEB120}</Project>
-      <Name>TcUnip.Session</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

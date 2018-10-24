@@ -26,10 +26,10 @@ namespace TcUnip.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/Calendario/ListAgendaDoDia/{getFromSession}")]
-        public IHttpActionResult ListAgendaDoDia(bool getFromSession)
+        [Route("api/Calendario/ListAgendaDoDia")]
+        public IHttpActionResult ListAgendaDoDia()
         {
-            var retorno = _agendaService.ListAgendaDoDia(getFromSession);
+            var retorno = _agendaService.ListAgendaDoDia();
 
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
@@ -38,10 +38,10 @@ namespace TcUnip.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/Calendario/ListAgendaPeriodo/{dateFrom}/{dateTo}/{getFromSession}")]
-        public IHttpActionResult ListAgendaPeriodo(string dateFrom, string dateTo, bool getFromSession)
+        [Route("api/Calendario/ListAgendaPeriodo/{dateFrom}/{dateTo}")]
+        public IHttpActionResult ListAgendaPeriodo(string dateFrom, string dateTo)
         {
-            var retorno = _agendaService.ListAgendaPeriodo(dateFrom, dateTo, getFromSession);
+            var retorno = _agendaService.ListAgendaPeriodo(dateFrom, dateTo);
 
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);

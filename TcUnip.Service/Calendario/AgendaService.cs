@@ -4,19 +4,14 @@ using System.Linq;
 using TcUnip.Model.Calendario;
 using TcUnip.Model.Common;
 using TcUnip.Model.Pessoa;
-using TcUnip.Service.Constants;
 using TcUnip.Service.Contract.Calendario;
 using TcUnip.ServiceApi.Calendario;
-using TcUnip.Session.Calendario;
 
 namespace TcUnip.Service.Calendario
 {
     public class AgendaService : IAgendaService
     {
-        readonly AgendaApi service = new AgendaApi();
-        readonly AgendaSN session = new AgendaSN();
-        readonly string sessionAgendaPeriodos = ConstSessions.listAgendaPeriodos;
-        readonly string sessionAgendaDoDia = ConstSessions.listAgendaDoDia;        
+        readonly AgendaApi service = new AgendaApi();       
 
         public Result<Agenda> Get(string id)
         {
@@ -34,34 +29,21 @@ namespace TcUnip.Service.Calendario
             return result;
         }
 
-        public Result<List<Agenda>> ListAgendaDoDia(bool getFromSession)
+        public Result<List<Agenda>> ListAgendaDoDia()
         {
             var list = new List<Agenda>();
-            var result = new Result<List<Agenda>>();
+            var result = new Result<List<Agenda>>();             
 
-            if (getFromSession)
-            {
-                var retornoSession = session.GetListFromSession(sessionAgendaDoDia);
-
-                if (retornoSession.Item2)
-                    list = retornoSession.Item1;
-                else                
-                    list = GetAgendaDoDia();                
-            }
-            else            
-                list = GetAgendaDoDia();              
-
-            list = ConfiguraAgendaService(list);
+            list = ConfiguraAgendaService(GetAgendaDoDia());
             result.Value = list;
 
             return result;
         }
 
-        public Result<List<Agenda>> ListAgendaPeriodo(string dateFrom, string dateTo, bool getFromSession)
+        public Result<List<Agenda>> ListAgendaPeriodo(string dateFrom, string dateTo)
         {
             var result = new Result<List<Agenda>>();
-            var retorno = GetAgendaPeriodo(dateFrom.Trim(), dateTo.Trim(), 
-                                           getFromSession ? sessionAgendaPeriodos : string.Empty);
+            var retorno = GetAgendaPeriodo(dateFrom.Trim(), dateTo.Trim());
 
             var list = ConfiguraAgendaService(retorno);
             result.Value = list;
@@ -172,32 +154,12 @@ namespace TcUnip.Service.Calendario
 
         private List<Agenda> GetAgendaDoDia()
         {
-            return GetAgendaPeriodo(DateTime.Now.ToShortDateString(), DateTime.Now.ToShortDateString(), string.Empty);
+            return GetAgendaPeriodo(DateTime.Now.ToShortDateString(), DateTime.Now.ToShortDateString());
         }
 
-        private List<Agenda> GetAgendaPeriodo(string dataDe, string dataAte, string sessionAgenda)
+        private List<Agenda> GetAgendaPeriodo(string dataDe, string dataAte)
         {
-            var list = new List<Agenda>();
-
-            var getFromSession = !string.IsNullOrEmpty(sessionAgenda);
-
-            if (getFromSession)
-            {
-                var retornoSession = session.GetListFromSession(sessionAgenda);
-
-                if (retornoSession.Item2)
-                    list = retornoSession.Item1;
-                else
-                    list = service.ListAgendasPeriodo(dataDe, dataAte);
-
-                if (!string.IsNullOrEmpty(sessionAgenda))
-                    if (list.Count > 0)
-                        session.AddListToSession(list, sessionAgenda);
-            }
-            else            
-                list = service.ListAgendasPeriodo(dataDe, dataAte);            
-
-            return list;
+            return service.ListAgendasPeriodo(dataDe, dataAte);
         }
 
         /// <summary>

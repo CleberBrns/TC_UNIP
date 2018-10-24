@@ -34,10 +34,10 @@ namespace TcUnip.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/Pessoa/ListPacientes/{getFromSession}")]
-        public IHttpActionResult ListPacientes(bool getFromSession)
+        [Route("api/Pessoa/ListPacientes")]
+        public IHttpActionResult ListPacientes()
         {
-            var retorno = _pacienteService.List(getFromSession);
+            var retorno = _pacienteService.List();
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
 
@@ -82,10 +82,10 @@ namespace TcUnip.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/Pessoa/ListFuncionarios/{getFromSession}")]
-        public IHttpActionResult ListFuncionarios(bool getFromSession)
+        [Route("api/Pessoa/ListFuncionarios")]
+        public IHttpActionResult ListFuncionarios()
         {
-            var retorno = _funcionarioService.List(getFromSession);
+            var retorno = _funcionarioService.List();
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
 
@@ -93,10 +93,10 @@ namespace TcUnip.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/Pessoa/ListProfissionais/{getFromSession}")]
-        public IHttpActionResult ListProfissionais(bool getFromSession)
+        [Route("api/Pessoa/ListProfissionais")]
+        public IHttpActionResult ListProfissionais()
         {
-            var retorno = _funcionarioService.ListProfissionais(getFromSession);
+            var retorno = _funcionarioService.ListProfissionais();
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
 
@@ -141,10 +141,10 @@ namespace TcUnip.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/Pessoa/ListUsuarios/{getFromSession}")]
-        public IHttpActionResult ListUsuarios(bool getFromSession)
+        [Route("api/Pessoa/ListUsuarios")]
+        public IHttpActionResult ListUsuarios()
         {
-            var retorno = _usuarioService.List(getFromSession);
+            var retorno = _usuarioService.List();
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
 
