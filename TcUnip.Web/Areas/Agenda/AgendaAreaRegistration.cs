@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace TCC_Unip.Areas.Agenda
+namespace TcUnip.Web.Areas.Agenda
 {
     public class AgendaAreaRegistration : AreaRegistration
     {
@@ -19,7 +19,7 @@ namespace TCC_Unip.Areas.Agenda
                 "Agenda_default",
                 "Agenda/{controller}/{action}/{id}",
                 new { Area = "Agenda", Controller = "Agenda", action = "Listagem", id = UrlParameter.Optional },
-                new[] { "TCC_Unip.Areas.Agenda.Controllers" }
+                new[] { "TcUnip.Web.Areas.Agenda.Controllers" }
             );
         }
     }

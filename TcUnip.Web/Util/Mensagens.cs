@@ -1,6 +1,6 @@
-﻿using TCC_Unip.Models.Local;
+﻿using TcUnip.Web.Models.Local;
 
-namespace TCC_Unip.Util
+namespace TcUnip.Web.Util
 {
     public class Mensagens
     {        

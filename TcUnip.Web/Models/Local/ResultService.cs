@@ -1,5 +1,5 @@
 ﻿
-namespace TCC_Unip.Models.Local
+namespace TcUnip.Web.Models.Local
 {
     public class ResultService<T>
         where T : new()

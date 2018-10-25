@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace TCC_Unip.Areas.Funcionario
+namespace TcUnip.Web.Areas.Funcionario
 {
     public class FuncionarioAreaRegistration : AreaRegistration
     {
@@ -19,7 +19,7 @@ namespace TCC_Unip.Areas.Funcionario
                 "Funcionario_default",
                 "Funcionario/{controller}/{action}/{id}",
                 new { Area = "Funcionario", Controller = "Funcionario", action = "Listagem", id = UrlParameter.Optional },
-                new[] { "TCC_Unip.Areas.Funcionario.Controllers" }
+                new[] { "TcUnip.Web.Areas.Funcionario.Controllers" }
             );
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace TCC_Unip.Models.Servico
+namespace TcUnip.Web.Models.Servico
 {
     public class Funcionario
     {

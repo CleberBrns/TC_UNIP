@@ -1,12 +1,12 @@
-﻿@model TCC_Unip.Models.Servico.Usuario
+﻿@model TcUnip.Web.Models.Servico.Usuario
 
-@using TCC_Unip.Models.Local;
+@using TcUnip.Web.Models.Local;
 
 @{
     var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
     var listPerfil = (IList<DataSelectControl>)ViewBag.ListPerfil;
-    var listFuncionarios = (IList<TCC_Unip.Models.Servico.Funcionario>)ViewBag.ListFuncionarios;
-    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
+    var listFuncionarios = (IList<TcUnip.Web.Models.Servico.Funcionario>)ViewBag.ListFuncionarios;
+    var user = (TcUnip.Web.Models.Servico.Usuario)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -78,7 +78,7 @@
                         }
                         else
                         {
-                            if (user.Permissoes.FirstOrDefault().Equals(TCC_Unip.Constants.ConstPermissoes.profissional))
+                            if (user.Permissoes.FirstOrDefault().Equals(TcUnip.Web.Constants.ConstPermissoes.profissional))
                             {
                                 <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf"
                                        value="@Model.Cpf" style="width: 40%" />

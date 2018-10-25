@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using TCC_Unip.Models.Servico;
-using TCC_Unip.Session;
+using TcUnip.Web.Models.Servico;
+using TcUnip.Web.Session;
 
-namespace TCC_Unip.Controllers
+namespace TcUnip.Web.Controllers
 {
     public class BaseController : Controller
     {

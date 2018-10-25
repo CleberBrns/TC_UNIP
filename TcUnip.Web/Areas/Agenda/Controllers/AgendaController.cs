@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Web.Mvc;
-using TCC_Unip.Controllers;
-using TCC_Unip.Models.Local;
-using TCC_Unip.Models.Servico;
-using TCC_Unip.Services;
-using TCC_Unip.Session;
-using TCC_Unip.Util;
+using TcUnip.Web.Controllers;
+using TcUnip.Web.Models.Local;
+using TcUnip.Web.Models.Servico;
+using TcUnip.Web.Services;
+using TcUnip.Web.Session;
+using TcUnip.Web.Util;
 
-namespace TCC_Unip.Areas.Agenda.Controllers
+namespace TcUnip.Web.Areas.Agenda.Controllers
 {
     public class AgendaController : BaseController
     {

@@ -1,8 +1,8 @@
-﻿using TCC_Unip.Contracts.Session;
-using TCC_Unip.Models.Servico;
-using TCC_Unip.SessionBase;
+﻿using TcUnip.Web.Contracts.Session;
+using TcUnip.Web.Models.Servico;
+using TcUnip.Web.SessionBase;
 
-namespace TCC_Unip.Session
+namespace TcUnip.Web.Session
 {
     public class AgendaSession : SessionBase<Agenda>, ISessionAgenda
     {

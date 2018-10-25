@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
-using TCC_Unip.Controllers;
+using TcUnip.Web.Controllers;
 
-namespace TCC_Unip.Areas.Inicio.Controllers
+namespace TcUnip.Web.Areas.Inicio.Controllers
 {
     public class InicioController : BaseController
     {

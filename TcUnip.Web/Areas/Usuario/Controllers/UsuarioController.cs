@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using TCC_Unip.Controllers;
-using TCC_Unip.Models.Local;
-using TCC_Unip.Services;
-using TCC_Unip.Session;
-using TCC_Unip.Util;
+using TcUnip.Web.Controllers;
+using TcUnip.Web.Models.Local;
+using TcUnip.Web.Services;
+using TcUnip.Web.Session;
+using TcUnip.Web.Util;
 
-namespace TCC_Unip.Areas.Usuario.Controllers
+namespace TcUnip.Web.Areas.Usuario.Controllers
 {
     public class UsuarioController : BaseController
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using TCC_Unip.Models.Local;
-using TCC_Unip.Models.Servico;
+using TcUnip.Web.Models.Local;
+using TcUnip.Web.Models.Servico;
 
-namespace TCC_Unip.Contracts.Service
+namespace TcUnip.Web.Contracts.Service
 {
     public interface IServiceUsuario
     {

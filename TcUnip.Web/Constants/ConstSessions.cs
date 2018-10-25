@@ -1,6 +1,6 @@
 ﻿
 
-namespace TCC_Unip.Constants
+namespace TcUnip.Web.Constants
 {
     public class ConstSessions
     {        

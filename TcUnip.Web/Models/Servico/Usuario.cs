@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TCC_Unip.Models.Servico
+namespace TcUnip.Web.Models.Servico
 {    
     public class Usuario
     {

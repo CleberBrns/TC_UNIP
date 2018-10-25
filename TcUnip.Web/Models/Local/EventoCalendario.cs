@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TCC_Unip.Models.Local
+namespace TcUnip.Web.Models.Local
 {
     public class EventoCalendario
     {

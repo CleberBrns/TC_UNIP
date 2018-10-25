@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using TCC_Unip.Models.Servico;
+using TcUnip.Web.Models.Servico;
 
-namespace TCC_Unip.Models.Json
+namespace TcUnip.Web.Models.Json
 {
     public class AgendaJS
     {

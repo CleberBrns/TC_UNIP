@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using TCC_Unip.Contracts.API;
-using TCC_Unip.Models.Servico;
+using TcUnip.Web.Contracts.API;
+using TcUnip.Web.Models.Servico;
 
-namespace TCC_Unip.API
+namespace TcUnip.Web.API
 {
     public class UsuarioAPI : IAPIBase<Usuario>
     {

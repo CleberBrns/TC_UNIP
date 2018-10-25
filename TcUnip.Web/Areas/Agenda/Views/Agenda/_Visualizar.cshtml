@@ -1,7 +1,7 @@
-﻿@model TCC_Unip.Models.Local.EventoCalendario
+﻿@model TcUnip.Web.Models.Local.EventoCalendario
 
 @{
-    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Web.Models.Servico.Usuario)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -33,7 +33,7 @@
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Retornar
                 </button>
 
-                @if (TCC_Unip.Constants.ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+                @if (TcUnip.Web.Constants.ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
                 {
                     <button type="button" class="btn btn-primary" id="btnEditar"
                             id-registro="@Model.IdConsulta" onclick="indexAgenda.modalEditar(this)">

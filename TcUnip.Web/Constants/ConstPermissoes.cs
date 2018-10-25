@@ -1,6 +1,6 @@
-﻿using TCC_Unip.Models.Servico;
+﻿using TcUnip.Web.Models.Servico;
 
-namespace TCC_Unip.Constants
+namespace TcUnip.Web.Constants
 {
     public class ConstPermissoes
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using TCC_Unip.Models.Servico;
+using TcUnip.Web.Models.Servico;
 
-namespace TCC_Unip.Contracts.Session
+namespace TcUnip.Web.Contracts.Session
 {
     public interface ISessionPaciente : ISessionBase<Paciente>
     {

@@ -1,10 +1,10 @@
-﻿@model TCC_Unip.Models.Servico.Paciente
+﻿@model TcUnip.Web.Models.Servico.Paciente
 
-@using TCC_Unip.Models.Local;
+@using TcUnip.Web.Models.Local;
 
 @{
     var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
-    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Web.Models.Servico.Usuario)ViewBag.Usuario;
 }
 
 @if (user != null)

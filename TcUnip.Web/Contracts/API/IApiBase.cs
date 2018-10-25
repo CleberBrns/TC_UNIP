@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TCC_Unip.Contracts.API
+namespace TcUnip.Web.Contracts.API
 {
     public interface IAPIBase<TModel>
     {

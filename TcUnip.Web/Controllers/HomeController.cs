@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace TCC_Unip.Controllers
+namespace TcUnip.Web.Controllers
 {
     public class HomeController : BaseController
     {

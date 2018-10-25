@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TCC_Unip.Models.Json
+namespace TcUnip.Web.Models.Json
 {
     public class PessoaJS
     {

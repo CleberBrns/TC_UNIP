@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using TCC_Unip.Contracts.Session;
+using TcUnip.Web.Contracts.Session;
 
-namespace TCC_Unip.SessionBase
+namespace TcUnip.Web.SessionBase
 {
     public class SessionBase<TModel> : ISessionBase<TModel>
         where TModel : class, new()

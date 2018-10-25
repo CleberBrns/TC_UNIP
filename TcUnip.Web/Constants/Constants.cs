@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using TCC_Unip.Models.Local;
+using TcUnip.Web.Models.Local;
 
-namespace TCC_Unip.Constants
+namespace TcUnip.Web.Constants
 {
     public class Constants
     {

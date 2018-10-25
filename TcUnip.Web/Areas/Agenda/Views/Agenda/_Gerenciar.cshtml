@@ -1,14 +1,14 @@
-﻿@model TCC_Unip.Models.Servico.Agenda
+﻿@model TcUnip.Web.Models.Servico.Agenda
 
-@using TCC_Unip.Models.Local;
+@using TcUnip.Web.Models.Local;
 
 @{
-    var listPacientes = (IList<TCC_Unip.Models.Servico.Paciente>)ViewBag.ListPacientes;
-    var listProfissionais = (IList<TCC_Unip.Models.Servico.Funcionario>)ViewBag.ListProfissionais;
+    var listPacientes = (IList<TcUnip.Web.Models.Servico.Paciente>)ViewBag.ListPacientes;
+    var listProfissionais = (IList<TcUnip.Web.Models.Servico.Funcionario>)ViewBag.ListProfissionais;
     var listHorarios = (IList<DataSelectControl>)ViewBag.ListHorarios;
     var listModalidades = (IList<DataSelectControl>)ViewBag.ListModalidades;
 
-    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Web.Models.Servico.Usuario)ViewBag.Usuario;
 }
 
 <link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />

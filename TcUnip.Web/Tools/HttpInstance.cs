@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http;
 
-namespace TCC_Unip.Tools
+namespace TcUnip.Web.Tools
 {
     public class HttpInstance
     {

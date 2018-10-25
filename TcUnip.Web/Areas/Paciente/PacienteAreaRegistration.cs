@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace TCC_Unip.Areas.Paciente
+namespace TcUnip.Web.Areas.Paciente
 {
     public class PacienteAreaRegistration : AreaRegistration
     {
@@ -19,7 +19,7 @@ namespace TCC_Unip.Areas.Paciente
                 "Paciente_default",
                 "Paciente/{controller}/{action}/{id}",
                 new { Area = "Paciente", Controller = "Paciente", action = "Listagem", id = UrlParameter.Optional },
-                new[] { "TCC_Unip.Areas.Paciente.Controllers" }
+                new[] { "TcUnip.Web.Areas.Paciente.Controllers" }
             );
         }
     }

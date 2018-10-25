@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace TCC_Unip
+namespace TcUnip.Web
 {
     public class BundleConfig
     {

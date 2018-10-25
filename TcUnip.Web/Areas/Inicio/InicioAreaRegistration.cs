@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace TCC_Unip.Areas.Inicio
+namespace TcUnip.Web.Areas.Inicio
 {
     public class InicioAreaRegistration : AreaRegistration
     {
@@ -19,7 +19,7 @@ namespace TCC_Unip.Areas.Inicio
                 "Inicio_default",
                 "Inicio/{controller}/{action}/{id}",
                 new { Area = "Inicio", Controller = "Inicio", action = "Index", id = UrlParameter.Optional },
-                new[] { "TCC_Unip.Areas.Inicio.Controllers" }
+                new[] { "TcUnip.Web.Areas.Inicio.Controllers" }
             );
         }
     }

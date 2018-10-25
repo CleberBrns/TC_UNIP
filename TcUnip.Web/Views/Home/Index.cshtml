@@ -1,4 +1,4 @@
-﻿@using TCC_Unip.Models.Local;
+﻿@using TcUnip.Web.Models.Local;
 
 @{
     ViewBag.Title = "Index";
@@ -6,8 +6,8 @@
 
 <h2>Index</h2>
 @{
-        var user = Session[TCC_Unip.Constants.ConstSessions.usuario] as 
-               TCC_Unip.Models.Servico.Usuario;
+        var user = Session[TcUnip.Web.Constants.ConstSessions.usuario] as 
+               TcUnip.Web.Models.Servico.Usuario;
 }
 
 @if (user != null)

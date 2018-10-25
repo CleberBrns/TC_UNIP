@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using TCC_Unip.Models.Local;
-using TCC_Unip.Models.Servico;
-using TCC_Unip.API;
-using TCC_Unip.Session;
-using TCC_Unip.Contracts.Service;
+using TcUnip.Web.Models.Local;
+using TcUnip.Web.Models.Servico;
+using TcUnip.Web.API;
+using TcUnip.Web.Session;
+using TcUnip.Web.Contracts.Service;
 using System;
 
-namespace TCC_Unip.Services
+namespace TcUnip.Web.Services
 {
     public class UsuarioService : IServiceUsuario
     {

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using TCC_Unip.Models.Local;
-using TCC_Unip.Models.Servico;
-using TCC_Unip.API;
-using TCC_Unip.Contracts.Service;
-using TCC_Unip.Session;
+using TcUnip.Web.Models.Local;
+using TcUnip.Web.Models.Servico;
+using TcUnip.Web.API;
+using TcUnip.Web.Contracts.Service;
+using TcUnip.Web.Session;
 using System.Linq;
 
-namespace TCC_Unip.Services
+namespace TcUnip.Web.Services
 {
     public class AgendaService : IServiceAgenda
     {

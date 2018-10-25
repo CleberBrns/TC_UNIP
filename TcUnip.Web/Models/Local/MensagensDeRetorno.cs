@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace TCC_Unip.Models.Local
+namespace TcUnip.Web.Models.Local
 {
     public class MensagensDeRetorno
     {
