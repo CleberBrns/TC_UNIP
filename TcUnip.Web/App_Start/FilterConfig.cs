@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace TcUnip.Web
+namespace TCC_Unip
 {
     public class FilterConfig
     {

@@ -1,0 +1,355 @@
+﻿@model TCC_Unip.Models.Servico.Usuario
+
+@using TCC_Unip.Models.Local;
+
+@{
+    var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
+    var listPerfil = (IList<DataSelectControl>)ViewBag.ListPerfil;
+    var listFuncionarios = (IList<TCC_Unip.Models.Servico.Funcionario>)ViewBag.ListFuncionarios;
+    var user = (TCC_Unip.Models.Servico.Usuario)ViewBag.Usuario;
+}
+
+@if (user != null)
+{
+    using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+
+            @if (!string.IsNullOrEmpty(Model.Email))
+            {
+                <input type="hidden" name="Id" id="Id" value=@Model.Email>
+                <input type="hidden" name="Cpf" id="hddCpf" value="@Model.Cpf">
+                <input type="hidden" name="Email" id="hddEmail" value="@Model.Email">
+            }
+            <input type="hidden" name="Permissoes" id="hddPermissao">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="campos" style="padding: 2% 0 2% 5%">
+                <div class="form-group">
+                    @if (string.IsNullOrEmpty(Model.Email))
+                    {
+                        <div id="divPreenchimento">
+                            @Html.Label("Preenchimento Automático", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-8">
+                                <div>
+                                    @Html.Label("É um Funcionário Cadastrado?", htmlAttributes: new { @class = "control-label" })
+                                    <input type="checkbox" class="" id="isFuncCadastrado" />
+                                </div>
+                                <div style="padding-top: 2%">
+                                    <select class="form-control" id="funcionarios" disabled="disabled" style="text-align-last: center">
+                                        <option value="0">-- Selecione --</option>
+                                        @foreach (var item in listFuncionarios)
+                                        {
+                                            if (Model.Cpf == item.Cpf)
+                                            {
+                                                <option value="@item.Cpf" email="@item.Email"
+                                                        modalidade="@item.Modalidades.FirstOrDefault()"
+                                                        selected="selected">
+                                                    @item.Nome
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Cpf" email="@item.Email"
+                                                        modalidade="@item.Modalidades.FirstOrDefault()">
+                                                    @item.Nome
+                                                </option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="form-group">
+                    @Html.Label("E-mail", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        <input type="text" autocomplete="off" class="form-control" id="email" name="Email" value="@Model.Email" />
+                        <span class="field-validation-valid text-danger" id="validaEmail" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("CPF", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        @if (string.IsNullOrEmpty(Model.Cpf))
+                        {
+                            <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf" value="@Model.Cpf" style="width: 40%" />
+                        }
+                        else
+                        {
+                            if (user.Permissoes.FirstOrDefault().Equals(TCC_Unip.Constants.ConstPermissoes.profissional))
+                            {
+                                <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf"
+                                       value="@Model.Cpf" style="width: 40%" />
+                            }
+                            else
+                            {
+                                <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf"
+                                       disabled="disabled" value="@Model.Cpf" style="width: 40%" />
+                            }
+                        }
+                        <span class="field-validation-valid text-danger" id="validaCpf" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Senha", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        <input type="password" class="form-control" id="senha" name="Senha" style="width: 60%" />
+                        <span class="field-validation-valid text-danger" id="validaSenha" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="form-group" style="white-space: nowrap">
+                    @Html.Label("Confirmar Senha", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        <input type="password" class="form-control" id="confirmaSenha" style="width: 60%" />
+                        <span class="field-validation-valid text-danger" id="validaConfirmaSenha" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        @Html.Label("Perfil", htmlAttributes: new { @class = "control-label col-md-3" })
+                    </div>
+                    <div class="col-md-8">
+                        <select class="form-control" id="perfil" name="Permissoes" style="width: 42%">
+                            <option value="0">-- Selecione --</option>
+                            @foreach (var item in listPerfil)
+                            {
+                                if (Model.Permissoes.FirstOrDefault() == item.Value)
+                                {
+                                    <option value="@item.Value" selected="selected">@item.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">@item.Name</option>
+                                }
+                            }
+                        </select>
+                        <span class="field-validation-valid text-danger" id="validaPerfil" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        @Html.Label("Situação", htmlAttributes: new { @class = "control-label col-md-3" })
+                    </div>
+                    <div class="col-md-8">
+                        <select class="form-control" id="status" name="Status" style="width: 42%">
+                            <option value="0">-- Selecione --</option>
+                            @foreach (var item in listStatus)
+                            {
+                                if (Model.Status == item.Value)
+                                {
+                                    <option value="@item.Value" selected="selected">@item.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Value">@item.Name</option>
+                                }
+                            }
+                        </select>
+                        <span class="field-validation-valid text-danger" id="validaStatus" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="text-right col-md-12">
+                    <button type="button" class="btn btn-primary" id="btnRetornar" name="btnRetornar" onclick="UsuarioGerenciar.closeModal()">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Retornar
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnSalvar">
+                        Salvar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <script>
+
+    $("#cpf").mask("999.999.999-99");
+
+    $("#btnSalvar").on('click', function () {
+        if (UsuarioGerenciar.validar())
+            UsuarioGerenciar.salvar();
+    });
+
+    $("#isFuncCadastrado").on('change', function () {
+
+        if (this.checked) {
+            $("#funcionarios").attr('disabled', false);
+        }
+        else {
+            $("#funcionarios").attr('disabled', true);
+            $('#funcionarios  option[value="0"]').prop("selected", true);
+            UsuarioGerenciar.preenchimentoAutomatico($("#cpf"), "", $("#hddCpf"), false);
+            UsuarioGerenciar.preenchimentoAutomatico($("#email"), "", $("#hddEmail"), false);
+            UsuarioGerenciar.permissaoProfissional("");
+        }
+    });
+
+    $("#funcionarios").on('change', function () {
+
+
+        var selecionado = $(this).find(':selected');
+        if (selecionado.val() !== "0") {
+            var cpf = selecionado.attr("value");
+            var email = selecionado.attr("email");
+            var permissao = selecionado.attr("modalidade");
+            UsuarioGerenciar.preenchimentoAutomatico($("#cpf"), cpf, $("#hddCpf"), true);
+            UsuarioGerenciar.preenchimentoAutomatico($("#email"), email, $("#hddEmail"), true);
+            UsuarioGerenciar.permissaoProfissional(permissao);
+        }
+        else {
+            UsuarioGerenciar.preenchimentoAutomatico($("#cpf"), "", $("#hddCpf"), false);
+            UsuarioGerenciar.preenchimentoAutomatico($("#email"), "", $("#hddEmail"), false);
+            UsuarioGerenciar.permissaoProfissional("");
+        }
+    });
+
+    var UsuarioGerenciar = {
+
+        permissaoProfissional: function (permissao) {
+            if (permissao !== undefined && permissao !== "") {
+                $('#perfil option[value="PROFISSIONAL"]').prop("selected", true);
+                $("#perfil").prop('disabled', true);
+            }
+            else {
+                $('#perfil option[value="0"]').prop("selected", true);
+                $("#perfil").prop('disabled', false);
+            }
+
+            $("#hddPermissao").val($("#perfil").val());
+        },
+
+        preenchimentoAutomatico: function (field, value, hidenField, desabilitar) {
+
+            $(field).val(value);
+            $(hidenField).val(value);
+
+            if (desabilitar) {
+                $(field).prop('disabled', true);
+            }
+            else {
+                $(field).prop('disabled', false);
+            }
+        },
+
+        salvar: function () {
+            //Ajuste para impedir multiplos cliques
+            event.preventDefault();
+            var that = $(this);
+            that.off('click');
+
+            var dadosSalvar = {
+
+                Email: $("#email").val().trim(),
+                Cpf: $("#cpf").val().trim(),
+                Senha: $("#senha").val().trim(),
+                Permissoes: $("#perfil").val().trim(),
+                Status: $("#status").val().trim()                
+            };
+
+            $.ajax({
+                url: "@Url.Action("Salvar", "Usuario")",
+                type: "POST",
+                data: { model: dadosSalvar },
+                success: function (result) {
+
+                    var retorno = result.mensagensRetorno;
+
+                    if (retorno.Status) {
+                        swal({
+                            title: '',
+                            text: retorno.MensagemExibicao,
+                            type: 'success',
+                            confirmButtonColor: '#10386B',
+                            allowOutsideClick: false
+                        }).then(function () {
+                            bootbox.hideAll();
+                            funcoesIndexTabs.listaUsuarios($(".abaUsuarios"), false);
+                        });
+                    }
+                    else {
+
+                        swal({
+                            title: '',
+                            text: retorno.MensagemExibicao,
+                            type: 'warning',
+                            confirmButtonColor: '#10386B',
+                            allowOutsideClick: false
+                        });
+                        console.log(retorno.MensagemAnalise);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                }
+            }).always(function () {
+                that.on('click', UsuarioGerenciar.salvar); //Devolve a ação do botão
+            });
+        },
+
+        validar: function () {
+
+            var ehValido = true;
+
+            var email = $("#email").val().trim();
+            var validaEmail = $("#validaEmail");
+
+            var cpf = $("#cpf").val().trim();
+            var validaCpf = $("#validaCpf");
+
+            var senha = $("#senha").val().trim();
+            var validaSenha = $("#validaSenha");
+
+            var confirmaSenha = $("#confirmaSenha").val().trim();
+            var validaConfirmaSenha = $("#validaConfirmaSenha");
+
+            var perfil = $("#perfil").val().trim();
+            var validaPerfil = $("#validaPerfil");
+
+            var status = $("#status").val();
+            var validaStatus = $("#validaStatus");
+
+            if (validacao.campoNulo(email, validaEmail))
+                ehValido = false;
+
+            if (!validacao.ValidarEmail(email, validaEmail))
+                ehValido = false;
+
+            if (validacao.campoNulo(cpf, validaCpf))
+                ehValido = false;
+
+            if (validacao.minLenght(cpf, validaCpf, 14, "Cpf inválido!"))
+                ehValido = false;
+
+            if (validacao.campoNulo(senha, validaSenha))
+                ehValido = false;
+
+            if (validacao.minLenght(senha, validaSenha, 6))
+                ehValido = false;
+
+            if (validacao.campoNulo(confirmaSenha, validaConfirmaSenha))
+                ehValido = false;
+
+            if (ehValido)
+                if (validacao.confirmaSenhas(senha, validaSenha, confirmaSenha, validaConfirmaSenha))
+                    ehValido = false;
+
+            if (validacao.selectSelecionado(perfil, validaPerfil, "Selecione uma Perfil"))
+                ehValido = false;
+
+            if (validacao.selectSelecionado(status, validaStatus, "Selecione uma Situação"))
+                ehValido = false;
+
+            return ehValido;
+        },
+
+        closeModal: function () {
+            bootbox.hideAll();
+        }
+
+    };
+
+    </script>
+}

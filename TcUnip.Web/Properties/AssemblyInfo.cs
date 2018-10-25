@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TcUnip.Web")]
+[assembly: AssemblyTitle("TCC_Unip")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TcUnip.Web")]
+[assembly: AssemblyProduct("TCC_Unip")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f7d7d5cd-fdae-4a17-bdfe-c3a4295c9080")]
+[assembly: Guid("d5853a74-a585-45d3-8ecc-a69e2ba6c9dc")]
 
 // Version information for an assembly consists of the following four values:
 //

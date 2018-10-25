@@ -1,0 +1,51 @@
+﻿/*body {
+}*/
+
+
+.navbar {    
+    
+    font-size: 14px;
+}
+
+.navbar-brand {
+    color: black;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    margin: auto;
+    font-size: 25px;
+}
+
+.caixaTexto {
+    height: 44px;
+    font-size: 16px;
+    width: 100%;
+    padding: 0 8px;
+}
+
+.divQuadro {
+    padding: 5%;       
+    overflow: hidden;    
+}
+
+    .divQuadro h2 {
+        font-weight: 100;
+        text-align: center;
+    }
+
+.divBotoes {
+    padding-top: 2%;
+    text-align: center;
+}
+
+.linkButton {
+    text-decoration: none;
+    color: #666;
+}
+
+.alinhamentoSelect {
+    text-align-last: center;
+}
+

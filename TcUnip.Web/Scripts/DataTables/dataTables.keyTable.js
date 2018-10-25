@@ -794,7 +794,7 @@ $.extend( KeyTable.prototype, {
 			return;
 		}
 
-		var div = $('<div><input type="text" tabindex="'+tabIndex+'"/></div>')
+		var div = $('<div><input type="text" autocomplete="off" tabindex="'+tabIndex+'"/></div>')
 			.css( {
 				position: 'absolute',
 				height: 1,
