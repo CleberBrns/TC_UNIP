@@ -11,7 +11,7 @@ namespace TcUnip.Web.Models.Proxy
     public class UsuarioProxy : IUsuarioProxy
     {
         IWebApiClient _apiClient;
-        readonly string apiRoute = "api/Usuario/";
+        readonly string apiRoute = "api/Pessoa/";
 
         public UsuarioProxy(IWebApiClient apiClient)
         {
@@ -21,27 +21,27 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<Usuario> Get(string email)
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<Usuario>>($"{apiRoute}Get/{email}"));
+            return AsyncContext.Run(() => _apiClient.GetAsync<Result<Usuario>>($"{apiRoute}GetUsuario/{email}"));
         }
 
         public Result<List<Usuario>> List()
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<Usuario>>>($"{apiRoute}List"));
+            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<Usuario>>>($"{apiRoute}ListUsuarios"));
         }
 
         public Result<bool> Salva(Usuario model)
         {
-            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<Usuario, Result<bool>>($"{apiRoute}Salva", model));
+            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<Usuario, Result<bool>>($"{apiRoute}SalvaUsuario", model));
         }
 
         public Result<bool> Excliu(string email)
         {
-            return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}Exclui/{email}")));
+            return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}ExcluiUsuario/{email}")));
         }
 
         public Result<Usuario> Autentica(Usuario model)
         {
-            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<Usuario, Result<Usuario>>($"{apiRoute}Autentica", model));
+            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<Usuario, Result<Usuario>>($"{apiRoute}AutenticaUsuario", model));
         }
     }
 }

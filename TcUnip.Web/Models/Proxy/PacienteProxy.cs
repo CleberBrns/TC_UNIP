@@ -11,7 +11,7 @@ namespace TcUnip.Web.Models.Proxy
     public class PacienteProxy : IPacienteProxy
     {
         IWebApiClient _apiClient;
-        readonly string apiRoute = "api/Paciente/";
+        readonly string apiRoute = "api/Pessoa/";
 
         public PacienteProxy(IWebApiClient apiClient)
         {
@@ -21,22 +21,22 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<Paciente> Get(string cpf)
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<Paciente>>($"{apiRoute}Get/{cpf}"));
+            return AsyncContext.Run(() => _apiClient.GetAsync<Result<Paciente>>($"{apiRoute}GetPaciente/{cpf}"));
         }
 
         public Result<List<Paciente>> List()
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<Paciente>>>($"{apiRoute}List"));
+            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<Paciente>>>($"{apiRoute}ListPacientes"));
         }
 
         public Result<bool> Salva(Paciente model)
         {
-            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<Paciente, Result<bool>>($"{apiRoute}Salva", model));
+            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<Paciente, Result<bool>>($"{apiRoute}SalvaPaciente", model));
         }
 
         public Result<bool> Exclui(string cpf)
         {
-            return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}Exclui/{cpf}")));
+            return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}ExcluiPaciente/{cpf}")));
         }
     }
 }

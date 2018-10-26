@@ -12,7 +12,7 @@ namespace TcUnip.Web.Models.Proxy
     public class AgendaProxy : IAgendaProxy
     {
         IWebApiClient _apiClient;
-        readonly string apiRoute = "api/Agenda/";
+        readonly string apiRoute = "api/Calendario/";
 
         public AgendaProxy(IWebApiClient apiClient)
         {
@@ -23,7 +23,7 @@ namespace TcUnip.Web.Models.Proxy
         public Result<Agenda> Get(string id)
         {
             return AsyncContext.Run(() => _apiClient.GetAsync<Result<Agenda>>(
-                 $"{apiRoute}Get/{id}"));
+                 $"{apiRoute}GetAgenda/{id}"));
         }
 
         public Result<List<Agenda>> ListAgendaDoDia()
@@ -51,12 +51,12 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<bool> Salva(Agenda model)
         {
-            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<Agenda, Result<bool>>($"{apiRoute}Salva", model));
+            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<Agenda, Result<bool>>($"{apiRoute}SalvaAgenda", model));
         }
 
         public Result<bool> Exclui(string id)
         {
-            return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}Exclui/{id}")));
+            return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}ExcluiAgenda/{id}")));
         }
     }
 }

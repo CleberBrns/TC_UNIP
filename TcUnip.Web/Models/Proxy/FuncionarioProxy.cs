@@ -11,7 +11,7 @@ namespace TcUnip.Web.Models.Proxy
     public class FuncionarioProxy : IFuncionarioProxy
     {
         IWebApiClient _apiClient;
-        readonly string apiRoute = "api/Funcionario/";
+        readonly string apiRoute = "api/Pessao/";
 
         public FuncionarioProxy(IWebApiClient apiClient)
         {
@@ -21,12 +21,12 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<Funcionario> Get(string cpf)
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<Funcionario>>($"{apiRoute}Get/{cpf}"));
+            return AsyncContext.Run(() => _apiClient.GetAsync<Result<Funcionario>>($"{apiRoute}GetFuncionario/{cpf}"));
         }
 
         public Result<List<Funcionario>> List()
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<Funcionario>>>($"{apiRoute}List"));
+            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<Funcionario>>>($"{apiRoute}ListFuncionarios"));
         }
 
         public Result<List<Funcionario>> ListProfissionais()
@@ -36,12 +36,12 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<bool> Salva(Funcionario model)
         {
-            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<Funcionario, Result<bool>>($"{apiRoute}Salva", model));
+            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<Funcionario, Result<bool>>($"{apiRoute}SalvaFuncionario", model));
         }
 
         public Result<bool> Exclui(string cpf)
         {
-            return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}Exclui/{cpf}")));
+            return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}ExcluiFuncionario/{cpf}")));
         }
     }
 }
