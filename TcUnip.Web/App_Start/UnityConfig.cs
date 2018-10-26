@@ -1,6 +1,9 @@
 using System;
-
+using TcUnip.Web.Models.Proxy;
+using TcUnip.Web.Models.Proxy.Contract;
+using TcUnip.Web.WebApiClient;
 using Unity;
+using Unity.AspNet.Mvc;
 
 namespace TcUnip.Web
 {
@@ -42,6 +45,11 @@ namespace TcUnip.Web
 
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<IWebApiClient, WebApiClient.WebApiClient>(new PerRequestLifetimeManager());
+            container.RegisterType<IAgendaProxy, AgendaProxy>(new PerRequestLifetimeManager());
+            //container.RegisterType<IFuncionarioProxy, FuncionarioProxy>(new PerRequestLifetimeManager());
+            //container.RegisterType<IPacienteProxy, PacienteProxy>(new PerRequestLifetimeManager());
+            //container.RegisterType<IUsuarioProxy, UsuarioProxy>(new PerRequestLifetimeManager());
         }
     }
 }

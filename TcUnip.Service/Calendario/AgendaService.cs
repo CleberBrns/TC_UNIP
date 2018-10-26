@@ -13,7 +13,7 @@ namespace TcUnip.Service.Calendario
     {
         readonly AgendaApi service = new AgendaApi();       
 
-        public Result<Agenda> Get(string id)
+        public Result<Agenda> GetAgenda(string id)
         {
             var result = new Result<Agenda>();
 
@@ -87,7 +87,7 @@ namespace TcUnip.Service.Calendario
             return result;
         }
 
-        public Result<bool> Save(Agenda model)
+        public Result<bool> SalvaAgenda(Agenda model)
         {
             var result = new Result<bool>();
 
@@ -132,7 +132,7 @@ namespace TcUnip.Service.Calendario
             return result;
         }
 
-        public Result<bool> Delete(string id)
+        public Result<bool> ExcluiAgenda(string id)
         {
             var result = new Result<bool>();
 
