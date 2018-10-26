@@ -8,7 +8,7 @@ namespace TcUnip.Service.Contract.Pessoa
     {
         Result<Paciente> Get(string cpf);
         Result<List<Paciente>> List();
-        Result<bool> Save(Paciente model);
-        Result<bool> Delete(string cpf);
+        Result<bool> Salva(Paciente model);
+        Result<bool> Exclui(string cpf);
     }
 }

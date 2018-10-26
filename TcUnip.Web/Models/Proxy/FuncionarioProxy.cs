@@ -11,7 +11,7 @@ namespace TcUnip.Web.Models.Proxy
     public class FuncionarioProxy : IFuncionarioProxy
     {
         IWebApiClient _apiClient;
-        readonly string apiRoute = "api/Pessoa/";
+        readonly string apiRoute = "api/Funcionario/";
 
         public FuncionarioProxy(IWebApiClient apiClient)
         {

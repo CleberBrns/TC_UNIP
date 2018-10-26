@@ -48,7 +48,7 @@ namespace TcUnip.Api.Controllers
         [Route("api/Pessoa/SalvaPaciente")]
         public IHttpActionResult SalvaPaciente(Paciente model)
         {
-            var retorno = _pacienteService.Save(model);
+            var retorno = _pacienteService.Salva(model);
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
 
@@ -59,7 +59,7 @@ namespace TcUnip.Api.Controllers
         [Route("api/Pessao/ExcluiPaciente")]
         public IHttpActionResult ExcluiPaciente(string cpf)
         {
-            var retorno = _pacienteService.Delete(cpf);
+            var retorno = _pacienteService.Exclui(cpf);
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
 
@@ -155,7 +155,7 @@ namespace TcUnip.Api.Controllers
         [Route("api/Pessoa/AutenticaUsuario")]
         public IHttpActionResult AutenticaUsuario(Usuario model)
         {
-            var retorno = _usuarioService.Auth(model);
+            var retorno = _usuarioService.Autentica(model);
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
 
@@ -166,7 +166,7 @@ namespace TcUnip.Api.Controllers
         [Route("api/Pessoa/SalvaUsuario")]
         public IHttpActionResult SalvaUsuario(Usuario model)
         {
-            var retorno = _usuarioService.Save(model);
+            var retorno = _usuarioService.Salva(model);
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
 
@@ -177,7 +177,7 @@ namespace TcUnip.Api.Controllers
         [Route("api/Pessao/ExcluiUsuario")]
         public IHttpActionResult ExcluiUsuario(string cpf)
         {
-            var retorno = _usuarioService.Delete(cpf);
+            var retorno = _usuarioService.Excliu(cpf);
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
 

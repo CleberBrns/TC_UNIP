@@ -8,8 +8,8 @@ namespace TcUnip.Service.Contract.Pessoa
     {
         Result<Usuario> Get(string email);
         Result<List<Usuario>> List();
-        Result<bool> Save(Usuario model);
-        Result<bool> Delete(string email);
-        Result<Usuario> Auth(Usuario model);
+        Result<bool> Salva(Usuario model);
+        Result<bool> Excliu(string email);
+        Result<Usuario> Autentica(Usuario model);
     }
 }

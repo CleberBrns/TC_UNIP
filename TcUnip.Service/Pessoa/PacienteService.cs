@@ -34,7 +34,7 @@ namespace TcUnip.Service.Pessoa
             return result;
         }
 
-        public Result<bool> Save(Paciente model)
+        public Result<bool> Salva(Paciente model)
         {
             string msg = string.Empty;
             string msgErro = string.Empty;
@@ -84,7 +84,7 @@ namespace TcUnip.Service.Pessoa
             return result;
         }
 
-        public Result<bool> Delete(string cpf)
+        public Result<bool> Exclui(string cpf)
         {
             var result = new Result<bool>();
 

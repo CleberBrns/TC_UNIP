@@ -33,7 +33,7 @@ namespace TcUnip.Service.Pessoa
             return result;
         }
 
-        public Result<bool> Save(Usuario model)
+        public Result<bool> Salva(Usuario model)
         {
             var result = new Result<bool>();
 
@@ -77,7 +77,7 @@ namespace TcUnip.Service.Pessoa
             return result;
         }
 
-        public Result<bool> Delete(string cpf)
+        public Result<bool> Excliu(string cpf)
         {
             var result = new Result<bool>();
 
@@ -95,7 +95,7 @@ namespace TcUnip.Service.Pessoa
             return result;
         }
 
-        public Result<Usuario> Auth(Usuario model)
+        public Result<Usuario> Autentica(Usuario model)
         {
             var result = new Result<Usuario>();
 
