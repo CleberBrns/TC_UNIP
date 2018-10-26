@@ -9,7 +9,7 @@ namespace TcUnip.Service.Contract.Pessoa
         Result<Funcionario> Get(string cpf);
         Result<List<Funcionario>> List();
         Result<List<Funcionario>> ListProfissionais();
-        Result<bool> Save(Funcionario model);
-        Result<bool> Delete(string cpf);
+        Result<bool> Salva(Funcionario model);
+        Result<bool> Exclui(string cpf);
     }
 }

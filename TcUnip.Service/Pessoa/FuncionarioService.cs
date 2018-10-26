@@ -50,7 +50,7 @@ namespace TcUnip.Service.Pessoa
             return result;
         }
 
-        public Result<bool> Save(Funcionario model)
+        public Result<bool> Salva(Funcionario model)
         {
             string msg = string.Empty;
             var result = new Result<bool>();
@@ -98,7 +98,7 @@ namespace TcUnip.Service.Pessoa
             return result;
         }
 
-        public Result<bool> Delete(string cpf)
+        public Result<bool> Exclui(string cpf)
         {
             var result = new Result<bool>();
 

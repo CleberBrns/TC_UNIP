@@ -20,10 +20,10 @@ namespace TcUnip.Web.Models.Proxy
             this._apiClient.baseUri = ConfigurationManager.AppSettings["tcUnipApi"];
         }
 
-        public Result<Agenda> GetAgenda(string id)
+        public Result<Agenda> Get(string id)
         {
             return AsyncContext.Run(() => _apiClient.GetAsync<Result<Agenda>>(
-                 $"{apiRoute}GetAgenda/{id}"));
+                 $"{apiRoute}Get/{id}"));
         }
 
         public Result<List<Agenda>> ListAgendaDoDia()
@@ -49,16 +49,14 @@ namespace TcUnip.Web.Models.Proxy
                  $"{apiRoute}ConsultasPeriodoPaciente/{cpf}/{dateFrom}/{dateTo}"));
         }
 
-        public Result<bool> SalvaAgenda(Agenda model)
+        public Result<bool> Salva(Agenda model)
         {
-            return AsyncContext.Run(() => 
-            _apiClient.PostWithReturnAsync<Agenda, Result<bool>>
-            ($"{apiRoute}SalvaAgenda", model));
+            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<Agenda, Result<bool>>($"{apiRoute}Salva", model));
         }
 
-        public Result<bool> ExcluiAgenda(string id)
+        public Result<bool> Exclui(string id)
         {
-            return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}ExcluiAgenda/{id}")));
+            return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}Exclui/{id}")));
         }
     }
 }

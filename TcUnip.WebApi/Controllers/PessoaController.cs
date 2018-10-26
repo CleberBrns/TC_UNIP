@@ -107,7 +107,7 @@ namespace TcUnip.Api.Controllers
         [Route("api/Pessoa/SalvaFuncionario")]
         public IHttpActionResult SalvaFuncionario(Funcionario model)
         {
-            var retorno = _funcionarioService.Save(model);
+            var retorno = _funcionarioService.Salva(model);
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
 
@@ -118,7 +118,7 @@ namespace TcUnip.Api.Controllers
         [Route("api/Pessao/ExcluiFuncionario")]
         public IHttpActionResult ExcluiFuncionario(string cpf)
         {
-            var retorno = _funcionarioService.Delete(cpf);
+            var retorno = _funcionarioService.Exclui(cpf);
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
 

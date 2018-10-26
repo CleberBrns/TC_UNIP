@@ -17,7 +17,7 @@ namespace TcUnip.Api.Controllers
         [Route("api/Calendario/GetAgenda/{id}")]
         public IHttpActionResult GetAgenda(string id)
         {
-            var retorno = _agendaService.GetAgenda(id);
+            var retorno = _agendaService.Get(id);
 
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
@@ -77,7 +77,7 @@ namespace TcUnip.Api.Controllers
         [Route("api/Calendario/SalvaAgenda")]
         public IHttpActionResult SalvaAgenda(Agenda model)
         {
-            var retorno = _agendaService.SalvaAgenda(model);
+            var retorno = _agendaService.Salva(model);
 
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
@@ -89,7 +89,7 @@ namespace TcUnip.Api.Controllers
         [Route("api/Calendario/ExcluiAgenda")]
         public IHttpActionResult ExcluiAgenda(string id)
         {
-            var retorno = _agendaService.ExcluiAgenda(id);
+            var retorno = _agendaService.Exclui(id);
 
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
