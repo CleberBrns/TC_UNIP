@@ -4,19 +4,26 @@ using System.Linq;
 using System.Web.Mvc;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Local;
-using TcUnip.Web.Services;
-using TcUnip.Web.Session;
+using TcUnip.Web.Models.Proxy.Contract;
 using TcUnip.Web.Util;
 
 namespace TcUnip.Web.Areas.Usuario.Controllers
 {
     public class UsuarioController : BaseController
     {
-        readonly Mensagens mensagens = new Mensagens();
-        readonly UsuarioService _service = new UsuarioService();
-        readonly FuncionarioService _serviceFuncionario = new FuncionarioService();
+        readonly IUsuarioProxy _usuariProxy;
+        readonly IFuncionarioProxy _funcionarioProxy;
 
-        public ActionResult Listagem(bool getFromSession)
+        readonly Mensagens mensagens = new Mensagens();
+  
+
+        public UsuarioController(IUsuarioProxy usuarioProxy, IFuncionarioProxy funcionarioProxy)
+        {
+            this._usuariProxy = usuarioProxy;
+            this._funcionarioProxy = funcionarioProxy;
+        }
+
+        public ActionResult Listagem()
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -32,9 +39,9 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 
             try
             {
-                var list = new List<Models.Servico.Usuario>();               
+                var list = new List<Model.Pessoa.Usuario>();               
 
-                var resultService = _service.List(getFromSession);
+                var resultService = _usuariProxy.List();
                 list = resultService.Value;
 
                 msgExibicao = resultService.Message;
@@ -74,7 +81,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
             ViewBag.ListPerfil = GetListPerfil(true);
             ViewBag.ListFuncionarios = GetListFuncionarios();
 
-            var model = new Models.Servico.Usuario();
+            var model = new Model.Pessoa.Usuario();
             var defaultObj = model.GetModelDefault();
             return PartialView("_Gerenciar", defaultObj);
         }
@@ -94,7 +101,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
                 ViewBag.ListPerfil = GetListPerfil(true);
                 ViewBag.ListFuncionarios = GetListFuncionarios();
 
-                var resultService = _service.Get(id);
+                var resultService = _usuariProxy.Get(id);
                 if (resultService.Status)
                     return PartialView("_Gerenciar", resultService.Value);
                 else
@@ -116,7 +123,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
         }
 
         [HttpPost]
-        public ActionResult Salvar(Models.Servico.Usuario model)
+        public ActionResult Salvar(Model.Pessoa.Usuario model)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -127,7 +134,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
             {
                 model.Permissoes = NormalizaPermissoes(model.Permissoes);
 
-                var resultService = _service.Save(model);
+                var resultService = _usuariProxy.Salva(model);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha" : string.Empty;
@@ -152,7 +159,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 
             try
             {
-                var resultService = _service.Delete(id);
+                var resultService = _usuariProxy.Excliu(id);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha" : string.Empty;
@@ -169,13 +176,13 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 
         #region Métodos Privados
 
-        private List<Models.Servico.Usuario> ConfiguraListaExibicao(List<Models.Servico.Usuario> list)
+        private List<Model.Pessoa.Usuario> ConfiguraListaExibicao(List<Model.Pessoa.Usuario> list)
         {
             //Seleciona somente os itens há serem exibidos para melhor performance
             if (list != null && list.Count > 0)
             {
                 var listPerfil = GetListPerfil();
-                var modelFuncionario = new Models.Servico.Funcionario();
+                var modelFuncionario = new Model.Pessoa.Funcionario();
                 var newFuncionario = modelFuncionario.GetModelDefault();
 
                 list.ForEach(l =>
@@ -185,7 +192,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
                 });
 
                 list = list.Select(l =>
-                new Models.Servico.Usuario
+                new Model.Pessoa.Usuario
                 {
                     Cpf = l.Cpf,
                     Email = l.Email,
@@ -196,7 +203,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
                                            .Select(p => p.Value)
                                            .ToArray(),
                     Status = l.Status,
-                    Funcionario = new Models.Servico.Funcionario
+                    Funcionario = new Model.Pessoa.Funcionario
                     {
                         Nome = l.Funcionario.Nome
                     }
@@ -218,9 +225,9 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
             return permissoes;
         }
 
-        private List<Models.Servico.Funcionario> GetListFuncionarios()
+        private List<Model.Pessoa.Funcionario> GetListFuncionarios()
         {
-            var listFuncionarios = _serviceFuncionario.List(true).Value;
+            var listFuncionarios = _funcionarioProxy.List().Value;
 
             if (listFuncionarios.Count > 0)
             {
@@ -233,7 +240,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
                                                        .ToList();
                 }
 
-                listFuncionarios = listFuncionarios.Select(l => new Models.Servico.Funcionario
+                listFuncionarios = listFuncionarios.Select(l => new Model.Pessoa.Funcionario
                 {
                     Nome = l.Nome,
                     Email = l.Email,
@@ -248,7 +255,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
         private string[] GetEmailsFuncionariosCadastrados()
         {
             var emailsUsuariosCadastrados = new string[] { };
-            var resultService = _service.List(true);
+            var resultService = _usuariProxy.List();
             if (resultService.Status)            
                 emailsUsuariosCadastrados = resultService.Value.Select(x => x.Email).ToArray();            
 

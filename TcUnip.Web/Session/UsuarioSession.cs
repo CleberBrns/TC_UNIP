@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
+using TcUnip.Model.Pessoa;
 using TcUnip.Web.Contracts.Session;
-using TcUnip.Web.Models.Servico;
 using TcUnip.Web.SessionBase;
 
 namespace TcUnip.Web.Session

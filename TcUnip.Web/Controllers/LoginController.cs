@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
-using TcUnip.Web.Models.Local;
-using TcUnip.Web.Models.Servico;
-using TcUnip.Web.Services;
+using TcUnip.Model.Common;
+using TcUnip.Model.Pessoa;
+using TcUnip.Web.Models.Proxy.Contract;
 using TcUnip.Web.Session;
 using TcUnip.Web.Util;
 
@@ -10,9 +10,14 @@ namespace TcUnip.Web.Controllers
 {
     public class LoginController : BaseController
     {
-        readonly UsuarioService service = new UsuarioService();
+        readonly IUsuarioProxy _usuarioProxy;        
         readonly UsuarioSession session = new UsuarioSession();
         readonly string sessionName = Constants.ConstSessions.usuario;
+
+        public LoginController(IUsuarioProxy usuarioProxy)
+        {
+            this._usuarioProxy = usuarioProxy;
+        }
 
         public ActionResult Login()
         {            
@@ -24,8 +29,7 @@ namespace TcUnip.Web.Controllers
 
         [HttpGet]
         public ActionResult Autenticar(Usuario model)
-        {
-            var _service = new UsuarioService();
+        {            
             var mensagens = new Mensagens();
             var constPermissao = new Constants.ConstPermissoes();
             var usuarioMaster = constPermissao.GetUsuarioMaster();
@@ -33,7 +37,7 @@ namespace TcUnip.Web.Controllers
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
-            var resultService = new ResultService<Usuario>();
+            var resultService = new Result<Usuario>();
             resultService.Status = false;
 
             try
@@ -47,7 +51,7 @@ namespace TcUnip.Web.Controllers
                     }
                     else
                     {
-                        resultService = _service.Auth(model);
+                        resultService = _usuarioProxy.Autentica(model);
                         model = resultService.Value;
                     }
 

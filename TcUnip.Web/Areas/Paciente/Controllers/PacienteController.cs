@@ -4,18 +4,22 @@ using System.Linq;
 using System.Web.Mvc;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Local;
-using TcUnip.Web.Services;
-using TcUnip.Web.Session;
+using TcUnip.Web.Models.Proxy.Contract;
 using TcUnip.Web.Util;
 
 namespace TcUnip.Web.Areas.Paciente.Controllers
 {
     public class PacienteController : BaseController
     {
-        readonly Mensagens mensagens = new Mensagens();
-        readonly PacienteService _service = new PacienteService();
+        readonly IPacienteProxy _pacienteProxy;
+        readonly Mensagens mensagens = new Mensagens();        
 
-        public ActionResult Listagem(bool getFromSession)
+        public PacienteController(IPacienteProxy pacienteProxy)
+        {
+            this._pacienteProxy = pacienteProxy;
+        }
+
+        public ActionResult Listagem()
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -30,9 +34,9 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
 
             try
             {
-                var list = new List<Models.Servico.Paciente>();               
+                var list = new List<Model.Pessoa.Paciente>();               
 
-                var resultService = _service.List(getFromSession);
+                var resultService = _pacienteProxy.List();
                 list = resultService.Value;
 
                 msgExibicao = resultService.Message;                
@@ -57,7 +61,7 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
             ViewBag.Usuario = GetUsuarioSession().Item1;
             ViewBag.ListStatus = GetListStatus();
 
-            var model = new Models.Servico.Paciente();
+            var model = new Model.Pessoa.Paciente();
             var defaultObj = model.GetModelDefault();
             return PartialView("_Gerenciar", defaultObj);
         }
@@ -76,7 +80,7 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
             {
                 ViewBag.ListStatus = GetListStatus();
 
-                var resultService = _service.Get(id);
+                var resultService = _pacienteProxy.Get(id);
 
                 if (resultService.Status)
                     return PartialView("_Gerenciar", resultService.Value);
@@ -99,7 +103,7 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
         }
 
         [HttpPost]
-        public ActionResult Salvar(Models.Servico.Paciente model)
+        public ActionResult Salvar(Model.Pessoa.Paciente model)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -108,7 +112,7 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
 
             try
             {                
-                var resultService = _service.Save(model);
+                var resultService = _pacienteProxy.Salva(model);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha!" : string.Empty;
@@ -133,7 +137,7 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
 
             try
             {                
-                var resultService = _service.Delete(id);
+                var resultService = _pacienteProxy.Exclui(id);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha" : string.Empty;
@@ -150,13 +154,13 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
 
         #region Métodos Privados
 
-        private List<Models.Servico.Paciente> ConfiguraListaExibicao(List<Models.Servico.Paciente> list)
+        private List<Model.Pessoa.Paciente> ConfiguraListaExibicao(List<Model.Pessoa.Paciente> list)
         {            
             //Seleciona somente os itens há serem exibidos para melhor performance
             if (list != null && list.Count > 0)
             {
                 list = list.Select(l =>
-                       new Models.Servico.Paciente
+                       new Model.Pessoa.Paciente
                         {
                             Nome = l.Nome,
                             Cpf = l.Cpf,

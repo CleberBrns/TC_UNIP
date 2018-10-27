@@ -2,19 +2,13 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using TcUnip.Web.Models.Servico;
+using TcUnip.Model.Pessoa;
 using TcUnip.Web.Session;
 
 namespace TcUnip.Web.Controllers
 {
     public class BaseController : Controller
     {
-        public Tuple<Usuario, bool> GetUsuarioSession()
-        {
-            UsuarioSession sessionUsuario = new UsuarioSession();
-            return sessionUsuario.GetModelFromSession(Constants.ConstSessions.usuario);
-        }
-
         public void ValidaAutorizaoAcessoUsuario(string permissaoAcesso)
         {
             var userInfo = GetUsuarioSession();
@@ -25,6 +19,12 @@ namespace TcUnip.Web.Controllers
             }
             else
                 BadRequestCustomizado((int)HttpStatusCode.RequestTimeout);
+        }
+
+        public Tuple<Usuario, bool> GetUsuarioSession()
+        {
+            UsuarioSession sessionUsuario = new UsuarioSession();
+            return sessionUsuario.GetModelFromSession(Constants.ConstSessions.usuario);
         }
 
         public void BadRequestCustomizado(int statusCode)

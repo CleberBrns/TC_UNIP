@@ -212,10 +212,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\AgendaAPI.cs" />
-    <Compile Include="API\FuncionarioAPI.cs" />
-    <Compile Include="API\PacienteAPI.cs" />
-    <Compile Include="API\UsuarioAPI.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -234,15 +230,7 @@
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Constants\ConstPermissoes.cs" />
     <Compile Include="Constants\ConstSessions.cs" />
-    <Compile Include="Contracts\API\IApiBase.cs" />
-    <Compile Include="Contracts\Service\IServiceAgenda.cs" />
-    <Compile Include="Contracts\Service\IServiceFuncionario.cs" />
-    <Compile Include="Contracts\Service\IServicePaciente.cs" />
-    <Compile Include="Contracts\Service\IServiceUsuario.cs" />
-    <Compile Include="Contracts\Session\ISessionAgenda.cs" />
     <Compile Include="Contracts\Session\ISessionBase.cs" />
-    <Compile Include="Contracts\Session\ISessionFuncionario.cs" />
-    <Compile Include="Contracts\Session\ISessionPaciente.cs" />
     <Compile Include="Contracts\Session\ISessionUsuario.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -250,8 +238,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Json\AgendaJS.cs" />
-    <Compile Include="Models\Json\PessoaJS.cs" />
     <Compile Include="Models\Local\DataSelectControl.cs" />
     <Compile Include="Models\Local\EventoCalendario.cs" />
     <Compile Include="Models\Local\MensagensDeRetorno.cs" />
@@ -264,24 +250,11 @@
     <Compile Include="Models\Proxy\FuncionarioProxy.cs" />
     <Compile Include="Models\Proxy\PacienteProxy.cs" />
     <Compile Include="Models\Proxy\UsuarioProxy.cs" />
-    <Compile Include="Models\Servico\Agenda.cs" />
-    <Compile Include="Models\Servico\Consulta.cs" />
-    <Compile Include="Models\Servico\Endereco.cs" />
-    <Compile Include="Models\Servico\Funcionario.cs" />
-    <Compile Include="Models\Servico\Paciente.cs" />
-    <Compile Include="Models\Servico\Usuario.cs" />
     <Compile Include="Models\WebApiClient\ApiException.cs" />
     <Compile Include="Models\WebApiClient\EnumAuthentication.cs" />
     <Compile Include="Models\WebApiClient\IWebApiClient.cs" />
     <Compile Include="Models\WebApiClient\WebApiClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AgendaService.cs" />
-    <Compile Include="Services\FuncionarioService.cs" />
-    <Compile Include="Services\PacienteService.cs" />
-    <Compile Include="Services\UsuarioService.cs" />
-    <Compile Include="Session\AgendaSession.cs" />
-    <Compile Include="Session\FuncionarioSession.cs" />
-    <Compile Include="Session\PacienteSession.cs" />
     <Compile Include="Session\SessionBase.cs" />
     <Compile Include="Session\UsuarioSession.cs" />
     <Compile Include="Tools\HttpInstance.cs" />

@@ -1,4 +1,4 @@
-﻿using TcUnip.Web.Models.Servico;
+﻿using TcUnip.Model.Pessoa;
 
 namespace TcUnip.Web.Constants
 {

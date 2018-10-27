@@ -1,5 +1,5 @@
 ﻿using System;
-using TcUnip.Web.Models.Servico;
+using TcUnip.Model.Pessoa;
 
 namespace TcUnip.Web.Contracts.Session
 {

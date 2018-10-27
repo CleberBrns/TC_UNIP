@@ -4,18 +4,22 @@ using System.Linq;
 using System.Web.Mvc;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Local;
-using TcUnip.Web.Services;
-using TcUnip.Web.Session;
+using TcUnip.Web.Models.Proxy.Contract;
 using TcUnip.Web.Util;
 
 namespace TcUnip.Web.Areas.Funcionario.Controllers
 {    
     public class FuncionarioController : BaseController
     {
-        readonly Mensagens mensagens = new Mensagens();
-        readonly FuncionarioService _service = new FuncionarioService();
+        readonly IFuncionarioProxy _funcionarioProxy;
+        readonly Mensagens mensagens = new Mensagens();        
 
-        public ActionResult Listagem(bool getFromSession)
+        public FuncionarioController(IFuncionarioProxy funcionarioProxy)
+        {
+            this._funcionarioProxy = funcionarioProxy;
+        }
+
+        public ActionResult Listagem()
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -31,9 +35,9 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 
             try
             {
-                var list = new List<Models.Servico.Funcionario>();
+                var list = new List<Model.Pessoa.Funcionario>();
 
-                var resultService = _service.List(getFromSession);
+                var resultService = _funcionarioProxy.List();
                 list = resultService.Value;
 
                 msgExibicao = resultService.Message;
@@ -62,7 +66,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
             ViewBag.ListStatus = GetListStatus();
             ViewBag.ListModalidades = GetListModalidades();
 
-            var model = new Models.Servico.Funcionario();
+            var model = new Model.Pessoa.Funcionario();
             var defaultObj = model.GetModelDefault();
             return PartialView("_Gerenciar", defaultObj);
         }
@@ -82,7 +86,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
                 ViewBag.ListStatus = GetListStatus();
                 ViewBag.ListModalidades = GetListModalidades();
 
-                var resultService = _service.Get(id);
+                var resultService = _funcionarioProxy.Get(id);
 
                 if (resultService.Status)
                     return PartialView("_Gerenciar", resultService.Value);
@@ -105,7 +109,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
         }
 
         [HttpPost]
-        public ActionResult Salvar(Models.Servico.Funcionario model)
+        public ActionResult Salvar(Model.Pessoa.Funcionario model)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -114,7 +118,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 
             try
             {
-                var resultService = _service.Save(model);
+                var resultService = _funcionarioProxy.Salva(model);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha" : string.Empty;
@@ -139,7 +143,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 
             try
             {
-                var resultService = _service.Delete(id);
+                var resultService = _funcionarioProxy.Exclui(id);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha" : string.Empty;
@@ -156,13 +160,13 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 
         #region Métodos Privados
 
-        private List<Models.Servico.Funcionario> ConfiguraListaExibicao(List<Models.Servico.Funcionario> list)
+        private List<Model.Pessoa.Funcionario> ConfiguraListaExibicao(List<Model.Pessoa.Funcionario> list)
         {
             //Seleciona somente os itens há serem exibidos para melhor performance
             if (list != null && list.Count > 0)
             {
                 list = list.Select(l =>
-                    new Models.Servico.Funcionario
+                    new Model.Pessoa.Funcionario
                     {
                         Nome = l.Nome,
                         Cpf = l.Cpf,
