@@ -1,12 +1,12 @@
-﻿@model TcUnip.Web.Models.Servico.Usuario
+﻿@model TcUnip.Model.Pessoa.Usuario
 
 @using TcUnip.Web.Models.Local;
 
 @{
     var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
     var listPerfil = (IList<DataSelectControl>)ViewBag.ListPerfil;
-    var listFuncionarios = (IList<TcUnip.Web.Models.Servico.Funcionario>)ViewBag.ListFuncionarios;
-    var user = (TcUnip.Web.Models.Servico.Usuario)ViewBag.Usuario;
+    var listFuncionarios = (IList<TcUnip.Model.Pessoa.Funcionario>)ViewBag.ListFuncionarios;
+    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
 }
 
 @if (user != null)

@@ -1,14 +1,14 @@
-﻿@model TcUnip.Web.Models.Servico.Agenda
+﻿@model TcUnip.Model.Calendario.Agenda
 
 @using TcUnip.Web.Models.Local;
 
 @{
-    var listPacientes = (IList<TcUnip.Web.Models.Servico.Paciente>)ViewBag.ListPacientes;
-    var listProfissionais = (IList<TcUnip.Web.Models.Servico.Funcionario>)ViewBag.ListProfissionais;
+    var listPacientes = (IList<TcUnip.Model.Pessoa.Paciente>)ViewBag.ListPacientes;
+    var listProfissionais = (IList<TcUnip.Model.Pessoa.Funcionario>)ViewBag.ListProfissionais;
     var listHorarios = (IList<DataSelectControl>)ViewBag.ListHorarios;
     var listModalidades = (IList<DataSelectControl>)ViewBag.ListModalidades;
 
-    var user = (TcUnip.Web.Models.Servico.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
 }
 
 <link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
@@ -192,12 +192,7 @@
 
         $('#profissional').change(function () {
             gerenciarAgenda.CarregaModalidades(this.value);
-        });
-
-        //$("#data").datepicker().on("changeDate", function (e) {
-        //    var dataSelecionada = e.format(0, "dd/mm/yyyy");
-        //    gerenciarAgenda.VerificaHorariosData(dataSelecionada);
-        //});
+        });        
 
         $("#btnSalvar").on('click', function () {
             if (gerenciarAgenda.Validar())
@@ -226,51 +221,6 @@
                     }).fail(function (jqXHR, textStatus, errorThrown) {
                         validacao.errorAjax(jqXHR, textStatus, errorThrown);
                     });
-                }
-            },
-
-            VerificaHorariosData: function (data) {
-
-                $('#horarios').empty();
-                $('#horarios').append('<option value=0>-- Selecione --</option>');
-
-                var cpf = $('#profissional').val();
-
-                if ((cpf !== undefined && cpf !== "") && (data !== undefined && data !== "")) {
-
-                    $.ajax({
-                        url: "@Url.Action("VerificaHorariosDataProfissional", "Agenda")",
-                        type: "POST",
-                        data: { cpf: cpf, data: data },
-                        success: function (result) {
-
-                            var retorno = result.mensagensRetorno;
-
-                            if (retorno !== undefined && retorno !== null) {
-
-                                swal({
-                                    title: '',
-                                    text: retorno.MensagemExibicao,
-                                    type: 'warning',
-                                    confirmButtonColor: '#10386B',
-                                    allowOutsideClick: false
-                                });
-                                console.log(retorno.MensagemAnalise);
-
-                            }
-                            else {
-                                $.each(result, function () {
-                                    $('#horarios').append('<option value=' +
-                                        this.Value + '>' + this.Name + '</option>');
-                                });
-                            }
-
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            validacao.errorAjax(jqXHR, textStatus, errorThrown);
-                        }
-                    });
-
                 }
             },
 
