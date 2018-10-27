@@ -2,7 +2,7 @@
 
 namespace TcUnip.Web.Models.Proxy.Contract
 {
-    interface IPacienteProxy : IPacienteService
+    public interface IPacienteProxy : IPacienteService
     {
     }
 }

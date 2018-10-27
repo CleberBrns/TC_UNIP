@@ -2,7 +2,7 @@
 
 namespace TcUnip.Web.Models.Proxy.Contract
 {
-    interface IUsuarioProxy : IUsuarioService
+    public interface IUsuarioProxy : IUsuarioService
     {
     }
 }
