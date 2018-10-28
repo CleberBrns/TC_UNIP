@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCC_Unip", "TC_Clinica_Gerenciamento\TCC_Unip.csproj", "{5329546D-2E3B-4BBB-A727-5DD6173DF58A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCC_Unip_Old", "TC_Clinica_Gerenciamento\TCC_Unip_Old.csproj", "{5329546D-2E3B-4BBB-A727-5DD6173DF58A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Model", "0.Model", "{1D7004B8-48CD-4DC6-8855-A312CDAC7A6A}"
 EndProject
