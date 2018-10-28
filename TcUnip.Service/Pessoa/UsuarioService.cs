@@ -10,9 +10,11 @@ namespace TcUnip.Service.Pessoa
     public class UsuarioService : IUsuarioService
     {
         readonly UsuarioApi serviceApi = new UsuarioApi();
+        ReplacesService replacesService = new ReplacesService();
 
         public Result<Usuario> Get(string email)
         {
+            email = replacesService.ReplaceCpfEmailWebToApi(email, false);
             var result = new Result<Usuario>();
             result.Value = serviceApi.Get(email);
 
@@ -77,11 +79,12 @@ namespace TcUnip.Service.Pessoa
             return result;
         }
 
-        public Result<bool> Excliu(string cpf)
+        public Result<bool> Excliu(string email)
         {
+            email = replacesService.ReplaceCpfEmailWebToApi(email, false);
             var result = new Result<bool>();
 
-            var retorno = serviceApi.Delete(cpf);
+            var retorno = serviceApi.Delete(email);
             result.Value = retorno;
 
             if (result.Value)

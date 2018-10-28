@@ -13,7 +13,7 @@ namespace TcUnip.Web.Models.Proxy
     {
         IWebApiClient _apiClient;
         readonly string apiRoute = "api/Calendario/";
-        readonly DateTimeService dateTimeService = new DateTimeService();
+        readonly ReplacesService replacesService = new ReplacesService();
 
         public AgendaProxy(IWebApiClient apiClient)
         {
@@ -34,8 +34,8 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<List<Agenda>> ListAgendaPeriodo(string dateFrom, string dateTo)
         {
-            dateFrom = dateTimeService.ReplaceDateWebToApi(dateFrom, true);
-            dateTo = dateTimeService.ReplaceDateWebToApi(dateTo, true);
+            dateFrom = replacesService.ReplaceDateWebToApi(dateFrom, true);
+            dateTo = replacesService.ReplaceDateWebToApi(dateTo, true);
 
             return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<Agenda>>>(
                  $"{apiRoute}ListAgendaPeriodo/{dateFrom}/{dateTo}"));
@@ -43,8 +43,8 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<Funcionario> ConsultasPeriodoFuncionario(string cpf, string dateFrom, string dateTo)
         {
-            dateFrom = dateTimeService.ReplaceDateWebToApi(dateFrom, true);
-            dateTo = dateTimeService.ReplaceDateWebToApi(dateTo, true);
+            dateFrom = replacesService.ReplaceDateWebToApi(dateFrom, true);
+            dateTo = replacesService.ReplaceDateWebToApi(dateTo, true);
 
             return AsyncContext.Run(() => _apiClient.GetAsync<Result<Funcionario>>(
                  $"{apiRoute}ConsultasPeriodoFuncionario/{cpf}/{dateFrom}/{dateTo}"));
@@ -52,8 +52,8 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<Paciente> ConsultasPeriodoPaciente(string cpf, string dateFrom, string dateTo)
         {
-            dateFrom = dateTimeService.ReplaceDateWebToApi(dateFrom, true);
-            dateTo = dateTimeService.ReplaceDateWebToApi(dateTo, true);
+            dateFrom = replacesService.ReplaceDateWebToApi(dateFrom, true);
+            dateTo = replacesService.ReplaceDateWebToApi(dateTo, true);
 
             return AsyncContext.Run(() => _apiClient.GetAsync<Result<Paciente>>(
                  $"{apiRoute}ConsultasPeriodoPaciente/{cpf}/{dateFrom}/{dateTo}"));

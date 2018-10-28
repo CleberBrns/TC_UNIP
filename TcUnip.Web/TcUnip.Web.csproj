@@ -259,6 +259,7 @@
     <Compile Include="Session\UsuarioSession.cs" />
     <Compile Include="Tools\HttpInstance.cs" />
     <Compile Include="Util\Mensagens.cs" />
+    <Compile Include="Util\ErrosService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Contents\bootstrap-datepicker.css" />

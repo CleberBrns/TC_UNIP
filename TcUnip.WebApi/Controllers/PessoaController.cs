@@ -56,7 +56,7 @@ namespace TcUnip.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("api/Pessao/ExcluiPaciente")]
+        [Route("api/Pessoa/ExcluiPaciente/{cpf}")]
         public IHttpActionResult ExcluiPaciente(string cpf)
         {
             var retorno = _pacienteService.Exclui(cpf);
@@ -115,7 +115,7 @@ namespace TcUnip.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("api/Pessao/ExcluiFuncionario")]
+        [Route("api/Pessoa/ExcluiFuncionario/{cpf}")]
         public IHttpActionResult ExcluiFuncionario(string cpf)
         {
             var retorno = _funcionarioService.Exclui(cpf);
@@ -130,7 +130,7 @@ namespace TcUnip.Api.Controllers
         #region Usuário
 
         [HttpGet]
-        [Route("api/Pessoa/GetUsuario/{cpf}")]
+        [Route("api/Pessoa/GetUsuario/{email}")]
         public IHttpActionResult GetUsuario(string email)
         {
             var retorno = _usuarioService.Get(email);
@@ -174,10 +174,10 @@ namespace TcUnip.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("api/Pessao/ExcluiUsuario")]
-        public IHttpActionResult ExcluiUsuario(string cpf)
+        [Route("api/Pessoa/ExcluiUsuario/email")]
+        public IHttpActionResult ExcluiUsuario(string email)
         {
-            var retorno = _usuarioService.Excliu(cpf);
+            var retorno = _usuarioService.Excliu(email);
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
 

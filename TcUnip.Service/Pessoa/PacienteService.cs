@@ -11,9 +11,12 @@ namespace TcUnip.Service.Pessoa
     {
         readonly PacienteApi serviceApi = new PacienteApi();
         readonly FuncionarioApi serviceFuncApi = new FuncionarioApi();
+        ReplacesService replacesService = new ReplacesService();
 
         public Result<Paciente> Get(string cpf)
         {
+            cpf = replacesService.ReplaceCpfEmailWebToApi(cpf, false);
+
             var result = new Result<Paciente>();
             result.Value = serviceApi.Get(cpf);
 
@@ -49,7 +52,7 @@ namespace TcUnip.Service.Pessoa
             }
             else
             {
-                var registroExistente = serviceApi.Get(model.Id);
+                var registroExistente = !string.IsNullOrEmpty(model.Id) ? serviceApi.Get(model.Id) : new Paciente();
 
                 if (string.IsNullOrEmpty(registroExistente.Nome))
                 {
@@ -86,6 +89,7 @@ namespace TcUnip.Service.Pessoa
 
         public Result<bool> Exclui(string cpf)
         {
+            cpf = replacesService.ReplaceCpfEmailWebToApi(cpf, false);
             var result = new Result<bool>();
 
             var retorno = serviceApi.Delete(cpf);

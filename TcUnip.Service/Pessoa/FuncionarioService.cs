@@ -11,10 +11,12 @@ namespace TcUnip.Service.Pessoa
     public class FuncionarioService : IFuncionarioService
     {
         readonly FuncionarioApi serviceApi = new FuncionarioApi();
-        readonly PacienteApi servicePacApi = new PacienteApi();        
+        readonly PacienteApi servicePacApi = new PacienteApi();
+        ReplacesService replacesService = new ReplacesService();
 
         public Result<Funcionario> Get(string cpf)
         {
+            cpf = replacesService.ReplaceCpfEmailWebToApi(cpf, false);
             var result = new Result<Funcionario>();
 
             result.Value = serviceApi.Get(cpf);
@@ -63,8 +65,7 @@ namespace TcUnip.Service.Pessoa
             }
             else
             {
-                var registroExistente = serviceApi.Get(model.Id);
-
+                var registroExistente = !string.IsNullOrEmpty(model.Id) ? serviceApi.Get(model.Id) : new Funcionario();
                 if (string.IsNullOrEmpty(registroExistente.Nome))
                 {
                     var retorno = serviceApi.Save(model);
@@ -100,6 +101,7 @@ namespace TcUnip.Service.Pessoa
 
         public Result<bool> Exclui(string cpf)
         {
+            cpf = replacesService.ReplaceCpfEmailWebToApi(cpf, false);
             var result = new Result<bool>();
 
             var retorno = serviceApi.Delete(cpf);

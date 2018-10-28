@@ -45,7 +45,7 @@
     <Compile Include="Calendario\Agenda.cs" />
     <Compile Include="Calendario\Consulta.cs" />
     <Compile Include="Common\DataControlValue.cs" />
-    <Compile Include="Common\DateTimeService.cs" />
+    <Compile Include="Common\ReplacesService.cs" />
     <Compile Include="Common\Endereco.cs" />
     <Compile Include="Common\Result.cs" />
     <Compile Include="Common\ConstStatus.cs" />

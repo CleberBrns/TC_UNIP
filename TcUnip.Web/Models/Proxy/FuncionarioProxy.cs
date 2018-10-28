@@ -11,7 +11,8 @@ namespace TcUnip.Web.Models.Proxy
     public class FuncionarioProxy : IFuncionarioProxy
     {
         IWebApiClient _apiClient;
-        readonly string apiRoute = "api/Pessao/";
+        readonly string apiRoute = "api/Pessoa/";
+        ReplacesService replacesService = new ReplacesService();
 
         public FuncionarioProxy(IWebApiClient apiClient)
         {
@@ -21,6 +22,7 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<Funcionario> Get(string cpf)
         {
+            cpf = replacesService.ReplaceCpfEmailWebToApi(cpf, true);
             return AsyncContext.Run(() => _apiClient.GetAsync<Result<Funcionario>>($"{apiRoute}GetFuncionario/{cpf}"));
         }
 
@@ -41,6 +43,7 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<bool> Exclui(string cpf)
         {
+            cpf = replacesService.ReplaceCpfEmailWebToApi(cpf, true);
             return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}ExcluiFuncionario/{cpf}")));
         }
     }

@@ -12,7 +12,7 @@ namespace TcUnip.Service.Calendario
     public class AgendaService : IAgendaService
     {
         readonly AgendaApi service = new AgendaApi();
-        readonly DateTimeService dateTimeService = new DateTimeService();
+        readonly ReplacesService dateTimeService = new ReplacesService();
 
         public Result<Agenda> Get(string id)
         {
@@ -112,6 +112,7 @@ namespace TcUnip.Service.Calendario
                 {
                     model.Data = dateTimeService.CombinaDataHora(model.Data, model.Horario);
                     model.DateTimeService = dateTimeService.ToMilliseconds(model.Data);
+                    model.Status = ConstStatus.Agendamento.pendente;
 
                     var retorno = service.Save(model);
                     result.Value = retorno;

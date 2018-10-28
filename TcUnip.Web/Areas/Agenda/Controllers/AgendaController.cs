@@ -19,7 +19,7 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
 
         readonly Constants.Constants constants = new Constants.Constants();
         readonly Mensagens mensagens = new Mensagens();
-        readonly DateTimeService dateTimeService = new DateTimeService();
+        readonly ReplacesService replacesService = new ReplacesService();
 
         public AgendaController(IAgendaProxy agendaProxy, IPacienteProxy pacienteProxy, IFuncionarioProxy funcionarioProxy)
         {
@@ -203,8 +203,9 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
             }
             catch (Exception ex)
             {
-                msgExibicao = Constants.Constants.msgFalhaAoListar;
-                msgAnalise = ex.ToString();
+                var msgsRetornos = ErrosService.GetMensagemService(ex, HttpContext.Response);
+                msgExibicao = msgsRetornos.Item1;
+                msgAnalise = !string.IsNullOrEmpty(msgsRetornos.Item2) ? msgsRetornos.Item2 : Constants.Constants.msgFalhaAoSalvar;
             }
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
@@ -254,7 +255,7 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
                     ViewBag.ListHorarios = GetListHorarios();
                     ViewBag.ListModalidades = GetListModalidadesProfissional(model.Funcionario.Cpf);
 
-                    model.Data = dateTimeService.FromMilliseconds(model.DateTimeService);
+                    model.Data = replacesService.FromMilliseconds(model.DateTimeService);
                     model.Horario = model.Data.ToShortTimeString();
 
                     return PartialView("_Gerenciar", model);
@@ -372,9 +373,9 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
                                            IdConsulta = l.Id,
                                            Titulo = l.Modalidade,
                                            Descricao = GetDescricaoEvento(l),
-                                           ComecaEm = dateTimeService.FromMilliseconds(l.DateTimeService),
-                                           TerminaEm = dateTimeService.FromMilliseconds(l.DateTimeService).AddHours(1),
-                                           CorEvento = GetCorEvento(dateTimeService.FromMilliseconds(l.DateTimeService))
+                                           ComecaEm = replacesService.FromMilliseconds(l.DateTimeService),
+                                           TerminaEm = replacesService.FromMilliseconds(l.DateTimeService).AddHours(1),
+                                           CorEvento = GetCorEvento(replacesService.FromMilliseconds(l.DateTimeService))
                                        }).ToList();
 
             return list.OrderBy(l => l.ComecaEm).ToList();

@@ -225,15 +225,16 @@ var validacao = {
     },
 
     errorAjax: function (jqXhr, textStatus, errorThrown) {
-        
+
+        debugger;
         var showLogOnConsole = true;
 
         if (jqXhr.responseJSON !== undefined && jqXhr.responseJSON !== null) {
             showLogOnConsole = false;
-            console.log(jqXhr.responseJSON.MensagemAnalise);
+            console.log(jqXhr.responseJSON.mensagensRetorno.MensagemAnalise);
             swal({                
                 title: "Atenção!",
-                text: jqXhr.responseJSON.MensagemExibicao,
+                text: jqXhr.responseJSON.mensagensRetorno.MensagemExibicao,
                 type: "warning",
                 confirmButtonColor: "#10386B",
                 allowOutsideClick: false

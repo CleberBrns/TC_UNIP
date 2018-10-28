@@ -12,6 +12,7 @@ namespace TcUnip.Web.Models.Proxy
     {
         IWebApiClient _apiClient;
         readonly string apiRoute = "api/Pessoa/";
+        ReplacesService replacesService = new ReplacesService();
 
         public UsuarioProxy(IWebApiClient apiClient)
         {
@@ -21,6 +22,7 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<Usuario> Get(string email)
         {
+            email = replacesService.ReplaceCpfEmailWebToApi(email, true);
             return AsyncContext.Run(() => _apiClient.GetAsync<Result<Usuario>>($"{apiRoute}GetUsuario/{email}"));
         }
 
@@ -36,6 +38,7 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<bool> Excliu(string email)
         {
+            email = replacesService.ReplaceCpfEmailWebToApi(email, true);
             return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}ExcluiUsuario/{email}")));
         }
 
