@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Calendario\AgendaApi.cs" />
     <Compile Include="Common\HttpInstance.cs" />
+    <Compile Include="Contabil\CaixaApi.cs" />
     <Compile Include="Pessoa\FuncionarioApi.cs" />
     <Compile Include="Pessoa\PacienteApi.cs" />
     <Compile Include="Pessoa\UsuarioApi.cs" />

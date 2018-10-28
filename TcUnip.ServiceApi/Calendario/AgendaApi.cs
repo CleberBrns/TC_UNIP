@@ -12,7 +12,7 @@ namespace TcUnip.ServiceApi.Calendario
 {
     public class AgendaApi : IServiceAPIBase<Agenda>
     {
-        readonly string agenda = "agenda";
+        readonly string baseRoute = "agenda";
         readonly string agendaPaciente = "agenda/paciente";
         readonly string agendaFuncionario  = "agenda/funcionario";
 
@@ -52,7 +52,7 @@ namespace TcUnip.ServiceApi.Calendario
 
         public Agenda Get(string id)
         {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, agenda, id);
+            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, id);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
 
@@ -67,7 +67,7 @@ namespace TcUnip.ServiceApi.Calendario
         public List<Agenda> ListAgendasPeriodo(string dateFrom, string dateTo)
         {
             var parametros = string.Format("{0}", "from/" + dateFrom + "/to/" + dateTo);
-            string action = string.Format("{0}{1}", BaseUrl, agenda + "/" + parametros);
+            string action = string.Format("{0}{1}", BaseUrl, baseRoute + "/" + parametros);
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
@@ -118,7 +118,7 @@ namespace TcUnip.ServiceApi.Calendario
 
             var jsonModel = JsonConvert.SerializeObject(agendaJS);
             var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}", BaseUrl, agenda);
+            string action = string.Format("{0}{1}", BaseUrl, baseRoute);
 
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PostAsync(action, jsonContent).Result;
 
@@ -132,7 +132,7 @@ namespace TcUnip.ServiceApi.Calendario
         {
             var jsonModel = JsonConvert.SerializeObject(model);
             var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}/{2}", BaseUrl, agenda, model.Id);
+            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, model.Id);
 
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PutAsync(action, jsonContent).Result;
 
@@ -144,7 +144,7 @@ namespace TcUnip.ServiceApi.Calendario
 
         public bool Delete(string id)
         {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, agenda, id);
+            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, id);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, action);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
 

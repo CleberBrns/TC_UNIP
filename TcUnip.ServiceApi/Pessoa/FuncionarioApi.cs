@@ -10,7 +10,7 @@ namespace TcUnip.ServiceApi.Pessoa
 {
     public class FuncionarioApi : IServiceAPIBase<Funcionario>
     {
-        readonly string tipoModel = "funcionario";
+        readonly string baseRoute = "funcionario";
 
         #region Definições Url
 
@@ -41,7 +41,7 @@ namespace TcUnip.ServiceApi.Pessoa
 
         public Funcionario Get(string cpf)
         {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, tipoModel, cpf);
+            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, cpf);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
 
@@ -53,7 +53,7 @@ namespace TcUnip.ServiceApi.Pessoa
 
         public List<Funcionario> List()
         {
-            string action = BaseUrl + tipoModel;
+            string action = BaseUrl + baseRoute;
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
@@ -68,7 +68,7 @@ namespace TcUnip.ServiceApi.Pessoa
         {            
             var jsonModel = JsonConvert.SerializeObject(model);            
             var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}", BaseUrl, tipoModel);
+            string action = string.Format("{0}{1}", BaseUrl, baseRoute);
 
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PostAsync(action, jsonContent).Result;
 
@@ -82,7 +82,7 @@ namespace TcUnip.ServiceApi.Pessoa
         {
             var jsonModel = JsonConvert.SerializeObject(model);
             var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}/{2}", BaseUrl, tipoModel, model.Cpf);
+            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, model.Cpf);
 
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PutAsync(action, jsonContent).Result;
 
@@ -94,7 +94,7 @@ namespace TcUnip.ServiceApi.Pessoa
 
         public bool Delete(string cpf)
         {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, tipoModel, cpf);
+            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, cpf);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, action);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
 

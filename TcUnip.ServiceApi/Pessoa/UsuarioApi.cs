@@ -12,7 +12,7 @@ namespace TcUnip.ServiceApi.Pessoa
 {
     public class UsuarioApi : IServiceAPIBase<Usuario>
     {
-        readonly string tipoModel = "usuario";
+        readonly string baseRoute = "usuario";
 
         #region Definições Url
 
@@ -43,7 +43,7 @@ namespace TcUnip.ServiceApi.Pessoa
 
         public Usuario Get(string email)
         {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, tipoModel, email);
+            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, email);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
 
@@ -55,7 +55,7 @@ namespace TcUnip.ServiceApi.Pessoa
 
         public List<Usuario> List()
         {            
-            string action = BaseUrl + tipoModel;
+            string action = BaseUrl + baseRoute;
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
@@ -70,7 +70,7 @@ namespace TcUnip.ServiceApi.Pessoa
         {            
             var jsonModel = JsonConvert.SerializeObject(model);            
             var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}", BaseUrl, tipoModel);
+            string action = string.Format("{0}{1}", BaseUrl, baseRoute);
 
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PostAsync(action, jsonContent).Result;
 
@@ -84,7 +84,7 @@ namespace TcUnip.ServiceApi.Pessoa
         {
             var jsonModel = JsonConvert.SerializeObject(model);
             var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}/{2}", BaseUrl, tipoModel, model.Email);
+            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, model.Email);
 
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PutAsync(action, jsonContent).Result;
 
@@ -96,7 +96,7 @@ namespace TcUnip.ServiceApi.Pessoa
 
         public bool Delete(string email)
         {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, tipoModel, email);
+            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, email);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, action);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
 
@@ -115,7 +115,7 @@ namespace TcUnip.ServiceApi.Pessoa
             var jsonModel = JsonConvert.SerializeObject(objAuth);
             var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
 
-            string action = string.Format("{0}{1}", BaseUrl, tipoModel + "/" + tipoAcao);
+            string action = string.Format("{0}{1}", BaseUrl, baseRoute + "/" + tipoAcao);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PostAsync(action, jsonContent).Result;
 
             model = new Usuario();
