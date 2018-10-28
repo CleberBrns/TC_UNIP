@@ -24,5 +24,19 @@ namespace TcUnip.Model.Common
         {
             return DateTime.Parse(data.ToString("dd/MM/yyyy") + " " + hora);
         }
+
+        /// <summary>
+        /// Ajuste os separadores das datas para poder passar pela API
+        /// </summary>
+        /// <param name="dateFromWeb"></param>
+        /// <param name="fromWeb"></param>
+        /// <returns></returns>
+        public string ReplaceDateWebToApi(string dateFromWeb, bool fromWeb)
+        {
+            if (fromWeb)
+                return dateFromWeb.Replace("/", "-").Trim();
+            else
+                return dateFromWeb.Replace("-", "/").Trim();
+        }        
     }
 }

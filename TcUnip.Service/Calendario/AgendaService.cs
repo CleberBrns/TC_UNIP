@@ -43,6 +43,9 @@ namespace TcUnip.Service.Calendario
 
         public Result<List<Agenda>> ListAgendaPeriodo(string dateFrom, string dateTo)
         {
+            dateFrom = dateTimeService.ReplaceDateWebToApi(dateFrom, false);
+            dateTo = dateTimeService.ReplaceDateWebToApi(dateTo, false);
+
             var result = new Result<List<Agenda>>();
             var retorno = GetAgendaPeriodo(dateFrom.Trim(), dateTo.Trim());
 
@@ -54,6 +57,9 @@ namespace TcUnip.Service.Calendario
 
         public Result<Funcionario> ConsultasPeriodoFuncionario(string cpf, string dateFrom, string dateTo)
         {
+            dateFrom = dateTimeService.ReplaceDateWebToApi(dateFrom, false);
+            dateTo = dateTimeService.ReplaceDateWebToApi(dateTo, false);
+
             var result = new Result<Funcionario>();
             var retorno = service.ConsultasPeriodoFuncionario(cpf, dateFrom, dateTo);
 
@@ -72,6 +78,9 @@ namespace TcUnip.Service.Calendario
 
         public Result<Paciente> ConsultasPeriodoPaciente(string cpf, string dateFrom, string dateTo)
         {
+            dateFrom = dateTimeService.ReplaceDateWebToApi(dateFrom, false);
+            dateTo = dateTimeService.ReplaceDateWebToApi(dateTo, false);
+
             var result = new Result<Paciente>();
             var retorno = service.ConsultasPeriodoPaciente(cpf, dateFrom, dateTo);
 
@@ -160,6 +169,9 @@ namespace TcUnip.Service.Calendario
 
         private List<Agenda> GetAgendaPeriodo(string dataDe, string dataAte)
         {
+            dataDe = dateTimeService.ReplaceDateWebToApi(dataDe, false);
+            dataAte = dateTimeService.ReplaceDateWebToApi(dataAte, false);
+
             return service.ListAgendasPeriodo(dataDe, dataAte);
         }
 

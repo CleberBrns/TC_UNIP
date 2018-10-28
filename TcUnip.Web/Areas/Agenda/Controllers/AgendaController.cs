@@ -361,9 +361,9 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
             return data;
         }
 
-        private List<EventoCalendario> GetAgendaCalendarioPorDatas(string dataIncio, string dataFim)
+        private List<EventoCalendario> GetAgendaCalendarioPorDatas(string dataInicio, string dataFim)
         {
-            var resultService = _agendaProxy.ListAgendaPeriodo(dataIncio, dataFim);
+            var resultService = _agendaProxy.ListAgendaPeriodo(dataInicio, dataFim);
             var listAgendaDoMes = FiltraListaPorPerfil(resultService.Value);
 
             var list = listAgendaDoMes.Select(l =>
