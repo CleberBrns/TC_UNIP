@@ -11,7 +11,8 @@ namespace TcUnip.Service.Calendario
 {
     public class AgendaService : IAgendaService
     {
-        readonly AgendaApi service = new AgendaApi();       
+        readonly AgendaApi service = new AgendaApi();
+        readonly DateTimeService dateTimeService = new DateTimeService();
 
         public Result<Agenda> Get(string id)
         {
@@ -100,8 +101,8 @@ namespace TcUnip.Service.Calendario
             {
                 if (model.Id == 0)
                 {
-                    model.Data = model.CombinaDataHora(model.Data, model.Horario);
-                    model.DateTimeService = model.ToMilliseconds(model.Data);
+                    model.Data = dateTimeService.CombinaDataHora(model.Data, model.Horario);
+                    model.DateTimeService = dateTimeService.ToMilliseconds(model.Data);
 
                     var retorno = service.Save(model);
                     result.Value = retorno;
@@ -178,8 +179,8 @@ namespace TcUnip.Service.Calendario
                                            Id = r.Id,
                                            Paciente = r.Paciente,
                                            Funcionario = r.Funcionario,
-                                           Data = r.FromMilliseconds(r.DateTimeService),
-                                           Horario = r.FromMilliseconds(r.DateTimeService).ToShortTimeString(),
+                                           Data = dateTimeService.FromMilliseconds(r.DateTimeService),
+                                           Horario = dateTimeService.FromMilliseconds(r.DateTimeService).ToShortTimeString(),
                                            Modalidade = r.Modalidade,
                                            Valor = r.Valor,
                                            DateTimeService = r.DateTimeService
@@ -205,8 +206,8 @@ namespace TcUnip.Service.Calendario
                                            Id = r.Id,
                                            Nome = r.Nome,
                                            Cpf = r.Cpf,                                           
-                                           Data = r.FromMilliseconds(r.DateTimeService),
-                                           Horario = r.FromMilliseconds(r.DateTimeService).ToShortTimeString(),
+                                           Data = dateTimeService.FromMilliseconds(r.DateTimeService),
+                                           Horario = dateTimeService.FromMilliseconds(r.DateTimeService).ToShortTimeString(),
                                            Modalidade = r.Modalidade,
                                            Valor = r.Valor,
                                            DateTimeService = r.DateTimeService

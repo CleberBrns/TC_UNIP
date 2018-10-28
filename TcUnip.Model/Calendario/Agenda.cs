@@ -6,6 +6,7 @@ namespace TcUnip.Model.Calendario
 {
     public class Agenda
     {
+        [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
         [JsonProperty(PropertyName = "paciente")]
         public Paciente Paciente { get; set; }
@@ -19,6 +20,8 @@ namespace TcUnip.Model.Calendario
         public decimal Valor { get; set; }
         [JsonProperty(PropertyName = "modalidade")]
         public string Modalidade { get; set; }
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; set; }
 
         public Agenda GetModelDefault()
         {
@@ -35,27 +38,6 @@ namespace TcUnip.Model.Calendario
                 Funcionario = funcionario,
                 Paciente = paciente
             };
-        }
-
-        public string ToMilliseconds(DateTime data)
-        {
-            DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-            var dataMS = (long)(data - UnixEpoch).TotalMilliseconds;
-            return dataMS.ToString();
-        }
-
-        public DateTime FromMilliseconds(string dateService)
-        {
-            DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            var dataRetornoMS = UnixEpoch.AddMilliseconds(Convert.ToInt64(dateService));
-
-            return dataRetornoMS;
-        }
-
-        public DateTime CombinaDataHora(DateTime data, string hora)
-        {
-            return DateTime.Parse(data.ToString("dd/MM/yyyy") + " " + hora);
         }
     }
 }

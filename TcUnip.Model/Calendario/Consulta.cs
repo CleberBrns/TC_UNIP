@@ -19,13 +19,7 @@ namespace TcUnip.Model.Calendario
         [JsonProperty(PropertyName = "modalidade")]
         public string Modalidade { get; set; }
         public string Horario { get; set; }
-
-        public DateTime FromMilliseconds(string dateService)
-        {
-            DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            var dataRetornoMS = UnixEpoch.AddMilliseconds(Convert.ToInt64(dateService));
-
-            return dataRetornoMS;
-        }
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; set; }
     }
 }

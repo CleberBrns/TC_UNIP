@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Web.Mvc;
+using TcUnip.Model.Common;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Local;
 using TcUnip.Web.Models.Proxy.Contract;
@@ -18,6 +19,7 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
 
         readonly Constants.Constants constants = new Constants.Constants();
         readonly Mensagens mensagens = new Mensagens();
+        readonly DateTimeService dateTimeService = new DateTimeService();
 
         public AgendaController(IAgendaProxy agendaProxy, IPacienteProxy pacienteProxy, IFuncionarioProxy funcionarioProxy)
         {
@@ -252,7 +254,7 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
                     ViewBag.ListHorarios = GetListHorarios();
                     ViewBag.ListModalidades = GetListModalidadesProfissional(model.Funcionario.Cpf);
 
-                    model.Data = model.FromMilliseconds(model.DateTimeService);
+                    model.Data = dateTimeService.FromMilliseconds(model.DateTimeService);
                     model.Horario = model.Data.ToShortTimeString();
 
                     return PartialView("_Gerenciar", model);
@@ -370,9 +372,9 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
                                            IdConsulta = l.Id,
                                            Titulo = l.Modalidade,
                                            Descricao = GetDescricaoEvento(l),
-                                           ComecaEm = l.FromMilliseconds(l.DateTimeService),
-                                           TerminaEm = l.FromMilliseconds(l.DateTimeService).AddHours(1),
-                                           CorEvento = GetCorEvento(l.FromMilliseconds(l.DateTimeService))
+                                           ComecaEm = dateTimeService.FromMilliseconds(l.DateTimeService),
+                                           TerminaEm = dateTimeService.FromMilliseconds(l.DateTimeService).AddHours(1),
+                                           CorEvento = GetCorEvento(dateTimeService.FromMilliseconds(l.DateTimeService))
                                        }).ToList();
 
             return list.OrderBy(l => l.ComecaEm).ToList();
