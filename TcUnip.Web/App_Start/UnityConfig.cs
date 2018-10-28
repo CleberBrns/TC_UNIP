@@ -47,9 +47,9 @@ namespace TcUnip.Web
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IWebApiClient, WebApiClient.WebApiClient>(new PerRequestLifetimeManager());
             container.RegisterType<IAgendaProxy, AgendaProxy>(new PerRequestLifetimeManager());
-            //container.RegisterType<IFuncionarioProxy, FuncionarioProxy>(new PerRequestLifetimeManager());
-            //container.RegisterType<IPacienteProxy, PacienteProxy>(new PerRequestLifetimeManager());
-            //container.RegisterType<IUsuarioProxy, UsuarioProxy>(new PerRequestLifetimeManager());
+            container.RegisterType<IFuncionarioProxy, FuncionarioProxy>(new PerRequestLifetimeManager());
+            container.RegisterType<IPacienteProxy, PacienteProxy>(new PerRequestLifetimeManager());
+            container.RegisterType<IUsuarioProxy, UsuarioProxy>(new PerRequestLifetimeManager());
         }
     }
 }
