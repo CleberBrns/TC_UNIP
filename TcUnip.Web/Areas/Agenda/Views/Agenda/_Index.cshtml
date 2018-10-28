@@ -124,7 +124,7 @@
             $('#dataInicio').val(moment().format('DD/MM/YYYY'));
             $('#dataFim').val(moment().format('DD/MM/YYYY'));
 
-            calendarioAgenda.carregaCalendarioDoMesAtual(true);
+            calendarioAgenda.carregaCalendarioDoMesAtual();
 
         });
 
@@ -167,24 +167,24 @@
 
                 if (tabName === 'abaCalendario') {
                     if (carregado === undefined || carregado === "false") {
-                        indexAgenda.listaAgendaCalendario(object, true);
+                        indexAgenda.listaAgendaCalendario(object);
                     }
                 }
                 else if (tabName === 'abaGridConsultas') {
                     if (carregado === undefined || carregado === "false") {
-                        indexAgenda.listaAgendaGrid(object, true);
+                        indexAgenda.listaAgendaGrid(object);
                     }
                 }
 
             },
 
-            listaAgendaCalendario: function (object, getFromSession) {
+            listaAgendaCalendario: function (object) {
 
             },
 
-            listaAgendaGrid: function (object, getFromSession) {
+            listaAgendaGrid: function (object) {
 
-                indexAgenda.getAgendaDoDia(object, getFromSession);
+                indexAgenda.getAgendaDoDia(object);
             },
 
             modalEditar: function (elem) {
@@ -252,7 +252,7 @@
                                         allowOutsideClick: false
                                     }).then(function () {
                                         bootbox.hideAll();
-                                        indexAgenda.listaAgendaGrid($(".abaGridConsultas"), false);
+                                        indexAgenda.listaAgendaGrid($(".abaGridConsultas"));
                                         calendarioAgenda.carregaCalendarioMes(dataRecarregar);
                                     });
                                 }
@@ -278,11 +278,10 @@
                 });
             },
 
-            getAgendaDoDia: function (object, getFromSession) {
+            getAgendaDoDia: function (object) {
 
                 $.ajax({
-                    url: "@Url.Action("ListaAgendaDoDia", "Agenda")",
-                    data: { getFromSession: getFromSession },
+                    url: "@Url.Action("ListaAgendaDoDia", "Agenda")",                    
                     type: "GET",
                     success: function (result) {
                         if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
@@ -449,13 +448,12 @@
 
             },
 
-            carregaCalendarioDoMesAtual: function (getFromSession) {
+            carregaCalendarioDoMesAtual: function () {
 
                 var eventos = [];
 
                 $.ajax({
                     url: "@Url.Action("GetAgendaCalendarioMesAtual", "Agenda")",
-                    data: { getFromSession: getFromSession },
                     type: "GET",
                     success: function (result) {
 

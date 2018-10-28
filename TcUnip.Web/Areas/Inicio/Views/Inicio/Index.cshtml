@@ -86,7 +86,7 @@
     <script>
 
     $(document).ready(function () {
-        funcoesIndexTabs.listaAgenda($(".abaAgenda"), true);
+        funcoesIndexTabs.listaAgenda($(".abaAgenda"));
     });
 
     $('#tabs a').click(function (e) {
@@ -104,22 +104,22 @@
             if (tabName === 'tabPacientes') {
 
                 if (carregado === undefined || carregado === "false") {
-                    funcoesIndexTabs.listaPacientes(object, true);
+                    funcoesIndexTabs.listaPacientes(object);
                 }
             }
             else if (tabName === 'tabFuncionarios') {
                 if (carregado === undefined || carregado === "false") {
-                    funcoesIndexTabs.listaFuncionarios(object, true);
+                    funcoesIndexTabs.listaFuncionarios(object);
                 }
             }
             else if (tabName === 'tabUsuarios') {
                 if (carregado === undefined || carregado === "false") {
-                    funcoesIndexTabs.listaUsuarios(object, true);
+                    funcoesIndexTabs.listaUsuarios(object);
                 }
             }
             else if (tabName === 'tabAgenda') {
                 if (carregado === undefined || carregado === "false") {
-                    funcoesIndexTabs.listaAgenda(object, true);
+                    funcoesIndexTabs.listaAgenda(object);
                 }
             }
             else if (tabName === 'tabSair') {
@@ -127,11 +127,10 @@
             }
         },
 
-        listaPacientes: function (object, getFromSession) {
+        listaPacientes: function (object) {
 
             $.ajax({
-                url: "@Url.Action("Listagem", "Paciente", new { area = "Paciente" })",
-                data: { getFromSession: getFromSession },
+                url: "@Url.Action("Listagem", "Paciente", new { area = "Paciente" })",                
                 type: "GET",
                 success: function (result) {
 
@@ -157,11 +156,10 @@
             });
         },
 
-        listaFuncionarios: function (object, getFromSession) {
+        listaFuncionarios: function (object) {
 
             $.ajax({
-                url: "@Url.Action("Listagem", "Funcionario", new { area = "Funcionario" })",
-                data: { getFromSession: getFromSession },
+                url: "@Url.Action("Listagem", "Funcionario", new { area = "Funcionario" })",                
                 type: "GET",
                 success: function (result) {
 
@@ -187,11 +185,10 @@
             });
         },
 
-        listaUsuarios: function (object, getFromSession) {
+        listaUsuarios: function (object) {
 
             $.ajax({
-                url: "@Url.Action("Listagem", "Usuario", new { area = "Usuario" })",
-                data: { getFromSession: getFromSession},
+                url: "@Url.Action("Listagem", "Usuario", new { area = "Usuario" })",               
                 type: "GET",
                 success: function (result) {
 
@@ -217,11 +214,10 @@
             });
         },
 
-        listaAgenda: function (object, getFromSession) {
+        listaAgenda: function (object) {
 
             $.ajax({
-                url: "@Url.Action("Listagem", "Agenda", new { area = "Agenda" })",
-                data: { getFromSession: getFromSession},
+                url: "@Url.Action("Listagem", "Agenda", new { area = "Agenda" })",                
                 type: "GET",
                 success: function (result) {
 
