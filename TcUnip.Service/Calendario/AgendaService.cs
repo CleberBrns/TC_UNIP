@@ -117,7 +117,7 @@ namespace TcUnip.Service.Calendario
                 }
                 else
                 {
-                    var retorno = service.Update(model);
+                    var retorno = service.Update(model, model.Id.ToString());
                     result.Value = retorno;
 
                     if (result.Value)

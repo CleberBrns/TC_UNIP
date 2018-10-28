@@ -2,12 +2,12 @@
 
 namespace TcUnip.Service.Contract.ServiceApi
 {
-    public interface IServiceAPIBase<TModel>
+    public interface IServiceApiBase<TModel>
     {
         TModel Get(string id);
         List<TModel> List();
         bool Save(TModel model);
-        bool Update(TModel model);
+        bool Update(TModel model, string id);
         bool Delete(string id);
     }
 }

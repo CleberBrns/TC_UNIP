@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using TcUnip.Model.Pessoa;
@@ -10,9 +10,14 @@ using TcUnip.ServiceApi.Common;
 
 namespace TcUnip.ServiceApi.Pessoa
 {
-    public class UsuarioApi : IServiceAPIBase<Usuario>
+    public class UsuarioApi : ServiceApiBase<Usuario>, IUsuarioApi
     {
         readonly string baseRoute = "usuario";
+        readonly string baseUrl = ConfigurationManager.AppSettings["BaseUrlApi"];
+
+        public UsuarioApi() : base("usuario", ConfigurationManager.AppSettings["BaseUrlApi"])
+        {
+        }       
 
         #region Definições Url
 
@@ -33,79 +38,6 @@ namespace TcUnip.ServiceApi.Pessoa
 
         #endregion
 
-        public string BaseUrl
-        {
-            get
-            {
-                return System.Configuration.ConfigurationManager.AppSettings["BaseUrlApi"];
-            }
-        }
-
-        public Usuario Get(string email)
-        {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, email);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
-
-            Usuario model =
-               JsonConvert.DeserializeObject<Usuario>(response.Content.ReadAsStringAsync().Result);
-
-            return model;
-        }
-
-        public List<Usuario> List()
-        {            
-            string action = BaseUrl + baseRoute;
-
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
-
-            List<Usuario> listModel = 
-                JsonConvert.DeserializeObject<List<Usuario>>(response.Content.ReadAsStringAsync().Result);
-
-            return listModel;
-        }
-
-        public bool Save(Usuario model)
-        {            
-            var jsonModel = JsonConvert.SerializeObject(model);            
-            var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}", BaseUrl, baseRoute);
-
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PostAsync(action, jsonContent).Result;
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                return true;
-
-            return false;
-        }
-
-        public bool Update(Usuario model)
-        {
-            var jsonModel = JsonConvert.SerializeObject(model);
-            var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, model.Email);
-
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PutAsync(action, jsonContent).Result;
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                return true;
-
-            return false;
-        }
-
-        public bool Delete(string email)
-        {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, email);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, action);
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                return true;
-
-            return false;
-        }
-
         public Tuple<Usuario, bool> Auth(Usuario model)
         {
             var statusAuth = false;
@@ -115,7 +47,7 @@ namespace TcUnip.ServiceApi.Pessoa
             var jsonModel = JsonConvert.SerializeObject(objAuth);
             var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
 
-            string action = string.Format("{0}{1}", BaseUrl, baseRoute + "/" + tipoAcao);
+            string action = string.Format("{0}{1}", baseUrl, baseRoute + "/" + tipoAcao);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PostAsync(action, jsonContent).Result;
 
             model = new Usuario();

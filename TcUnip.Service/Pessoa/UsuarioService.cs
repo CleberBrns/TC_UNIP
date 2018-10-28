@@ -61,7 +61,7 @@ namespace TcUnip.Service.Pessoa
                 }
                 else
                 {
-                    var retorno = serviceApi.Update(model);
+                    var retorno = serviceApi.Update(model, model.Email);
                     result.Value = retorno;
 
                     if (result.Value)

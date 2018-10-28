@@ -80,7 +80,7 @@ namespace TcUnip.Service.Pessoa
                 }
                 else
                 {
-                    var retorno = serviceApi.Update(model);
+                    var retorno = serviceApi.Update(model, model.Cpf);
                     result.Value = retorno;
 
                     if (result.Value)

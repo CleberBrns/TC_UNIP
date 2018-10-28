@@ -1,16 +1,15 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
+﻿using System.Configuration;
 using TcUnip.Model.Pessoa;
 using TcUnip.Service.Contract.ServiceApi;
 using TcUnip.ServiceApi.Common;
 
 namespace TcUnip.ServiceApi.Pessoa
 {
-    public class FuncionarioApi : IServiceAPIBase<Funcionario>
+    public class FuncionarioApi : ServiceApiBase<Funcionario>, IFuncionarioApi
     {
-        readonly string baseRoute = "funcionario";
+        public FuncionarioApi() : base("funcionario", ConfigurationManager.AppSettings["BaseUrlApi"])
+        {
+        }
 
         #region Definições Url
 
@@ -30,79 +29,6 @@ namespace TcUnip.ServiceApi.Pessoa
         //PUT BaseUrl + model/1
 
         #endregion
-
-        public string BaseUrl
-        {
-            get
-            {
-                return System.Configuration.ConfigurationManager.AppSettings["BaseUrlApi"];
-            }
-        }
-
-        public Funcionario Get(string cpf)
-        {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, cpf);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
-
-            Funcionario model =
-               JsonConvert.DeserializeObject<Funcionario>(response.Content.ReadAsStringAsync().Result);
-
-            return model;
-        }
-
-        public List<Funcionario> List()
-        {
-            string action = BaseUrl + baseRoute;
-
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
-
-            List<Funcionario> listModel = 
-                JsonConvert.DeserializeObject<List<Funcionario>>(response.Content.ReadAsStringAsync().Result);
-
-            return listModel;
-        }
-
-        public bool Save(Funcionario model)
-        {            
-            var jsonModel = JsonConvert.SerializeObject(model);            
-            var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}", BaseUrl, baseRoute);
-
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PostAsync(action, jsonContent).Result;
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                return true;
-
-            return false;
-        }
-
-        public bool Update(Funcionario model)
-        {
-            var jsonModel = JsonConvert.SerializeObject(model);
-            var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, model.Cpf);
-
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PutAsync(action, jsonContent).Result;
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                return true;
-
-            return false;
-        }
-
-        public bool Delete(string cpf)
-        {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, cpf);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, action);
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                return true;
-
-            return false;
-        }
 
     }
 }

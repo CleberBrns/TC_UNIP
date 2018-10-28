@@ -1,14 +1,19 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Configuration;
 using TcUnip.Model.Contabil;
 using TcUnip.Service.Contract.ServiceApi;
 using TcUnip.ServiceApi.Common;
 
 namespace TcUnip.ServiceApi.Contabil
 {
-    public class CaixaApi : IServiceAPIBase<Caixa>
+    public class CaixaApi : ServiceApiBase<Caixa>, ICaixaApi
     {
+        readonly string baseRoute = "fluxo-caixa";
+        readonly string baseUrl = ConfigurationManager.AppSettings["BaseUrlApi"];
+
+        public CaixaApi() : base("fluxo-caixa", ConfigurationManager.AppSettings["BaseUrlApi"])
+        {            
+        }
+
         #region Definições Url
 
         //Seleciona by id
@@ -31,53 +36,7 @@ namespace TcUnip.ServiceApi.Contabil
 
         #endregion
 
-        readonly string baseRoute = "fluxo-caixa";
+        //readonly string baseRoute = "fluxo-caixa";
 
-        public string BaseUrl
-        {
-            get
-            {
-                return System.Configuration.ConfigurationManager.AppSettings["BaseUrlApi"];
-            }
-        }
-
-        public Caixa Get(string id)
-        {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, id);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
-
-            var model = new Caixa();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                model = JsonConvert.DeserializeObject<Caixa>(response.Content.ReadAsStringAsync().Result);
-
-            return model;
-        }
-
-        public List<Caixa> List()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool Save(Caixa model)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool Update(Caixa model)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool UpdateStatus(string id, string constStatus)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool Delete(string id)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

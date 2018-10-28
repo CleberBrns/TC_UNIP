@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using TcUnip.Model.Calendario;
@@ -10,11 +11,16 @@ using TcUnip.ServiceApi.Common;
 
 namespace TcUnip.ServiceApi.Calendario
 {
-    public class AgendaApi : IServiceAPIBase<Agenda>
+    public class AgendaApi : ServiceApiBase<Agenda>, IAgendaApi
     {
         readonly string baseRoute = "agenda";
         readonly string agendaPaciente = "agenda/paciente";
         readonly string agendaFuncionario  = "agenda/funcionario";
+        readonly string baseUrl = ConfigurationManager.AppSettings["BaseUrlApi"];
+
+        public AgendaApi() : base("agenda", ConfigurationManager.AppSettings["BaseUrlApi"])
+        {
+        }
 
         #region Definições Url
 
@@ -42,32 +48,16 @@ namespace TcUnip.ServiceApi.Calendario
 
         #endregion
 
-        public string BaseUrl
-        {
-            get
-            {
-                return System.Configuration.ConfigurationManager.AppSettings["BaseUrlApi"];
-            }
-        }
-
-        public Agenda Get(string id)
-        {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, id);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
-
-            var model = new Agenda();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                model = JsonConvert.DeserializeObject<Agenda>(response.Content.ReadAsStringAsync().Result);
-
-            return model;
-        }
-
+        /// <summary>
+        /// https://clinica-unip.herokuapp.com/clinica/agenda/from/12/09/2018/to/12/09/2018
+        /// </summary>
+        /// <param name="dateFrom"></param>
+        /// <param name="dateTo"></param>
+        /// <returns></returns>
         public List<Agenda> ListAgendasPeriodo(string dateFrom, string dateTo)
         {
             var parametros = string.Format("{0}", "from/" + dateFrom + "/to/" + dateTo);
-            string action = string.Format("{0}{1}", BaseUrl, baseRoute + "/" + parametros);
+            string action = string.Format("{0}{1}", baseUrl, baseRoute + "/" + parametros);
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
@@ -79,11 +69,17 @@ namespace TcUnip.ServiceApi.Calendario
             return listModel;
         }
 
+        /// <summary>
+        /// https://clinica-unip.herokuapp.com/clinica/agenda/paciente/88888888888/from/12/09/2018/to/15/09/2018
+        /// </summary>
+        /// <param name="cpf"></param>
+        /// <param name="dateFrom"></param>
+        /// <param name="dateTo"></param>
+        /// <returns></returns>
         public Paciente ConsultasPeriodoPaciente(string cpf, string dateFrom, string dateTo)
-        {
-            //https://clinica-unip.herokuapp.com/clinica/agenda/paciente/88888888888/from/12/09/2018/to/15/09/2018
+        {            
             var parametros = "/" + cpf + "/from/" + dateFrom + "/to/" + dateTo;
-            string action = string.Format("{0}{1}{2}", BaseUrl, agendaPaciente, parametros);
+            string action = string.Format("{0}{1}{2}", baseUrl, agendaPaciente, parametros);
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
@@ -95,11 +91,17 @@ namespace TcUnip.ServiceApi.Calendario
             return model;
         }
 
+        /// <summary>
+        /// https://clinica-unip.herokuapp.com/clinica/agenda/funcionario/88888888888/from/12/09/2018/to/15/09/2018
+        /// </summary>
+        /// <param name="cpf"></param>
+        /// <param name="dateFrom"></param>
+        /// <param name="dateTo"></param>
+        /// <returns></returns>
         public Funcionario ConsultasPeriodoFuncionario(string cpf, string dateFrom, string dateTo)
-        {
-            //https://clinica-unip.herokuapp.com/clinica/agenda/funcionario/88888888888/from/12/09/2018/to/15/09/2018
+        {            
             var parametros = "/" + cpf + "/from/" + dateFrom + "/to/" + dateTo;
-            string action = string.Format("{0}{1}{2}", BaseUrl, agendaFuncionario, parametros);
+            string action = string.Format("{0}{1}{2}", baseUrl, agendaFuncionario, parametros);
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
             HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
@@ -110,59 +112,5 @@ namespace TcUnip.ServiceApi.Calendario
 
             return model;
         }
-
-        public bool Save(Agenda model)
-        {
-            var agendaJS = new AgendaJS();
-            agendaJS = agendaJS.ConvertToJS(model);
-
-            var jsonModel = JsonConvert.SerializeObject(agendaJS);
-            var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}", BaseUrl, baseRoute);
-
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PostAsync(action, jsonContent).Result;
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                return true;
-
-            return false;
-        }
-
-        public bool Update(Agenda model)
-        {
-            var jsonModel = JsonConvert.SerializeObject(model);
-            var jsonContent = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, model.Id);
-
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().PutAsync(action, jsonContent).Result;
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                return true;
-
-            return false;
-        }
-
-        public bool Delete(string id)
-        {
-            string action = string.Format("{0}{1}/{2}", BaseUrl, baseRoute, id);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, action);
-            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                return true;
-
-            return false;
-        }
-
-        #region Métodos Privados
-
-        #endregion
-
-        #region Métodos Não Implementados
-        public List<Agenda> List()
-        {
-            throw new System.NotImplementedException();
-        }
-        #endregion
     }
 }
