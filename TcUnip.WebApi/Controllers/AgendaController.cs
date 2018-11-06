@@ -86,7 +86,7 @@ namespace TcUnip.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("api/Calendario/ExcluiAgenda")]
+        [Route("api/Calendario/ExcluiAgenda/{id}")]
         public IHttpActionResult ExcluiAgenda(string id)
         {
             var retorno = _agendaService.Exclui(id);
