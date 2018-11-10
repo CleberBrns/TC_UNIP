@@ -42,6 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agenda\ModalidadeModel.cs" />
+    <Compile Include="Agenda\PesquisaModel.cs" />
+    <Compile Include="Agenda\SessaoModel.cs" />
+    <Compile Include="Agenda\StatusSessaoModel.cs" />
+    <Compile Include="Cadastro\FuncionarioModel.cs" />
+    <Compile Include="Cadastro\PacienteModel.cs" />
+    <Compile Include="Cadastro\PessoaModel.cs" />
+    <Compile Include="Cadastro\TipoPerfilModel.cs" />
+    <Compile Include="Cadastro\UsuarioModel.cs" />
     <Compile Include="Calendario\Agenda.cs" />
     <Compile Include="Calendario\Consulta.cs" />
     <Compile Include="Common\DataControlValue.cs" />
@@ -50,6 +59,8 @@
     <Compile Include="Common\Result.cs" />
     <Compile Include="Common\ConstStatus.cs" />
     <Compile Include="Contabil\Caixa.cs" />
+    <Compile Include="FluxoCaixa\CaixaModel.cs" />
+    <Compile Include="FluxoCaixa\ReciboModel.cs" />
     <Compile Include="Json\AgendaJS.cs" />
     <Compile Include="Json\PessoaJS.cs" />
     <Compile Include="Pessoa\Funcionario.cs" />
@@ -57,5 +68,6 @@
     <Compile Include="Pessoa\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
