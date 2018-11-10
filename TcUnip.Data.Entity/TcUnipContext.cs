@@ -26,6 +26,7 @@ namespace TcUnip.Data.Entity
         public DbSet<Paciente> Paciente { get; set; }
         public DbSet<Funcionario> Funcionario { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<TipoPerfil> TipoPerfil { get; set; }
 
         public DbSet<Modalidade> Modalidade { get; set; }
         public DbSet<Sessao> Sessao { get; set; }

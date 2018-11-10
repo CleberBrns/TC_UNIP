@@ -23,10 +23,6 @@ namespace TcUnip.Data.Entity.Mapping.Modelagem.Cadastro
                 .HasMaxLength(20)
                 .IsRequired();
 
-            Property(x => x.Permissao)
-                .HasMaxLength(20)
-                .IsRequired();
-
             Property(x => x.Ativo)
                 .IsRequired();
 
@@ -37,6 +33,9 @@ namespace TcUnip.Data.Entity.Mapping.Modelagem.Cadastro
                 .IsOptional();
 
             HasOptional(x => x.Funcionario);
+
+            Property(x => x.IdTipoPerfil)
+                .IsRequired();
         }
     }
 }
