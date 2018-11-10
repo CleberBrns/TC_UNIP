@@ -41,8 +41,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agenda\IModalidadeRepository.cs" />
+    <Compile Include="Agenda\ISessaoRepository.cs" />
+    <Compile Include="Agenda\IStatusSessaoRepository.cs" />
+    <Compile Include="Cadastro\IFuncionarioRepository.cs" />
+    <Compile Include="Cadastro\IPacienteRepository.cs" />
+    <Compile Include="Cadastro\IPessoaRepository.cs" />
+    <Compile Include="Cadastro\ITipoPerfilRepository.cs" />
+    <Compile Include="Cadastro\IUsuarioRepository.cs" />
+    <Compile Include="FluxoCaixa\ICaixaRepository.cs" />
     <Compile Include="IRepositoryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TcUnip.Model\TcUnip.Model.csproj">
+      <Project>{7B1C239C-0AD3-4A46-B7FD-E69AC34A4074}</Project>
+      <Name>TcUnip.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
