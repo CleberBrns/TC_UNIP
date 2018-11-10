@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using TcUnip.Data.Entity.Modelagem.Cadastro;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 
 namespace TcUnip.Data.Entity.SeedItens
 {
@@ -30,7 +31,7 @@ namespace TcUnip.Data.Entity.SeedItens
 
                 if (userBd == null)
                 {
-                    context.Usuario.Add(admUser);
+                    context.Usuario.AddOrUpdate(admUser);
                     context.SaveChanges();
                 }
             }
