@@ -8,9 +8,9 @@ namespace TcUnip.Data.Entity.SeedItens
 {
     public class UsuarioSeed
     {
-        public static void Seed(TcUnipContext context, List<TipoPerfil> listTipoPerfil)
+        public static void Seed(TcUnipContext context)
         {
-            var perfilAdm = listTipoPerfil.Where(l => l.Permissao == "ADMINISTRACAO")
+            var perfilAdm = context.TipoPerfil.Where(l => l.Permissao == "ADMINISTRACAO")
                                           .FirstOrDefault();
 
             if (perfilAdm != null)
@@ -19,15 +19,17 @@ namespace TcUnip.Data.Entity.SeedItens
                 {
                     Email = "master@tcunip.com.br",
                     Senha = "@dmin56784321",
-                    TipoPerfil = perfilAdm
+                    Cpf = "111.222.333-44",
+                    Ativo = true,
+                    Excluido = true,
+                    IdTipoPerfil = perfilAdm.Id                    
                 };
 
-                var userBd = context.Usuario
-                                    .Include(t => t.TipoPerfil)
-                                    .Where(u => u.Email == admUser.Email &&
+                var userBd = context.Usuario.Where(u => u.Email == admUser.Email &&
                                                         u.Senha == admUser.Senha &&
-                                                        u.TipoPerfil.Permissao == admUser.TipoPerfil.Permissao)
-                                    .FirstOrDefault();
+                                                        u.Cpf == admUser.Cpf &&
+                                                        u.IdTipoPerfil == admUser.IdTipoPerfil)
+                                            .FirstOrDefault();
 
                 if (userBd == null)
                 {
