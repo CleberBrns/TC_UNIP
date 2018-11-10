@@ -8,9 +8,8 @@ namespace TcUnip.Data.Entity.Migrations
         {
             ModalidadeSeed.Seed(context);
             StatusSessaoSeed.Seed(context);
-            var listTipoPerfil = TipoPerfilSeed.Seed(context);
-            UsuarioSeed.Seed(context, listTipoPerfil);
-
+            TipoPerfilSeed.Seed(context);
+            UsuarioSeed.Seed(context);
         }
     }
 }

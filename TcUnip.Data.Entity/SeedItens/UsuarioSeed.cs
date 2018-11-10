@@ -21,7 +21,7 @@ namespace TcUnip.Data.Entity.SeedItens
                     Senha = "@dmin56784321",
                     Cpf = "111.222.333-44",
                     Ativo = true,
-                    Excluido = true,
+                    Excluido = false,
                     IdTipoPerfil = perfilAdm.Id                    
                 };
 

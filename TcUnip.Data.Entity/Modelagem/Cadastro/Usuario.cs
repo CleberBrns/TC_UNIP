@@ -12,7 +12,7 @@ namespace TcUnip.Data.Entity.Modelagem.Cadastro
         public bool Excluido { get; set; }
 
         [ForeignKey("Funcionario")]
-        public int IdFuncionario { get; set; }
+        public int? IdFuncionario { get; set; }
         public virtual Funcionario Funcionario { get; set; }
 
         [ForeignKey("TipoPerfil")]
