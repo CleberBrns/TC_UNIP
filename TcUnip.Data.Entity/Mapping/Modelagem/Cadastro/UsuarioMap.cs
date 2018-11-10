@@ -11,10 +11,6 @@ namespace TcUnip.Data.Entity.Mapping.Modelagem.Cadastro
 
             HasKey(x => x.Id);
 
-            Property(x => x.Nome)
-                .HasMaxLength(100)
-                .IsRequired();
-
             Property(x => x.Email)
                 .HasMaxLength(100)
                 .IsRequired();

@@ -48,18 +48,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\Modelagem\Agenda\ModalidadeMap.cs" />
+    <Compile Include="Mapping\Modelagem\Agenda\SessaoMap.cs" />
+    <Compile Include="Mapping\Modelagem\Agenda\StatusSessaoMap.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\FuncionarioMap.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\PacienteMap.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\PessoaMap.cs" />
     <Compile Include="Mapping\IMapping.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\UsuarioMap.cs" />
+    <Compile Include="Mapping\Modelagem\FluxoCaixa\CaixaMap.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Seed.cs" />
     <Compile Include="Migrations\TcUnipHistoryContext.cs" />
+    <Compile Include="Modelagem\Agenda\Modalidade.cs" />
+    <Compile Include="Modelagem\Agenda\Sessao.cs" />
+    <Compile Include="Modelagem\Agenda\StatusSessao.cs" />
     <Compile Include="Modelagem\Cadastro\Funcionario.cs" />
     <Compile Include="Modelagem\Cadastro\Paciente.cs" />
     <Compile Include="Modelagem\Cadastro\Pessoa.cs" />
     <Compile Include="Modelagem\Cadastro\Usuario.cs" />
+    <Compile Include="Modelagem\FluxoCaixa\Caixa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TcUnipContext.cs" />
   </ItemGroup>

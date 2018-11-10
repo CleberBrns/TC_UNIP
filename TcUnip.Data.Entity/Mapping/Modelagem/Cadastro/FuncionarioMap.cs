@@ -9,16 +9,23 @@ namespace TcUnip.Data.Entity.Mapping.Modelagem.Cadastro
         {
            ToTable("Funcionario", "tcUnip");
 
-            HasKey(x => x.Id);
-
-            Property(x => x.IdPessoa)
-               .IsRequired();
+            HasKey(x => x.Id);            
 
             Property(x => x.Ativo)
                .IsRequired();
 
             Property(x => x.Excluido)
-                .IsRequired();            
+                .IsRequired();
+
+            Property(x => x.IdPessoa)
+               .IsRequired();
+
+            Property(x => x.IdModalidade)
+                .IsRequired();
+
+            HasRequired(x => x.Modalidade)
+               .WithMany(x => x.Funcionarios)
+               .HasForeignKey(x => x.IdModalidade);
         }
     }
 }

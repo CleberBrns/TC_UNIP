@@ -6,7 +6,9 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Reflection;
 using TcUnip.Data.Entity.Mapping;
+using TcUnip.Data.Entity.Modelagem.Agenda;
 using TcUnip.Data.Entity.Modelagem.Cadastro;
+using TcUnip.Data.Entity.Modelagem.FluxoCaixa;
 
 namespace TcUnip.Data.Entity
 {
@@ -21,6 +23,15 @@ namespace TcUnip.Data.Entity
         #region Tabelas
 
         public DbSet<Pessoa> Pessoa { get; set; }
+        public DbSet<Paciente> Paciente { get; set; }
+        public DbSet<Funcionario> Funcionario { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
+
+        public DbSet<Modalidade> Modalidade { get; set; }
+        public DbSet<Sessao> Sessao { get; set; }
+        public DbSet<StatusSessao> StatusSessao { get; set; }
+
+        public DbSet<Caixa> Caixa { get; set; }
 
         #endregion
 
