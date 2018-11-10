@@ -12,7 +12,7 @@ namespace TcUnip.Data.Entity.SeedItens
     {
         public static void Seed(TcUnipContext context)
         {
-            var listBD = context.Modalidade.ToList();
+            var listBD = context.StatusSessao.ToList();
 
             if (!listBD.Any())
             {
@@ -31,7 +31,7 @@ namespace TcUnip.Data.Entity.SeedItens
 
                 foreach (var item in arraySalvar)
                 {
-                    if (listBD.Find(c => c.Id == item.Id && c.Nome == item.Descricao) == null)
+                    if (listBD.Find(c => c.Id == item.Id && c.Descricao == item.Descricao) == null)
                     {
                         listSalvar.Add(item);
                     }
