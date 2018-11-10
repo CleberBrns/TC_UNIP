@@ -82,5 +82,15 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TcUnip.Data.Entity\TcUnip.Data.Entity.csproj">
+      <Project>{10F8AD70-B69E-4DA5-A2DB-0AC2711FBBF9}</Project>
+      <Name>TcUnip.Data.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TcUnip.Model\TcUnip.Model.csproj">
+      <Project>{7B1C239C-0AD3-4A46-B7FD-E69AC34A4074}</Project>
+      <Name>TcUnip.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
