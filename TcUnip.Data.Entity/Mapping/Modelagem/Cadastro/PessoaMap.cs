@@ -1,8 +1,7 @@
 ﻿using System.Data.Entity.ModelConfiguration;
-using TcUnip.Data.Entity.Mapping;
 using TcUnip.Data.Entity.Modelagem.Cadastro;
 
-namespace TcUnip.Data.Entity.Diagrams.Modelagem
+namespace TcUnip.Data.Entity.Mapping.Modelagem.Cadastro
 {
     public class PessoaMap : EntityTypeConfiguration<Pessoa>, IMapping
     {
@@ -25,12 +24,10 @@ namespace TcUnip.Data.Entity.Diagrams.Modelagem
                 .IsRequired();
 
             Property(x => x.Telefone)
-                .HasMaxLength(20)
-                .IsRequired();
+                .HasMaxLength(20);                
 
             Property(x => x.Endereco)
-                .HasMaxLength(500)
-                .IsRequired();
+                .HasMaxLength(500);                
 
             Property(x => x.Ativo)
                 .IsRequired();

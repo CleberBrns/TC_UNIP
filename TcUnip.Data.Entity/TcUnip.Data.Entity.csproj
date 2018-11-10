@@ -48,12 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Diagrams\Modelagem\PessoaMap.cs" />
+    <Compile Include="Mapping\Modelagem\Cadastro\FuncionarioMap.cs" />
+    <Compile Include="Mapping\Modelagem\Cadastro\PacienteMap.cs" />
+    <Compile Include="Mapping\Modelagem\Cadastro\PessoaMap.cs" />
     <Compile Include="Mapping\IMapping.cs" />
+    <Compile Include="Mapping\Modelagem\Cadastro\UsuarioMap.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\Seed.cs" />
     <Compile Include="Migrations\TcUnipHistoryContext.cs" />
+    <Compile Include="Modelagem\Cadastro\Funcionario.cs" />
+    <Compile Include="Modelagem\Cadastro\Paciente.cs" />
     <Compile Include="Modelagem\Cadastro\Pessoa.cs" />
+    <Compile Include="Modelagem\Cadastro\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TcUnipContext.cs" />
   </ItemGroup>
@@ -62,6 +68,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Diagrams\" />
     <Folder Include="SeedItens\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
