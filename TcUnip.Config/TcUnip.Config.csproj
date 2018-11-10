@@ -83,9 +83,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TcUnip.Data.Contract\TcUnip.Data.Contract.csproj">
+      <Project>{260E3B8C-F516-4AFF-908D-A78225052895}</Project>
+      <Name>TcUnip.Data.Contract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TcUnip.Data.Entity\TcUnip.Data.Entity.csproj">
       <Project>{10F8AD70-B69E-4DA5-A2DB-0AC2711FBBF9}</Project>
       <Name>TcUnip.Data.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TcUnip.Data.Repositories\TcUnip.Data.Repositories.csproj">
+      <Project>{B4FCFC38-683C-40D3-A6F0-58F24B9CFA00}</Project>
+      <Name>TcUnip.Data.Repositories</Name>
     </ProjectReference>
     <ProjectReference Include="..\TcUnip.Model\TcUnip.Model.csproj">
       <Project>{7B1C239C-0AD3-4A46-B7FD-E69AC34A4074}</Project>
