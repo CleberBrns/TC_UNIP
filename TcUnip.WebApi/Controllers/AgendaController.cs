@@ -96,5 +96,17 @@ namespace TcUnip.Api.Controllers
 
             return Ok(retorno);
         }
+
+        [HttpGet]
+        [Route("api/Calendario/AtualizaStatusConsulta/{id}/{statusConsulta}")]
+        public IHttpActionResult AtualizaStatusConsulta(string id, string statusConsulta)
+        {
+            var retorno = _agendaService.AtualizaStatusConsulta(id, statusConsulta);
+
+            if (!retorno.Status)
+                return new InvalidListMessageResult(retorno.Message);
+
+            return Ok(retorno);
+        }
     }
 }

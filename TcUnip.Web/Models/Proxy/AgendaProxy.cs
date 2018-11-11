@@ -68,5 +68,11 @@ namespace TcUnip.Web.Models.Proxy
         {
             return AsyncContext.Run((() => _apiClient.DeleteAsync<Result<bool>>($"{apiRoute}ExcluiAgenda/{id}")));
         }
+
+        public Result<bool> AtualizaStatusConsulta(string id, string statusConsulta)
+        {
+            return AsyncContext.Run(() => _apiClient.GetAsync<Result<bool>>(
+                 $"{apiRoute}AtualizaStatusConsulta/{id}/{statusConsulta}"));
+        }
     }
 }

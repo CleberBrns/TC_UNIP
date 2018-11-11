@@ -50,6 +50,7 @@
     <Compile Include="Common\Result.cs" />
     <Compile Include="Common\ConstStatus.cs" />
     <Compile Include="Contabil\Caixa.cs" />
+    <Compile Include="Contabil\Recibo.cs" />
     <Compile Include="Json\AgendaJS.cs" />
     <Compile Include="Json\PessoaJS.cs" />
     <Compile Include="Pessoa\Funcionario.cs" />

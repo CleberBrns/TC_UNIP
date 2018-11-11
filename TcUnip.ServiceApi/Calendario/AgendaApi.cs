@@ -45,6 +45,8 @@ namespace TcUnip.ServiceApi.Calendario
         //Listar um Funcionario com todas suas consultas
         //GET agenda/funcionario/cpfFuncionario/from/12/09/2018/to/15/09/2018
 
+        //Atualizando o Status de um Agendamento
+        //POST BaseUrl + baseRoute1/status/OK(ConstStatus Agendamento)
 
         #endregion
 
@@ -111,6 +113,26 @@ namespace TcUnip.ServiceApi.Calendario
                 model = JsonConvert.DeserializeObject<Funcionario>(response.Content.ReadAsStringAsync().Result);
 
             return model;
+        }
+
+        /// <summary>
+        /// https://clinica-unip.herokuapp.com/clinica/agenda/1/status/OK
+        /// </summary>
+        /// <param name="dateFrom"></param>
+        /// <param name="dateTo"></param>
+        /// <returns></returns>
+        public bool AtualizaStatusAgendamento(string id, string statusAgenda)
+        {
+            var parametros = string.Format("{0}" + id + "/status/" + statusAgenda);
+            string action = string.Format("{0}{1}", baseUrl, baseRoute + "/" + parametros);
+
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, action);
+            HttpResponseMessage response = HttpInstance.GetHttpClientInstance().SendAsync(request).Result;
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                return true;
+
+            return false;
         }
     }
 }

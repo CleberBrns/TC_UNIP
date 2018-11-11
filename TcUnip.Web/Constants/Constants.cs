@@ -47,6 +47,18 @@ namespace TcUnip.Web.Constants
             };
         }
 
+        public List<DataSelectControl> ListStatusConsulta()
+        {
+            return new List<DataSelectControl>
+            {
+                new DataSelectControl { Name = "Pendente", Value = "PENDENTE"},
+                new DataSelectControl { Name = "Não compareceu", Value = "NAO_COMPARECEU" },
+                new DataSelectControl { Name = "Não compareceu, pagamento pendente", Value = "NAO_COMPARECEU_PAGAMENTO_PENDENTE" },
+                new DataSelectControl { Name = "Compareceu, pagamento pendente", Value = "COMPARECEU_PAGAMENTO_PENDENTE" },
+                new DataSelectControl { Name = "Concluído", Value = "OK" }
+            };
+        }
+
         public List<DataSelectControl> ListHorariosConsultas()
         {            
             return GetHorariosDoDia();

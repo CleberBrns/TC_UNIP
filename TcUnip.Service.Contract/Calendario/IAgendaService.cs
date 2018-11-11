@@ -15,5 +15,6 @@ namespace TcUnip.Service.Contract.Calendario
         Result<Funcionario> ConsultasPeriodoFuncionario(string cpf, string dateFrom, string dateTo);
         Result<bool> Salva(Agenda model);
         Result<bool> Exclui(string id);
+        Result<bool> AtualizaStatusConsulta(string id, string statusConsulta);
     }
 }

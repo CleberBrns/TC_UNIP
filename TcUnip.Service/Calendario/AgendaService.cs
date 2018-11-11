@@ -63,14 +63,7 @@ namespace TcUnip.Service.Calendario
             var result = new Result<Funcionario>();
             var retorno = service.ConsultasPeriodoFuncionario(cpf, dateFrom, dateTo);
 
-            if (string.IsNullOrEmpty(retorno.Cpf))
-            {
-                result.Message = "Sem agenda!";
-                result.Status = false;
-            }                
-            else                
-                retorno.Consultas = ConfiguraConsultaService(retorno.Consultas);
-
+            retorno.Consultas = ConfiguraConsultaService(retorno.Consultas);
             result.Value = retorno;
 
             return result;
@@ -84,14 +77,7 @@ namespace TcUnip.Service.Calendario
             var result = new Result<Paciente>();
             var retorno = service.ConsultasPeriodoPaciente(cpf, dateFrom, dateTo);
 
-            if (!string.IsNullOrEmpty(retorno.Cpf))
-            {
-                result.Message = "Sem agenda!";
-                result.Status = false;
-            }                
-            else
-                retorno.Consultas = ConfiguraConsultaService(retorno.Consultas);
-
+            retorno.Consultas = ConfiguraConsultaService(retorno.Consultas);
             result.Value = retorno;
 
             return result;
@@ -157,6 +143,24 @@ namespace TcUnip.Service.Calendario
                 result.Message = "Falha ao excluir a Consulta!";
                 result.Status = false;
             }                
+
+            return result;
+        }
+
+        public Result<bool> AtualizaStatusConsulta(string id, string statusConsulta)
+        {
+            var result = new Result<bool>();
+
+            var retorno = service.AtualizaStatusAgendamento(id, statusConsulta);
+            result.Value = retorno;
+
+            if (result.Value)
+                result.Message = "Status da Consulta atualizado com sucesso!";
+            else
+            {
+                result.Message = "Falha ao atualizar o Status da Consulta!";
+                result.Status = false;
+            }
 
             return result;
         }
@@ -228,7 +232,7 @@ namespace TcUnip.Service.Calendario
                                        .ToList();
 
             return listaConfigurada;
-        }
+        }       
 
         #endregion
     }
