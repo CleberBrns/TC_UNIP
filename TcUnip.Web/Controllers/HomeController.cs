@@ -9,7 +9,7 @@ namespace TcUnip.Web.Controllers
             if (!GetUsuarioSession().Item2)
                 return RedirectToAction("Login", "Login");
 
-            return View();
+            return RedirectToAction("Index", "Inicio");
         }
     }
 }
