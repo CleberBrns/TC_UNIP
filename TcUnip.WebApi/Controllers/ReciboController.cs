@@ -13,7 +13,7 @@ namespace TcUnip.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/Contabilidade/GetRecibo/{id}")]
+        [Route("api/Recibo/GetRecibo/{id}")]
         public IHttpActionResult GetRecibo(string id)
         {
             var retorno = _reciboService.Get(id);
@@ -25,7 +25,7 @@ namespace TcUnip.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/Contabilidade/ListRecibosDoDia")]
+        [Route("api/Recibo/ListRecibosDoDia")]
         public IHttpActionResult ListRecibosDoDia()
         {
             var retorno = _reciboService.ListRecibosDoDia();
@@ -37,7 +37,7 @@ namespace TcUnip.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/Contabilidade/ListRecibosPeriodo/{dateFrom}/{dateTo}")]
+        [Route("api/Recibo/ListRecibosPeriodo/{dateFrom}/{dateTo}")]
         public IHttpActionResult ListRecibosPeriodo(string dateFrom, string dateTo)
         {
             var retorno = _reciboService.ListRecibosPeriodo(dateFrom, dateTo);
@@ -49,7 +49,7 @@ namespace TcUnip.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/Contabilidade/ListRecibosPeriodoFuncionario/{dateFrom}/{dateTo}/{getFromSession}")]
+        [Route("api/Recibo/ListRecibosPeriodoFuncionario/{dateFrom}/{dateTo}/{getFromSession}")]
         public IHttpActionResult RecibosPeriodoFuncionario(string cpf, string dateFrom, string dateTo)
         {
             var retorno = _reciboService.ListRecibosPeriodoFuncionario(cpf, dateFrom, dateTo);
@@ -61,7 +61,7 @@ namespace TcUnip.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/Contabilidade/ListRecibosPeriodoPaciente/{dateFrom}/{dateTo}/{getFromSession}")]
+        [Route("api/Recibo/ListRecibosPeriodoPaciente/{dateFrom}/{dateTo}/{getFromSession}")]
         public IHttpActionResult RecibosPeriodoPaciente(string cpf, string dateFrom, string dateTo)
         {
             var retorno = _reciboService.ListRecibosPeriodoPaciente(cpf, dateFrom, dateTo);
