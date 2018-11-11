@@ -25,7 +25,7 @@ namespace TcUnip.Service.Contabil
             if (string.IsNullOrEmpty(result.Value.DateTimeService))
             {
                 result.Status = false;
-                result.Message = "O regirsto não existe mais na base de dados do serviço!";
+                result.Message = "O registro não existe mais na base de dados do serviço!";
             }
 
             return result;
@@ -36,7 +36,7 @@ namespace TcUnip.Service.Contabil
             var list = new List<Caixa>();
             var result = new Result<List<Caixa>>();
 
-            list = ConfiguraConsultaService(GetCaixaDoDia());
+            list = ConfiguraConsultaService(List());
             result.Value = list;
 
             return result;
@@ -113,6 +113,11 @@ namespace TcUnip.Service.Contabil
 
         #region Métodos Privados
 
+        private List<Caixa> List()
+        {
+            return service.List();
+        }
+
         private List<Caixa> GetCaixaDoDia()
         {
             return GetCaixaPeriodo(DateTime.Now.ToShortDateString(), DateTime.Now.ToShortDateString());
@@ -144,7 +149,7 @@ namespace TcUnip.Service.Contabil
                                            Descricao = r.Descricao,
                                            Credito = r.Credito,
                                            Debito = r.Debito,
-                                           Saldo = r.Saldo,
+                                           Saldo = (r.Credito - r.Debito).ToString(),
                                            Data = dateTimeService.FromMilliseconds(r.DateTimeService),
                                            Horario = dateTimeService.FromMilliseconds(r.DateTimeService).ToShortTimeString(),
                                            DateTimeService = r.DateTimeService

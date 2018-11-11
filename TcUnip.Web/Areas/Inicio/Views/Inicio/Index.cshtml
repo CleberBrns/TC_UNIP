@@ -34,12 +34,12 @@
                                         Funcionários
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="#" name="tabCaixa" class="abaCaixa" carregado="false">
+                                        Caixa
+                                    </a>
+                                </li>
                             }
-                            <li>
-                                <a href="#" name="tabCaixa" class="abaCaixa" carregado="false">
-                                    Caixa
-                                </a>
-                            </li>
                             <li>
                                 <a href="#" name="tabRecibos" class="abaRecibos" carregado="false">
                                     Recibos
@@ -65,8 +65,8 @@
                             {
                                 <div id="tabPacientes"></div>
                                 <div id="tabFuncionarios"></div>
+                                <div id="tabCaixa"></div>
                             }
-                            <div id="tabCaixa">Div Caixa</div>
                             <div id="tabRecibos">Div Recibos</div>
                             @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
                             {
@@ -120,6 +120,11 @@
             else if (tabName === 'tabAgenda') {
                 if (carregado === undefined || carregado === "false") {
                     funcoesIndexTabs.listaAgenda(object);
+                }
+            }
+            else if (tabName === 'tabCaixa') {
+                if (carregado === undefined || carregado === "false") {
+                    funcoesIndexTabs.listaCaixa(object);
                 }
             }
             else if (tabName === 'tabSair') {
@@ -223,6 +228,35 @@
 
                     if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
                         $('#tabAgenda').html(result);
+                        $(object).attr("carregado", "true");
+                    }
+                    else {
+                        var retorno = result.mensagensRetorno;
+                        swal({
+                            title: '',
+                            text: retorno.MensagemExibicao,
+                            type: 'warning',
+                            confirmButtonColor: '#10386B',
+                            allowOutsideClick: false
+                        });
+                        console.log(retorno.MensagemAnalise);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                }
+            });
+        },
+
+        listaCaixa: function (object) {
+
+            $.ajax({
+                url: "@Url.Action("Index", "Caixa", new { area = "Caixa" })",                
+                type: "GET",
+                success: function (result) {
+
+                    if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
+                        $('#tabCaixa').html(result);
                         $(object).attr("carregado", "true");
                     }
                     else {

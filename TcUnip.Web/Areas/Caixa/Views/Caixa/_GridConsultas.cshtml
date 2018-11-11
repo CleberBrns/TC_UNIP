@@ -1,0 +1,50 @@
+﻿@using TcUnip.Web.Constants;
+
+@model IList<TcUnip.Model.Contabil.Caixa>
+
+@{
+    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+}
+
+@if (user != null)
+{
+    <div class="row">
+
+        <div class="col-md-12 col-sm-12" style="overflow-x:auto; padding-top: 5%">
+            <table class="table table-striped" id="gridCaixa" carregada="false">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Descrição</th>
+                        <th>Débito</th>
+                        <th>Crédito</th>
+                        <th>Saldo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var itemModel in Model)
+                    {
+                        <tr>
+                            <td>@itemModel.Data.ToShortDateString()</td>
+                            <td>@itemModel.Descricao</td>
+                            <td>R$ @itemModel.Debito</td>
+                            <td>R$ @itemModel.Credito</td>
+                            <td>R$ @itemModel.Saldo</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+
+        $("#gridCaixa").DataTable({
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+            },            
+            "aaSorting": []
+        });
+
+    </script>
+}

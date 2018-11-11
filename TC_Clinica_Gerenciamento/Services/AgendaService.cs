@@ -15,7 +15,6 @@ namespace TCC_Unip.Services
         readonly AgendaSession session = new AgendaSession();
         readonly string sessionAgendaPeriodos = Constants.ConstSessions.listAgendaPeriodos;
         readonly string sessionAgendaDoDia = Constants.ConstSessions.listAgendaDoDia;
-        readonly string sessionConsultas = Constants.ConstSessions.listConsultas;
 
         public ResultService<Agenda> Get(string id)
         {

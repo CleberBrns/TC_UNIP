@@ -2,7 +2,7 @@
 using TcUnip.Api.Results;
 using TcUnip.Service.Contract.Contabil;
 
-namespace TcUnip.WebApi.Controllers
+namespace TcUnip.Api.Controllers
 {
     public class ReciboController : ApiController
     {

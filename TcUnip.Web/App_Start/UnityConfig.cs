@@ -50,6 +50,8 @@ namespace TcUnip.Web
             container.RegisterType<IFuncionarioProxy, FuncionarioProxy>(new PerRequestLifetimeManager());
             container.RegisterType<IPacienteProxy, PacienteProxy>(new PerRequestLifetimeManager());
             container.RegisterType<IUsuarioProxy, UsuarioProxy>(new PerRequestLifetimeManager());
+            container.RegisterType<ICaixaProxy, CaixaProxy>(new PerRequestLifetimeManager());
+            container.RegisterType<IReciboProxy, ReciboProxy>(new PerRequestLifetimeManager());
         }
     }
 }

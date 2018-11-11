@@ -3,7 +3,7 @@ using TcUnip.Api.Results;
 using TcUnip.Model.Contabil;
 using TcUnip.Service.Contract.Contabil;
 
-namespace TcUnip.WebApi.Controllers
+namespace TcUnip.Api.Controllers
 {
     public class CaixaController : ApiController
     {
@@ -25,7 +25,7 @@ namespace TcUnip.WebApi.Controllers
             return Ok(retorno);
         }
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         [Route("api/Caixa/ListCaixaDoDia")]
         public IHttpActionResult ListCaixaDoDia()
         {

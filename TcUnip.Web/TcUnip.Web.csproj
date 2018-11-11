@@ -219,6 +219,8 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Areas\Agenda\AgendaAreaRegistration.cs" />
     <Compile Include="Areas\Agenda\Controllers\AgendaController.cs" />
+    <Compile Include="Areas\Caixa\CaixaAreaRegistration.cs" />
+    <Compile Include="Areas\Caixa\Controllers\CaixaController.cs" />
     <Compile Include="Areas\Funcionario\Controllers\FuncionarioController.cs" />
     <Compile Include="Areas\Funcionario\FuncionarioAreaRegistration.cs" />
     <Compile Include="Areas\Inicio\Controllers\InicioController.cs" />
@@ -533,6 +535,12 @@
     <Content Include="Content\bootstrap-datepicker.standalone.css.map" />
     <Content Include="Content\bootstrap-datepicker3.css.map" />
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
+    <Content Include="Areas\Caixa\Views\Web.config" />
+    <Content Include="Areas\Caixa\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Caixa\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Caixa\Views\Caixa\_Index.cshtml" />
+    <Content Include="Areas\Caixa\Views\Caixa\_GridConsultas.cshtml" />
+    <Content Include="Areas\Caixa\Views\Caixa\_Gerenciar.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
