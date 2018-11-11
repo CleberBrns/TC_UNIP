@@ -1,0 +1,87 @@
+﻿@model TcUnip.Model.Contabil.Recibo
+
+@using TcUnip.Web.Models.Local;
+
+@{   
+    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+}
+
+@if (user != null)
+{
+    using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <input type="hidden" name="IdAgenda" value='@Model.IdAgenda'>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="campos" style="padding: 2% 0 2% 5%">
+                <div class="form-group">
+                    @Html.Label("Paciente", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        <input type="text" autocomplete="off" disabled="disabled" class="form-control"
+                               value="@Model.Paciente" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Data", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-4">
+                        <input type="text" autocomplete="off" disabled="disabled" class="form-control alinhamentoSelect"
+                               value="@Model.Data.ToShortDateString()" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Hora", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-3">
+                        <input type="text" autocomplete="off" disabled="disabled" class="form-control alinhamentoSelect"
+                                value="@Model.Data.ToShortTimeString()" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Profissional", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-8">
+                        <input type="text" autocomplete="off" disabled="disabled" class="form-control"
+                               value="@Model.Profissional" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Valor", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-4">
+                        <input type="text" autocomplete="off" disabled="disabled" class="form-control alinhamentoSelect"
+                               id="nome" name="Nome" value="R$ @Model.Valor" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="text-right col-md-12">
+                    <button type="button" class="btn btn-primary" id="btnRetornar" name="btnRetornar" 
+                            onclick="reciboVisualizar.closeModal()">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Retornar
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnImprimir">
+                        Imprimir <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <script>
+
+    $("#btnImprimir").on('click', function () {        
+            reciboVisualizar.imprimir();
+    });
+
+    var reciboVisualizar = {
+
+        imprimir: function () {
+
+        },
+
+        closeModal: function () {
+            bootbox.hideAll();
+        }
+
+    };
+
+    </script>
+}

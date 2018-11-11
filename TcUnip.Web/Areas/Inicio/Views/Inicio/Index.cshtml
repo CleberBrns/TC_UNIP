@@ -67,7 +67,7 @@
                                 <div id="tabFuncionarios"></div>
                                 <div id="tabCaixa"></div>
                             }
-                            <div id="tabRecibos">Div Recibos</div>
+                            <div id="tabRecibos"></div>
                             @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
                             {
                                 <div id="tabUsuarios"></div>
@@ -125,6 +125,11 @@
             else if (tabName === 'tabCaixa') {
                 if (carregado === undefined || carregado === "false") {
                     funcoesIndexTabs.listaCaixa(object);
+                }
+            }
+            else if (tabName === 'tabRecibos') {
+                if (carregado === undefined || carregado === "false") {
+                    funcoesIndexTabs.listaRecibos(object);
                 }
             }
             else if (tabName === 'tabSair') {
@@ -257,6 +262,35 @@
 
                     if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
                         $('#tabCaixa').html(result);
+                        $(object).attr("carregado", "true");
+                    }
+                    else {
+                        var retorno = result.mensagensRetorno;
+                        swal({
+                            title: '',
+                            text: retorno.MensagemExibicao,
+                            type: 'warning',
+                            confirmButtonColor: '#10386B',
+                            allowOutsideClick: false
+                        });
+                        console.log(retorno.MensagemAnalise);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                }
+            });
+        },
+
+        listaRecibos: function (object) {
+
+            $.ajax({
+                url: "@Url.Action("Index", "Recibo", new { area = "Recibo" })",                
+                type: "GET",
+                success: function (result) {
+
+                    if (result.mensagensRetorno === undefined || result.mensagensRetorno === null) {
+                        $('#tabRecibos').html(result);
                         $(object).attr("carregado", "true");
                     }
                     else {

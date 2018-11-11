@@ -227,6 +227,8 @@
     <Compile Include="Areas\Inicio\InicioAreaRegistration.cs" />
     <Compile Include="Areas\Paciente\Controllers\PacienteController.cs" />
     <Compile Include="Areas\Paciente\PacienteAreaRegistration.cs" />
+    <Compile Include="Areas\Recibo\Controllers\ReciboController.cs" />
+    <Compile Include="Areas\Recibo\ReciboAreaRegistration.cs" />
     <Compile Include="Areas\Usuario\Controllers\UsuarioController.cs" />
     <Compile Include="Areas\Usuario\UsuarioAreaRegistration.cs" />
     <Compile Include="Constants\Constants.cs" />
@@ -541,6 +543,13 @@
     <Content Include="Areas\Caixa\Views\Caixa\_Index.cshtml" />
     <Content Include="Areas\Caixa\Views\Caixa\_GridConsultas.cshtml" />
     <Content Include="Areas\Caixa\Views\Caixa\_Gerenciar.cshtml" />
+    <Content Include="Areas\Recibo\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Recibo\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Recibo\Views\Web.config" />
+    <Content Include="Areas\Recibo\Views\Recibo\_Index.cshtml" />
+    <Content Include="Areas\Recibo\Views\Recibo\_GridRecibos.cshtml" />
+    <Content Include="Areas\Recibo\Views\Recibo\_Visualizar.cshtml" />
+    <Content Include="Areas\Recibo\Views\Recibo\_Imprimir.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
