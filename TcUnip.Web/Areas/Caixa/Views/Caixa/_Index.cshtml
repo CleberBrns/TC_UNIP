@@ -109,7 +109,7 @@
                     data: { data: dataSelecionada},
                     success: function (html) {
                         bootbox.dialog({
-                            title: "Cadastrar Despesa",
+                            title: "Cadastrar",
                             message: html
                         });
                     },
@@ -134,7 +134,7 @@
                     data: { id: id },
                     success: function (html) {
                         bootbox.dialog({
-                            title: "Editar Despesa",
+                            title: "Editar Registro",
                             message: html
                         });
                     },error: function (jqXHR, textStatus, errorThrown) {

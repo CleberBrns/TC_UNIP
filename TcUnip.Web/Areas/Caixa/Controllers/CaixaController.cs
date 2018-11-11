@@ -92,7 +92,7 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 
             ViewBag.Usuario = GetUsuarioSession().Item1;          
 
-            var model = new Model.Pessoa.Funcionario();
+            var model = new Model.Contabil.Caixa();
             var defaultObj = model.GetModelDefault();
             return PartialView("_Gerenciar", defaultObj);
         }

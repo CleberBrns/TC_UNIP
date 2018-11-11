@@ -1,1 +1,211 @@
-﻿
+﻿@model TcUnip.Model.Contabil.Caixa
+
+@using TcUnip.Web.Models.Local;
+
+@{
+    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+}
+
+<link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<script src="~/Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+<style type="text/css">
+    .datepicker {
+        background: #808080;
+        color: #ffffff;
+    }
+</style>
+
+@if (user != null)
+{
+    using (Html.BeginForm())
+    {
+        <div class="form-horizontal">            
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="campos" style="padding: 2% 0 2% 5%">
+                <div class="form-group">
+                    <div class="form-group">
+                        @Html.Label("Data", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-6">
+                            <div class="input-group" style="width: 60%">
+                                <input type="text" autocomplete="off" class="form-control alinhamentoSelect" id="data" name="Data"
+                                       value="@Model.Data.ToShortDateString()" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                </span>
+                            </div>
+                            <span class="field-validation-valid text-danger" id="validaData" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Descrição", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            <input type="text" autocomplete="off" class="form-control" id="descricao" 
+                                   name="Descricao" value="@Model.Descricao" />
+                            <span class="field-validation-valid text-danger" id="validaDescricao" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Débito - R$", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-6">
+                            <input type="text" autocomplete="off" class="form-control alinhamentoSelect valor" 
+                                   id="debito" style="width: 60%" name="Debito" />
+                            <span class="field-validation-valid text-danger" id="validaDebito" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Crédito - R$", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-6">
+                            <input type="text" autocomplete="off" class="form-control alinhamentoSelect valor" 
+                                   id="credito" style="width: 60%" name="Credito" />
+                            <span class="field-validation-valid text-danger" id="validaCredito" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="text-right col-md-12">
+                    <button type="button" class="btn btn-primary" id="btnRetornar" name="btnRetornar" onclick="gerenciarCaixa.CloseModal()">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Retornar
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btnSalvar">
+                        Salvar <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <script>
+
+        $('#data').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            language: "pt-BR"
+        });
+
+        $('#data').mask('99/99/9999', { placeholder: "dd/mm/aaaa" });
+        $('.valor').mask('00.000,00', { reverse: true });
+
+        $('#profissional').change(function () {
+            gerenciarCaixa.CarregaModalidades(this.value);
+        });
+
+        $("#btnSalvar").on('click', function () {
+            if (gerenciarCaixa.Validar())
+                gerenciarCaixa.Salvar();
+        });
+
+        $(".close").on('click', function () {
+            gerenciarCaixa.CloseModal();
+        });
+
+        var gerenciarCaixa = {
+
+            Salvar: function () {
+
+                //Ajuste para impedir multiplos cliques
+                event.preventDefault();
+                var that = $(this);
+                that.off('click');
+
+                $.ajax({
+                    url: "@Url.Action("Salvar", "Caixa")",
+                    type: "POST",
+                    data: $('form').serialize(),
+                    success: function (result) {
+
+                        var retorno = result.mensagensRetorno;
+
+                        if (retorno.Status) {
+                            swal({
+                                title: '',
+                                text: retorno.MensagemExibicao,
+                                type: 'success',
+                                confirmButtonColor: '#10386B',
+                                allowOutsideClick: false
+                            }).then(function () {
+                                bootbox.hideAll();
+                                funcoesIndexTabs.listaCaixa($(".abaCaixa"), false);
+                            });
+                        }
+                        else {
+
+                            swal({
+                                title: '',
+                                text: retorno.MensagemExibicao,
+                                type: 'warning',
+                                confirmButtonColor: '#10386B',
+                                allowOutsideClick: false
+                            });
+                            console.log(retorno.MensagemAnalise);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                    }
+                }).always(function () {
+                    that.on('click', gerenciarCaixa.salvar); //Devolve a ação do botão
+                });
+
+            },
+
+            Validar: function () {
+
+                var ehValido = true;
+
+                var data = $("#data").val().trim();
+                var validaData = $("#validaData");
+
+                var descricao = $("#descricao").val().trim();
+                var validaDescricao = $("#validaDescricao");
+
+                var debito = $("#debito").val().trim();
+                var validaDebito = $("#validaDebito");
+
+                var credito = $("#credito").val().trim();
+                var validaCredito = $("#validaCredito");
+
+                if (validacao.campoNulo(data, validaData))
+                    ehValido = false;
+
+                if (validacao.campoNulo(descricao, validaDescricao))
+                    ehValido = false;
+
+                if (debito.length == 0 && credito.length == 0) {
+
+                    swal({
+                        title: '',
+                        text: 'É obrigatório o preenchimento do campo Crédito ou Débito',
+                        type: 'warning',
+                        confirmButtonColor: '#10386B',
+                        allowOutsideClick: false
+                    });
+
+                    ehValido = false;
+                }
+
+                if (debito == 0 && credito == 0) {
+
+                    swal({
+                        title: '',
+                        text: 'É obrigatório incluir valor no campo Crédito ou Débito',
+                        type: 'warning',
+                        confirmButtonColor: '#10386B',
+                        allowOutsideClick: false
+                    });
+
+                    ehValido = false;
+                }
+
+                return ehValido;
+            },
+
+            CloseModal: function () {
+                bootbox.hideAll();
+            }
+        };
+
+    </script>
+}
