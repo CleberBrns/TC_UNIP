@@ -98,7 +98,7 @@
                 var id = $(elem).attr("id-registro");
 
                 $.ajax({
-                    url: "@Url.Action("ModalVisualizar", "Recibo")/",
+                    url: "@Url.Action("ModalVisualizarImpressao", "Recibo")/",
                     type: "GET",
                     data: { id: id },
                     success: function (html) {

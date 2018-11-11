@@ -1,0 +1,76 @@
+﻿@model TcUnip.Model.Calendario.Agenda
+
+@{
+    var modalidadeRecibo = (string)ViewBag.Modalidade;
+    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+}
+
+<script src="~/Scripts/Default/Impressao.js"></script>
+
+@if (user != null)
+{
+    <div class="form-horizontal">
+        <div class="campos divImpressao" id="divImpressao" style="padding: 2% 0 2% 5%">
+            <div style="padding-left: 10%">
+                <div class="form-group">
+                    <div col-md-10>
+                        @Html.Label("RECIBO")
+                    </div>
+                </div>
+                <div class="form-group" style="padding-bottom: 3%; padding-top: 3%;">
+                    <div col-md-10>
+                        @Html.Label("Recebemos de " + Model.Paciente.Nome)
+                        <div>
+                            @Html.Label("Portador do CPF ; ") <span style="font-weight: bold">@Model.Paciente.Cpf</span>
+                        </div>
+                        <div>
+                            @Html.Label("A quantida de R$ " + Model.Valor)
+                        </div>
+                        <div>
+                            @Html.Label("Referente a uma sessão de " + modalidadeRecibo)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div col-md-10>
+                        @Html.Label("Emitente: Osteofit Clinica De Fisioterapia E Academia Ltda")
+                        <div>
+                            @Html.Label("Data: " + DateTime.Now.ToShortDateString())
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" style="padding-top: 2%;">
+            <div class="text-right col-md-12">
+                <button type="button" class="btn btn-primary" id="btnRetornar" name="btnRetornar"
+                        onclick="impressaoRecibo.closeModal()">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Retornar
+                </button>
+                <button type="button" class="btn btn-primary" id="btnImprimir">
+                    Imprimir <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $("#btnImprimir").on('click', function () {
+            configuraImpressao.Imprimir("divImpressao");
+        });
+
+        $(".close").on('click', function () {
+            impressaoRecibo.closeModal();
+        });
+
+        var impressaoRecibo = {
+
+            closeModal: function () {
+                bootbox.hideAll();
+            }
+        };
+
+    </script>
+
+}

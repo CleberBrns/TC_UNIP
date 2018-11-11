@@ -492,6 +492,7 @@
     <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="Scripts\controllers\tabs.js" />
     <Content Include="Scripts\Default\ConfigsDataTable.js" />
+    <Content Include="Scripts\Default\Impressao.js" />
     <Content Include="Scripts\Default\Initial.js" />
     <Content Include="Scripts\Default\Validacao.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -549,7 +550,7 @@
     <Content Include="Areas\Recibo\Views\Recibo\_Index.cshtml" />
     <Content Include="Areas\Recibo\Views\Recibo\_GridRecibos.cshtml" />
     <Content Include="Areas\Recibo\Views\Recibo\_Visualizar.cshtml" />
-    <Content Include="Areas\Recibo\Views\Recibo\_Imprimir.cshtml" />
+    <Content Include="Areas\Recibo\Views\Recibo\_Impressao.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
