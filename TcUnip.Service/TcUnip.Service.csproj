@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agenda\AgendaService.cs" />
     <Compile Include="Cadastro\CadastroService.cs" />
     <Compile Include="Calendario\AgendaService.cs" />
     <Compile Include="Contabil\CaixaService.cs" />

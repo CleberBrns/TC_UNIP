@@ -14,8 +14,8 @@ namespace TcUnip.Service.Contract.Agenda
         Result<SessaoModel> Get(int id);
         Result<List<SessaoModel>> ListAgendaPeriodo(PesquisaModel pesquisaModel);
         Result<List<SessaoModel>> ListAgendaDoDia();
-        Result<PacienteModel> ConsultasPeriodoPaciente(PesquisaModel pesquisaModel);
-        Result<FuncionarioModel> ConsultasPeriodoFuncionario(PesquisaModel pesquisaModel);
+        Result<List<SessaoModel>> ConsultasPeriodoPaciente(PesquisaModel pesquisaModel);
+        Result<List<SessaoModel>> ConsultasPeriodoFuncionario(PesquisaModel pesquisaModel);
         Result<bool> Salva(SessaoModel model);
         Result<bool> Exclui(int id);
     }
