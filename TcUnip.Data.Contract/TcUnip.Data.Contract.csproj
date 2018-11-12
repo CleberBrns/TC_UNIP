@@ -45,6 +45,7 @@
     <Compile Include="Agenda\ISessaoRepository.cs" />
     <Compile Include="Agenda\IStatusSessaoRepository.cs" />
     <Compile Include="Cadastro\IFuncionarioRepository.cs" />
+    <Compile Include="Cadastro\IModalidadeFuncionarioRepository.cs" />
     <Compile Include="Cadastro\IPacienteRepository.cs" />
     <Compile Include="Cadastro\IPessoaRepository.cs" />
     <Compile Include="Cadastro\ITipoPerfilRepository.cs" />

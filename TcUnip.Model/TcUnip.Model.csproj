@@ -47,6 +47,7 @@
     <Compile Include="Agenda\SessaoModel.cs" />
     <Compile Include="Agenda\StatusSessaoModel.cs" />
     <Compile Include="Cadastro\FuncionarioModel.cs" />
+    <Compile Include="Cadastro\ModalidadeFuncionarioModel.cs" />
     <Compile Include="Cadastro\PacienteModel.cs" />
     <Compile Include="Cadastro\PessoaModel.cs" />
     <Compile Include="Cadastro\TipoPerfilModel.cs" />
