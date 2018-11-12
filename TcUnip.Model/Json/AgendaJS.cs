@@ -16,22 +16,22 @@ namespace TcUnip.Model.Json
         [JsonProperty(PropertyName = "funcionario")]
         public PessoaJS Funcionario { get; set; }
 
-        public AgendaJS ConvertToJS(Agenda agenda)
-        {
-            return new AgendaJS
-            {
-                Paciente = new PessoaJS
-                {
-                    Cpf = agenda.Paciente.Cpf
-                },
-                Funcionario = new PessoaJS
-                {
-                    Cpf = agenda.Funcionario.Cpf
-                },
-                DateTime = agenda.DateTimeService,
-                Valor = agenda.Valor,
-                Modalidade = agenda.Modalidade
-            };
-        }
+        //public AgendaJS ConvertToJS(Agenda agenda)
+        //{
+        //    return new AgendaJS
+        //    {
+        //        Paciente = new PessoaJS
+        //        {
+        //            Cpf = agenda.Paciente.Cpf
+        //        },
+        //        Funcionario = new PessoaJS
+        //        {
+        //            Cpf = agenda.Funcionario.Cpf
+        //        },
+        //        DateTime = agenda.DateTimeService,
+        //        Valor = agenda.Valor,
+        //        Modalidade = agenda.Modalidade
+        //    };
+        //}
     }
 }
