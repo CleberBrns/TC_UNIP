@@ -42,14 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agenda\IAgendaService.cs" />
-    <Compile Include="Cadastro\IFuncionarioService.cs" />
-    <Compile Include="Cadastro\IPacienteService.cs" />
-    <Compile Include="Cadastro\IUsuarioService.cs" />
+    <Compile Include="Cadastro\ICadastroService.cs" />
     <Compile Include="Calendario\IAgendaService.cs" />
-    <Compile Include="FluxoCaixa\ICaixaService.cs" />
     <Compile Include="Contabil\ICaixaService.cs" />
     <Compile Include="Contabil\IReciboService.cs" />
-    <Compile Include="FluxoCaixa\IReciboService.cs" />
+    <Compile Include="FluxoCaixa\IFluxoCaixa.cs" />
     <Compile Include="Pessoa\IFuncionarioService.cs" />
     <Compile Include="Pessoa\IPacienteService.cs" />
     <Compile Include="Pessoa\IUsuarioService.cs" />
