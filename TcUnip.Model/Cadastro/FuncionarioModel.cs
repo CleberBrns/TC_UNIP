@@ -1,4 +1,5 @@
-﻿using TcUnip.Model.Agenda;
+﻿using System.Collections.Generic;
+using TcUnip.Model.Agenda;
 
 namespace TcUnip.Model.Cadastro
 {
@@ -11,7 +12,6 @@ namespace TcUnip.Model.Cadastro
         public int IdPessoa { get; set; }
         public PessoaModel Pessoa { get; set; }
 
-        public int IdModalidade { get; set; }
-        public ModalidadeModel Modalidade { get; set; }
+        public List<ModalidadeFuncionarioModel> ListModalidades { get; set; }
     }
 }

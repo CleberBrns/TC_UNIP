@@ -15,13 +15,15 @@ namespace TcUnip.Service.Cadastro
         readonly IUsuarioRepository _usuarioRepository;
         readonly IPacienteRepository _pacienteRepository;
         readonly IFuncionarioRepository _funcionarioRepository;
+        readonly IModalidadeFuncionarioRepository _modalidadeFuncionarioRepository;
 
         public CadastroService(IUsuarioRepository usuarioRepository, IPacienteRepository pacienteRepository, 
-                               IFuncionarioRepository funcionarioRepository)
+                               IFuncionarioRepository funcionarioRepository, IModalidadeFuncionarioRepository modalidadeFuncionarioRepository)
         {
             this._usuarioRepository = usuarioRepository;
             this._pacienteRepository = pacienteRepository;
-            this._funcionarioRepository = funcionarioRepository;            
+            this._funcionarioRepository = funcionarioRepository;
+            this._modalidadeFuncionarioRepository = modalidadeFuncionarioRepository;
         }
 
         #endregion
@@ -154,6 +156,28 @@ namespace TcUnip.Service.Cadastro
             }
 
             return new Tuple<Result<bool>, bool>(result, emailExistente);
+        }
+
+        public bool AtualizaModalidades(List<ModalidadeFuncionarioModel> listModalidades)
+        {
+            bool atualizou = false;
+            var idFuncionario = listModalidades.Select(x => x.IdFuncionario).FirstOrDefault();
+            var modalidades = listModalidades.Select(x => x.IdModalidade).ToArray();
+
+            var listBD = _modalidadeFuncionarioRepository.Lista(x => x.IdFuncionario == idFuncionario &&
+                                                                     modalidades.Contains(x.IdModalidade))
+                                                         .ToList();
+
+            if (listBD.Count > 0)
+            {
+                _modalidadeFuncionarioRepository.SalvarLista(listModalidades);
+            }
+            else
+            {
+                
+            }
+
+            return atualizou;
         }
 
         #endregion

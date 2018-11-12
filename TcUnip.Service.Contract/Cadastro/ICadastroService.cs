@@ -35,7 +35,7 @@ namespace TcUnip.Service.Contract.Cadastro
         Result<List<FuncionarioModel>> ListFuncionario();
         Result<List<FuncionarioModel>> ListProfissionais();
         Result<bool> SalvaFuncionario(FuncionarioModel model);
-        Result<bool> ExcluiFuncionario(int id);
+        Result<bool> ExcluiFuncionario(int id);       
 
         #endregion
     }
