@@ -7,7 +7,7 @@ namespace TcUnip.Data.Entity.Mapping.Modelagem.Agenda
     {
         public ModalidadeMap()
         {
-            ToTable("Modalidades", "tcUnip");
+            ToTable("Modalidade", "tcUnip");
 
             HasKey(x => x.Id);
 

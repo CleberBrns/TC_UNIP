@@ -52,10 +52,12 @@
     <Compile Include="Mapping\Modelagem\Agenda\SessaoMap.cs" />
     <Compile Include="Mapping\Modelagem\Agenda\StatusSessaoMap.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\FuncionarioMap.cs" />
+    <Compile Include="Mapping\Modelagem\Cadastro\ModalidadeFuncionarioMap.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\PacienteMap.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\PessoaMap.cs" />
     <Compile Include="Mapping\IMapping.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\TipoPerfilMap.cs" />
+    <Compile Include="Modelagem\Cadastro\ModalidadeFuncionario.cs" />
     <Compile Include="Modelagem\Cadastro\TipoPerfil.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\UsuarioMap.cs" />
     <Compile Include="Mapping\Modelagem\FluxoCaixa\CaixaMap.cs" />

@@ -19,13 +19,6 @@ namespace TcUnip.Data.Entity.Mapping.Modelagem.Cadastro
 
             Property(x => x.IdPessoa)
                .IsRequired();
-
-            Property(x => x.IdModalidade)
-                .IsRequired();
-
-            HasRequired(x => x.Modalidade)
-               .WithMany(x => x.Funcionarios)
-               .HasForeignKey(x => x.IdModalidade);
         }
     }
 }
