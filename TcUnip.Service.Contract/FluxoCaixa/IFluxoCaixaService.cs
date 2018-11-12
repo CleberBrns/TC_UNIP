@@ -9,20 +9,21 @@ using TcUnip.Model.FluxoCaixa;
 
 namespace TcUnip.Service.Contract.FluxoCaixa
 {
-    public interface IFluxoCaixa
+    public interface IFluxoCaixaService
     {
         #region Caixa
 
         Result<CaixaModel> GetCaixa(int id);
+        Result<List<CaixaModel>> ListCaixaDoDia();
         Result<List<CaixaModel>> ListCaixaPeriodo(PesquisaModel pesquisaModel);
-        Result<CaixaModel> ListCaixaPeriodoPaciente(PesquisaModel pesquisaModel);
-        Result<CaixaModel> ListCaixaPeriodoFuncionario(PesquisaModel pesquisaModel);
+        Result<bool> SalvaCaixa(CaixaModel model);
+        Result<bool> ExcluiCaixa(int id);
 
         #endregion
 
         #region Recibo
 
-        Result<ReciboModel> GetRecibo(string id);
+        Result<ReciboModel> GetRecibo(int id);
         Result<List<ReciboModel>> ListRecibosPeriodo(PesquisaModel pesquisaModel);
         Result<List<ReciboModel>> ListRecibosDoDia();
         Result<List<ReciboModel>> ListRecibosPeriodoPaciente(PesquisaModel pesquisaModel);

@@ -46,7 +46,7 @@
     <Compile Include="Calendario\IAgendaService.cs" />
     <Compile Include="Contabil\ICaixaService.cs" />
     <Compile Include="Contabil\IReciboService.cs" />
-    <Compile Include="FluxoCaixa\IFluxoCaixa.cs" />
+    <Compile Include="FluxoCaixa\IFluxoCaixaService.cs" />
     <Compile Include="Pessoa\IFuncionarioService.cs" />
     <Compile Include="Pessoa\IPacienteService.cs" />
     <Compile Include="Pessoa\IUsuarioService.cs" />

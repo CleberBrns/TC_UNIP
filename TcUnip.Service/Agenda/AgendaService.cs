@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TcUnip.Data.Contract.Agenda;
 using TcUnip.Model.Agenda;
-using TcUnip.Model.Cadastro;
 using TcUnip.Model.Common;
 using TcUnip.Service.Contract.Agenda;
 
