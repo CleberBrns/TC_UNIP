@@ -49,6 +49,7 @@
     <Compile Include="FluxoCaixa\ICaixaService.cs" />
     <Compile Include="Contabil\ICaixaService.cs" />
     <Compile Include="Contabil\IReciboService.cs" />
+    <Compile Include="FluxoCaixa\IReciboService.cs" />
     <Compile Include="Pessoa\IFuncionarioService.cs" />
     <Compile Include="Pessoa\IPacienteService.cs" />
     <Compile Include="Pessoa\IUsuarioService.cs" />
