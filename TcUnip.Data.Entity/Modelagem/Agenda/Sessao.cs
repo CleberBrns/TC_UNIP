@@ -23,9 +23,5 @@ namespace TcUnip.Data.Entity.Modelagem.Agenda
         [ForeignKey("Modalidade")]
         public int IdModalidade { get; set; }
         public virtual Modalidade Modalidade { get; set; }
-
-        [ForeignKey("StatusSessao")]
-        public int IdStatus { get; set; }
-        public virtual StatusSessao StatusSessao { get; set; }
     }
 }

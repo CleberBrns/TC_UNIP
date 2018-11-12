@@ -27,10 +27,7 @@ namespace TcUnip.Data.Entity.Mapping.Modelagem.Agenda
                 .IsRequired();
 
             Property(x => x.IdModalidade)
-                .IsRequired();
-
-            Property(x => x.IdStatus)
-                .IsRequired();
+                .IsRequired();            
         }
     }
 }
