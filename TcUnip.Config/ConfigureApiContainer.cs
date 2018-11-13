@@ -11,6 +11,12 @@ using TcUnip.Data.Repositories.FluxoCaixa;
 using TcUnip.Model.Agenda;
 using TcUnip.Model.Cadastro;
 using TcUnip.Model.FluxoCaixa;
+using TcUnip.Service.Agenda;
+using TcUnip.Service.Cadastro;
+using TcUnip.Service.Contract.Agenda;
+using TcUnip.Service.Contract.Cadastro;
+using TcUnip.Service.Contract.FluxoCaixa;
+using TcUnip.Service.FluxoCaixa;
 using Unity;
 
 namespace TcUnip.Config
@@ -28,6 +34,7 @@ namespace TcUnip.Config
             container.RegisterType<IPessoaRepository, PessoaRepository>();
             container.RegisterType<ITipoPerfilRepository, TipoPerfilRepository>();
             container.RegisterType<IUsuarioRepository, UsuarioRepository>();
+            container.RegisterType<IModalidadeFuncionarioRepository, ModalidadeFuncionarioRepository>();
 
             //Agenda 
             container.RegisterType<IModalidadeRepository, ModalidadeRepository>();
@@ -39,6 +46,10 @@ namespace TcUnip.Config
             #endregion
 
             #region Services
+
+            container.RegisterType<IAgendaService, AgendaService>();
+            container.RegisterType<ICadastroService, CadastroService>();
+            container.RegisterType<IFluxoCaixaService, FluxoCaixaService>();
 
             #endregion
         }
@@ -59,6 +70,7 @@ namespace TcUnip.Config
                 cfg.CreateMap<PessoaModel, Pessoa>().ReverseMap();
                 cfg.CreateMap<TipoPerfilModel, TipoPerfil>().ReverseMap();
                 cfg.CreateMap<UsuarioModel, Usuario>().ReverseMap();
+                cfg.CreateMap<ModalidadeFuncionarioModel, ModalidadeFuncionario>().ReverseMap();
 
                 //Agenda
                 cfg.CreateMap<ModalidadeModel, Modalidade>().ReverseMap();

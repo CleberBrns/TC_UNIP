@@ -2,5 +2,5 @@
 
 namespace TcUnip.Service.Contract.ServiceApi
 {
-    public interface IAgendaApi : IServiceApiBase<Agenda> { }
+    public interface IAgendaApi {}//: IServiceApiBase<Agenda> { }
 }

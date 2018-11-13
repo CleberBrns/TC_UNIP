@@ -9,7 +9,7 @@ using TcUnip.ServiceApi.Calendario;
 
 namespace TcUnip.Service.Calendario
 {
-    public class AgendaService : IAgendaService
+    public class AgendaService_Old : IAgendaService_Old
     {
         readonly AgendaApi service = new AgendaApi();
         readonly ReplacesService dateTimeService = new ReplacesService();

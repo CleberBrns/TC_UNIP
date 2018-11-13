@@ -99,6 +99,14 @@
       <Project>{7B1C239C-0AD3-4A46-B7FD-E69AC34A4074}</Project>
       <Name>TcUnip.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TcUnip.Service.Contract\TcUnip.Service.Contract.csproj">
+      <Project>{5E9F759F-6C82-4A72-9365-2E2005628BC3}</Project>
+      <Name>TcUnip.Service.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TcUnip.Service\TcUnip.Service.csproj">
+      <Project>{E143CBC5-ADDF-4F5D-B3E1-004C28250CD5}</Project>
+      <Name>TcUnip.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

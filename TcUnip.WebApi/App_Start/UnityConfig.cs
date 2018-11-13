@@ -1,10 +1,5 @@
 using System;
-using TcUnip.Service.Calendario;
-using TcUnip.Service.Contabil;
-using TcUnip.Service.Contract.Calendario;
-using TcUnip.Service.Contract.Contabil;
-using TcUnip.Service.Contract.Pessoa;
-using TcUnip.Service.Pessoa;
+using TcUnip.Config;
 using Unity;
 
 namespace TcUnip.Api
@@ -48,17 +43,13 @@ namespace TcUnip.Api
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
 
+            ConfigureApiContainer.InitializeContainer(container, false);
+
             container.RegisterType<Controllers.PessoaController>();
             container.RegisterType<Controllers.AgendaController>();
             container.RegisterType<Controllers.CaixaController>();
             container.RegisterType<Controllers.ReciboController>();
 
-            container.RegisterType<IAgendaService, AgendaService>();
-            container.RegisterType<IPacienteService, PacienteService>();
-            container.RegisterType<IFuncionarioService, FuncionarioService>();
-            container.RegisterType<IUsuarioService, UsuarioService>();
-            container.RegisterType<ICaixaService, CaixaService>();
-            container.RegisterType<IReciboService, ReciboService>();
         }
     }
 }
