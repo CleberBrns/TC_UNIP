@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agenda\ModalidadeModel.cs" />
-    <Compile Include="Agenda\PesquisaModel.cs" />
+    <Compile Include="Common\PesquisaModel.cs" />
     <Compile Include="Agenda\SessaoModel.cs" />
     <Compile Include="Agenda\StatusSessaoModel.cs" />
     <Compile Include="Cadastro\FuncionarioModel.cs" />

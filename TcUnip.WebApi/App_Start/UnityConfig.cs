@@ -46,8 +46,8 @@ namespace TcUnip.Api
             ConfigureApiContainer.InitializeContainer(container, false);
 
             container.RegisterType <Controllers.AgendaController>();
-            //container.RegisterType<Controllers.AgendaController>();
-            //container.RegisterType<Controllers.CaixaController>();    
+            container.RegisterType<Controllers.CadastroController>();
+            container.RegisterType<Controllers.FluxoCaixaController>();
 
         }
     }

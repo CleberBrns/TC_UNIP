@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using TcUnip.Api.Results;
 using TcUnip.Model.Agenda;
+using TcUnip.Model.Common;
 using TcUnip.Service.Contract.Agenda;
 
 namespace TcUnip.Api.Controllers

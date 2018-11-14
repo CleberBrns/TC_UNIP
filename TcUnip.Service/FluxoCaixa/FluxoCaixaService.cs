@@ -164,7 +164,7 @@ namespace TcUnip.Service.FluxoCaixa
             var listSessoes = _sessaoRepository.Lista(x => !x.Excluido &&
                                                          x.Data.Date >= pesquisaModel.DataIncio.Date &&
                                                          x.Data.Date <= pesquisaModel.DataFim.Date &&
-                                                         x.Funcionario.Pessoa.Cpf == pesquisaModel.CpfCadastro,
+                                                         x.Funcionario.Pessoa.Cpf == pesquisaModel.CpfPesquisa,
                                                          x => x.Funcionario.Pessoa)
                                                .ToList();
 
@@ -179,7 +179,7 @@ namespace TcUnip.Service.FluxoCaixa
             var listSessoes = _sessaoRepository.Lista(x => !x.Excluido &&
                                                          x.Data.Date >= pesquisaModel.DataIncio.Date &&
                                                          x.Data.Date <= pesquisaModel.DataFim.Date &&
-                                                         x.Paciente.Pessoa.Cpf == pesquisaModel.CpfCadastro,
+                                                         x.Paciente.Pessoa.Cpf == pesquisaModel.CpfPesquisa,
                                                          x => x.Paciente.Pessoa)
                                                .ToList();
 
@@ -200,9 +200,11 @@ namespace TcUnip.Service.FluxoCaixa
             {
                 IdSessao = modelRetorno.Id,
                 Paciente = modelRetorno.Paciente.Pessoa.Nome,
+                CpfPaciente = modelRetorno.Paciente.Pessoa.Cpf,
                 Profissional = modelRetorno.Funcionario.Pessoa.Nome,
                 Data = modelRetorno.Data,
-                Valor = modelRetorno.Valor.ToString()
+                Valor = modelRetorno.Valor.ToString(),
+                ModalidadeSessao = modelRetorno.Modalidade.Nome
             };
 
             return recibo;
@@ -221,9 +223,11 @@ namespace TcUnip.Service.FluxoCaixa
                                        {
                                            IdSessao = r.Id,
                                            Paciente = r.Paciente.Pessoa.Nome,
+                                           CpfPaciente = r.Paciente.Pessoa.Cpf,
                                            Profissional = r.Funcionario.Pessoa.Nome,
                                            Data = r.Data,
-                                           Valor = r.Valor.ToString()
+                                           Valor = r.Valor.ToString(),
+                                           ModalidadeSessao = r.Modalidade.Nome
                                        })
                                        .ToList();
 

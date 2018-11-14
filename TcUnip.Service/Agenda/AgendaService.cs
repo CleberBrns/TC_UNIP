@@ -62,7 +62,7 @@ namespace TcUnip.Service.Agenda
             result.Value = _sessaoRepository.Lista(x => !x.Excluido &&
                                                          x.Data.Date >= pesquisaModel.DataIncio.Date &&
                                                          x.Data.Date <= pesquisaModel.DataFim.Date &&
-                                                         x.Funcionario.Pessoa.Cpf == pesquisaModel.CpfCadastro, 
+                                                         x.Funcionario.Pessoa.Cpf == pesquisaModel.CpfPesquisa, 
                                                          x => x.Funcionario.Pessoa)
                                             .ToList();
 
@@ -75,7 +75,7 @@ namespace TcUnip.Service.Agenda
             result.Value = _sessaoRepository.Lista(x => !x.Excluido &&
                                                          x.Data.Date >= pesquisaModel.DataIncio.Date &&
                                                          x.Data.Date <= pesquisaModel.DataFim.Date &&
-                                                         x.Paciente.Pessoa.Cpf == pesquisaModel.CpfCadastro,
+                                                         x.Paciente.Pessoa.Cpf == pesquisaModel.CpfPesquisa,
                                                          x => x.Paciente.Pessoa)
                                             .ToList();
 
