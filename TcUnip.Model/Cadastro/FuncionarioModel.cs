@@ -12,6 +12,6 @@ namespace TcUnip.Model.Cadastro
         public int IdPessoa { get; set; }
         public PessoaModel Pessoa { get; set; }
 
-        public List<ModalidadeFuncionarioModel> ListModalidades { get; set; }
+        public List<ModalidadeFuncionarioModel> Modalidades { get; set; }
     }
 }
