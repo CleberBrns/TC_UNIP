@@ -21,7 +21,6 @@ namespace TcUnip.Service.Contract.Cadastro
         #endregion
 
         #region Paciente
-
         Result<PacienteModel> GetPaciente(int id);
         Result<List<PacienteModel>> ListPaciente();
         Result<bool> SalvaPaciente(PacienteModel model);
