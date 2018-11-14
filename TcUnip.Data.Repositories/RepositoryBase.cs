@@ -109,12 +109,12 @@ namespace TcUnip.Data.Repositories
                     Attach(context, modelo, EntityState.Deleted);
                     return context.SaveChanges() != 0;
                 }
-                catch (DbEntityValidationException dbEx)
+                catch (DbEntityValidationException)
                 {
 
                     return false;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
 
                     return false;
