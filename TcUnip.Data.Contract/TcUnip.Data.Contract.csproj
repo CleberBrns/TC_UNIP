@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agenda\IModalidadeRepository.cs" />
+    <Compile Include="Common\IModalidadeRepository.cs" />
     <Compile Include="Agenda\ISessaoRepository.cs" />
     <Compile Include="Agenda\IStatusSessaoRepository.cs" />
     <Compile Include="Cadastro\IFuncionarioRepository.cs" />

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TcUnip.Data.Entity.Modelagem.Agenda;
+using TcUnip.Data.Entity.Modelagem.Common;
 
 namespace TcUnip.Data.Entity.SeedItens
 {

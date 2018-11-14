@@ -152,7 +152,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agenda\ModalidadeRepository.cs" />
+    <Compile Include="Common\ModalidadeRepository.cs" />
     <Compile Include="Agenda\SessaoRepository.cs" />
     <Compile Include="Agenda\StatusSessaoRepository.cs" />
     <Compile Include="Cadastro\FuncionarioRepository.cs" />

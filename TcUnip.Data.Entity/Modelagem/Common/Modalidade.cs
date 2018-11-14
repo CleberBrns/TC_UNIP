@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using TcUnip.Data.Entity.Modelagem.Cadastro;
-
-namespace TcUnip.Data.Entity.Modelagem.Agenda
+﻿namespace TcUnip.Data.Entity.Modelagem.Common
 {
     public class Modalidade
     {

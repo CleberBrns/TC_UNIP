@@ -1,5 +1,6 @@
 ﻿using System;
 using TcUnip.Model.Cadastro;
+using TcUnip.Model.Common;
 
 namespace TcUnip.Model.Agenda
 {

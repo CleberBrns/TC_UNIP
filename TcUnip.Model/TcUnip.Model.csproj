@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agenda\ModalidadeModel.cs" />
+    <Compile Include="Common\ModalidadeModel.cs" />
     <Compile Include="Common\PesquisaModel.cs" />
     <Compile Include="Agenda\SessaoModel.cs" />
     <Compile Include="Agenda\StatusSessaoModel.cs" />

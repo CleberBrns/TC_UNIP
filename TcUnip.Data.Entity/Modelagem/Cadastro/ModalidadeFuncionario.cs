@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using TcUnip.Data.Entity.Modelagem.Agenda;
+using TcUnip.Data.Entity.Modelagem.Common;
 
 namespace TcUnip.Data.Entity.Modelagem.Cadastro
 {

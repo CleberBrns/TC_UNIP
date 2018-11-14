@@ -1,4 +1,4 @@
-﻿using TcUnip.Model.Agenda;
+﻿using TcUnip.Model.Common;
 
 namespace TcUnip.Model.Cadastro
 {

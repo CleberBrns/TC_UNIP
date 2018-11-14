@@ -8,6 +8,7 @@ using System.Reflection;
 using TcUnip.Data.Entity.Mapping;
 using TcUnip.Data.Entity.Modelagem.Agenda;
 using TcUnip.Data.Entity.Modelagem.Cadastro;
+using TcUnip.Data.Entity.Modelagem.Common;
 using TcUnip.Data.Entity.Modelagem.FluxoCaixa;
 
 namespace TcUnip.Data.Entity
