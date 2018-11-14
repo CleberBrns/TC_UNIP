@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using TcUnip.Data.Entity.Modelagem.Agenda;
 
 namespace TcUnip.Data.Entity.Modelagem.Cadastro
@@ -12,5 +13,7 @@ namespace TcUnip.Data.Entity.Modelagem.Cadastro
         [ForeignKey("Pessoa")]
         public int IdPessoa { get; set; }
         public virtual Pessoa Pessoa { get; set; }
+
+        public virtual List<ModalidadeFuncionario> Modalidades { get; set; }
     }
 }
