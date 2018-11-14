@@ -10,11 +10,11 @@ namespace TcUnip.Web.Controllers
 {
     public class LoginController : BaseController
     {
-        IUsuarioProxy _usuarioProxy;        
+        IUsuarioProxy_old _usuarioProxy;        
         readonly UsuarioSession session = new UsuarioSession();
         readonly string sessionName = Constants.ConstSessions.usuario;
 
-        public LoginController(IUsuarioProxy usuarioProxy)
+        public LoginController(IUsuarioProxy_old usuarioProxy)
         {
             this._usuarioProxy = usuarioProxy;
         }

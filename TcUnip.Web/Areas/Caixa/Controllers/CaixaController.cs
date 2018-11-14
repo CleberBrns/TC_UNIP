@@ -11,10 +11,10 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 {
     public class CaixaController : BaseController
     {
-        readonly ICaixaProxy _caixaProxy;
+        readonly ICaixaProxy_old _caixaProxy;
         readonly Mensagens mensagens = new Mensagens();
 
-        public CaixaController(ICaixaProxy caixaProxy)
+        public CaixaController(ICaixaProxy_old caixaProxy)
         {
             this._caixaProxy = caixaProxy;
         }

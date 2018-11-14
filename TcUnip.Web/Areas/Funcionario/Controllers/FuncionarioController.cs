@@ -11,10 +11,10 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 {    
     public class FuncionarioController : BaseController
     {
-        readonly IFuncionarioProxy _funcionarioProxy;
+        readonly IFuncionarioProxy_old _funcionarioProxy;
         readonly Mensagens mensagens = new Mensagens();        
 
-        public FuncionarioController(IFuncionarioProxy funcionarioProxy)
+        public FuncionarioController(IFuncionarioProxy_old funcionarioProxy)
         {
             this._funcionarioProxy = funcionarioProxy;
         }

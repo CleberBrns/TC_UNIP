@@ -9,13 +9,13 @@ using TcUnip.Web.WebApiClient;
 
 namespace TcUnip.Web.Models.Proxy
 {
-    public class CaixaProxy : ICaixaProxy
+    public class CaixaProxy_old : ICaixaProxy_old
     {
         IWebApiClient _apiClient;
         readonly string apiRoute = "api/Caixa/";
         readonly ReplacesService replacesService = new ReplacesService();
 
-        public CaixaProxy(IWebApiClient apiClient)
+        public CaixaProxy_old(IWebApiClient apiClient)
         {
             this._apiClient = apiClient;
             this._apiClient.baseUri = ConfigurationManager.AppSettings["tcUnipApi"];

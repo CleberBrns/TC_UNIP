@@ -2,7 +2,7 @@
 
 namespace TcUnip.Web.Models.Proxy.Contract
 {
-    public interface IReciboProxy : IReciboService
+    public interface IReciboProxy_old : IReciboService
     {
     }
 }

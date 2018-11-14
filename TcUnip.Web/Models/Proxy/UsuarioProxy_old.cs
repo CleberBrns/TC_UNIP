@@ -8,13 +8,13 @@ using TcUnip.Web.WebApiClient;
 
 namespace TcUnip.Web.Models.Proxy
 {
-    public class UsuarioProxy : IUsuarioProxy
+    public class UsuarioProxy_old : IUsuarioProxy_old
     {
         IWebApiClient _apiClient;
         readonly string apiRoute = "api/Pessoa/";
         ReplacesService replacesService = new ReplacesService();
 
-        public UsuarioProxy(IWebApiClient apiClient)
+        public UsuarioProxy_old(IWebApiClient apiClient)
         {
             this._apiClient = apiClient;
             this._apiClient.baseUri = ConfigurationManager.AppSettings["tcUnipApi"];

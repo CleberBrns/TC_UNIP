@@ -13,15 +13,15 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
 {
     public class AgendaController : BaseController
     {
-        readonly IAgendaProxy _agendaProxy;
-        readonly IPacienteProxy _pacienteProxy;
-        readonly IFuncionarioProxy _funcionarioProxy;
+        readonly IAgendaProxy_old _agendaProxy;
+        readonly IPacienteProxy_old _pacienteProxy;
+        readonly IFuncionarioProxy_old _funcionarioProxy;
 
         readonly Constants.Constants constants = new Constants.Constants();
         readonly Mensagens mensagens = new Mensagens();
         readonly ReplacesService replacesService = new ReplacesService();
 
-        public AgendaController(IAgendaProxy agendaProxy, IPacienteProxy pacienteProxy, IFuncionarioProxy funcionarioProxy)
+        public AgendaController(IAgendaProxy_old agendaProxy, IPacienteProxy_old pacienteProxy, IFuncionarioProxy_old funcionarioProxy)
         {
             this._agendaProxy = agendaProxy;
             this._pacienteProxy = pacienteProxy;

@@ -9,13 +9,13 @@ using TcUnip.Web.WebApiClient;
 
 namespace TcUnip.Web.Models.Proxy
 {
-    public class AgendaProxy : IAgendaProxy
+    public class AgendaProxy_old : IAgendaProxy_old
     {
         IWebApiClient _apiClient;
         readonly string apiRoute = "api/Calendario/";
         readonly ReplacesService replacesService = new ReplacesService();
 
-        public AgendaProxy(IWebApiClient apiClient)
+        public AgendaProxy_old(IWebApiClient apiClient)
         {
             this._apiClient = apiClient;
             this._apiClient.baseUri = ConfigurationManager.AppSettings["tcUnipApi"];

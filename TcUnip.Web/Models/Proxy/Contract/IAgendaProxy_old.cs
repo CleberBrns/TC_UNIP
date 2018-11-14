@@ -2,7 +2,7 @@
 
 namespace TcUnip.Web.Models.Proxy.Contract
 {
-    public interface IAgendaProxy : IAgendaService
+    public interface IAgendaProxy_old : IAgendaService
     {
     }
 }

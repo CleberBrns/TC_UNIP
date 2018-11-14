@@ -2,7 +2,7 @@
 
 namespace TcUnip.Web.Models.Proxy.Contract
 {
-    public interface ICaixaProxy : ICaixaService
+    public interface ICaixaProxy_old : ICaixaService
     {
     }
 }

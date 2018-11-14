@@ -11,12 +11,12 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
 {
     public class ReciboController : BaseController
     {
-        readonly IAgendaProxy _agendaProxy;
-        readonly IReciboProxy _reciboProxy;
+        readonly IAgendaProxy_old _agendaProxy;
+        readonly IReciboProxy_old _reciboProxy;
         readonly Mensagens mensagens = new Mensagens();
         readonly ReplacesService replacesService = new ReplacesService();
 
-        public ReciboController(IReciboProxy reciboProxy, IAgendaProxy agendaProxy)
+        public ReciboController(IReciboProxy_old reciboProxy, IAgendaProxy_old agendaProxy)
         {
             this._reciboProxy = reciboProxy;
             this._agendaProxy = agendaProxy;

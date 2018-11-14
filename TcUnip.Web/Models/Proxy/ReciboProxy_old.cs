@@ -8,13 +8,13 @@ using TcUnip.Web.WebApiClient;
 
 namespace TcUnip.Web.Models.Proxy
 {
-    public class ReciboProxy : IReciboProxy
+    public class ReciboProxy_old : IReciboProxy_old
     {
         IWebApiClient _apiClient;
         readonly string apiRoute = "api/Recibo/";
         readonly ReplacesService replacesService = new ReplacesService();
 
-        public ReciboProxy(IWebApiClient apiClient)
+        public ReciboProxy_old(IWebApiClient apiClient)
         {
             this._apiClient = apiClient;
             this._apiClient.baseUri = ConfigurationManager.AppSettings["tcUnipApi"];

@@ -11,13 +11,13 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 {
     public class UsuarioController : BaseController
     {
-        readonly IUsuarioProxy _usuariProxy;
-        readonly IFuncionarioProxy _funcionarioProxy;
+        readonly IUsuarioProxy_old _usuariProxy;
+        readonly IFuncionarioProxy_old _funcionarioProxy;
 
         readonly Mensagens mensagens = new Mensagens();
   
 
-        public UsuarioController(IUsuarioProxy usuarioProxy, IFuncionarioProxy funcionarioProxy)
+        public UsuarioController(IUsuarioProxy_old usuarioProxy, IFuncionarioProxy_old funcionarioProxy)
         {
             this._usuariProxy = usuarioProxy;
             this._funcionarioProxy = funcionarioProxy;

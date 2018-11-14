@@ -11,10 +11,10 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
 {
     public class PacienteController : BaseController
     {
-        readonly IPacienteProxy _pacienteProxy;
+        readonly IPacienteProxy_old _pacienteProxy;
         readonly Mensagens mensagens = new Mensagens();        
 
-        public PacienteController(IPacienteProxy pacienteProxy)
+        public PacienteController(IPacienteProxy_old pacienteProxy)
         {
             this._pacienteProxy = pacienteProxy;
         }
