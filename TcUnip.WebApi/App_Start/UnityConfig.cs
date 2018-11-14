@@ -45,10 +45,9 @@ namespace TcUnip.Api
 
             ConfigureApiContainer.InitializeContainer(container, false);
 
-            //container.RegisterType<Controllers.PessoaController>();
+            container.RegisterType <Controllers.AgendaController>();
             //container.RegisterType<Controllers.AgendaController>();
-            //container.RegisterType<Controllers.CaixaController>();
-            //container.RegisterType<Controllers.ReciboController>();
+            //container.RegisterType<Controllers.CaixaController>();    
 
         }
     }

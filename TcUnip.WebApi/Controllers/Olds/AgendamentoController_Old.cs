@@ -5,7 +5,7 @@ using TcUnip.Api.Results;
 
 namespace TcUnip.Api.Controllers
 {
-    public class AgendaController_Old : ApiController
+    public class AgendamentoController_Old : ApiController
     {
     //    readonly IAgendaService_Old _agendaService;
     //    public AgendaController_Old(IAgendaService_Old agendaService)

@@ -56,7 +56,7 @@ namespace TcUnip.Service.Agenda
             return result;
         }
 
-        public Result<List<SessaoModel>> ConsultasPeriodoFuncionario(PesquisaModel pesquisaModel)
+        public Result<List<SessaoModel>> ListAgendaPeriodoFuncionario(PesquisaModel pesquisaModel)
         {
             var result = new Result<List<SessaoModel>>();
             result.Value = _sessaoRepository.Lista(x => !x.Excluido &&
@@ -69,7 +69,7 @@ namespace TcUnip.Service.Agenda
             return result;
         }
 
-        public Result<List<SessaoModel>> ConsultasPeriodoPaciente(PesquisaModel pesquisaModel)
+        public Result<List<SessaoModel>> ListAgendaPeriodoPaciente(PesquisaModel pesquisaModel)
         {
             var result = new Result<List<SessaoModel>>();
             result.Value = _sessaoRepository.Lista(x => !x.Excluido &&
