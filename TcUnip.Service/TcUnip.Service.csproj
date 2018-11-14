@@ -65,10 +65,6 @@
       <Project>{5E9F759F-6C82-4A72-9365-2E2005628BC3}</Project>
       <Name>TcUnip.Service.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TcUnip.ServiceApi\TcUnip.ServiceApi.csproj">
-      <Project>{6A5B306A-E212-46D5-A438-9725E8F72C6A}</Project>
-      <Name>TcUnip.ServiceApi</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

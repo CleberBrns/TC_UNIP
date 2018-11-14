@@ -319,7 +319,7 @@ namespace TcUnip.Service.Cadastro
         public Result<List<FuncionarioModel>> ListProfissionais()
         {
             var result = new Result<List<FuncionarioModel>>();
-            result.Value = _funcionarioRepository.Lista(x => !x.Excluido && x.Modalidade != null, x => x.Modalidade).ToList();
+            result.Value = _funcionarioRepository.Lista(x => !x.Excluido).ToList();
 
             return result;
         }
