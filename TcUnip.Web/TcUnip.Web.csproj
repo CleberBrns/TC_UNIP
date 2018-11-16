@@ -250,6 +250,7 @@
     <Compile Include="Models\Proxy\CadastroProxy.cs" />
     <Compile Include="Models\Proxy\Contract\IAgendaProxy.cs" />
     <Compile Include="Models\Proxy\Contract\IFluxoCaixaProxy.cs" />
+    <Compile Include="Models\Proxy\FluxoCaixaProxy.cs" />
     <Compile Include="Models\Proxy\old\AgendaProxy_old.cs" />
     <Compile Include="Models\Proxy\old\CaixaProxy_old.cs" />
     <Compile Include="Models\Proxy\Contract\old\IAgendaProxy_old.cs" />
