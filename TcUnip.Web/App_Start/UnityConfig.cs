@@ -46,12 +46,9 @@ namespace TcUnip.Web
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IWebApiClient, WebApiClient.WebApiClient>(new PerRequestLifetimeManager());
-            container.RegisterType<IAgendaProxy_old, AgendaProxy_old>(new PerRequestLifetimeManager());
-            container.RegisterType<IFuncionarioProxy_old, FuncionarioProxy_old>(new PerRequestLifetimeManager());
-            container.RegisterType<IPacienteProxy_old, PacienteProxy_old>(new PerRequestLifetimeManager());
-            container.RegisterType<IUsuarioProxy_old, UsuarioProxy_old>(new PerRequestLifetimeManager());
-            container.RegisterType<ICaixaProxy_old, CaixaProxy_old>(new PerRequestLifetimeManager());
-            container.RegisterType<IReciboProxy_old, ReciboProxy_old>(new PerRequestLifetimeManager());
+            container.RegisterType<ICadastroProxy, CadastroProxy>(new PerRequestLifetimeManager());
+            container.RegisterType<IAgendaProxy, AgendaProxy>(new PerRequestLifetimeManager());
+            container.RegisterType<IFluxoCaixaProxy, FluxoCaixaProxy>(new PerRequestLifetimeManager());
         }
     }
 }
