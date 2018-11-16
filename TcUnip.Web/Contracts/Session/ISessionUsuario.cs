@@ -1,10 +1,10 @@
 ﻿using System;
-using TcUnip.Model.Pessoa;
+using TcUnip.Model.Cadastro;
 
 namespace TcUnip.Web.Contracts.Session
 {
-    public interface ISessionUsuario : ISessionBase<Usuario>
+    public interface ISessionUsuario : ISessionBase<UsuarioModel>
     {        
-        Tuple<Usuario, bool> GetFromListSession(string email, string sessionName);
+        Tuple<UsuarioModel, bool> GetFromListSession(string email, string sessionName);
     }
 }

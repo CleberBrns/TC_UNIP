@@ -57,25 +57,33 @@ namespace TcUnip.Service.Cadastro
             var usuarioValido = false;
             var result = new Result<UsuarioModel>();
             result.Status = false;
-            
-            var retorno = _usuarioRepository.SelecionarUm(x => x.Email == model.Email);
 
-            if (retorno != null)
+            if (string.IsNullOrEmpty(model.Email.Trim()) || string.IsNullOrEmpty(model.Senha.Trim()))            
+                result.Message = "O campo E-mail e Senha são obrigatórios!";            
+            else
             {
-                if (retorno.Excluido)                
-                    result.Message = "Usuário excluído!";                
-                else if (!retorno.Ativo)                
-                    result.Message = "Usuário inativo!";                
-                else if (model.Senha != retorno.Senha)                
-                    result.Message = "Senha inválida!";                
-                else
-                    usuarioValido = true;
-            }
-            else            
-                result.Message = "Usuário inválido!";            
+                var retorno = _usuarioRepository.SelecionarUm(x => x.Email == model.Email);
 
-            if (usuarioValido)
-                result.Value = retorno;            
+                if (retorno != null)
+                {
+                    if (retorno.Excluido)
+                        result.Message = "Usuário excluído!";
+                    else if (!retorno.Ativo)
+                        result.Message = "Usuário inativo!";
+                    else if (model.Senha != retorno.Senha)
+                        result.Message = "Senha inválida!";
+                    else
+                        usuarioValido = true;
+                }
+                else
+                    result.Message = "Usuário inválido!";
+
+                if (usuarioValido)
+                {
+                    result.Value = retorno;
+                    result.Status = usuarioValido;
+                }
+            }
 
             return result;
         }

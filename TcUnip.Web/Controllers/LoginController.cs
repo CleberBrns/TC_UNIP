@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using TcUnip.Model.Cadastro;
 using TcUnip.Model.Common;
 using TcUnip.Model.Pessoa;
 using TcUnip.Web.Models.Proxy.Contract;
@@ -10,13 +11,13 @@ namespace TcUnip.Web.Controllers
 {
     public class LoginController : BaseController
     {
-        IUsuarioProxy_old _usuarioProxy;        
+        ICadastroProxy _UsuarioModelProxy;        
         readonly UsuarioSession session = new UsuarioSession();
         readonly string sessionName = Constants.ConstSessions.usuario;
 
-        public LoginController(IUsuarioProxy_old usuarioProxy)
+        public LoginController(ICadastroProxy UsuarioModelProxy)
         {
-            this._usuarioProxy = usuarioProxy;
+            this._UsuarioModelProxy = UsuarioModelProxy;
         }
 
         public ActionResult Login()
@@ -28,32 +29,23 @@ namespace TcUnip.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Autenticar(Usuario model)
+        public ActionResult Autenticar(UsuarioModel model)
         {            
             var mensagens = new Mensagens();
-            var constPermissao = new Constants.ConstPermissoes();
-            var usuarioMaster = constPermissao.GetUsuarioMaster();
+            var constPermissao = new Constants.ConstPermissoes();            
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
-            var resultService = new Result<Usuario>();
+            var resultService = new Result<UsuarioModel>();
             resultService.Status = false;
 
             try
             {
                 if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.Senha))
                 {
-                    if (model.Email.Trim() == usuarioMaster.Email && model.Senha.Trim() == usuarioMaster.Senha)
-                    {
-                        resultService.Status = true;
-                        model = usuarioMaster;
-                    }
-                    else
-                    {
-                        resultService = _usuarioProxy.Autentica(model);
-                        model = resultService.Value;
-                    }
+                    resultService = _UsuarioModelProxy.AutenticaUsuario(model);
+                    model = resultService.Value;
 
                     if (resultService.Status)
                         session.AddModelToSession(model, sessionName);                        
@@ -65,8 +57,7 @@ namespace TcUnip.Web.Controllers
                 {
                     msgExibicao = "O campo E-mail e Senha são obrigatórios!";
                     msgAnalise = Constants.Constants.msgFalhaPadrao;
-                }
-               
+                }               
             }
             catch (Exception ex)
             {

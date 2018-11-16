@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Linq;
-using TcUnip.Model.Pessoa;
+using TcUnip.Model.Cadastro;
 using TcUnip.Web.Contracts.Session;
 using TcUnip.Web.SessionBase;
 
 namespace TcUnip.Web.Session
 {
-    public class UsuarioSession : SessionBase<Usuario>, ISessionUsuario
+    public class UsuarioSession : SessionBase<UsuarioModel>, ISessionUsuario
     {
-        public Tuple<Usuario, bool> GetFromListSession(string email, string sessionName)
+        public Tuple<UsuarioModel, bool> GetFromListSession(string email, string sessionName)
         {
             var sessionValida = false;
-            var model = new Usuario();
+            var model = new UsuarioModel();
 
             var retornolistFromSession = this.GetListFromSession(sessionName);
 
@@ -21,7 +21,7 @@ namespace TcUnip.Web.Session
                 model = retornolistFromSession.Item1.Where(l => l.Email.Equals(email)).FirstOrDefault();
             }
 
-            return new Tuple<Usuario, bool>(model, sessionValida);
+            return new Tuple<UsuarioModel, bool>(model, sessionValida);
         }
 
     }
