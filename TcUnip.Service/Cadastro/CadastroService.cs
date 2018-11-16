@@ -54,17 +54,28 @@ namespace TcUnip.Service.Cadastro
 
         public Result<UsuarioModel> AutenticaUsuario(UsuarioModel model)
         {
+            var usuarioValido = false;
             var result = new Result<UsuarioModel>();
-
-            var retorno = _usuarioRepository.SelecionarUm(x => x.Senha == model.Senha && x.Email == model.Email);
+            result.Status = false;
+            
+            var retorno = _usuarioRepository.SelecionarUm(x => x.Email == model.Email);
 
             if (retorno != null)
-                result.Value = retorno;
-            else
             {
-                result.Message = "Usuário Inválido ou Senha Incorreta";
-                result.Status = false;                
+                if (retorno.Excluido)                
+                    result.Message = "Usuário excluído!";                
+                else if (!retorno.Ativo)                
+                    result.Message = "Usuário inativo!";                
+                else if (model.Senha != retorno.Senha)                
+                    result.Message = "Senha inválida!";                
+                else
+                    usuarioValido = true;
             }
+            else            
+                result.Message = "Usuário inválido!";            
+
+            if (usuarioValido)
+                result.Value = retorno;            
 
             return result;
         }
@@ -150,7 +161,7 @@ namespace TcUnip.Service.Cadastro
                                                                x.Id != model.Id);
             if (usuario != null)
             {
-                result.Message = "E-mail vinculado a outro Usuário. Não é permitido sua utilização";
+                result.Message = "E-mail já utilizado na base de dados, não é permitido sua reutilização";
                 result.Status = false;
                 emailExistente = true;
             }
