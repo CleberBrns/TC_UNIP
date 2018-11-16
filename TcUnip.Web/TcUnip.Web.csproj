@@ -247,6 +247,7 @@
     <Compile Include="Models\Local\MensagensDeRetorno.cs" />
     <Compile Include="Models\Local\ResultService.cs" />
     <Compile Include="Models\Proxy\AgendaProxy.cs" />
+    <Compile Include="Models\Proxy\CadastroProxy.cs" />
     <Compile Include="Models\Proxy\Contract\IAgendaProxy.cs" />
     <Compile Include="Models\Proxy\Contract\IFluxoCaixaProxy.cs" />
     <Compile Include="Models\Proxy\old\AgendaProxy_old.cs" />
