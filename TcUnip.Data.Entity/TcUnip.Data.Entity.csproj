@@ -57,6 +57,10 @@
     <Compile Include="Mapping\Modelagem\Cadastro\PessoaMap.cs" />
     <Compile Include="Mapping\IMapping.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\TipoPerfilMap.cs" />
+    <Compile Include="Migrations\201811172044479_Initial.cs" />
+    <Compile Include="Migrations\201811172044479_Initial.Designer.cs">
+      <DependentUpon>201811172044479_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modelagem\Cadastro\ModalidadeFuncionario.cs" />
     <Compile Include="Modelagem\Cadastro\TipoPerfil.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\UsuarioMap.cs" />
@@ -83,6 +87,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Diagrams\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201811172044479_Initial.resx">
+      <DependentUpon>201811172044479_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

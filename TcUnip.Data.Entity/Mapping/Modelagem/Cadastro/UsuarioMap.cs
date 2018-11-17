@@ -20,7 +20,7 @@ namespace TcUnip.Data.Entity.Mapping.Modelagem.Cadastro
                 .IsRequired();
 
             Property(x => x.Senha)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsRequired();
 
             Property(x => x.Ativo)
