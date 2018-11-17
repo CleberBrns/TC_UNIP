@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using AutoMapper.XpressionMapper.Extensions;
+using AutoMapper.Extensions.ExpressionMapping;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -201,13 +201,13 @@ namespace TcUnip.Data.Repositories
 
         private Expression<Func<TRespository, bool>> GetMappedSelector(Expression<Func<TModel, bool>> selector)
         {
-            var modelo = Mapper.MapExpression<Expression<Func<TModel, bool>>, Expression<Func<TRespository, bool>>>(selector);
+            var modelo = Mapper.Map<Expression<Func<TModel, bool>>, Expression<Func<TRespository, bool>>>(selector);
             return modelo;
         }
 
         private Expression<Func<TRespository, object>> GetMappedSelector(Expression<Func<TModel, object>> selector)
         {
-            var modelo = Mapper.MapExpression<Expression<Func<TModel, object>>, Expression<Func<TRespository, object>>>(selector);
+            var modelo = Mapper.Map<Expression<Func<TModel, object>>, Expression<Func<TRespository, object>>>(selector);
             return modelo;
         }
 
