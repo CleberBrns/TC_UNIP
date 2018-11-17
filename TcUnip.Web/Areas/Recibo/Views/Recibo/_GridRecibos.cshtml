@@ -1,9 +1,9 @@
 ﻿@using TcUnip.Web.Constants;
 
-@model IList<TcUnip.Model.Contabil.Recibo>
+@model IList<TcUnip.Model.FluxoCaixa.ReciboModel>
 
 @{
-    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Model.Cadastro.UsuarioModel)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -32,7 +32,7 @@
                         <td>@itemModel.Profissional</td>
                         <td>R$ @itemModel.Valor</td>
                         <td class="text-center">
-                            <a class="btnEditar" id-registro="@itemModel.IdAgenda" title="Editar" 
+                            <a class="btnEditar" id-registro="@itemModel.IdSessao" title="Editar"
                                onclick="indexRecibo.modalVisualizar(this)"
                                style="cursor: pointer;">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>

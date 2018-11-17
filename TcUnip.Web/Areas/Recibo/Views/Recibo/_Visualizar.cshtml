@@ -1,9 +1,9 @@
-﻿@model TcUnip.Model.Contabil.Recibo
+﻿@model TcUnip.Model.FluxoCaixa.ReciboModel
 
 @using TcUnip.Web.Models.Local;
 
 @{   
-    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Model.Cadastro.UsuarioModel)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -11,7 +11,7 @@
     using (Html.BeginForm())
     {
         <div class="form-horizontal">
-            <input type="hidden" name="IdAgenda" value='@Model.IdAgenda'>
+            <input type="hidden" name="IdSessao" value='@Model.IdSessao'>
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="campos" style="padding: 2% 0 2% 5%">

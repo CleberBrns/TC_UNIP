@@ -1,8 +1,7 @@
-﻿@model TcUnip.Model.Calendario.Agenda
+﻿@model TcUnip.Model.FluxoCaixa.ReciboModel
 
-@{
-    var modalidadeRecibo = (string)ViewBag.Modalidade;
-    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+@{    
+    var user = (TcUnip.Model.Cadastro.UsuarioModel)ViewBag.Usuario;
 }
 
 <script src="~/Scripts/Default/Impressao.js"></script>
@@ -19,15 +18,15 @@
                 </div>
                 <div class="form-group" style="padding-bottom: 3%; padding-top: 3%;">
                     <div col-md-10>
-                        @Html.Label("Recebemos de " + Model.Paciente.Nome)
+                        @Html.Label("Recebemos de " + Model.Paciente)
                         <div>
-                            @Html.Label("Portador do CPF ; ") <span style="font-weight: bold">@Model.Paciente.Cpf</span>
+                            @Html.Label("Portador do CPF ; ") <span style="font-weight: bold">@Model.CpfPaciente</span>
                         </div>
                         <div>
                             @Html.Label("A quantida de R$ " + Model.Valor)
                         </div>
                         <div>
-                            @Html.Label("Referente a uma sessão de " + modalidadeRecibo)
+                            @Html.Label("Referente a uma sessão de " + Model.ModalidadeSessao)
                         </div>
                     </div>
                 </div>

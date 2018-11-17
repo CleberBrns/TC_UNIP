@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using TcUnip.Model.Common;
+using TcUnip.Model.FluxoCaixa;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Proxy.Contract;
 using TcUnip.Web.Util;
@@ -11,14 +12,13 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
 {
     public class ReciboController : BaseController
     {
-        readonly IAgendaProxy_old _agendaProxy;
-        readonly IReciboProxy_old _reciboProxy;
-        readonly Mensagens mensagens = new Mensagens();
-        readonly ReplacesService replacesService = new ReplacesService();
+        readonly IAgendaProxy _agendaProxy;
+        readonly IFluxoCaixaProxy _fluxoCaixaProxy;
+        readonly Mensagens mensagens = new Mensagens();        
 
-        public ReciboController(IReciboProxy_old reciboProxy, IAgendaProxy_old agendaProxy)
+        public ReciboController(IFluxoCaixaProxy fluxoCaixaProxy, IAgendaProxy agendaProxy)
         {
-            this._reciboProxy = reciboProxy;
+            this._fluxoCaixaProxy = fluxoCaixaProxy;
             this._agendaProxy = agendaProxy;
         }
 
@@ -42,7 +42,7 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
 
             try
             {
-                var resultService = _reciboProxy.ListRecibosDoDia();
+                var resultService = _fluxoCaixaProxy.ListRecibosDoDia();
 
                 var list = FiltraListaPorPerfil(resultService.Value);
 
@@ -70,7 +70,12 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
 
             try
             {
-                var resultService = _reciboProxy.ListRecibosPeriodo(dataInicio, dataFim);
+                var dadosPesquisa = new PesquisaModel {
+                    DataIncio = Convert.ToDateTime(dataInicio),
+                    DataFim = Convert.ToDateTime(dataFim)
+                };
+
+                var resultService = _fluxoCaixaProxy.ListRecibosPeriodo(dadosPesquisa);
 
                 var list = FiltraListaPorPerfil(resultService.Value);
 
@@ -89,7 +94,7 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ModalVisualizar(string id)
+        public ActionResult ModalVisualizar(int id)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -100,7 +105,7 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
 
             try
             {
-                var resultService = _reciboProxy.Get(id);
+                var resultService = _fluxoCaixaProxy.GetRecibo(id);
 
                 if (resultService.Status)
                 {
@@ -122,7 +127,7 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ModalVisualizarImpressao(string id)
+        public ActionResult ModalVisualizarImpressao(int id)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -133,16 +138,10 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
 
             try
             {
-                var resultService = _agendaProxy.Get(id);                
+                var resultService = _fluxoCaixaProxy.GetRecibo(id);                
 
                 if (resultService.Status)
                 {
-                    var constants = new Constants.Constants();
-
-                    ViewBag.Modalidade = 
-                        constants.ListModalidades().Where(m => m.Value.Equals(resultService.Value.Modalidade))
-                        .Select(m => m.Name).FirstOrDefault();
-
                     return PartialView("_Impressao", resultService.Value);
                 }
                 else
@@ -163,13 +162,13 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
 
         #region Métodos Privados
 
-        private List<Model.Contabil.Recibo> FiltraListaPorPerfil(List<Model.Contabil.Recibo> listRecibos)
+        private List<ReciboModel> FiltraListaPorPerfil(List<ReciboModel> listRecibos)
         {
             if (listRecibos.Count > 0 &&
-                Constants.ConstPermissoes.profissional.Equals(GetUsuarioSession().Item1.Permissoes.FirstOrDefault()))
+                Constants.ConstPermissoes.profissional.Equals(GetUsuarioSession().Item1.TipoPerfil.Permissao.FirstOrDefault()))
             {
                 listRecibos = 
-                    listRecibos.Where(l => l.Profissional.Equals(GetUsuarioSession().Item1.Funcionario.Nome))
+                    listRecibos.Where(l => l.Profissional.Equals(GetUsuarioSession().Item1.Funcionario.Pessoa.Nome))
                                .ToList();
             }
 
