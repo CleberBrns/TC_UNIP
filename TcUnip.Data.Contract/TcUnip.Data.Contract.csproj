@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Common\IModalidadeRepository.cs" />
     <Compile Include="Agenda\ISessaoRepository.cs" />
-    <Compile Include="Agenda\IStatusSessaoRepository.cs" />
     <Compile Include="Cadastro\IFuncionarioRepository.cs" />
     <Compile Include="Cadastro\IModalidadeFuncionarioRepository.cs" />
     <Compile Include="Cadastro\IPacienteRepository.cs" />

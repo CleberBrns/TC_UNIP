@@ -44,7 +44,6 @@ namespace TcUnip.Config
 
             //Agenda             
             container.RegisterType<ISessaoRepository, SessaoRepository>();
-            container.RegisterType<IStatusSessaoRepository, StatusSessaoRepository>();
 
             //Fluxo Caixa
             container.RegisterType<ICaixaRepository, CaixaRepository>();
@@ -84,7 +83,6 @@ namespace TcUnip.Config
 
                 //Agenda                
                 cfg.CreateMap<SessaoModel, Sessao>().ReverseMap();
-                cfg.CreateMap<StatusSessaoModel, StatusSessao>().ReverseMap();
 
                 //Fluxo Caixa
                 cfg.CreateMap<CaixaModel, Caixa>().ReverseMap();

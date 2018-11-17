@@ -39,8 +39,8 @@ namespace TcUnip.Api.Controllers
             return Ok(retorno);
         }
 
-        [HttpGet]
-        [Route("api/Cadastro/AutenticaUsuario/{model}")]
+        [HttpPost]
+        [Route("api/Cadastro/AutenticaUsuario")]
         public IHttpActionResult AutenticaUsuario(UsuarioModel model)
         {
             var retorno = _cadastroService.AutenticaUsuario(model);
