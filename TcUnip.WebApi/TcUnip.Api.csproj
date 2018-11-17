@@ -242,11 +242,7 @@
     <Compile Include="Controllers\CadastroController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\FluxoCaixaController.cs" />
-    <Compile Include="Controllers\Olds\AgendamentoController_Old.cs" />
-    <Compile Include="Controllers\Olds\CaixaController_Old.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Olds\PessoaController_Old.cs" />
-    <Compile Include="Controllers\Olds\ReciboController_Old.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

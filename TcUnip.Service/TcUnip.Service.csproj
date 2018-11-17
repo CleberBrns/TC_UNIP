@@ -43,14 +43,8 @@
   <ItemGroup>
     <Compile Include="Agenda\AgendaService.cs" />
     <Compile Include="Cadastro\CadastroService.cs" />
-    <Compile Include="Calendario\AgendaService_Old.cs" />
     <Compile Include="Common\CommonService.cs" />
-    <Compile Include="Contabil\CaixaService.cs" />
-    <Compile Include="Contabil\ReciboService.cs" />
     <Compile Include="FluxoCaixa\FluxoCaixaService.cs" />
-    <Compile Include="Pessoa\FuncionarioService.cs" />
-    <Compile Include="Pessoa\PacienteService.cs" />
-    <Compile Include="Pessoa\UsuarioService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

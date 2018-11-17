@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using TcUnip.Model.Cadastro;
 using TcUnip.Model.Common;
-using TcUnip.Model.Pessoa;
 using TcUnip.Web.Models.Proxy.Contract;
 using TcUnip.Web.Session;
 using TcUnip.Web.Util;
