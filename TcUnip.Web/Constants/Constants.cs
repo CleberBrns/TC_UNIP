@@ -20,42 +20,8 @@ namespace TcUnip.Web.Constants
         {            
             return new List<DataSelectControl>
             {
-                new DataSelectControl { Name = "Ativo", Value = "ATIVO"},
-                new DataSelectControl { Name = "Inativo", Value = "INATIVO" }
-            };
-        }
-
-        public List<DataSelectControl> ListModalidades()
-        {
-            return new List<DataSelectControl>
-            {
-                new DataSelectControl { Name = "Osteopatia", Value = "Osteopatia"},
-                new DataSelectControl { Name = "Fisioterapia", Value = "Fisioterapia" },
-                new DataSelectControl { Name = "Pilates", Value = "Pilates" },
-                new DataSelectControl { Name = "Treinamento Funcional", Value = "TreinamentoFuncional" },
-                new DataSelectControl { Name = "RPG", Value = "RPG" }
-            };
-        }
-
-        public List<DataSelectControl> ListPermissoesPerfil()
-        {
-            return new List<DataSelectControl>
-            {
-                new DataSelectControl { Name = "Administrador", Value = "ADMINISTRACAO"},
-                new DataSelectControl { Name = "Recepcionista", Value = "RECEPCAO" },
-                new DataSelectControl { Name = "Profissional", Value = "PROFISSIONAL" }
-            };
-        }
-
-        public List<DataSelectControl> ListStatusConsulta()
-        {
-            return new List<DataSelectControl>
-            {
-                new DataSelectControl { Name = "Pendente", Value = "PENDENTE"},
-                new DataSelectControl { Name = "Não compareceu", Value = "NAO_COMPARECEU" },
-                new DataSelectControl { Name = "Não compareceu, pagamento pendente", Value = "NAO_COMPARECEU_PAGAMENTO_PENDENTE" },
-                new DataSelectControl { Name = "Compareceu, pagamento pendente", Value = "COMPARECEU_PAGAMENTO_PENDENTE" },
-                new DataSelectControl { Name = "Concluído", Value = "OK" }
+                new DataSelectControl { Name = "Ativo", IntValue = 0},
+                new DataSelectControl { Name = "Inativo", IntValue = 0 }
             };
         }
 

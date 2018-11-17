@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using TcUnip.Model.Cadastro;
+using TcUnip.Model.Common;
 using TcUnip.Web.Session;
 
 namespace TcUnip.Web.Controllers
@@ -22,9 +24,21 @@ namespace TcUnip.Web.Controllers
         }
 
         public Tuple<UsuarioModel, bool> GetUsuarioSession()
-        {
+        {            
             UsuarioSession sessionUsuario = new UsuarioSession();
             return sessionUsuario.GetModelFromSession(Constants.ConstSessions.usuario);
+        }
+
+        public Tuple<List<TipoPerfilModel>, bool> GetListTipoPerfilSession()
+        {
+            SessionTipoPerfil sessionTipoPerfil = new SessionTipoPerfil();
+            return sessionTipoPerfil.GetListFromSession(Constants.ConstSessions.listTipoPerfil);
+        }
+
+        public Tuple<List<ModalidadeModel>, bool> GetListModalidadesSession()
+        {
+            SessionModalidades sessionModalidades = new SessionModalidades();
+            return sessionModalidades.GetListFromSession(Constants.ConstSessions.listTipoPerfil);
         }
 
         public void BadRequestCustomizado(int statusCode)

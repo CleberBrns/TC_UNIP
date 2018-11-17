@@ -13,11 +13,13 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
     public class UsuarioController : BaseController
     {
         readonly ICadastroProxy _cadastroProxy;
+        readonly ICommonProxy _commonProxy;
         readonly Mensagens mensagens = new Mensagens();  
 
-        public UsuarioController(ICadastroProxy cadastroProxy)
+        public UsuarioController(ICadastroProxy cadastroProxy, ICommonProxy commonProxy)
         {
             this._cadastroProxy = cadastroProxy;
+            this._commonProxy = commonProxy;
         }
 
         public ActionResult Listagem()
@@ -174,7 +176,6 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
             //Seleciona somente os itens há serem exibidos para melhor performance
             if (list != null && list.Count > 0)
             {
-                var listPerfil = GetListPerfil();
                 //var modelFuncionario = new FuncionarioModel();
                 //var newFuncionario = modelFuncionario.GetModelDefault();
 
@@ -253,8 +254,24 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 
         private List<DataSelectControl> GetListPerfil(bool filtroPerfil = false)
         {
-            var constants = new Constants.Constants();
-            var listPerfil = constants.ListPermissoesPerfil();
+            var listPerfil = new List<DataSelectControl>();
+            var listTipoPerfil = new List<TipoPerfilModel>();
+            var listPerfilSession = GetListTipoPerfilSession();
+
+            if (listPerfilSession.Item2)            
+                listTipoPerfil = listPerfilSession.Item1;            
+            else
+            {
+                CommonSelectControls commonSelectControls = new CommonSelectControls();
+                listTipoPerfil = commonSelectControls.ListTipoPerfil();
+            }
+
+            listPerfil = listTipoPerfil.Select(l => new DataSelectControl
+                                            {
+                                                Name = l.Tipo,
+                                                IntValue = l.Id
+                                            })
+                                       .ToList();
 
             if (filtroPerfil)
             {

@@ -9,5 +9,6 @@ namespace TcUnip.Web.Models.Local
     {
         public string Name { get; set; }
         public string Value { get; set; }
+        public int IntValue { get; set; }
     }
 }

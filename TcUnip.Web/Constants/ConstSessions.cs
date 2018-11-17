@@ -14,5 +14,8 @@ namespace TcUnip.Web.Constants
         public const string listAgendaPeriodos = "listAgendaPeriodosSN";
         public const string listAgendaDoDia = "listAgendaDoDiaSN";
         public const string listConsultas = "listConsultasSN";
+
+        public const string listTipoPerfil = "listTipoPerfilSN";
+        public const string listModalidades = "listModalidadesSN";
     }
 }
