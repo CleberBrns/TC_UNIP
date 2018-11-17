@@ -44,6 +44,7 @@
     <Compile Include="Agenda\AgendaService.cs" />
     <Compile Include="Cadastro\CadastroService.cs" />
     <Compile Include="Calendario\AgendaService_Old.cs" />
+    <Compile Include="Common\CommonService.cs" />
     <Compile Include="Contabil\CaixaService.cs" />
     <Compile Include="Contabil\ReciboService.cs" />
     <Compile Include="FluxoCaixa\FluxoCaixaService.cs" />

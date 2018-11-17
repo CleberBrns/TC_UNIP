@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using TcUnip.Model.Cadastro;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Local;
 using TcUnip.Web.Models.Proxy.Contract;
@@ -11,16 +12,12 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 {
     public class UsuarioController : BaseController
     {
-        readonly IUsuarioProxy_old _usuariProxy;
-        readonly IFuncionarioProxy_old _funcionarioProxy;
+        readonly ICadastroProxy _cadastroProxy;
+        readonly Mensagens mensagens = new Mensagens();  
 
-        readonly Mensagens mensagens = new Mensagens();
-  
-
-        public UsuarioController(IUsuarioProxy_old usuarioProxy, IFuncionarioProxy_old funcionarioProxy)
+        public UsuarioController(ICadastroProxy cadastroProxy)
         {
-            this._usuariProxy = usuarioProxy;
-            this._funcionarioProxy = funcionarioProxy;
+            this._cadastroProxy = cadastroProxy;
         }
 
         public ActionResult Listagem()
@@ -38,11 +35,9 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
             string msgAnalise = string.Empty;
 
             try
-            {
-                var list = new List<Model.Pessoa.Usuario>();               
-
-                var resultService = _usuariProxy.List();
-                list = resultService.Value;
+            {               
+                var resultService = _cadastroProxy.ListUsuario();
+                var list = resultService.Value;
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha!" : string.Empty;
@@ -50,12 +45,12 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
                 list = ConfiguraListaExibicao(list);
 
                 //Não lista os usuários com perfil Administracao, quando o usuário logado não for um Administrador
-                if (!Constants.ConstPermissoes.administracao.Contains(userInfo.Item1.Permissoes.FirstOrDefault()))
+                if (!Constants.ConstPermissoes.administracao.Contains(userInfo.Item1.TipoPerfil.Permissao))
                 {
                     if (list.Count > 0)
                     {
                         list = list.Where(l =>
-                            l.Permissoes.FirstOrDefault() != Constants.ConstPermissoes.administracao)
+                            l.TipoPerfil.Permissao != Constants.ConstPermissoes.administracao)
                                    .ToList();
                     }
                 }
@@ -81,13 +76,13 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
             ViewBag.ListPerfil = GetListPerfil(true);
             ViewBag.ListFuncionarios = GetListFuncionarios();
 
-            var model = new Model.Pessoa.Usuario();
-            var defaultObj = model.GetModelDefault();
-            return PartialView("_Gerenciar", defaultObj);
+            //var model = new UsuarioModel();
+            //var defaultObj = model.GetModelDefault();
+            return PartialView("_Gerenciar", new UsuarioModel());
         }
 
         [HttpGet]
-        public ActionResult ModalEditar(string id)
+        public ActionResult ModalEditar(int id)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -101,7 +96,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
                 ViewBag.ListPerfil = GetListPerfil(true);
                 ViewBag.ListFuncionarios = GetListFuncionarios();
 
-                var resultService = _usuariProxy.Get(id);
+                var resultService = _cadastroProxy.GetUsuario(id);
                 if (resultService.Status)
                     return PartialView("_Gerenciar", resultService.Value);
                 else
@@ -123,7 +118,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
         }
 
         [HttpPost]
-        public ActionResult Salvar(Model.Pessoa.Usuario model)
+        public ActionResult Salvar(UsuarioModel model)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -132,9 +127,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 
             try
             {
-                model.Permissoes = NormalizaPermissoes(model.Permissoes);
-
-                var resultService = _usuariProxy.Salva(model);
+                var resultService = _cadastroProxy.SalvaUsuario(model);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha" : string.Empty;
@@ -150,7 +143,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
         }
 
         [HttpPost]
-        public ActionResult Excluir(string id)
+        public ActionResult Excluir(int id)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -159,7 +152,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 
             try
             {
-                var resultService = _usuariProxy.Excliu(id);
+                var resultService = _cadastroProxy.ExcluiUsuario(id);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha" : string.Empty;
@@ -176,58 +169,45 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 
         #region Métodos Privados
 
-        private List<Model.Pessoa.Usuario> ConfiguraListaExibicao(List<Model.Pessoa.Usuario> list)
+        private List<UsuarioModel> ConfiguraListaExibicao(List<UsuarioModel> list)
         {
             //Seleciona somente os itens há serem exibidos para melhor performance
             if (list != null && list.Count > 0)
             {
                 var listPerfil = GetListPerfil();
-                var modelFuncionario = new Model.Pessoa.Funcionario();
-                var newFuncionario = modelFuncionario.GetModelDefault();
+                //var modelFuncionario = new FuncionarioModel();
+                //var newFuncionario = modelFuncionario.GetModelDefault();
 
                 list.ForEach(l =>
                 {
                     if (l.Funcionario == null)
-                        l.Funcionario = newFuncionario;
+                        l.Funcionario = new FuncionarioModel();
                 });
 
                 list = list.Select(l =>
-                new Model.Pessoa.Usuario
+                new UsuarioModel
                 {
                     Cpf = l.Cpf,
                     Email = l.Email,
-                    PermissaoExibicao = listPerfil.Where(lp => lp.Value == l.Permissoes.FirstOrDefault())
-                                           .Select(p => p.Name)
-                                           .FirstOrDefault(),
-                    Permissoes = listPerfil.Where(lp => lp.Value == l.Permissoes.FirstOrDefault())
-                                           .Select(p => p.Value)
-                                           .ToArray(),
-                    Status = l.Status,
-                    Funcionario = new Model.Pessoa.Funcionario
+                    TipoPerfil = 
+                        new TipoPerfilModel {
+                            Tipo = l.TipoPerfil.Tipo,
+                            Permissao = l.TipoPerfil.Permissao
+                        },
+                    Ativo = l.Ativo,
+                    Funcionario = new FuncionarioModel
                     {
-                        Nome = l.Funcionario.Nome
+                        Pessoa = new PessoaModel { Nome = l.Funcionario.Pessoa.Nome }
                     }
                 }).ToList();
             }
 
             return list;
-        }
+        }        
 
-        private string[] NormalizaPermissoes(string[] permissoes)
+        private List<FuncionarioModel> GetListFuncionarios()
         {
-            if (permissoes.Length > 0)
-                permissoes = new HashSet<string>(permissoes).ToArray();
-            if (permissoes.Length > 0)
-                permissoes = permissoes.Where(x => !string.IsNullOrEmpty(x)).ToArray();
-            if (permissoes.Length > 0)
-                permissoes = permissoes.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-
-            return permissoes;
-        }
-
-        private List<Model.Pessoa.Funcionario> GetListFuncionarios()
-        {
-            var listFuncionarios = _funcionarioProxy.List().Value;
+            var listFuncionarios = _cadastroProxy.ListFuncionario().Value;
 
             if (listFuncionarios.Count > 0)
             {
@@ -236,15 +216,18 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
                 if (emailsUsuariosCadastrados.Length > 0)
                 {
                     //Remove os funcionários que já foram cadastrados
-                    listFuncionarios = listFuncionarios.Where(l => !emailsUsuariosCadastrados.Contains(l.Email))
+                    listFuncionarios = listFuncionarios.Where(l => !emailsUsuariosCadastrados.Contains(l.Pessoa.Email))
                                                        .ToList();
                 }
 
-                listFuncionarios = listFuncionarios.Select(l => new Model.Pessoa.Funcionario
-                {
-                    Nome = l.Nome,
-                    Email = l.Email,
-                    Cpf = l.Cpf,
+                listFuncionarios = listFuncionarios.Select(l => new FuncionarioModel
+                {    
+                    Pessoa = new PessoaModel
+                    {
+                        Nome = l.Pessoa.Nome,
+                        Email = l.Pessoa.Email,
+                        Cpf = l.Pessoa.Cpf
+                    },
                     Modalidades = l.Modalidades
                 }).ToList();
             }
@@ -255,7 +238,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
         private string[] GetEmailsFuncionariosCadastrados()
         {
             var emailsUsuariosCadastrados = new string[] { };
-            var resultService = _usuariProxy.List();
+            var resultService = _cadastroProxy.ListUsuario();
             if (resultService.Status)            
                 emailsUsuariosCadastrados = resultService.Value.Select(x => x.Email).ToArray();            
 
@@ -277,7 +260,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
             {
                 var usuario = GetUsuarioSession().Item1;
                 //Não lista o Perfil Administrador caso o usuário não seja um Administrador
-                if (!usuario.Permissoes.FirstOrDefault().Equals(Constants.ConstPermissoes.administracao))
+                if (!usuario.TipoPerfil.Permissao.Equals(Constants.ConstPermissoes.administracao))
                     listPerfil = listPerfil.Where(l => l.Value != Constants.ConstPermissoes.administracao).ToList();
             }
 

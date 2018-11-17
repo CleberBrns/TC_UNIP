@@ -17,8 +17,10 @@ using TcUnip.Model.Common;
 using TcUnip.Model.FluxoCaixa;
 using TcUnip.Service.Agenda;
 using TcUnip.Service.Cadastro;
+using TcUnip.Service.Common;
 using TcUnip.Service.Contract.Agenda;
 using TcUnip.Service.Contract.Cadastro;
+using TcUnip.Service.Contract.Common;
 using TcUnip.Service.Contract.FluxoCaixa;
 using TcUnip.Service.FluxoCaixa;
 using Unity;
@@ -40,13 +42,16 @@ namespace TcUnip.Config
             container.RegisterType<IUsuarioRepository, UsuarioRepository>();
             container.RegisterType<IModalidadeFuncionarioRepository, ModalidadeFuncionarioRepository>();
 
-            //Agenda 
-            container.RegisterType<IModalidadeRepository, ModalidadeRepository>();
+            //Agenda             
             container.RegisterType<ISessaoRepository, SessaoRepository>();
             container.RegisterType<IStatusSessaoRepository, StatusSessaoRepository>();
 
-            //Fluxo Caixao
+            //Fluxo Caixa
             container.RegisterType<ICaixaRepository, CaixaRepository>();
+
+            //Common
+            container.RegisterType<IModalidadeRepository, ModalidadeRepository>();
+
             #endregion
 
             #region Services
@@ -54,6 +59,7 @@ namespace TcUnip.Config
             container.RegisterType<IAgendaService, AgendaService>();
             container.RegisterType<ICadastroService, CadastroService>();
             container.RegisterType<IFluxoCaixaService, FluxoCaixaService>();
+            container.RegisterType<ICommonService, CommonService>();
 
             #endregion
         }
@@ -76,13 +82,15 @@ namespace TcUnip.Config
                 cfg.CreateMap<UsuarioModel, Usuario>().ReverseMap();
                 cfg.CreateMap<ModalidadeFuncionarioModel, ModalidadeFuncionario>().ReverseMap();
 
-                //Agenda
-                cfg.CreateMap<ModalidadeModel, Modalidade>().ReverseMap();
+                //Agenda                
                 cfg.CreateMap<SessaoModel, Sessao>().ReverseMap();
                 cfg.CreateMap<StatusSessaoModel, StatusSessao>().ReverseMap();
 
                 //Fluxo Caixa
                 cfg.CreateMap<CaixaModel, Caixa>().ReverseMap();
+
+                //Common
+                cfg.CreateMap<ModalidadeModel, Modalidade>().ReverseMap();
 
                 #endregion
             });

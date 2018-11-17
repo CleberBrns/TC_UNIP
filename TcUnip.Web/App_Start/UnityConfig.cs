@@ -49,6 +49,7 @@ namespace TcUnip.Web
             container.RegisterType<ICadastroProxy, CadastroProxy>(new PerRequestLifetimeManager());
             container.RegisterType<IAgendaProxy, AgendaProxy>(new PerRequestLifetimeManager());
             container.RegisterType<IFluxoCaixaProxy, FluxoCaixaProxy>(new PerRequestLifetimeManager());
+            container.RegisterType<ICommonProxy, CommonProxy>(new PerRequestLifetimeManager());
         }
     }
 }

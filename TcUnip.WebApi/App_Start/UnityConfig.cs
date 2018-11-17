@@ -45,10 +45,10 @@ namespace TcUnip.Api
 
             ConfigureApiContainer.InitializeContainer(container, false);
 
-            container.RegisterType <Controllers.AgendaController>();
+            container.RegisterType<Controllers.AgendaController>();
             container.RegisterType<Controllers.CadastroController>();
             container.RegisterType<Controllers.FluxoCaixaController>();
-
+            container.RegisterType<Controllers.CommonController>();
         }
     }
 }

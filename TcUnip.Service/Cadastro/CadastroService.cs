@@ -47,7 +47,10 @@ namespace TcUnip.Service.Cadastro
         public Result<List<UsuarioModel>> ListUsuario()
         {
             var result = new Result<List<UsuarioModel>>();
-            result.Value = _usuarioRepository.Lista(x => !x.Excluido).ToList();
+            result.Value = _usuarioRepository.Lista(x => !x.Excluido, 
+                                                    x => x.TipoPerfil, 
+                                                    x => x.Funcionario.Pessoa)
+                                             .ToList();
 
             return result;
         }
@@ -308,7 +311,7 @@ namespace TcUnip.Service.Cadastro
         public Result<List<FuncionarioModel>> ListFuncionario()
         {
             var result = new Result<List<FuncionarioModel>>();
-            result.Value = _funcionarioRepository.Lista(x => !x.Excluido).ToList();
+            result.Value = _funcionarioRepository.Lista(x => !x.Excluido, x => x.Pessoa, x => x.Modalidades).ToList();
 
             return result;
         }

@@ -235,6 +235,8 @@
     <Compile Include="Constants\ConstPermissoes.cs" />
     <Compile Include="Constants\ConstSessions.cs" />
     <Compile Include="Contracts\Session\ISessionBase.cs" />
+    <Compile Include="Contracts\Session\ISessionModalidades.cs" />
+    <Compile Include="Contracts\Session\ISessionTipoPerfil.cs" />
     <Compile Include="Contracts\Session\ISessionUsuario.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -249,6 +251,7 @@
     <Compile Include="Models\Proxy\AgendaProxy.cs" />
     <Compile Include="Models\Proxy\CadastroProxy.cs" />
     <Compile Include="Models\Proxy\Contract\IAgendaProxy.cs" />
+    <Compile Include="Models\Proxy\Contract\ICommonProxy.cs" />
     <Compile Include="Models\Proxy\Contract\IFluxoCaixaProxy.cs" />
     <Compile Include="Models\Proxy\FluxoCaixaProxy.cs" />
     <Compile Include="Models\Proxy\old\AgendaProxy_old.cs" />
@@ -260,6 +263,7 @@
     <Compile Include="Models\Proxy\Contract\old\IPacienteProxy_old.cs" />
     <Compile Include="Models\Proxy\Contract\old\IReciboProxy_old.cs" />
     <Compile Include="Models\Proxy\Contract\old\IUsuarioProxy_old.cs" />
+    <Compile Include="Models\Proxy\CommonProxy.cs" />
     <Compile Include="Models\Proxy\old\FuncionarioProxy_old.cs" />
     <Compile Include="Models\Proxy\old\PacienteProxy_old.cs" />
     <Compile Include="Models\Proxy\old\ReciboProxy_old.cs" />
@@ -270,8 +274,11 @@
     <Compile Include="Models\WebApiClient\WebApiClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\SessionBase.cs" />
+    <Compile Include="Session\SessionModalidades.cs" />
+    <Compile Include="Session\SessionTipoPerfil.cs" />
     <Compile Include="Session\UsuarioSession.cs" />
     <Compile Include="Tools\HttpInstance.cs" />
+    <Compile Include="Util\CommonSelectControls.cs" />
     <Compile Include="Util\Mensagens.cs" />
     <Compile Include="Util\ErrosService.cs" />
   </ItemGroup>
