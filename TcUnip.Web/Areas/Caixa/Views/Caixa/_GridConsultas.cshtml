@@ -1,9 +1,9 @@
 ﻿@using TcUnip.Web.Constants;
 
-@model IList<TcUnip.Model.Contabil.Caixa>
+@model IList<TcUnip.Model.FluxoCaixa.CaixaModel>
 
 @{
-    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Model.Cadastro.UsuarioModel)ViewBag.Usuario;
 }
 
 @if (user != null)

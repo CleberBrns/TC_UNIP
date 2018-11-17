@@ -1,7 +1,7 @@
 ﻿@using TcUnip.Web.Constants;
 
 @{
-    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Model.Cadastro.UsuarioModel)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -18,7 +18,7 @@
     </style>
 
     <div class="row">
-        @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+        @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao.FirstOrDefault()))
         {
             <div class="col-md-12">
                 <div style="text-align: right">
@@ -217,6 +217,19 @@
                         swal({
                             title: '',
                             text: "A Data incial não pode ser maior que a final.",
+                            type: 'warning',
+                            confirmButtonColor: '#10386B',
+                            allowOutsideClick: false
+                        });
+
+                        ehValido = false;
+                    }
+
+                    if (dataDois < dataUm) {
+
+                        swal({
+                            title: '',
+                            text: "A Data final não pode ser menor que a inicial.",
                             type: 'warning',
                             confirmButtonColor: '#10386B',
                             allowOutsideClick: false

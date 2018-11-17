@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TcUnip.Model.Common;
+using TcUnip.Model.FluxoCaixa;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Proxy.Contract;
 using TcUnip.Web.Util;
@@ -11,12 +13,12 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 {
     public class CaixaController : BaseController
     {
-        readonly ICaixaProxy_old _caixaProxy;
+        readonly IFluxoCaixaProxy _fluxoCaixaProxy;
         readonly Mensagens mensagens = new Mensagens();
 
-        public CaixaController(ICaixaProxy_old caixaProxy)
+        public CaixaController(IFluxoCaixaProxy fluxoCaixaProxy)
         {
-            this._caixaProxy = caixaProxy;
+            this._fluxoCaixaProxy = fluxoCaixaProxy;
         }
 
         public ActionResult Index()
@@ -39,7 +41,7 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 
             try
             {
-                var resultService = _caixaProxy.ListCaixaDoDia();
+                var resultService = _fluxoCaixaProxy.ListCaixaDoDia();
 
                 var list = resultService.Value;
 
@@ -67,7 +69,13 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 
             try
             {
-                var resultService = _caixaProxy.ListCaixaPeriodo(dataInicio, dataFim);
+                var dadosPesquisa = new PesquisaModel
+                {
+                    DataIncio = Convert.ToDateTime(dataInicio),
+                    DataFim = Convert.ToDateTime(dataFim)
+                };
+
+                var resultService = _fluxoCaixaProxy.ListCaixaPeriodo(dadosPesquisa);
 
                 var list = resultService.Value;
 
@@ -92,13 +100,13 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 
             ViewBag.Usuario = GetUsuarioSession().Item1;          
 
-            var model = new Model.Contabil.Caixa();
-            var defaultObj = model.GetModelDefault();
-            return PartialView("_Gerenciar", defaultObj);
+            //var model = new Model.Contabil.Caixa();
+            //var defaultObj = model.GetModelDefault();
+            return PartialView("_Gerenciar", new CaixaModel());
         }
 
         [HttpGet]
-        public ActionResult ModalEditar(string id)
+        public ActionResult ModalEditar(int id)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -109,7 +117,7 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 
             try
             {
-                var resultService = _caixaProxy.Get(id);
+                var resultService = _fluxoCaixaProxy.GetCaixa(id);
 
                 if (resultService.Status)
                     return PartialView("_Gerenciar", resultService.Value);
@@ -131,7 +139,7 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 
         }
 
-        public ActionResult Salvar(Model.Contabil.Caixa model)
+        public ActionResult Salvar(CaixaModel model)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -140,7 +148,7 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 
             try
             {
-                var resultService = _caixaProxy.Salva(model);
+                var resultService = _fluxoCaixaProxy.SalvaCaixa(model);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha!" : string.Empty;
