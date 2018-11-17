@@ -6,6 +6,7 @@ using TcUnip.Model.Cadastro;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Local;
 using TcUnip.Web.Models.Proxy.Contract;
+using TcUnip.Web.Session;
 using TcUnip.Web.Util;
 
 namespace TcUnip.Web.Areas.Usuario.Controllers
@@ -262,8 +263,9 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
                 listTipoPerfil = listPerfilSession.Item1;            
             else
             {
-                CommonSelectControls commonSelectControls = new CommonSelectControls();
-                listTipoPerfil = commonSelectControls.ListTipoPerfil();
+                SessionTipoPerfil sessionTipoPerfil = new SessionTipoPerfil();
+                listTipoPerfil = _commonProxy.ListTipoPerfil().Value;
+                sessionTipoPerfil.AddListToSession(listTipoPerfil, Constants.ConstSessions.listTipoPerfil);
             }
 
             listPerfil = listTipoPerfil.Select(l => new DataSelectControl

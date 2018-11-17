@@ -7,6 +7,7 @@ using TcUnip.Model.Common;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Local;
 using TcUnip.Web.Models.Proxy.Contract;
+using TcUnip.Web.Session;
 using TcUnip.Web.Util;
 
 namespace TcUnip.Web.Areas.Funcionario.Controllers
@@ -14,11 +15,13 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
     public class FuncionarioController : BaseController
     {
         readonly ICadastroProxy _cadastroProxy;
+        readonly ICommonProxy _commonProxy;
         readonly Mensagens mensagens = new Mensagens();        
 
-        public FuncionarioController(ICadastroProxy cadastroProxy)
+        public FuncionarioController(ICadastroProxy cadastroProxy, ICommonProxy commonProxy)
         {
             this._cadastroProxy = cadastroProxy;
+            this._commonProxy = commonProxy;
         }
 
         public ActionResult Listagem()
@@ -199,8 +202,9 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
                 listModalidade = listModalidadesSession.Item1;
             else
             {
-                CommonSelectControls commonSelectControls = new CommonSelectControls();
-                listModalidade = commonSelectControls.ListModalidades();
+                SessionModalidades sessionModalidades = new SessionModalidades();
+                listModalidade = _commonProxy.ListModalidades().Value;
+                sessionModalidades.AddListToSession(listModalidade, Constants.ConstSessions.listModalidades);
             }
 
             listModalidadesSelect = listModalidade.Select(l => new DataSelectControl

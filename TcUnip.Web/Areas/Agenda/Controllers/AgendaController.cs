@@ -9,6 +9,7 @@ using TcUnip.Model.Common;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Local;
 using TcUnip.Web.Models.Proxy.Contract;
+using TcUnip.Web.Session;
 using TcUnip.Web.Util;
 
 namespace TcUnip.Web.Areas.Agenda.Controllers
@@ -16,15 +17,17 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
     public class AgendaController : BaseController
     {
         readonly IAgendaProxy _agendaProxy;
-        readonly ICadastroProxy _cadastroProxy;        
+        readonly ICadastroProxy _cadastroProxy;
+        readonly ICommonProxy _commonProxy;
 
         readonly Constants.Constants constants = new Constants.Constants();
         readonly Mensagens mensagens = new Mensagens();        
 
-        public AgendaController(IAgendaProxy agendaProxy, ICadastroProxy _cadastroProxy)
+        public AgendaController(IAgendaProxy agendaProxy, ICadastroProxy _cadastroProxy, ICommonProxy commonProxy)
         {
             this._agendaProxy = agendaProxy;
             this._cadastroProxy = _cadastroProxy;
+            this._commonProxy = commonProxy;
         }
 
         #region Grid        
@@ -423,8 +426,9 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
                 listModalidade = listModalidadesSession.Item1;
             else
             {
-                CommonSelectControls commonSelectControls = new CommonSelectControls();
-                listModalidade = commonSelectControls.ListModalidades();
+                SessionModalidades sessionModalidades = new SessionModalidades();
+                listModalidade = _commonProxy.ListModalidades().Value;
+                sessionModalidades.AddListToSession(listModalidade, Constants.ConstSessions.listModalidades);
             }
 
             listModalidadesSelect = listModalidade.Select(l => new DataSelectControl
