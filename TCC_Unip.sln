@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcUnip.Data.Repositories", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcUnip.Data.Contract", "TcUnip.Data.Contract\TcUnip.Data.Contract.csproj", "{260E3B8C-F516-4AFF-908D-A78225052895}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcUnip.AppApi", "TcUnip.AppApi\TcUnip.AppApi.csproj", "{45F173F7-69CD-4AB1-98A1-A274D6BA5C9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{260E3B8C-F516-4AFF-908D-A78225052895}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{260E3B8C-F516-4AFF-908D-A78225052895}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{260E3B8C-F516-4AFF-908D-A78225052895}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45F173F7-69CD-4AB1-98A1-A274D6BA5C9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45F173F7-69CD-4AB1-98A1-A274D6BA5C9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45F173F7-69CD-4AB1-98A1-A274D6BA5C9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45F173F7-69CD-4AB1-98A1-A274D6BA5C9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +99,7 @@ Global
 		{4BE8AC73-357C-4360-8E52-68EC020B91ED} = {4C61B5F9-FBA5-4886-A5BC-6C130CE64621}
 		{B4FCFC38-683C-40D3-A6F0-58F24B9CFA00} = {4BE8AC73-357C-4360-8E52-68EC020B91ED}
 		{260E3B8C-F516-4AFF-908D-A78225052895} = {4BE8AC73-357C-4360-8E52-68EC020B91ED}
+		{45F173F7-69CD-4AB1-98A1-A274D6BA5C9E} = {77A86174-31F4-47E9-8AC6-31454EB5055B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44C65A0B-F40F-44E2-B215-9999CBE848BE}
