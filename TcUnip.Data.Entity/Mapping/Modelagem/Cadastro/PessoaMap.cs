@@ -26,7 +26,7 @@ namespace TcUnip.Data.Entity.Mapping.Modelagem.Cadastro
             Property(x => x.Telefone)
                 .HasMaxLength(20);                
 
-            Property(x => x.Rua)
+            Property(x => x.Logradouro)
                 .HasMaxLength(500);
 
             Property(x => x.Cep)

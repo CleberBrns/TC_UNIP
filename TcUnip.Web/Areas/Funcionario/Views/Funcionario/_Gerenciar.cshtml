@@ -1,11 +1,11 @@
-﻿@model TcUnip.Model.Pessoa.Funcionario
+﻿@model TcUnip.Model.Cadastro.FuncionarioModel
 
 @using TcUnip.Web.Models.Local;
 
 @{
     var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
     var listModalidades = (IList<DataSelectControl>)ViewBag.ListModalidades;
-    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Model.Cadastro.UsuarioModel)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -13,13 +13,10 @@
     using (Html.BeginForm())
     {
         <div class="form-horizontal">
-            @if (!string.IsNullOrEmpty(Model.Cpf))
+            <input type="hidden" name="Id" value=@Model.Id>
+            @if (!string.IsNullOrEmpty(Model.Pessoa.Cpf))
             {
-                <input type="hidden" name="Id" value=@Model.Cpf>               
-            }
-            @if (!string.IsNullOrEmpty(Model.Nome))
-            {
-                <input type="hidden" name="Nome" value='@Model.Nome'>
+                <input type="hidden" name="Id" value=@Model.Pessoa.Cpf>               
             }
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -27,29 +24,23 @@
                 <div class="form-group">
                     @Html.Label("Nome", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        @if (string.IsNullOrEmpty(Model.Nome))
-                        {
-                            <input type="text" autocomplete="off" class="form-control" id="nome" name="Nome" value="@Model.Nome" />
-                        }
-                        else
-                        {
-                            <input type="text" autocomplete="off" disabled="disabled" class="form-control"
-                                   id="nome" name="Nome" value="@Model.Nome" />
-                        }
+                        <input type="text" autocomplete="off" class="form-control" id="nome" 
+                               name="Pessoa.Nome" value="@Model.Pessoa.Nome" />
                         <span class="field-validation-valid text-danger" id="validaNome" data-valmsg-replace="true"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("CPF", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        @if (string.IsNullOrEmpty(Model.Cpf))
+                        @if (string.IsNullOrEmpty(Model.Pessoa.Cpf))
                         {
-                            <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf" value="@Model.Cpf" style="width: 40%" />
+                            <input type="text" autocomplete="off" class="form-control" id="cpf" 
+                                   name="Pessoa.Cpf" value="@Model.Pessoa.Cpf" style="width: 40%" />
                         }
                         else
                         {
-                            <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf"
-                                   value="@Model.Cpf" style="width: 40%" />
+                            <input type="text" autocomplete="off" class="form-control" id="cpf" 
+                                   name="Pessoa.Cpf" value="@Model.Pessoa.Cpf" style="width: 40%" />
 
                         }
                         <span class="field-validation-valid text-danger" id="validaCpf" data-valmsg-replace="true"></span>
@@ -58,36 +49,40 @@
                 <div class="form-group">
                     @Html.Label("E-mail", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" autocomplete="off" class="form-control" id="email" name="Email" value="@Model.Email" />
+                        <input type="text" autocomplete="off" class="form-control" id="email" 
+                               name="Pessoa.Email" value="@Model.Pessoa.Email" />
                         <span class="field-validation-valid text-danger" id="validaEmail" data-valmsg-replace="true"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("Endereço", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" autocomplete="off" class="form-control" id="endereco" name="Endereco.Logradouro" value="@Model.Endereco.Logradouro" />
+                        <input type="text" autocomplete="off" class="form-control" id="endereco" 
+                               name="Pessoa.Logradouro" value="@Model.Pessoa.Logradouro" />
                         <span class="field-validation-valid text-danger" id="validaEndereco" data-valmsg-replace="true"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("Cep", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" autocomplete="off" class="form-control" id="cep" name="Endereco.Cep" value="@Model.Endereco.Cep" style="width: 30%" />
+                        <input type="text" autocomplete="off" class="form-control" id="cep" 
+                               name="Pessoa.Cep" value="@Model.Pessoa.Cep" style="width: 30%" />
                         <span class="field-validation-valid text-danger" id="validaCep" data-valmsg-replace="true"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("Complemento", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" autocomplete="off" class="form-control" id="complemento" name="Endereco.Complemento"
-                               value="@Model.Endereco.Complemento" />
+                        <input type="text" autocomplete="off" class="form-control" id="complemento" 
+                               name="Pessoa.Complemento" value="@Model.Pessoa.Complemento" />
                         <span class="field-validation-valid text-danger" id="validaComplemento" data-valmsg-replace="true"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("Telefone", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" autocomplete="off" class="form-control" id="telefone" name="Telefone" value="@Model.Telefone" style="width: 40%" />
+                        <input type="text" autocomplete="off" class="form-control" id="telefone" 
+                               name="Pessoa.Telefone" value="@Model.Pessoa.Telefone" style="width: 40%" />
                         <span class="field-validation-valid text-danger" id="validaTelefone" data-valmsg-replace="true"></span>
                     </div>
                 </div>
@@ -96,11 +91,11 @@
                         @Html.Label("Situação", htmlAttributes: new { @class = "control-label col-md-3" })
                     </div>
                     <div class="col-md-8">
-                        <select class="form-control" id="status" name="Status" style="width: 42%">
+                        <select class="form-control" id="status" name="Ativo" style="width: 42%">
                             <option value="0">-- Selecione --</option>
                             @foreach (var item in listStatus)
                             {
-                                if (Model.Status == item.Value)
+                                if (Model.Ativo == Convert.ToBoolean(item.Value))
                                 {
                                     <option value="@item.Value" selected="selected">@item.Name</option>
                                 }
@@ -122,11 +117,12 @@
                         {
                             <div class="checkbox">
                                 <label>
-                                    @if (Model.Modalidades.Length > 0)
+                                    @if (Model.Modalidades.Count > 0)
                                     {
-                                        if (Model.Modalidades.Contains(item.Value))
+                                        if (Model.Modalidades.Where(m => m.IdModalidade == item.IntValue).FirstOrDefault() != null)
                                         {
-                                            <input type="checkbox" name="Modalidades" checked="checked" value="@item.Value" /> @item.Name
+                                            <input type="checkbox" name="Modalidades" checked="checked" 
+                                                   value="@item.Value" /> @item.Name
                                         }
                                         else
                                         {
@@ -158,139 +154,139 @@
 
     <script>
 
-    var SPMaskBehavior = function (val) {
-        return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
-    },
-    spOptions = {
-        onKeyPress: function (val, e, field, options) {
-            field.mask(SPMaskBehavior.apply({}, arguments), options);
-        }
-    };
-    $("#telefone").mask(SPMaskBehavior, spOptions);
-
-    $("#cpf").mask("999.999.999-99");
-    $("#cep").mask("99999-999");
-
-    $("#btnSalvar").on('click', function () {
-        if (funcionarioGerenciar.validar())
-            funcionarioGerenciar.salvar();
-    });
-
-    var funcionarioGerenciar = {
-
-        salvar: function () {
-
-            //Ajuste para impedir multiplos cliques
-            event.preventDefault();
-            var that = $(this);
-            that.off('click');
-
-            $.ajax({
-                url: "@Url.Action("Salvar", "Funcionario")",
-                type: "POST",
-                data: $('form').serialize(),
-                success: function (result) {
-
-                    var retorno = result.mensagensRetorno;
-
-                    if (retorno.Status) {
-                        swal({
-                            title: '',
-                            text: retorno.MensagemExibicao,
-                            type: 'success',
-                            confirmButtonColor: '#10386B',
-                            allowOutsideClick: false
-                        }).then(function () {
-                            bootbox.hideAll();
-                            funcoesIndexTabs.listaFuncionarios($(".abaFuncionarios"), false);
-                        });
-                    }
-                    else {
-
-                        swal({
-                            title: '',
-                            text: retorno.MensagemExibicao,
-                            type: 'warning',
-                            confirmButtonColor: '#10386B',
-                            allowOutsideClick: false
-                        });
-                        console.log(retorno.MensagemAnalise);
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    validacao.errorAjax(jqXHR, textStatus, errorThrown);
-                }
-            }).always(function () {
-                that.on('click', funcionarioGerenciar.salvar); //Devolve a ação do botão
-            });
+        var SPMaskBehavior = function (val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
         },
+        spOptions = {
+            onKeyPress: function (val, e, field, options) {
+                field.mask(SPMaskBehavior.apply({}, arguments), options);
+            }
+        };
+        $("#telefone").mask(SPMaskBehavior, spOptions);
 
-        validar: function () {
+        $("#cpf").mask("999.999.999-99");
+        $("#cep").mask("99999-999");
 
-            var ehValido = true;
+        $("#btnSalvar").on('click', function () {
+            if (funcionarioGerenciar.validar())
+                funcionarioGerenciar.salvar();
+        });
 
-            var nome = $("#nome").val().trim();
-            var validaNome = $("#validaNome");
+        var funcionarioGerenciar = {
 
-            var cpf = $("#cpf").val().trim();
-            var validaCpf = $("#validaCpf");
+            salvar: function () {
 
-            var email = $("#email").val().trim();
-            var validaEmail = $("#validaEmail");
+                //Ajuste para impedir multiplos cliques
+                event.preventDefault();
+                var that = $(this);
+                that.off('click');
 
-            var endereco = $("#endereco").val().trim();
-            var validaEndereco = $("#validaEndereco");
+                $.ajax({
+                    url: "@Url.Action("Salvar", "Funcionario")",
+                    type: "POST",
+                    data: $('form').serialize(),
+                    success: function (result) {
 
-            var cep = $("#cep").val().trim();
-            var validaCep = $("#validaCep");
+                        var retorno = result.mensagensRetorno;
 
-            var telefone = $("#telefone").val().trim();
-            var validaTelefone = $("#validaTelefone");
+                        if (retorno.Status) {
+                            swal({
+                                title: '',
+                                text: retorno.MensagemExibicao,
+                                type: 'success',
+                                confirmButtonColor: '#10386B',
+                                allowOutsideClick: false
+                            }).then(function () {
+                                bootbox.hideAll();
+                                funcoesIndexTabs.listaFuncionarios($(".abaFuncionarios"), false);
+                            });
+                        }
+                        else {
 
-            var status = $("#status").val();
-            var validaStatus = $("#validaStatus");
+                            swal({
+                                title: '',
+                                text: retorno.MensagemExibicao,
+                                type: 'warning',
+                                confirmButtonColor: '#10386B',
+                                allowOutsideClick: false
+                            });
+                            console.log(retorno.MensagemAnalise);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        validacao.errorAjax(jqXHR, textStatus, errorThrown);
+                    }
+                }).always(function () {
+                    that.on('click', funcionarioGerenciar.salvar); //Devolve a ação do botão
+                });
+            },
 
-            if (validacao.campoNulo(nome, validaNome))
-                ehValido = false;
+            validar: function () {
 
-            if (validacao.campoNulo(cpf, validaCpf))
-                ehValido = false;
+                var ehValido = true;
 
-            if (validacao.minLenght(cpf, validaCpf, 14, "Cpf inválido!"))
-                ehValido = false;
+                var nome = $("#nome").val().trim();
+                var validaNome = $("#validaNome");
 
-            if (validacao.campoNulo(email, validaEmail))
-                ehValido = false;
+                var cpf = $("#cpf").val().trim();
+                var validaCpf = $("#validaCpf");
 
-            if (!validacao.ValidarEmail(email, validaEmail))
-                ehValido = false;
+                var email = $("#email").val().trim();
+                var validaEmail = $("#validaEmail");
 
-            if (validacao.campoNulo(endereco, validaEndereco))
-                ehValido = false;
+                var endereco = $("#endereco").val().trim();
+                var validaEndereco = $("#validaEndereco");
 
-            if (validacao.campoNulo(cep, validaCep))
-                ehValido = false;
+                var cep = $("#cep").val().trim();
+                var validaCep = $("#validaCep");
 
-            if (validacao.minLenght(cep, validaCep, 9, "Cep inválido!"))
-                ehValido = false;
+                var telefone = $("#telefone").val().trim();
+                var validaTelefone = $("#validaTelefone");
 
-            if (validacao.campoNulo(telefone, validaTelefone))
-                ehValido = false;
+                var status = $("#status").val();
+                var validaStatus = $("#validaStatus");
 
-            if (validacao.minLenght(telefone, validaTelefone, 14, "Telefone inválido!"))
-                ehValido = false;
+                if (validacao.campoNulo(nome, validaNome))
+                    ehValido = false;
 
-            if (validacao.selectSelecionado(status, validaStatus, "Selecione uma Situação"))
-                ehValido = false;
+                if (validacao.campoNulo(cpf, validaCpf))
+                    ehValido = false;
 
-            return ehValido;
-        },
+                if (validacao.minLenght(cpf, validaCpf, 14, "Cpf inválido!"))
+                    ehValido = false;
 
-        closeModal: function () {
-            bootbox.hideAll();
-        }
+                if (validacao.campoNulo(email, validaEmail))
+                    ehValido = false;
 
-    };
+                if (!validacao.ValidarEmail(email, validaEmail))
+                    ehValido = false;
+
+                if (validacao.campoNulo(endereco, validaEndereco))
+                    ehValido = false;
+
+                if (validacao.campoNulo(cep, validaCep))
+                    ehValido = false;
+
+                if (validacao.minLenght(cep, validaCep, 9, "Cep inválido!"))
+                    ehValido = false;
+
+                if (validacao.campoNulo(telefone, validaTelefone))
+                    ehValido = false;
+
+                if (validacao.minLenght(telefone, validaTelefone, 14, "Telefone inválido!"))
+                    ehValido = false;
+
+                if (validacao.selectSelecionado(status, validaStatus, "Selecione uma Situação"))
+                    ehValido = false;
+
+                return ehValido;
+            },
+
+            closeModal: function () {
+                bootbox.hideAll();
+            }
+
+        };
 
     </script>
 }

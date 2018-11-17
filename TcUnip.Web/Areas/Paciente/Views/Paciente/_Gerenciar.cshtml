@@ -56,7 +56,7 @@
                     @Html.Label("Endereço", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
                         <input type="text" autocomplete="off" class="form-control" id="endereco" 
-                               name="Pessoa.Rua" value="@Model.Pessoa.Rua" />
+                               name="Pessoa.Logradouro" value="@Model.Pessoa.Logradouro" />
                         <span class="field-validation-valid text-danger" id="validaEndereco" data-valmsg-replace="true"></span>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                         @Html.Label("Situação", htmlAttributes: new { @class = "control-label col-md-3" })
                     </div>
                     <div class="col-md-8">
-                        <select class="form-control" id="status" name="Status" style="width: 42%">
+                        <select class="form-control" id="status" name="Ativo" style="width: 42%">
                             <option value="0">-- Selecione --</option>
                             @foreach (var item in listStatus)
                             {

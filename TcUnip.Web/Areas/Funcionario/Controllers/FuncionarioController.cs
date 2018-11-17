@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using TcUnip.Model.Cadastro;
+using TcUnip.Model.Common;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Local;
 using TcUnip.Web.Models.Proxy.Contract;
@@ -11,12 +13,12 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 {    
     public class FuncionarioController : BaseController
     {
-        readonly IFuncionarioProxy_old _funcionarioProxy;
+        readonly ICadastroProxy _cadastroProxy;
         readonly Mensagens mensagens = new Mensagens();        
 
-        public FuncionarioController(IFuncionarioProxy_old funcionarioProxy)
+        public FuncionarioController(ICadastroProxy cadastroProxy)
         {
-            this._funcionarioProxy = funcionarioProxy;
+            this._cadastroProxy = cadastroProxy;
         }
 
         public ActionResult Listagem()
@@ -35,9 +37,9 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 
             try
             {
-                var list = new List<Model.Pessoa.Funcionario>();
+                var list = new List<FuncionarioModel>();
 
-                var resultService = _funcionarioProxy.List();
+                var resultService = _cadastroProxy.ListFuncionario();
                 list = resultService.Value;
 
                 msgExibicao = resultService.Message;
@@ -66,13 +68,13 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
             ViewBag.ListStatus = GetListStatus();
             ViewBag.ListModalidades = GetListModalidades();
 
-            var model = new Model.Pessoa.Funcionario();
-            var defaultObj = model.GetModelDefault();
-            return PartialView("_Gerenciar", defaultObj);
+            //var model = new FuncionarioModel();
+            //var defaultObj = model.GetModelDefault();
+            return PartialView("_Gerenciar", new FuncionarioModel());
         }
 
         [HttpGet]
-        public ActionResult ModalEditar(string id)
+        public ActionResult ModalEditar(int id)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -86,7 +88,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
                 ViewBag.ListStatus = GetListStatus();
                 ViewBag.ListModalidades = GetListModalidades();
 
-                var resultService = _funcionarioProxy.Get(id);
+                var resultService = _cadastroProxy.GetFuncionario(id);
 
                 if (resultService.Status)
                     return PartialView("_Gerenciar", resultService.Value);
@@ -109,7 +111,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
         }
 
         [HttpPost]
-        public ActionResult Salvar(Model.Pessoa.Funcionario model)
+        public ActionResult Salvar(FuncionarioModel model)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -118,7 +120,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 
             try
             {
-                var resultService = _funcionarioProxy.Salva(model);
+                var resultService = _cadastroProxy.SalvaFuncionario(model);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha" : string.Empty;
@@ -134,7 +136,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
         }
 
         [HttpPost]
-        public ActionResult Excluir(string id)
+        public ActionResult Excluir(int id)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -143,7 +145,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 
             try
             {
-                var resultService = _funcionarioProxy.Exclui(id);
+                var resultService = _cadastroProxy.ExcluiFuncionario(id);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha" : string.Empty;
@@ -160,18 +162,21 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 
         #region Métodos Privados
 
-        private List<Model.Pessoa.Funcionario> ConfiguraListaExibicao(List<Model.Pessoa.Funcionario> list)
+        private List<FuncionarioModel> ConfiguraListaExibicao(List<FuncionarioModel> list)
         {
             //Seleciona somente os itens há serem exibidos para melhor performance
             if (list != null && list.Count > 0)
             {
                 list = list.Select(l =>
-                    new Model.Pessoa.Funcionario
+                    new FuncionarioModel
                     {
-                        Nome = l.Nome,
-                        Cpf = l.Cpf,
-                        Status = l.Status,
-                        Email = l.Email
+                        Pessoa = new PessoaModel
+                        {
+                            Nome = l.Pessoa.Nome,
+                            Cpf = l.Pessoa.Cpf,
+                            Email = l.Pessoa.Email
+                        },
+                        Ativo = l.Ativo
                     }).ToList();
             }
 
@@ -186,8 +191,25 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 
         private List<DataSelectControl> GetListModalidades()
         {
-            var constants = new Constants.Constants();
-            return constants.ListModalidades();
+            var listModalidadesSelect = new List<DataSelectControl>();
+            var listModalidade = new List<ModalidadeModel>();
+            var listModalidadesSession = GetListModalidadesSession();
+
+            if (listModalidadesSession.Item2)
+                listModalidade = listModalidadesSession.Item1;
+            else
+            {
+                CommonSelectControls commonSelectControls = new CommonSelectControls();
+                listModalidade = commonSelectControls.ListModalidades();
+            }
+
+            listModalidadesSelect = listModalidade.Select(l => new DataSelectControl
+            {
+                Name = l.Nome,
+                IntValue = l.Id
+            }).ToList();
+
+            return listModalidadesSelect;
         }        
 
         #endregion
