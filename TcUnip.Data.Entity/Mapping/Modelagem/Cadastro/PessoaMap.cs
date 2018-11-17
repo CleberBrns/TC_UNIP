@@ -26,8 +26,14 @@ namespace TcUnip.Data.Entity.Mapping.Modelagem.Cadastro
             Property(x => x.Telefone)
                 .HasMaxLength(20);                
 
-            Property(x => x.Endereco)
-                .HasMaxLength(500);                
+            Property(x => x.Rua)
+                .HasMaxLength(500);
+
+            Property(x => x.Cep)
+                .HasMaxLength(10);
+
+            Property(x => x.Complemento)
+                .HasMaxLength(500);
 
             Property(x => x.Ativo)
                 .IsRequired();

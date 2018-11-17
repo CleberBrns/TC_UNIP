@@ -201,7 +201,7 @@ namespace TcUnip.Service.Cadastro
         public Result<List<PacienteModel>> ListPaciente()
         {
             var result = new Result<List<PacienteModel>>();
-            result.Value = _pacienteRepository.Lista(x => !x.Excluido).ToList();
+            result.Value = _pacienteRepository.Lista(x => !x.Excluido, x => x.Pessoa).ToList();
 
             return result;
         }

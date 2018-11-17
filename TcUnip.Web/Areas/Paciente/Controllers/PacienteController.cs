@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using TcUnip.Model.Cadastro;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Local;
 using TcUnip.Web.Models.Proxy.Contract;
@@ -11,12 +12,12 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
 {
     public class PacienteController : BaseController
     {
-        readonly IPacienteProxy_old _pacienteProxy;
+        readonly ICadastroProxy _cadastroProxy;
         readonly Mensagens mensagens = new Mensagens();        
 
-        public PacienteController(IPacienteProxy_old pacienteProxy)
+        public PacienteController(ICadastroProxy cadastroProxy)
         {
-            this._pacienteProxy = pacienteProxy;
+            this._cadastroProxy = cadastroProxy;
         }
 
         public ActionResult Listagem()
@@ -34,9 +35,9 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
 
             try
             {
-                var list = new List<Model.Pessoa.Paciente>();               
+                var list = new List<PacienteModel>();               
 
-                var resultService = _pacienteProxy.List();
+                var resultService = _cadastroProxy.ListPaciente();
                 list = resultService.Value;
 
                 msgExibicao = resultService.Message;                
@@ -61,13 +62,13 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
             ViewBag.Usuario = GetUsuarioSession().Item1;
             ViewBag.ListStatus = GetListStatus();
 
-            var model = new Model.Pessoa.Paciente();
-            var defaultObj = model.GetModelDefault();
-            return PartialView("_Gerenciar", defaultObj);
+            //var model = new PacienteModel();
+            //var defaultObj = model.GetModelDefault();
+            return PartialView("_Gerenciar", new PacienteModel());
         }
 
         [HttpGet]
-        public ActionResult ModalEditar(string id)
+        public ActionResult ModalEditar(int id)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -80,7 +81,7 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
             {
                 ViewBag.ListStatus = GetListStatus();
 
-                var resultService = _pacienteProxy.Get(id);
+                var resultService = _cadastroProxy.GetPaciente(id);
 
                 if (resultService.Status)
                     return PartialView("_Gerenciar", resultService.Value);
@@ -103,7 +104,7 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
         }
 
         [HttpPost]
-        public ActionResult Salvar(Model.Pessoa.Paciente model)
+        public ActionResult Salvar(PacienteModel model)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -112,7 +113,7 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
 
             try
             {                
-                var resultService = _pacienteProxy.Salva(model);
+                var resultService = _cadastroProxy.SalvaPaciente(model);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha!" : string.Empty;
@@ -128,7 +129,7 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
         }
 
         [HttpPost]
-        public ActionResult Excluir(string id)
+        public ActionResult Excluir(int id)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -137,7 +138,7 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
 
             try
             {                
-                var resultService = _pacienteProxy.Exclui(id);
+                var resultService = _cadastroProxy.ExcluiPaciente(id);
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha" : string.Empty;
@@ -154,18 +155,21 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
 
         #region Métodos Privados
 
-        private List<Model.Pessoa.Paciente> ConfiguraListaExibicao(List<Model.Pessoa.Paciente> list)
+        private List<PacienteModel> ConfiguraListaExibicao(List<PacienteModel> list)
         {            
             //Seleciona somente os itens há serem exibidos para melhor performance
             if (list != null && list.Count > 0)
             {
                 list = list.Select(l =>
-                       new Model.Pessoa.Paciente
+                       new PacienteModel
                         {
-                            Nome = l.Nome,
-                            Cpf = l.Cpf,
-                            Status = l.Status,
-                            Email = l.Email
+                           Pessoa = new PessoaModel
+                           {
+                               Nome = l.Pessoa.Nome,
+                               Cpf = l.Pessoa.Cpf,
+                               Email = l.Pessoa.Email
+                           },
+                           Ativo = l.Ativo
                         }).ToList();
             }
 

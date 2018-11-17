@@ -1,10 +1,10 @@
-﻿@model TcUnip.Model.Pessoa.Paciente
+﻿@model TcUnip.Model.Cadastro.PacienteModel
 
 @using TcUnip.Web.Models.Local;
 
 @{
     var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
-    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Model.Cadastro.UsuarioModel)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -12,14 +12,10 @@
     using (Html.BeginForm())
     {
         <div class="form-horizontal">
-
-            @if (!string.IsNullOrEmpty(Model.Cpf))
+            <input type="hidden" name="Id" value=@Model.Id>
+            @if (!string.IsNullOrEmpty(Model.Pessoa.Cpf))
             {
-                <input type="hidden" name="Id" value=@Model.Cpf>                
-            }
-            @if (!string.IsNullOrEmpty(Model.Nome))
-            {
-                <input type="hidden" name="Nome" value='@Model.Nome'>
+                <input type="hidden" name="Cpf" value=@Model.Pessoa.Cpf>                
             }
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -27,29 +23,23 @@
                 <div class="form-group">
                     @Html.Label("Nome", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        @if (string.IsNullOrEmpty(Model.Nome))
-                        {
-                            <input type="text" autocomplete="off" class="form-control" id="nome" name="Nome" value="@Model.Nome" />
-                        }
-                        else
-                        {
-                            <input type="text" autocomplete="off" disabled="disabled" class="form-control" 
-                                   id="nome" name="Nome" value="@Model.Nome" />    
-                        }                        
+                        <input type="text" autocomplete="off" class="form-control" id="nome" 
+                               name="Pessoa.Nome" value="@Model.Pessoa.Nome" />
                         <span class="field-validation-valid text-danger" id="validaNome" data-valmsg-replace="true"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("CPF", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        @if (string.IsNullOrEmpty(Model.Cpf))
+                        @if (string.IsNullOrEmpty(Model.Pessoa.Cpf))
                         {
-                            <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf" value="@Model.Cpf" style="width: 40%" />
+                            <input type="text" autocomplete="off" class="form-control" id="cpf" 
+                                   name="Pessoa.Cpf" value="@Model.Pessoa.Cpf" style="width: 40%" />
                         }
                         else
                         {
-                            <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf"
-                                   value="@Model.Cpf" style="width: 40%" />
+                            <input type="text" autocomplete="off" class="form-control" id="cpf" 
+                                   name="Pessoa.Cpf" value="@Model.Pessoa.Cpf" style="width: 40%" />
                         }
                         <span class="field-validation-valid text-danger" id="validaCpf" data-valmsg-replace="true"></span>
                     </div>
@@ -57,36 +47,40 @@
                 <div class="form-group">
                     @Html.Label("E-mail", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" autocomplete="off" class="form-control" id="email" name="Email" value="@Model.Email" />
+                        <input type="text" autocomplete="off" class="form-control" id="email" 
+                               name="Pessoa.Email" value="@Model.Pessoa.Email" />
                         <span class="field-validation-valid text-danger" id="validaEmail" data-valmsg-replace="true"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("Endereço", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" autocomplete="off" class="form-control" id="endereco" name="Endereco.Logradouro" value="@Model.Endereco.Logradouro" />
+                        <input type="text" autocomplete="off" class="form-control" id="endereco" 
+                               name="Pessoa.Rua" value="@Model.Pessoa.Rua" />
                         <span class="field-validation-valid text-danger" id="validaEndereco" data-valmsg-replace="true"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("Cep", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" autocomplete="off" class="form-control" id="cep" name="Endereco.Cep" value="@Model.Endereco.Cep" style="width: 30%" />
+                        <input type="text" autocomplete="off" class="form-control" id="cep" 
+                               name="Pessoa.Cep" value="@Model.Pessoa.Cep" style="width: 30%" />
                         <span class="field-validation-valid text-danger" id="validaCep" data-valmsg-replace="true"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("Complemento", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" autocomplete="off" class="form-control" id="complemento" name="Endereco.Complemento"
-                               value="@Model.Endereco.Complemento" />
+                        <input type="text" autocomplete="off" class="form-control" id="complemento" 
+                               name="Pessoa.Complemento" value="@Model.Pessoa.Complemento" />
                         <span class="field-validation-valid text-danger" id="validaComplemento" data-valmsg-replace="true"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.Label("Telefone", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-8">
-                        <input type="text" autocomplete="off" class="form-control" id="telefone" name="Telefone" value="@Model.Telefone" style="width: 40%" />
+                        <input type="text" autocomplete="off" class="form-control" id="telefone" 
+                               name="Pessoa.Telefone" value="@Model.Pessoa.Telefone" style="width: 40%" />
                         <span class="field-validation-valid text-danger" id="validaTelefone" data-valmsg-replace="true"></span>
                     </div>
                 </div>
@@ -99,13 +93,13 @@
                             <option value="0">-- Selecione --</option>
                             @foreach (var item in listStatus)
                             {
-                                if (Model.Status == item.Value)
+                                if (Model.Ativo == Convert.ToBoolean(item.IntValue))
                                 {
-                                    <option value="@item.Value" selected="selected">@item.Name</option>
+                                    <option value="@item.IntValue" selected="selected">@item.Name</option>
                                 }
                                 else
                                 {
-                                    <option value="@item.Value">@item.Name</option>
+                                    <option value="@item.IntValue">@item.Name</option>
                                 }
                             }
                         </select>
