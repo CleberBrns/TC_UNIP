@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="Mapping\Modelagem\Common\ModalidadeMap.cs" />
     <Compile Include="Mapping\Modelagem\Agenda\SessaoMap.cs" />
-    <Compile Include="Mapping\Modelagem\Agenda\StatusSessaoMap.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\FuncionarioMap.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\ModalidadeFuncionarioMap.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\PacienteMap.cs" />
@@ -67,7 +66,6 @@
     <Compile Include="Migrations\TcUnipHistoryContext.cs" />
     <Compile Include="Modelagem\Common\Modalidade.cs" />
     <Compile Include="Modelagem\Agenda\Sessao.cs" />
-    <Compile Include="Modelagem\Agenda\StatusSessao.cs" />
     <Compile Include="Modelagem\Cadastro\Funcionario.cs" />
     <Compile Include="Modelagem\Cadastro\Paciente.cs" />
     <Compile Include="Modelagem\Cadastro\Pessoa.cs" />
@@ -75,7 +73,6 @@
     <Compile Include="Modelagem\FluxoCaixa\Caixa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeedItens\ModalidadeSeed.cs" />
-    <Compile Include="SeedItens\StatusSessaoSeed.cs" />
     <Compile Include="SeedItens\TipoPerfilSeed.cs" />
     <Compile Include="SeedItens\UsuarioSeed.cs" />
     <Compile Include="TcUnipContext.cs" />

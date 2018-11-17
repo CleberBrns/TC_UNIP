@@ -26,12 +26,12 @@ namespace TcUnip.Data.Entity
         public DbSet<Pessoa> Pessoa { get; set; }
         public DbSet<Paciente> Paciente { get; set; }
         public DbSet<Funcionario> Funcionario { get; set; }
+        public DbSet<ModalidadeFuncionario> ModalidadeFuncionario { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<TipoPerfil> TipoPerfil { get; set; }
 
         public DbSet<Modalidade> Modalidade { get; set; }
         public DbSet<Sessao> Sessao { get; set; }
-        public DbSet<StatusSessao> StatusSessao { get; set; }
 
         public DbSet<Caixa> Caixa { get; set; }
 
