@@ -41,22 +41,15 @@ namespace TcUnip.Web.Controllers
 
             try
             {
-                if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(model.Senha))
-                {
-                    resultService = _UsuarioModelProxy.AutenticaUsuario(model);
-                    model = resultService.Value;
+                resultService = _UsuarioModelProxy.AutenticaUsuario(model);
+                model = resultService.Value;
 
-                    if (resultService.Status)
-                        session.AddModelToSession(model, sessionName);                        
+                if (resultService.Status)
+                    session.AddModelToSession(model, sessionName);
 
-                    msgExibicao = resultService.Message;
-                    msgAnalise = !resultService.Status ? "Falha" : string.Empty;
-                }
-                else
-                {
-                    msgExibicao = "O campo E-mail e Senha são obrigatórios!";
-                    msgAnalise = Constants.Constants.msgFalhaPadrao;
-                }               
+                msgExibicao = resultService.Message;
+                msgAnalise = !resultService.Status ? "Falha" : string.Empty;
+
             }
             catch (Exception ex)
             {

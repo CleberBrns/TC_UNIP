@@ -57,9 +57,7 @@ namespace TcUnip.Service.Cadastro
         }
 
         public Result<UsuarioModel> AutenticaUsuario(UsuarioModel model)
-        {
-            var teste = GerenciaCriptografia.CriptografaString(model.Senha);
-
+        {           
             var usuarioValido = false;
             var result = new Result<UsuarioModel>();
             result.Status = false;
