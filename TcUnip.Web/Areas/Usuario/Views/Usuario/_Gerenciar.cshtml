@@ -5,8 +5,8 @@
 @{
     var listStatus = (IList<DataSelectControl>)ViewBag.ListStatus;
     var listPerfil = (IList<DataSelectControl>)ViewBag.ListPerfil;
-    var listFuncionarios = (IList<TcUnip.Model.Pessoa.Funcionario>)ViewBag.ListFuncionarios;
-    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+    var listFuncionarios = (IList<TcUnip.Model.Cadastro.FuncionarioModel>)ViewBag.ListFuncionarios;
+    var user = (TcUnip.Model.Cadastro.UsuarioModel)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -14,11 +14,9 @@
     using (Html.BeginForm())
     {
         <div class="form-horizontal">
-
+            <input type="hidden" name="Id" id="Id" value=@Model.Id>
             @if (!string.IsNullOrEmpty(Model.Email))
-            {
-                <input type="hidden" name="Id" id="Id" value=@Model.Email>
-                <input type="hidden" name="Cpf" id="hddCpf" value="@Model.Cpf">
+            {                
                 <input type="hidden" name="Email" id="hddEmail" value="@Model.Email">
             }
             <input type="hidden" name="Permissoes" id="hddPermissao">
@@ -40,19 +38,19 @@
                                         <option value="0">-- Selecione --</option>
                                         @foreach (var item in listFuncionarios)
                                         {
-                                            if (Model.Cpf == item.Cpf)
+                                            if (Model.Cpf == item.Pessoa.Cpf)
                                             {
-                                                <option value="@item.Cpf" email="@item.Email"
-                                                        modalidade="@item.Modalidades.FirstOrDefault()"
+                                                <option value="@item.Pessoa.Cpf" email="@item.Pessoa.Email"
+                                                        modalidade="@item.Modalidades.FirstOrDefault().Modalidade.Nome"
                                                         selected="selected">
-                                                    @item.Nome
+                                                    @item.Pessoa.Nome
                                                 </option>
                                             }
                                             else
                                             {
-                                                <option value="@item.Cpf" email="@item.Email"
-                                                        modalidade="@item.Modalidades.FirstOrDefault()">
-                                                    @item.Nome
+                                                <option value="@item.Pessoa.Cpf" email="@item.Pessoa.Email"
+                                                        modalidade="@item.Modalidades.FirstOrDefault().Modalidade.Nome">
+                                                    @item.Pessoa.Nome
                                                 </option>
                                             }
                                         }
@@ -74,11 +72,12 @@
                     <div class="col-md-8">
                         @if (string.IsNullOrEmpty(Model.Cpf))
                         {
-                            <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf" value="@Model.Cpf" style="width: 40%" />
+                            <input type="text" autocomplete="off" class="form-control" id="cpf" 
+                                   name="Cpf" value="@Model.Cpf" style="width: 40%" />
                         }
                         else
                         {
-                            if (user.Permissoes.FirstOrDefault().Equals(TcUnip.Web.Constants.ConstPermissoes.profissional))
+                            if (user.TipoPerfil.Permissao.Equals(TcUnip.Web.Constants.ConstPermissoes.profissional))
                             {
                                 <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf"
                                        value="@Model.Cpf" style="width: 40%" />
@@ -115,7 +114,7 @@
                             <option value="0">-- Selecione --</option>
                             @foreach (var item in listPerfil)
                             {
-                                if (Model.Permissoes.FirstOrDefault() == item.Value)
+                                if (Model.TipoPerfil.Permissao == item.Value)
                                 {
                                     <option value="@item.Value" selected="selected">@item.Name</option>
                                 }
