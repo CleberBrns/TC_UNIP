@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Web.Mvc;
+using TcUnip.Model.Agenda;
+using TcUnip.Model.Cadastro;
 using TcUnip.Model.Common;
 using TcUnip.Web.Controllers;
 using TcUnip.Web.Models.Local;
@@ -13,19 +15,16 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
 {
     public class AgendaController : BaseController
     {
-        readonly IAgendaProxy_old _agendaProxy;
-        readonly IPacienteProxy_old _pacienteProxy;
-        readonly IFuncionarioProxy_old _funcionarioProxy;
+        readonly IAgendaProxy _agendaProxy;
+        readonly ICadastroProxy _cadastroProxy;        
 
         readonly Constants.Constants constants = new Constants.Constants();
-        readonly Mensagens mensagens = new Mensagens();
-        readonly ReplacesService replacesService = new ReplacesService();
+        readonly Mensagens mensagens = new Mensagens();        
 
-        public AgendaController(IAgendaProxy_old agendaProxy, IPacienteProxy_old pacienteProxy, IFuncionarioProxy_old funcionarioProxy)
+        public AgendaController(IAgendaProxy agendaProxy, ICadastroProxy _cadastroProxy)
         {
             this._agendaProxy = agendaProxy;
-            this._pacienteProxy = pacienteProxy;
-            this._funcionarioProxy = funcionarioProxy;
+            this._cadastroProxy = _cadastroProxy;
         }
 
         #region Grid        
@@ -78,7 +77,12 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
 
             try
             {
-                var resultService = _agendaProxy.ListAgendaPeriodo(dataInicio, dataFim);
+                var dadosPesquisa = new PesquisaModel
+                {
+                    DataIncio = Convert.ToDateTime(dataInicio),
+                    DataFim = Convert.ToDateTime(dataFim)
+                };
+                var resultService = _agendaProxy.ListAgendaPeriodo(dadosPesquisa);
 
                 var list = FiltraListaPorPerfil(resultService.Value);
 
@@ -155,25 +159,14 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
 
         #region Modal Gerenciar
 
-        public ActionResult GetModalidadesProfissional(string cpf)
+        public ActionResult GetModalidadesProfissional(int id)
         {
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
             try
             {
-                var resultService = _funcionarioProxy.Get(cpf);
-                if (!resultService.Status)
-                    msgAnalise = "Erro!";
-
-                msgExibicao = resultService.Message;                
-
-                var listModalidades = GetListModalidades();
-                if (resultService.Status)
-                {
-                    var modalidadesProf = resultService.Value.Modalidades;
-                    listModalidades = listModalidades.Where(l => modalidadesProf.Contains(l.Value)).ToList();
-                }
+                var listModalidades = GetListModalidadesProfissional(id);
 
                 return Json(listModalidades, JsonRequestBehavior.AllowGet);
             }
@@ -187,7 +180,7 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Salvar(Model.Calendario.Agenda model)
+        public ActionResult Salvar(SessaoModel model)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -223,8 +216,8 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
             ViewBag.ListProfissionais = GetListProfissionais();            
             ViewBag.ListHorarios = GetListHorarios();
 
-            var model = new Model.Calendario.Agenda();
-            model = model.GetModelDefault();
+            var model = new SessaoModel();
+            //model = model.GetModelDefault();
 
             if (!string.IsNullOrEmpty(data))
                 model.Data = Convert.ToDateTime(data);
@@ -234,7 +227,7 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
             return PartialView("_Gerenciar", model);
         }
 
-        public ActionResult ModalEditar(string id)
+        public ActionResult ModalEditar(int id)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -253,10 +246,7 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
                     ViewBag.ListPacientes = GetListPacientes();
                     ViewBag.ListProfissionais = GetListProfissionais();
                     ViewBag.ListHorarios = GetListHorarios();
-                    ViewBag.ListModalidades = GetListModalidadesProfissional(model.Funcionario.Cpf);
-
-                    model.Data = replacesService.FromMilliseconds(model.DateTimeService);
-                    model.Horario = model.Data.ToShortTimeString();
+                    ViewBag.ListModalidades = GetListModalidadesProfissional(model.Funcionario.Id);                    
 
                     return PartialView("_Gerenciar", model);
                 }
@@ -291,7 +281,7 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
         }
 
         [HttpPost]
-        public ActionResult Excluir(string id)
+        public ActionResult Excluir(int id)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
@@ -320,30 +310,28 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
         /// <summary>
         /// O acesso do Profissional lista apenas as consultas marcadas com o mesmo
         /// </summary>
-        /// <param name="listAgenda"></param>
+        /// <param name="listSessoes"></param>
         /// <returns></returns>
-        private List<Model.Calendario.Agenda> FiltraListaPorPerfil(List<Model.Calendario.Agenda> listAgenda)
+        private List<SessaoModel> FiltraListaPorPerfil(List<SessaoModel> listSessoes)
         {
-            if (listAgenda.Count > 0 && 
-                Constants.ConstPermissoes.profissional.Equals(GetUsuarioSession().Item1.Permissoes.FirstOrDefault()))
+            if (listSessoes.Count > 0 && 
+                Constants.ConstPermissoes.profissional.Equals(GetUsuarioSession().Item1.TipoPerfil.Permissao))
             {
-                listAgenda = listAgenda.Where(l => l.Funcionario.Cpf.Equals(GetUsuarioSession().Item1.Cpf)).ToList();
+                listSessoes = listSessoes.Where(l => l.Funcionario.Pessoa.Cpf.Equals(GetUsuarioSession().Item1.Cpf)).ToList();
             }
 
-            return listAgenda;
+            return listSessoes;
         }
 
-        private List<DataSelectControl> GetListModalidadesProfissional(string cpf)
+        private List<DataSelectControl> GetListModalidadesProfissional(int id)
         {
-            var resultService = _funcionarioProxy.Get(cpf);
+            var resultService = _cadastroProxy.GetFuncionario(id);
 
-            var listModalidades = new List<DataSelectControl>();
-            if (resultService.Status)
+            var listModalidades = GetListModalidades();
+            if (resultService.Status && resultService.Value.Modalidades.Count > 0)
             {
-                listModalidades = GetListModalidades();
-
-                var modalidadesProf = resultService.Value.Modalidades;
-                listModalidades = listModalidades.Where(l => modalidadesProf.Contains(l.Value)).ToList();
+                var idsModalidades = resultService.Value.Modalidades.Select(m => m.IdModalidade).ToArray();
+                listModalidades = listModalidades.Where(l => idsModalidades.Contains(l.IntValue)).ToList();
             }
 
             return listModalidades;
@@ -364,37 +352,42 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
 
         private List<EventoCalendario> GetAgendaCalendarioPorDatas(string dataInicio, string dataFim)
         {
-            var resultService = _agendaProxy.ListAgendaPeriodo(dataInicio, dataFim);
+            var dadosPesquisa = new PesquisaModel
+            {
+                DataIncio = Convert.ToDateTime(dataInicio),
+                DataFim = Convert.ToDateTime(dataFim)
+            };
+            var resultService = _agendaProxy.ListAgendaPeriodo(dadosPesquisa);
             var listAgendaDoMes = FiltraListaPorPerfil(resultService.Value);
 
             var list = listAgendaDoMes.Select(l =>
                                        new EventoCalendario
                                        {
                                            IdConsulta = l.Id,
-                                           Titulo = l.Modalidade,
+                                           Titulo = l.Modalidade.Nome,
                                            Descricao = GetDescricaoEvento(l),
-                                           ComecaEm = replacesService.FromMilliseconds(l.DateTimeService),
-                                           TerminaEm = replacesService.FromMilliseconds(l.DateTimeService).AddHours(1),
-                                           CorEvento = GetCorEvento(replacesService.FromMilliseconds(l.DateTimeService))
+                                           ComecaEm = l.Data,
+                                           TerminaEm = l.Data.AddHours(1),
+                                           CorEvento = GetCorEvento(l.Data)
                                        }).ToList();
 
             return list.OrderBy(l => l.ComecaEm).ToList();
         }
 
-        private string GetTituloEvento(Model.Calendario.Agenda agenda)
+        private string GetTituloEvento(SessaoModel agenda)
         {
-            var paciente = agenda.Paciente.Nome.Substring(0, Math.Min(8, agenda.Paciente.Nome.Length));
-            var profissional = agenda.Funcionario.Nome.Substring(0, Math.Min(8, agenda.Funcionario.Nome.Length));
+            var paciente = agenda.Paciente.Pessoa.Nome.Substring(0, Math.Min(8, agenda.Paciente.Pessoa.Nome.Length));
+            var profissional = agenda.Funcionario.Pessoa.Nome.Substring(0, Math.Min(8, agenda.Funcionario.Pessoa.Nome.Length));
             var titulo = agenda.Modalidade + ", " + paciente + ", " + profissional;
 
             return titulo;
         }
 
-        private string GetDescricaoEvento(Model.Calendario.Agenda agenda)
+        private string GetDescricaoEvento(SessaoModel agenda)
         {
             return "Sessão de " + agenda.Modalidade + ", " +
-                   " agendada para o Paciente " + agenda.Paciente.Nome +
-                   " com o Profissional " + agenda.Funcionario.Nome;                 
+                   " agendada para o Paciente " + agenda.Paciente.Pessoa.Nome +
+                   " com o Profissional " + agenda.Funcionario.Pessoa.Nome;                 
         }
 
         private string GetCorEvento(DateTime dataEvento)
@@ -410,19 +403,37 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
             return cor;            
         }
 
-        private List<Model.Pessoa.Paciente> GetListPacientes()
+        private List<PacienteModel> GetListPacientes()
         {
-            return _pacienteProxy.List().Value;
+            return _cadastroProxy.ListPaciente().Value;
         }
 
-        private List<Model.Pessoa.Funcionario> GetListProfissionais()
+        private List<FuncionarioModel> GetListProfissionais()
         {
-            return _funcionarioProxy.ListProfissionais().Value;
+            return _cadastroProxy.ListProfissionais().Value;
         }
 
         private List<DataSelectControl> GetListModalidades()
-        {            
-            return constants.ListModalidades();
+        {
+            var listModalidadesSelect = new List<DataSelectControl>();
+            var listModalidade = new List<ModalidadeModel>();
+            var listModalidadesSession = GetListModalidadesSession();
+
+            if (listModalidadesSession.Item2)
+                listModalidade = listModalidadesSession.Item1;
+            else
+            {
+                CommonSelectControls commonSelectControls = new CommonSelectControls();
+                listModalidade = commonSelectControls.ListModalidades();
+            }
+
+            listModalidadesSelect = listModalidade.Select(l => new DataSelectControl
+            {
+                Name = l.Nome,
+                IntValue = l.Id
+            }).ToList();
+
+            return listModalidadesSelect;
         }
 
         private List<DataSelectControl> GetListHorarios()

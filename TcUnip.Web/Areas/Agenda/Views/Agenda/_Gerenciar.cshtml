@@ -1,14 +1,14 @@
-﻿@model TcUnip.Model.Calendario.Agenda
+﻿@model TcUnip.Model.Agenda.SessaoModel
 
 @using TcUnip.Web.Models.Local;
 
 @{
-    var listPacientes = (IList<TcUnip.Model.Pessoa.Paciente>)ViewBag.ListPacientes;
-    var listProfissionais = (IList<TcUnip.Model.Pessoa.Funcionario>)ViewBag.ListProfissionais;
+    var listPacientes = (IList<TcUnip.Model.Cadastro.PacienteModel>)ViewBag.ListPacientes;
+    var listProfissionais = (IList<TcUnip.Model.Cadastro.FuncionarioModel>)ViewBag.ListProfissionais;
     var listHorarios = (IList<DataSelectControl>)ViewBag.ListHorarios;
     var listModalidades = (IList<DataSelectControl>)ViewBag.ListModalidades;
 
-    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Model.Cadastro.UsuarioModel)ViewBag.Usuario;
 }
 
 <link href="~/Content/bootstrap-datepicker3.css" rel="stylesheet" />
@@ -35,25 +35,25 @@
                             @Html.Label("Paciente", htmlAttributes: new { @class = "control-label col-md-3" })
                         </div>
                         <div class="col-md-8">
-                            <select class="form-control alinhamentoSelect" id="paciente" name="Paciente.Cpf">
+                            <select class="form-control alinhamentoSelect" id="paciente" name="Paciente.Pessoa.Cpf">
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listPacientes)
                                 {
-                                    if (Model.Paciente != null && !string.IsNullOrEmpty(Model.Paciente.Cpf))
+                                    if (Model.Paciente != null && !string.IsNullOrEmpty(Model.Paciente.Pessoa.Cpf))
                                     {
-                                        if (Model.Paciente.Cpf == item.Cpf)
+                                        if (Model.Paciente.Pessoa.Cpf == item.Pessoa.Cpf)
                                         {
-                                            <option value="@item.Cpf" selected="selected">@item.Nome</option>
+                                            <option value="@item.Pessoa.Cpf" selected="selected">@item.Pessoa.Nome</option>
                                         }
                                         else
                                         {
-                                            <option value="@item.Cpf">@item.Nome</option>
+                                            <option value="@item.Pessoa.Cpf">@item.Pessoa.Nome</option>
                                         }
 
                                     }
                                     else
                                     {
-                                        <option value="@item.Cpf">@item.Nome</option>
+                                        <option value="@item.Pessoa.Cpf">@item.Pessoa.Nome</option>
                                     }
                                 }
                             </select>
@@ -65,25 +65,25 @@
                             @Html.Label("Profissional", htmlAttributes: new { @class = "control-label col-md-3" })
                         </div>
                         <div class="col-md-8">
-                            <select class="form-control alinhamentoSelect" id="profissional" name="Funcionario.Cpf">
+                            <select class="form-control alinhamentoSelect" id="profissional" name="Funcionario.Pessoa.Cpf">
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listProfissionais)
                                 {
-                                    if (Model.Funcionario != null && !string.IsNullOrEmpty(Model.Funcionario.Cpf))
+                                    if (Model.Funcionario != null && !string.IsNullOrEmpty(Model.Funcionario.Pessoa.Cpf))
                                     {
-                                        if (Model.Funcionario.Cpf == item.Cpf)
+                                        if (Model.Funcionario.Pessoa.Cpf == item.Pessoa.Cpf)
                                         {
-                                            <option value="@item.Cpf" selected="selected">@item.Nome</option>
+                                            <option value="@item.Pessoa.Cpf" selected="selected">@item.Pessoa.Nome</option>
                                         }
                                         else
                                         {
-                                            <option value="@item.Cpf">@item.Nome</option>
+                                            <option value="@item.Pessoa.Cpf">@item.Pessoa.Nome</option>
                                         }
 
                                     }
                                     else
                                     {
-                                        <option value="@item.Cpf">@item.Nome</option>
+                                        <option value="@item.Pessoa.Cpf">@item.Pessoa.Nome</option>
                                     }
                                 }
                             </select>
@@ -101,13 +101,13 @@
                                     <option value="0">-- Selecione --</option>
                                     @foreach (var item in listModalidades)
                                     {
-                                        if (Model.Modalidade == item.Value)
+                                        if (Model.Modalidade.Id == item.IntValue)
                                         {
-                                            <option value="@item.Value" selected="selected">@item.Name</option>
+                                            <option value="@item.IntValue" selected="selected">@item.Name</option>
                                         }
                                         else
                                         {
-                                            <option value="@item.Value">@item.Name</option>
+                                            <option value="@item.IntValue">@item.Name</option>
                                         }
                                     }
                                 </select>
@@ -143,7 +143,7 @@
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listHorarios)
                                 {
-                                    if (Model.Horario == item.Value)
+                                    if (Model.Data.ToLongTimeString() == item.Value)
                                     {
                                         <option value="@item.Value" selected="selected">@item.Name</option>
                                     }

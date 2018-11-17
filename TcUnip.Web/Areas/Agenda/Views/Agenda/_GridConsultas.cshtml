@@ -1,9 +1,9 @@
 ﻿@using TcUnip.Web.Constants;
 
-@model IList<TcUnip.Model.Calendario.Agenda>
+@model IList<TcUnip.Model.Agenda.SessaoModel>
 
 @{
-    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Model.Cadastro.UsuarioModel)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -19,7 +19,7 @@
                         <th>Hora</th>
                         <th>Prossional</th>
                         <th>Valor</th>
-                        @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+                        @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
                         {
                             <th></th>
                             <th></th>
@@ -35,7 +35,7 @@
                         <td>@itemModel.Horario</td>
                         <td>@itemModel.Funcionario.Nome</td>
                         <td>R$ @itemModel.Valor</td>
-                        @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+                        @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
 
                         {
                             <td class="text-center">

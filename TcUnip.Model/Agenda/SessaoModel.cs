@@ -8,7 +8,7 @@ namespace TcUnip.Model.Agenda
     {
         public int Id { get; set; }
         public decimal Valor { get; set; }
-        public DateTime Data { get; set; }
+        public DateTime Data { get; set; }        
         public bool Excluido { get; set; }
 
         public int IdPaciente { get; set; }

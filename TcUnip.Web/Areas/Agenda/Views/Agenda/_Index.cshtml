@@ -1,7 +1,7 @@
 ﻿@using TcUnip.Web.Constants;
 
 @{
-    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Model.Cadastro.UsuarioModel)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -19,7 +19,7 @@
     </style>
 
     <div class="row">
-        @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+        @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
         {
             <div class="col-md-12">
                 <div style="text-align: right">

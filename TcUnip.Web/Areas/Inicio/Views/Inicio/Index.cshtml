@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Index";
 
-    var user = (TcUnip.Model.Pessoa.Usuario)ViewBag.Usuario;
+    var user = (TcUnip.Model.Cadastro.UsuarioModel)ViewBag.Usuario;
 }
 
 @if (user != null)
@@ -22,7 +22,7 @@
                                     Agenda
                                 </a>
                             </li>
-                            @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+                            @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
                             {
                                 <li>
                                     <a href="#" name="tabPacientes" class="abaPacientes" carregado="false">
@@ -45,7 +45,7 @@
                                     Recibos
                                 </a>
                             </li>
-                            @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+                            @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
                             {
                                 <li>
                                     <a href="#" name="tabUsuarios" class="abaUsuarios" carregado="false">
@@ -61,14 +61,14 @@
                         </ul>
                         <div id="content">
                             <div id="tabAgenda"></div>
-                            @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+                            @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
                             {
                                 <div id="tabPacientes"></div>
                                 <div id="tabFuncionarios"></div>
                                 <div id="tabCaixa"></div>
                             }
                             <div id="tabRecibos"></div>
-                            @if (ConstPermissoes.gerenciamento.Contains(user.Permissoes.FirstOrDefault()))
+                            @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
                             {
                                 <div id="tabUsuarios"></div>
                             }

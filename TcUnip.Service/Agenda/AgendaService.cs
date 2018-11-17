@@ -24,7 +24,8 @@ namespace TcUnip.Service.Agenda
         public Result<SessaoModel> Get(int id)
         {
             var result = new Result<SessaoModel>();
-            result.Value = _sessaoRepository.SelecionarUm(x => x.Id == id);
+            result.Value = _sessaoRepository.SelecionarUm(x => x.Id == id, x => x.Paciente.Pessoa, 
+                                                                           x => x.Funcionario.Pessoa);
 
             if (result.Value == null)
             {
@@ -50,7 +51,8 @@ namespace TcUnip.Service.Agenda
             var result = new Result<List<SessaoModel>>();
             result.Value = _sessaoRepository.Lista(x => !x.Excluido &&
                                                          x.Data.Date >= pesquisaModel.DataIncio.Date &&
-                                                         x.Data.Date <= pesquisaModel.DataFim.Date)
+                                                         x.Data.Date <= pesquisaModel.DataFim.Date,
+                                                         x => x.Modalidade)
                                             .ToList();
 
             return result;
