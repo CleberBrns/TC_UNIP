@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using TcUnip.Model.Pessoa;
+using TcUnip.Model.Cadastro;
 using TcUnip.Web.Session;
 
 namespace TcUnip.Web.Controllers
@@ -14,14 +14,14 @@ namespace TcUnip.Web.Controllers
             var userInfo = GetUsuarioSession();
             if (userInfo.Item2)
             {
-                if (!permissaoAcesso.Contains(userInfo.Item1.Permissoes.FirstOrDefault()))
+                if (!permissaoAcesso.Contains(userInfo.Item1.TipoPerfil.Permissao))
                     BadRequestCustomizado((int)HttpStatusCode.Unauthorized);
             }
             else
                 BadRequestCustomizado((int)HttpStatusCode.RequestTimeout);
         }
 
-        public Tuple<Usuario, bool> GetUsuarioSession()
+        public Tuple<UsuarioModel, bool> GetUsuarioSession()
         {
             UsuarioSession sessionUsuario = new UsuarioSession();
             return sessionUsuario.GetModelFromSession(Constants.ConstSessions.usuario);
