@@ -1,16 +1,14 @@
 namespace TcUnip.Data.Entity.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<TcUnip.Data.Entity.TcUnipContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<TcUnipContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            SetHistoryContextFactory("System.Data.SqlClient", (connection, defaultSchema) => new TcUnipHistoryContext(connection, defaultSchema));
+            SetHistoryContextFactory("System.Data.SqlClient", 
+                (connection, defaultSchema) => new TcUnipHistoryContext(connection, defaultSchema));
         }
 
         protected override void Seed(TcUnip.Data.Entity.TcUnipContext context)

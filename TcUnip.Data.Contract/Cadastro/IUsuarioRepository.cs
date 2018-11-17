@@ -4,5 +4,6 @@ namespace TcUnip.Data.Contract.Cadastro
 {
     public interface IUsuarioRepository : IRepositoryBase<UsuarioModel>
     {
+        UsuarioModel GetByEmail(string email);
     }
 }

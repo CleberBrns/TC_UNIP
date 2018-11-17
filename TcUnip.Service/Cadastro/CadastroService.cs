@@ -5,7 +5,6 @@ using TcUnip.Data.Contract.Cadastro;
 using TcUnip.Model.Cadastro;
 using TcUnip.Model.Common;
 using TcUnip.Service.Contract.Cadastro;
-using TcUnip.Service.Criptografia;
 
 namespace TcUnip.Service.Cadastro
 {
@@ -66,8 +65,7 @@ namespace TcUnip.Service.Cadastro
                 result.Message = "O campo E-mail e Senha são obrigatórios!";            
             else
             {
-                var retorno = _usuarioRepository.SelecionarUm(x => x.Email == model.Email);
-                var senhaDeCrip = GerenciaCriptografia.DescriptografaString(model.Senha);
+                var retorno = _usuarioRepository.GetByEmail(model.Email);
 
                 if (retorno != null)
                 {
@@ -75,7 +73,7 @@ namespace TcUnip.Service.Cadastro
                         result.Message = "Usuário excluído!";
                     else if (!retorno.Ativo)
                         result.Message = "Usuário inativo!";
-                    else if (model.Senha != senhaDeCrip)
+                    else if (model.Senha != retorno.Senha)
                         result.Message = "Senha inválida!";
                     else
                         usuarioValido = true;
@@ -108,8 +106,7 @@ namespace TcUnip.Service.Cadastro
             else
             {
                 if (model.Id != 0)
-                {
-                    model.Senha = GerenciaCriptografia.CriptografaString(model.Senha.Trim());
+                {                    
                     model = _usuarioRepository.Salvar(model);
                     if (model.Id != 0)
                     {
@@ -127,8 +124,6 @@ namespace TcUnip.Service.Cadastro
                         var usuarioBD = _usuarioRepository.SelecionarUm(x => x.Id == model.Id);
                         model.Senha = usuarioBD.Senha;
                     }
-                    else
-                        model.Senha = GerenciaCriptografia.CriptografaString(model.Senha.Trim());
 
                     result.Value = _usuarioRepository.Atualizar(model);
 

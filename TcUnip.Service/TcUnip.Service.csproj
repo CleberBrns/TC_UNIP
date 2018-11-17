@@ -45,8 +45,6 @@
     <Compile Include="Agenda\AgendaService.cs" />
     <Compile Include="Cadastro\CadastroService.cs" />
     <Compile Include="Common\CommonService.cs" />
-    <Compile Include="Criptografia\GerenciaCriptografia.cs" />
-    <Compile Include="Criptografia\ScopedReferenceMap.cs" />
     <Compile Include="FluxoCaixa\FluxoCaixaService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

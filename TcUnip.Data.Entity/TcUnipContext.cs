@@ -41,6 +41,8 @@ namespace TcUnip.Data.Entity
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+
             //Altera as configurações padrões do Entity ao criar as tabelas
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
