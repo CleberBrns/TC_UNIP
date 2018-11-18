@@ -53,8 +53,9 @@ namespace TcUnip.Web.Controllers
             }
             catch (Exception ex)
             {
-                msgExibicao = Constants.Constants.msgFalhaAoAutenticar;
-                msgAnalise = ex.Message;
+                var msgsRetornos = ErrosService.GetMensagemService(ex, HttpContext.Response);
+                msgExibicao = msgsRetornos.Item1;
+                msgAnalise = !string.IsNullOrEmpty(msgsRetornos.Item2) ? msgsRetornos.Item2 : Constants.Constants.msgFalhaAoSalvar;
             }
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);

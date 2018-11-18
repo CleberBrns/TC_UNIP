@@ -17,8 +17,9 @@ namespace TcUnip.Data.Entity.SeedItens
             {
                 var admUser = new Usuario
                 {
+                    Id = 1,
                     Email = "master@tcunip.com.br",
-                    Senha = "mLZfnHtsfMkfmKRJGfDr2GMpMEIkHAkqSBrv6jn_fEc1",
+                    Senha = "@dmin56784321",
                     Cpf = "111.222.333-44",
                     Ativo = true,
                     Excluido = false,

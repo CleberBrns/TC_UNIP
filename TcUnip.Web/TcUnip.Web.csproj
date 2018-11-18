@@ -247,7 +247,6 @@
     <Compile Include="Models\Local\DataSelectControl.cs" />
     <Compile Include="Models\Local\EventoCalendario.cs" />
     <Compile Include="Models\Local\MensagensDeRetorno.cs" />
-    <Compile Include="Models\Local\ResultService.cs" />
     <Compile Include="Models\Proxy\AgendaProxy.cs" />
     <Compile Include="Models\Proxy\CadastroProxy.cs" />
     <Compile Include="Models\Proxy\Contract\IAgendaProxy.cs" />
