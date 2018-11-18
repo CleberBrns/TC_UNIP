@@ -8,6 +8,6 @@ namespace TcUnip.Data.Contract.Cadastro
         FuncionarioModel GetById(int id);
         FuncionarioModel GetByCpf(string cpf);
         List<FuncionarioModel> ListFuncionarios();
-        List<FuncionarioModel> ListProfissionais()
+        List<FuncionarioModel> ListProfissionais();
     }
 }
