@@ -55,7 +55,7 @@ namespace TcUnip.Web.Controllers
             {
                 var msgsRetornos = ErrosService.GetMensagemService(ex, HttpContext.Response);
                 msgExibicao = msgsRetornos.Item1;
-                msgAnalise = !string.IsNullOrEmpty(msgsRetornos.Item2) ? msgsRetornos.Item2 : Constants.Constants.msgFalhaAoSalvar;
+                msgAnalise = !string.IsNullOrEmpty(msgsRetornos.Item2) ? msgsRetornos.Item2 : Constants.Constants.msgFalhaPadrao;
             }
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);

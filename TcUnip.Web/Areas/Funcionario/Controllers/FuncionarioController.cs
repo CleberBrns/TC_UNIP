@@ -54,8 +54,9 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
             }
             catch (Exception ex)
             {
-                msgExibicao = Constants.Constants.msgFalhaAoListar;
-                msgAnalise = ex.ToString();
+                var msgsRetornos = ErrosService.GetMensagemService(ex, HttpContext.Response);
+                msgExibicao = msgsRetornos.Item1;
+                msgAnalise = !string.IsNullOrEmpty(msgsRetornos.Item2) ? msgsRetornos.Item2 : Constants.Constants.msgFalhaAoListar;
             }
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
@@ -104,8 +105,9 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
             }
             catch (Exception ex)
             {
-                msgExibicao = Constants.Constants.msgFalhaAoCarregar;
-                msgAnalise = ex.Message;
+                var msgsRetornos = ErrosService.GetMensagemService(ex, HttpContext.Response);
+                msgExibicao = msgsRetornos.Item1;
+                msgAnalise = !string.IsNullOrEmpty(msgsRetornos.Item2) ? msgsRetornos.Item2 : Constants.Constants.msgFalhaAoCarregar;
             }
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
@@ -130,8 +132,9 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
             }
             catch (Exception ex)
             {
-                msgExibicao = Constants.Constants.msgFalhaAoSalvar;
-                msgAnalise = ex.Message;
+                var msgsRetornos = ErrosService.GetMensagemService(ex, HttpContext.Response);
+                msgExibicao = msgsRetornos.Item1;
+                msgAnalise = !string.IsNullOrEmpty(msgsRetornos.Item2) ? msgsRetornos.Item2 : Constants.Constants.msgFalhaAoSalvar;
             }
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
@@ -155,8 +158,9 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
             }
             catch (Exception ex)
             {
-                msgExibicao = Constants.Constants.msgFalhaAoExcluir;
-                msgAnalise = ex.Message;
+                var msgsRetornos = ErrosService.GetMensagemService(ex, HttpContext.Response);
+                msgExibicao = msgsRetornos.Item1;
+                msgAnalise = !string.IsNullOrEmpty(msgsRetornos.Item2) ? msgsRetornos.Item2 : Constants.Constants.msgFalhaAoExcluir;
             }
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
