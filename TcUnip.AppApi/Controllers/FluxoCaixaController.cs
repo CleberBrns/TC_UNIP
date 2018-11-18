@@ -40,8 +40,8 @@ namespace TcUnip.AppApi.Controllers
             return Ok(retorno);
         }
 
-        [HttpGet]
-        [Route("api/FluxoCaixa/ListCaixaPeriodo/{pesquisaModel}")]
+        [HttpPost]
+        [Route("api/FluxoCaixa/ListCaixaPeriodo")]
         public IHttpActionResult ListCaixaPeriodo(PesquisaModel pesquisaModel)
         {
             var retorno = _fluxoCaixaService.ListCaixaPeriodo(pesquisaModel);
@@ -104,8 +104,8 @@ namespace TcUnip.AppApi.Controllers
             return Ok(retorno);
         }
 
-        [HttpGet]
-        [Route("api/FluxoCaixa/ListRecibosPeriodo/{pesquisaModel}")]
+        [HttpPost]
+        [Route("api/FluxoCaixa/ListRecibosPeriodo")]
         public IHttpActionResult ListRecibosPeriodo(PesquisaModel pesquisaModel)
         {
             var retorno = _fluxoCaixaService.ListRecibosPeriodo(pesquisaModel);
@@ -116,8 +116,8 @@ namespace TcUnip.AppApi.Controllers
             return Ok(retorno);
         }
 
-        [HttpGet]
-        [Route("api/FluxoCaixa/ListRecibosPeriodoPaciente/{pesquisaModel}")]
+        [HttpPost]
+        [Route("api/FluxoCaixa/ListRecibosPeriodoPaciente")]
         public IHttpActionResult ListRecibosPeriodoPaciente(PesquisaModel pesquisaModel)
         {
             var retorno = _fluxoCaixaService.ListRecibosPeriodoPaciente(pesquisaModel);
@@ -128,8 +128,8 @@ namespace TcUnip.AppApi.Controllers
             return Ok(retorno);
         }
 
-        [HttpGet]
-        [Route("api/FluxoCaixa/ListRecibosPeriodoFuncionario/{pesquisaModel}")]
+        [HttpPost]
+        [Route("api/FluxoCaixa/ListRecibosPeriodoFuncionario")]
         public IHttpActionResult ListRecibosPeriodoFuncionario(PesquisaModel pesquisaModel)
         {
             var retorno = _fluxoCaixaService.ListRecibosPeriodoFuncionario(pesquisaModel);

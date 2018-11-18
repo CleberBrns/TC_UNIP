@@ -32,8 +32,8 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<List<CaixaModel>> ListCaixaPeriodo(PesquisaModel pesquisaModel)
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<CaixaModel>>>(
-                             $"{apiRoute}ListCaixaPeriodo/{pesquisaModel}"));
+            return AsyncContext.Run(() =>
+            _apiClient.PostWithReturnAsync<PesquisaModel, Result<List<CaixaModel>>>($"{apiRoute}ListCaixaPeriodo", pesquisaModel));
         }
 
         public Result<bool> SalvaCaixa(CaixaModel model)
@@ -63,20 +63,20 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<List<ReciboModel>> ListRecibosPeriodo(PesquisaModel pesquisaModel)
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<ReciboModel>>>(
-                             $"{apiRoute}ListRecibosPeriodo/{pesquisaModel}"));
+            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<PesquisaModel, 
+                Result<List<ReciboModel>>>($"{apiRoute}ListRecibosPeriodo", pesquisaModel));
         }
 
         public Result<List<ReciboModel>> ListRecibosPeriodoPaciente(PesquisaModel pesquisaModel)
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<ReciboModel>>>(
-                             $"{apiRoute}ListRecibosPeriodoPaciente/{pesquisaModel}"));
+            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<PesquisaModel,
+                Result<List<ReciboModel>>>($"{apiRoute}ListRecibosPeriodoPaciente", pesquisaModel));
         }
 
         public Result<List<ReciboModel>> ListRecibosPeriodoFuncionario(PesquisaModel pesquisaModel)
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<ReciboModel>>>(
-                             $"{apiRoute}ListRecibosPeriodoFuncionario/{pesquisaModel}"));
+            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<PesquisaModel,
+                Result<List<ReciboModel>>>($"{apiRoute}ListRecibosPeriodoFuncionario", pesquisaModel));
         }
 
         #endregion

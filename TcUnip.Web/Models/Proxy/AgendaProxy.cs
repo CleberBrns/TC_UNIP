@@ -11,7 +11,7 @@ namespace TcUnip.Web.Models.Proxy
     public class AgendaProxy : IAgendaProxy
     {
         IWebApiClient _apiClient;
-        readonly string apiRoute = "api/Calendario/";
+        readonly string apiRoute = "api/Agenda/";
 
         public AgendaProxy(IWebApiClient apiClient)
         {
@@ -32,20 +32,20 @@ namespace TcUnip.Web.Models.Proxy
 
         public Result<List<SessaoModel>> ListAgendaPeriodo(PesquisaModel pesquisaModel)
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<SessaoModel>>>(
-                 $"{apiRoute}ListAgendaPeriodo/{pesquisaModel}"));
+            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<PesquisaModel,
+                Result<List<SessaoModel>>>($"{apiRoute}ListAgendaPeriodo", pesquisaModel));
         }
 
         public Result<List<SessaoModel>> ListAgendaPeriodoPaciente(PesquisaModel pesquisaModel)
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<SessaoModel>>>(
-                 $"{apiRoute}ListAgendaPeriodoPaciente/{pesquisaModel}"));
+            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<PesquisaModel,
+                Result<List<SessaoModel>>>($"{apiRoute}ListAgendaPeriodoPaciente", pesquisaModel));
         }
 
         public Result<List<SessaoModel>> ListAgendaPeriodoFuncionario(PesquisaModel pesquisaModel)
         {
-            return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<SessaoModel>>>(
-                 $"{apiRoute}ListAgendaPeriodoFuncionario/{pesquisaModel}"));
+            return AsyncContext.Run(() => _apiClient.PostWithReturnAsync<PesquisaModel,
+                Result<List<SessaoModel>>>($"{apiRoute}ListAgendaPeriodoFuncionario", pesquisaModel));
         }
 
         public Result<bool> Salva(SessaoModel model)

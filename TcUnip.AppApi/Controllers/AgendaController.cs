@@ -38,8 +38,8 @@ namespace TcUnip.AppApi.Controllers
             return Ok(retorno);
         }
 
-        [HttpGet]
-        [Route("api/Agenda/ListAgendaPeriodo/{pesquisaModel}")]
+        [HttpPost]
+        [Route("api/Agenda/ListAgendaPeriodo")]
         public IHttpActionResult ListAgendaPeriodo(PesquisaModel pesquisaModel)
         {
             var retorno = _agendaService.ListAgendaPeriodo(pesquisaModel);
@@ -50,8 +50,8 @@ namespace TcUnip.AppApi.Controllers
             return Ok(retorno);
         }
 
-        [HttpGet]
-        [Route("api/Agenda/ListAgendaPeriodoFuncionario/{pesquisaModel}")]
+        [HttpPost]
+        [Route("api/Agenda/ListAgendaPeriodoFuncionario")]
         public IHttpActionResult ListAgendaPeriodoFuncionario(PesquisaModel pesquisaModel)
         {
             var retorno = _agendaService.ListAgendaPeriodoFuncionario(pesquisaModel);
@@ -62,8 +62,8 @@ namespace TcUnip.AppApi.Controllers
             return Ok(retorno);
         }
 
-        [HttpGet]
-        [Route("api/Agenda/ListAgendaPeriodoPaciente/{pesquisaModel}")]
+        [HttpPost]
+        [Route("api/Agenda/ListAgendaPeriodoPaciente")]
         public IHttpActionResult ListAgendaPeriodoPaciente(PesquisaModel pesquisaModel)
         {
             var retorno = _agendaService.ListAgendaPeriodoPaciente(pesquisaModel);

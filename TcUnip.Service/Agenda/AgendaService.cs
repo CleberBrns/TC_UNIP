@@ -10,8 +10,8 @@ namespace TcUnip.Service.Agenda
 {
     public class AgendaService : IAgendaService
     {
-        #region Propriedades e Construtor
-
+        readonly Util.ConfiguraPesquisa configuraPesquia = new Util.ConfiguraPesquisa();
+        #region Propriedades e Construtor        
         readonly ISessaoRepository _sessaoRepository;
 
         public AgendaService(ISessaoRepository sessaoRepository)
@@ -24,8 +24,7 @@ namespace TcUnip.Service.Agenda
         public Result<SessaoModel> Get(int id)
         {
             var result = new Result<SessaoModel>();
-            result.Value = _sessaoRepository.SelecionarUm(x => x.Id == id, x => x.Paciente.Pessoa, 
-                                                                           x => x.Funcionario.Pessoa);
+            result.Value = _sessaoRepository.GetById(id);
 
             if (result.Value == null)
             {
@@ -39,47 +38,34 @@ namespace TcUnip.Service.Agenda
         public Result<List<SessaoModel>> ListAgendaDoDia()
         {
             var result = new Result<List<SessaoModel>>();
-            result.Value = _sessaoRepository.Lista(x => !x.Excluido && 
-                                                         x.Data.Date == DateTime.Now.Date)
-                                            .ToList();
+            result.Value = _sessaoRepository.ListAgendaPeriodo(configuraPesquia.GetPesquisaDoDia());
 
             return result;
         }
 
         public Result<List<SessaoModel>> ListAgendaPeriodo(PesquisaModel pesquisaModel)
         {
+            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
             var result = new Result<List<SessaoModel>>();
-            result.Value = _sessaoRepository.Lista(x => !x.Excluido &&
-                                                         x.Data.Date >= pesquisaModel.DataIncio.Date &&
-                                                         x.Data.Date <= pesquisaModel.DataFim.Date,
-                                                         x => x.Modalidade)
-                                            .ToList();
+            result.Value = _sessaoRepository.ListAgendaPeriodo(pesquisaModel);
 
             return result;
         }
 
         public Result<List<SessaoModel>> ListAgendaPeriodoFuncionario(PesquisaModel pesquisaModel)
         {
+            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
             var result = new Result<List<SessaoModel>>();
-            result.Value = _sessaoRepository.Lista(x => !x.Excluido &&
-                                                         x.Data.Date >= pesquisaModel.DataIncio.Date &&
-                                                         x.Data.Date <= pesquisaModel.DataFim.Date &&
-                                                         x.Funcionario.Pessoa.Cpf == pesquisaModel.CpfPesquisa, 
-                                                         x => x.Funcionario.Pessoa)
-                                            .ToList();
+            result.Value = _sessaoRepository.ListAgendaPeriodoFuncionario(pesquisaModel);
 
             return result;
         }
 
         public Result<List<SessaoModel>> ListAgendaPeriodoPaciente(PesquisaModel pesquisaModel)
         {
+            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
             var result = new Result<List<SessaoModel>>();
-            result.Value = _sessaoRepository.Lista(x => !x.Excluido &&
-                                                         x.Data.Date >= pesquisaModel.DataIncio.Date &&
-                                                         x.Data.Date <= pesquisaModel.DataFim.Date &&
-                                                         x.Paciente.Pessoa.Cpf == pesquisaModel.CpfPesquisa,
-                                                         x => x.Paciente.Pessoa)
-                                            .ToList();
+            result.Value = _sessaoRepository.ListAgendaPeriodoPaciente(pesquisaModel);
 
             return result;
         }
