@@ -31,7 +31,7 @@ namespace TcUnip.Web.Models.Proxy
             _apiClient.PostWithReturnAsync<UsuarioModel, Result<UsuarioModel>>($"{apiRoute}AutenticaUsuario", model));
         }
 
-        public Result<List<UsuarioModel>> ListUsuario()
+        public Result<List<UsuarioModel>> ListUsuarios()
         {
             return AsyncContext.Run(() => _apiClient.GetAsync<Result<List<UsuarioModel>>>($"{apiRoute}ListUsuario"));
         }

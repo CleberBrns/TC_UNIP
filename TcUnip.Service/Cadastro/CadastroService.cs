@@ -33,7 +33,7 @@ namespace TcUnip.Service.Cadastro
         public Result<UsuarioModel> GetUsuario(int id)
         {
             var result = new Result<UsuarioModel>();
-            result.Value = _usuarioRepository.SelecionarUm(x => x.Id == id);
+            result.Value = _usuarioRepository.GetById(id);
 
             if (result.Value == null)
             {
@@ -44,13 +44,10 @@ namespace TcUnip.Service.Cadastro
             return result;
         }
 
-        public Result<List<UsuarioModel>> ListUsuario()
+        public Result<List<UsuarioModel>> ListUsuarios()
         {
             var result = new Result<List<UsuarioModel>>();
-            result.Value = _usuarioRepository.Lista(x => !x.Excluido, 
-                                                    x => x.TipoPerfil, 
-                                                    x => x.Funcionario.Pessoa)
-                                             .ToList();
+            result.Value = _usuarioRepository.ListUsuarios();
 
             return result;
         }
@@ -168,9 +165,9 @@ namespace TcUnip.Service.Cadastro
             var result = new Result<bool>();
 
             var emailExistente = false;
-            var usuario = _usuarioRepository.SelecionarUm(x => x.Email == model.Email &&
-                                                               x.Id != model.Id);
-            if (usuario != null)
+            var usuario = _usuarioRepository.GetByEmail(model.Email);
+
+            if (usuario != null && usuario.Id != model.Id)
             {
                 result.Message = "E-mail já utilizado na base de dados, não é permitido sua reutilização";
                 result.Status = false;

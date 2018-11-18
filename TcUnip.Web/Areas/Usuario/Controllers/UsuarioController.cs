@@ -39,7 +39,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 
             try
             {               
-                var resultService = _cadastroProxy.ListUsuario();
+                var resultService = _cadastroProxy.ListUsuarios();
                 var list = resultService.Value;
 
                 msgExibicao = resultService.Message;
@@ -244,7 +244,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
         private string[] GetEmailsFuncionariosCadastrados()
         {
             var emailsUsuariosCadastrados = new string[] { };
-            var resultService = _cadastroProxy.ListUsuario();
+            var resultService = _cadastroProxy.ListUsuarios();
             if (resultService.Status)            
                 emailsUsuariosCadastrados = resultService.Value.Select(x => x.Email).ToArray();            
 

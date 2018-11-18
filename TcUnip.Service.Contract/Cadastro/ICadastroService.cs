@@ -13,7 +13,7 @@ namespace TcUnip.Service.Contract.Cadastro
         #region Usuario
 
         Result<UsuarioModel> GetUsuario(int id);
-        Result<List<UsuarioModel>> ListUsuario();
+        Result<List<UsuarioModel>> ListUsuarios();
         Result<UsuarioModel> AutenticaUsuario(UsuarioModel model);
         Result<bool> SalvaUsuario(UsuarioModel model);
         Result<bool> ExcluiUsuario(int id);

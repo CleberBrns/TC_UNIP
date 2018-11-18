@@ -31,7 +31,7 @@ namespace TcUnip.AppApi.Controllers
         [Route("api/Cadastro/ListUsuario")]
         public IHttpActionResult ListUsuario()
         {
-            var retorno = _cadastroService.ListUsuario();
+            var retorno = _cadastroService.ListUsuarios();
 
             if (!retorno.Status)
                 return new InvalidListMessageResult(retorno.Message);
