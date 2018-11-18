@@ -184,7 +184,7 @@ namespace TcUnip.Service.Cadastro
         public Result<PacienteModel> GetPaciente(int id)
         {
             var result = new Result<PacienteModel>();
-            result.Value = _pacienteRepository.SelecionarUm(x => x.Id == id);
+            result.Value = _pacienteRepository.GetById(id);
 
             if (result.Value == null)
             {
@@ -198,7 +198,7 @@ namespace TcUnip.Service.Cadastro
         public Result<List<PacienteModel>> ListPaciente()
         {
             var result = new Result<List<PacienteModel>>();
-            result.Value = _pacienteRepository.Lista(x => !x.Excluido, x => x.Pessoa).ToList();
+            result.Value = _pacienteRepository.ListPacientes();
 
             return result;
         }
@@ -275,9 +275,9 @@ namespace TcUnip.Service.Cadastro
             var result = new Result<bool>();
 
             var cpfExistente = false;
-            var usuario = _pacienteRepository.SelecionarUm(x => x.Pessoa.Cpf == model.Pessoa.Cpf &&
-                                                               x.Id != model.Id, u => u.Pessoa);
-            if (usuario != null)
+            var usuario = _pacienteRepository.GetByCpf(model.Pessoa.Cpf);
+                                                        
+            if (usuario != null && usuario.Id != model.Id)
             {
                 result.Message = "CPF vinculado a outro Paciente. Não é permitido sua utilização";
                 result.Status = false;

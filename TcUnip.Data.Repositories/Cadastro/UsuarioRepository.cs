@@ -18,7 +18,7 @@ namespace TcUnip.Data.Repositories.Cadastro
             using (var context = new TcUnipContext())
             {
                 return Mapper.Map<UsuarioModel>(
-                    context.Usuario.Where(x => x.Id == id)
+                    context.Usuario.Where(x => x.Id == id && !x.Excluido)
                                    .Include(x => x.TipoPerfil)
                                    .Include(x => x.Funcionario.Pessoa)
                                    .FirstOrDefault()
