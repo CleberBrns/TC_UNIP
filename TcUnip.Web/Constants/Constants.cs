@@ -20,8 +20,8 @@ namespace TcUnip.Web.Constants
         {            
             return new List<DataSelectControl>
             {
-                new DataSelectControl { Name = "Ativo", IntValue = 0},
-                new DataSelectControl { Name = "Inativo", IntValue = 0 }
+                new DataSelectControl { Name = "Ativo", IntValue = 1, Value = "True"},
+                new DataSelectControl { Name = "Inativo", IntValue = 0, Value = "False" }
             };
         }
 

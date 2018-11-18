@@ -102,7 +102,9 @@ namespace TcUnip.Service.Cadastro
             }
             else
             {
-                if (model.Id != 0)
+                model.IdFuncionario = model.IdFuncionario.Value == 0  ? (int?)null : model.IdFuncionario;
+                model.Excluido = false;
+                if (model.Id == 0)
                 {                    
                     model = _usuarioRepository.Salvar(model);
                     if (model.Id != 0)
@@ -118,7 +120,7 @@ namespace TcUnip.Service.Cadastro
                 {
                     if (string.IsNullOrEmpty(model.Senha))
                     {
-                        var usuarioBD = _usuarioRepository.SelecionarUm(x => x.Id == model.Id);
+                        var usuarioBD = _usuarioRepository.GetById(model.Id);
                         model.Senha = usuarioBD.Senha;
                     }
 
@@ -144,7 +146,7 @@ namespace TcUnip.Service.Cadastro
             var result = new Result<bool>();
             result.Status = false;
 
-            var modelBD = _usuarioRepository.SelecionarUm(x => x.Id == id);
+            var modelBD = _usuarioRepository.GetById(id);
             modelBD.Excluido = true;
 
             result.Value = _usuarioRepository.Atualizar(modelBD);
@@ -254,7 +256,7 @@ namespace TcUnip.Service.Cadastro
             var result = new Result<bool>();
             result.Status = false;
 
-            var modelBD = _pacienteRepository.SelecionarUm(x => x.Id == id);
+            var modelBD = _pacienteRepository.GetById(id);
             modelBD.Excluido = true;
 
             result.Value = _pacienteRepository.Atualizar(modelBD);
@@ -372,7 +374,7 @@ namespace TcUnip.Service.Cadastro
             var result = new Result<bool>();
             result.Status = false;
 
-            var modelBD = _funcionarioRepository.SelecionarUm(x => x.Id == id);
+            var modelBD = _funcionarioRepository.GetById(id);
             modelBD.Excluido = true;
 
             result.Value = _funcionarioRepository.Atualizar(modelBD);
@@ -410,7 +412,7 @@ namespace TcUnip.Service.Cadastro
             var idFuncionario = listModalidades.Select(x => x.IdFuncionario).FirstOrDefault();
             var idsModalidades = listModalidades.Select(x => x.IdModalidade).ToArray();
 
-            var listBD = _modalidadeFuncionarioRepository.Lista(x => x.IdFuncionario == idFuncionario).ToList();
+            var listBD = _modalidadeFuncionarioRepository.ListModalidadesFuncionario(idFuncionario);
 
             if (listBD.Count > 0)
             {

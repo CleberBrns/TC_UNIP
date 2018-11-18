@@ -110,7 +110,7 @@ namespace TcUnip.Service.Agenda
             var result = new Result<bool>();
             result.Status = false;
 
-            var modelBD = _sessaoRepository.SelecionarUm(x => x.Id == id);
+            var modelBD = _sessaoRepository.GetById(id);
             modelBD.Excluido = true;
 
             result.Value = _sessaoRepository.Atualizar(modelBD);

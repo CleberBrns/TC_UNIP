@@ -77,7 +77,7 @@
                         }
                         else
                         {
-                            if (user.TipoPerfil.Permissao.Equals(TcUnip.Web.Constants.ConstPermissoes.profissional))
+                            if (user.TipoPerfil.Permissao.Equals(TcUnip.Web.Constants.ConstPermissoes.administracao))
                             {
                                 <input type="text" autocomplete="off" class="form-control" id="cpf" name="Cpf"
                                        value="@Model.Cpf" style="width: 40%" />
@@ -110,17 +110,17 @@
                         @Html.Label("Perfil", htmlAttributes: new { @class = "control-label col-md-3" })
                     </div>
                     <div class="col-md-8">
-                        <select class="form-control" id="perfil" name="Permissoes" style="width: 42%">
+                        <select class="form-control" id="perfil" name="TipoPerfil.Id" style="width: 42%">
                             <option value="0">-- Selecione --</option>
                             @foreach (var item in listPerfil)
                             {
-                                if (Model.TipoPerfil.Permissao == item.Value)
+                                if (Model.TipoPerfil != null && Model.TipoPerfil.Id == item.IntValue)
                                 {
-                                    <option value="@item.Value" selected="selected">@item.Name</option>
+                                    <option value="@item.IntValue" selected="selected">@item.Name</option>
                                 }
                                 else
                                 {
-                                    <option value="@item.Value">@item.Name</option>
+                                    <option value="@item.IntValue">@item.Name</option>
                                 }
                             }
                         </select>
@@ -188,7 +188,6 @@
 
     $("#funcionarios").on('change', function () {
 
-
         var selecionado = $(this).find(':selected');
         if (selecionado.val() !== "0") {
             var cpf = selecionado.attr("value");
@@ -241,11 +240,13 @@
 
             var dadosSalvar = {
 
+                Id: $("#Id").val(),
                 Email: $("#email").val().trim(),
                 Cpf: $("#cpf").val().trim(),
                 Senha: $("#senha").val().trim(),
-                Permissoes: $("#perfil").val().trim(),
-                Status: $("#status").val().trim()                
+                IdFuncionario: $("#funcionarios").val(),
+                IdTipoPerfil: $("#perfil").val(),
+                Ativo: $("#status").val().trim()                
             };
 
             $.ajax({
@@ -290,6 +291,7 @@
 
         validar: function () {
 
+            var id = $("#Id").val().trim();
             var ehValido = true;
 
             var email = $("#email").val().trim();
@@ -322,18 +324,24 @@
             if (validacao.minLenght(cpf, validaCpf, 14, "Cpf inválido!"))
                 ehValido = false;
 
-            if (validacao.campoNulo(senha, validaSenha))
-                ehValido = false;
+            /*Se for edição não é necessário preencher a senha, 
+             * a mesma será mantida caso uma nova não seja digitada*/
+            if (id == undefined || id == 0) {
 
-            if (validacao.minLenght(senha, validaSenha, 6))
-                ehValido = false;
-
-            if (validacao.campoNulo(confirmaSenha, validaConfirmaSenha))
-                ehValido = false;
-
-            if (ehValido)
-                if (validacao.confirmaSenhas(senha, validaSenha, confirmaSenha, validaConfirmaSenha))
+                if (validacao.campoNulo(senha, validaSenha))
                     ehValido = false;
+
+                if (validacao.minLenght(senha, validaSenha, 6))
+                    ehValido = false;
+
+                if (validacao.campoNulo(confirmaSenha, validaConfirmaSenha))
+                    ehValido = false;
+
+                if (ehValido)
+                    if (validacao.confirmaSenhas(senha, validaSenha, confirmaSenha, validaConfirmaSenha))
+                        ehValido = false;
+            }
+
 
             if (validacao.selectSelecionado(perfil, validaPerfil, "Selecione uma Perfil"))
                 ehValido = false;

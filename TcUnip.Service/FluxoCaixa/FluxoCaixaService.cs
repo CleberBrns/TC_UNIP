@@ -30,7 +30,7 @@ namespace TcUnip.Service.FluxoCaixa
         public Result<CaixaModel> GetCaixa(int id)
         {
             var result = new Result<CaixaModel>();
-            result.Value = _caixaRepository.SelecionarUm(x => x.Id == id);
+            result.Value = _caixaRepository.GetById(id);
 
             if (result.Value == null)
             {
@@ -118,7 +118,7 @@ namespace TcUnip.Service.FluxoCaixa
         public Result<ReciboModel> GetRecibo(int id)
         {
             var result = new Result<ReciboModel>();
-            var sessao = _sessaoRepository.SelecionarUm(x => x.Id == id);
+            var sessao = _sessaoRepository.GetById(id);
 
             if (sessao != null)            
                 result.Value = ConfiguraRecibo(sessao);            

@@ -12,11 +12,6 @@ namespace TcUnip.Data.Contract
         bool AtualizarLista(IList<TModel> listModel);
         bool Excluir(TModel model);
         bool Excluir(Expression<Func<TModel, bool>> expression);
-        IList<TModel> Lista();
-        IList<TModel> Lista(params Expression<Func<TModel, object>>[] includes);
-        IList<TModel> Lista(Expression<Func<TModel, bool>> expression);
-        IList<TModel> Lista(Expression<Func<TModel, bool>> expression, params Expression<Func<TModel, object>>[] includes);
-        TModel SelecionarUm(Expression<Func<TModel, bool>> expression);
-        TModel SelecionarUm(Expression<Func<TModel, bool>> expression, params Expression<Func<TModel, object>>[] includes);        
+        IList<TModel> Lista();     
     }
 }

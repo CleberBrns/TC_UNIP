@@ -82,7 +82,8 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 
             //var model = new UsuarioModel();
             //var defaultObj = model.GetModelDefault();
-            return PartialView("_Gerenciar", new UsuarioModel());
+            return PartialView("_Gerenciar", 
+                new UsuarioModel{ Id = 0, Ativo = true });
         }
 
         [HttpGet]
@@ -184,27 +185,17 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
                 //var modelFuncionario = new FuncionarioModel();
                 //var newFuncionario = modelFuncionario.GetModelDefault();
 
-                list.ForEach(l =>
-                {
-                    if (l.Funcionario == null)
-                        l.Funcionario = new FuncionarioModel();
-                });
-
                 list = list.Select(l =>
                 new UsuarioModel
                 {
+                    Id = l.Id,
                     Cpf = l.Cpf,
                     Email = l.Email,
                     TipoPerfil = 
                         new TipoPerfilModel {
-                            Tipo = l.TipoPerfil.Tipo,
-                            Permissao = l.TipoPerfil.Permissao
+                            Tipo = l.TipoPerfil.Tipo
                         },
-                    Ativo = l.Ativo,
-                    Funcionario = new FuncionarioModel
-                    {
-                        Pessoa = new PessoaModel { Nome = l.Funcionario.Pessoa.Nome }
-                    }
+                    Ativo = l.Ativo
                 }).ToList();
             }
 

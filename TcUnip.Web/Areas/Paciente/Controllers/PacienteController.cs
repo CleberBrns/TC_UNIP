@@ -167,6 +167,7 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
                 list = list.Select(l =>
                        new PacienteModel
                         {
+                           Id = l.Id,
                            Pessoa = new PessoaModel
                            {
                                Nome = l.Pessoa.Nome,

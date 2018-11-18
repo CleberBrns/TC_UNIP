@@ -144,59 +144,6 @@ namespace TcUnip.Data.Repositories
             }
         }
 
-        public IList<TModel> Lista(params Expression<Func<TModel, object>>[] includes)
-        {
-            using (var context = new TcUnipContext())
-            {
-                var modelo = context.Set<TRespository>().AsQueryable();
-                modelo = includes.Aggregate(modelo, (current, include) => current.Include(GetMappedSelector(include)));
-                return Mapper.Map<IList<TRespository>, IList<TModel>>(modelo.ToList());
-            }
-        }
-
-        public IList<TModel> Lista(Expression<Func<TModel, bool>> expression)
-        {
-            using (var context = new TcUnipContext())
-            {
-                var modelo = context.Set<TRespository>().Where(GetMappedSelector(expression)).ToList();
-                return Mapper.Map<IList<TRespository>, IList<TModel>>(modelo);
-            }
-        }
-
-        public IList<TModel> Lista(Expression<Func<TModel, bool>> expression, params Expression<Func<TModel, object>>[] includes)
-        {
-            using (var context = new TcUnipContext())
-            {
-                var modelo = context.Set<TRespository>().Where(GetMappedSelector(expression));
-                modelo = includes.Aggregate(modelo, (current, include) => current.Include(GetMappedSelector(include)));
-                return Mapper.Map<IList<TRespository>, IList<TModel>>(modelo.ToList());
-            }
-        }
-
-        public TModel SelecionarUm(Expression<Func<TModel, bool>> expression)
-        {
-            using (var context = new TcUnipContext())
-            {
-                var modelo = context.Set<TRespository>().Where(GetMappedSelector(expression)).FirstOrDefault();
-                return Mapper.Map<TRespository, TModel>(modelo);
-            }
-        }
-
-        public TModel SelecionarUm(Expression<Func<TModel, bool>> expression, params Expression<Func<TModel, object>>[] includes)
-        {
-            using (var context = new TcUnipContext())
-            {
-                var modelo = context.Set<TRespository>().Where(GetMappedSelector(expression));
-                modelo = includes.Aggregate(modelo, (current, include) => current.Include(GetMappedSelector(include)));
-                return Mapper.Map<TRespository, TModel>(modelo.FirstOrDefault());
-            }
-        }
-
-        public string GetModelSerializeLog(TModel model)
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(model);
-        }
-
         #region Private
 
         private Expression<Func<TRespository, bool>> GetMappedSelector(Expression<Func<TModel, bool>> selector)

@@ -177,6 +177,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
                 list = list.Select(l =>
                     new FuncionarioModel
                     {
+                        Id = l.Id,
                         Pessoa = new PessoaModel
                         {
                             Nome = l.Pessoa.Nome,

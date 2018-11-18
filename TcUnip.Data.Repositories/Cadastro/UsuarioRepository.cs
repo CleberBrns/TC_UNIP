@@ -44,7 +44,7 @@ namespace TcUnip.Data.Repositories.Cadastro
             using (var context = new TcUnipContext())
             {
                 return Mapper.Map<List<UsuarioModel>>(
-                    context.Usuario.Where(x => !x.Excluido)
+                    context.Usuario.Where(x => !x.Excluido && x.Id != 1)//Não lista o usuário Master
                                    .Include(x => x.TipoPerfil)
                                    .Include(x => x.Funcionario.Pessoa)
                                    .AsNoTracking()

@@ -14,6 +14,16 @@ namespace TcUnip.Data.Repositories.FluxoCaixa
     {
         public CaixaRepository(IMapper mapper) : base(mapper) { }
 
+        public CaixaModel GetById(int id)
+        {
+            using (var context = new TcUnipContext())
+            {
+                return Mapper.Map<CaixaModel>(
+                        context.Caixa.Where(x => x.Id == id).FirstOrDefault()
+                    );
+            }
+        }
+
         public List<CaixaModel> ListCaixaPeriodo(PesquisaModel pesquisaModel)
         {
             using (var context = new TcUnipContext())
@@ -25,6 +35,6 @@ namespace TcUnip.Data.Repositories.FluxoCaixa
                                   .ToList()
                     );
             }
-        }
+        }        
     }
 }
