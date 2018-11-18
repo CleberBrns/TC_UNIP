@@ -405,26 +405,32 @@ namespace TcUnip.Service.Cadastro
             return new Tuple<Result<bool>, bool>(result, cpfExistente);
         }
 
-        private bool AtualizaModalidades(List<ModalidadeFuncionarioModel> listModalidades)
+        private void AtualizaModalidadesFuncionario(List<ModalidadeFuncionarioModel> listModalidades)
         {
-            bool atualizou = false;
             var idFuncionario = listModalidades.Select(x => x.IdFuncionario).FirstOrDefault();
-            var modalidades = listModalidades.Select(x => x.IdModalidade).ToArray();
+            var idsModalidades = listModalidades.Select(x => x.IdModalidade).ToArray();
 
-            var listBD = _modalidadeFuncionarioRepository.Lista(x => x.IdFuncionario == idFuncionario &&
-                                                                     modalidades.Contains(x.IdModalidade))
-                                                         .ToList();
+            var listBD = _modalidadeFuncionarioRepository.Lista(x => x.IdFuncionario == idFuncionario).ToList();
 
             if (listBD.Count > 0)
             {
-                _modalidadeFuncionarioRepository.SalvarLista(listModalidades);
+                var idsModalidadesBD = listBD.Select(x => x.IdModalidade).ToArray();
+
+                var listInserir = listModalidades.Where(x => !idsModalidadesBD.Contains(x.IdModalidade)).ToList();
+                if (listInserir.Count > 0)
+                {
+                    //Insere
+                }
+                var listExcluir = listBD.Where(x => !idsModalidades.Contains(x.IdModalidade)).ToList();
+                if (listExcluir.Count > 0)
+                {
+                    //Excluir
+                }
             }
             else
             {
-
-            }
-
-            return atualizou;
+                _modalidadeFuncionarioRepository.SalvarLista(listModalidades);
+            }            
         }
 
         #endregion
