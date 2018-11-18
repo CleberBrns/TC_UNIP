@@ -318,7 +318,9 @@ namespace TcUnip.Service.Cadastro
         public Result<List<FuncionarioModel>> ListProfissionais()
         {
             var result = new Result<List<FuncionarioModel>>();
-            result.Value = _funcionarioRepository.ListProfissionais();
+            var list = _funcionarioRepository.ListFuncionarios();
+
+            result.Value = list.Where(x => x.Modalidades.Count > 0).ToList();
 
             return result;
         }
@@ -337,11 +339,14 @@ namespace TcUnip.Service.Cadastro
             }
             else
             {
-                if (model.Id != 0)
+                model.Modalidades = ConfiguraModalidades(model.IdsModalidades, model.Id);
+                model.Pessoa.Ativo = true;
+                if (model.Id == 0)
                 {
                     model = _funcionarioRepository.Salvar(model);
                     if (model.Id != 0)
                     {
+                        AtualizaModalidadesFuncionario(model.Modalidades);
                         result.Message = "Funcionário salvo com sucesso!";
                         result.Value = true;
                         result.Status = true;
@@ -355,6 +360,8 @@ namespace TcUnip.Service.Cadastro
 
                     if (result.Value)
                     {
+                        AtualizaModalidadesFuncionario(model.Modalidades);
+
                         result.Message = "Funcionário atualizado com sucesso!";
                         result.Value = true;
                         result.Status = true;
@@ -367,7 +374,6 @@ namespace TcUnip.Service.Cadastro
 
             return result;
         }
-
 
         public Result<bool> ExcluiFuncionario(int id)
         {
@@ -418,21 +424,26 @@ namespace TcUnip.Service.Cadastro
             {
                 var idsModalidadesBD = listBD.Select(x => x.IdModalidade).ToArray();
 
-                var listInserir = listModalidades.Where(x => !idsModalidadesBD.Contains(x.IdModalidade)).ToList();
-                if (listInserir.Count > 0)
-                {
-                    //Insere
-                }
                 var listExcluir = listBD.Where(x => !idsModalidades.Contains(x.IdModalidade)).ToList();
                 if (listExcluir.Count > 0)
-                {
-                    //Excluir
-                }
+                    _modalidadeFuncionarioRepository.ExcluiLista(listExcluir);                    
+
+                var listInserir = listModalidades.Where(x => !idsModalidadesBD.Contains(x.IdModalidade)).ToList();
+                if (listInserir.Count > 0)                
+                    _modalidadeFuncionarioRepository.SalvarLista(listInserir);               
             }
-            else
-            {
+            else            
                 _modalidadeFuncionarioRepository.SalvarLista(listModalidades);
-            }            
+                    
+        }
+
+        private List<ModalidadeFuncionarioModel> ConfiguraModalidades(string[] idsModalidades, int idFuncionario)
+        {
+            return idsModalidades.Select(x => new ModalidadeFuncionarioModel
+            {
+                IdModalidade = Int32.Parse(x),
+                IdFuncionario = idFuncionario
+            }).ToList();
         }
 
         #endregion

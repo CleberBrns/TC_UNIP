@@ -72,9 +72,17 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
             ViewBag.ListStatus = GetListStatus();
             ViewBag.ListModalidades = GetListModalidades();
 
+            var model = new FuncionarioModel {
+                Id = 0,
+                Excluido = false,
+                Ativo = true,
+                Modalidades = new List<ModalidadeFuncionarioModel> { },
+                Pessoa = new PessoaModel { }
+            };
+
             //var model = new FuncionarioModel();
             //var defaultObj = model.GetModelDefault();
-            return PartialView("_Gerenciar", new FuncionarioModel());
+            return PartialView("_Gerenciar", model);
         }
 
         [HttpGet]

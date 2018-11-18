@@ -16,7 +16,9 @@
             <input type="hidden" name="Id" value=@Model.Id>
             @if (!string.IsNullOrEmpty(Model.Pessoa.Cpf))
             {
-                <input type="hidden" name="Id" value=@Model.Pessoa.Cpf>               
+                <input type="hidden" name="Id" value=@Model.Pessoa.Cpf>
+                <input type="hidden" name="Pessoa.Id" value=@Model.Pessoa.Id>
+                <input type="hidden" name="IdPessoa" value=@Model.Pessoa.Id>
             }
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -121,17 +123,17 @@
                                     {
                                         if (Model.Modalidades.Where(m => m.IdModalidade == item.IntValue).FirstOrDefault() != null)
                                         {
-                                            <input type="checkbox" name="Modalidades" checked="checked" 
-                                                   value="@item.Value" /> @item.Name
+                                            <input type="checkbox" name="IdsModalidades" checked="checked" 
+                                                   value="@item.IntValue" /> @item.Name
                                         }
                                         else
                                         {
-                                            <input type="checkbox" name="Modalidades" value="@item.Value" /> @item.Name
+                                            <input type="checkbox" name="IdsModalidades" value="@item.IntValue" /> @item.Name
                                         }
                                     }
                                     else
                                     {
-                                        <input type="checkbox" name="Modalidades" value="@item.Value" /> @item.Name
+                                        <input type="checkbox" name="IdsModalidades" value="@item.IntValue" /> @item.Name
                                     }
                                 </label>
                             </div>

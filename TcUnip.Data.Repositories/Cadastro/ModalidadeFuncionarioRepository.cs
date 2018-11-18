@@ -23,5 +23,28 @@ namespace TcUnip.Data.Repositories.Cadastro
             }
         }
 
+        public void ExcluiLista(List<ModalidadeFuncionarioModel> modalidadeFuncionarios)
+        {
+            using (var context = new TcUnipContext())
+            {
+                foreach (var item in modalidadeFuncionarios)
+                {
+                    Excluir(item.IdFuncionario, item.IdModalidade, context);
+                }
+            }
+        }
+
+        private void Excluir(int idFuncionario, int idModalidade, TcUnipContext context)
+        {
+
+            context.ModalidadeFuncionario.Remove(
+                    context.ModalidadeFuncionario.Where(x => x.IdFuncionario == idFuncionario &&
+                                                             x.IdModalidade == idModalidade)
+                                                             .FirstOrDefault()
+                    );
+
+            context.SaveChanges();
+        }
+
     }
 }

@@ -17,12 +17,15 @@ namespace TcUnip.Data.Repositories.Cadastro
         {
             using (var context = new TcUnipContext())
             {
-                return Mapper.Map<FuncionarioModel>(
-                    context.Funcionario.Where(x => x.Id == id && !x.Excluido && x.Ativo)
-                                    .Include(x => x.Pessoa)
-                                    .Include(x => x.Modalidades)                                    
-                                    .FirstOrDefault()
-                );
+                var funcionario = context.Funcionario.Where(x => x.Id == id && !x.Excluido && x.Ativo)
+                                     .Include(x => x.Pessoa)
+                                     .Include(x => x.Modalidades)
+                                     .FirstOrDefault();
+
+                if (funcionario != null)
+                    funcionario.Modalidades.ForEach(x => x.Funcionario = null);                
+
+                return Mapper.Map<FuncionarioModel>(funcionario);
             }
         }
 
@@ -42,27 +45,26 @@ namespace TcUnip.Data.Repositories.Cadastro
         {
             using (var context = new TcUnipContext())
             {
-                return Mapper.Map<List<FuncionarioModel>>(
-                    context.Funcionario.Where(x => !x.Excluido && x.Ativo)
+                var list = context.Funcionario.Where(x => !x.Excluido && x.Ativo)
                                    .Include(x => x.Pessoa)
-                                   .Include(x => x.Modalidades)
                                    .AsNoTracking()
-                                   .ToList()
-                    );
-            }
-        }
+                                   .ToList();
 
-        public List<FuncionarioModel> ListProfissionais()
-        {
-            using (var context = new TcUnipContext())
-            {
-                return Mapper.Map<List<FuncionarioModel>>(
-                    context.Funcionario.Where(x => !x.Excluido && x.Ativo && x.Modalidades.Count > 0)
-                                   .Include(x => x.Pessoa)
-                                   .Include(x => x.Modalidades)
-                                   .AsNoTracking()
-                                   .ToList()
-                    );
+                if (list.Count > 0)
+                {
+                    var idsFuncionario = list.Select(x => x.Id).ToArray();
+
+                    var listModalidades = context.ModalidadeFuncionario.Include(x => x.Modalidade)
+                                                                       .Where(x => idsFuncionario.Contains(x.IdFuncionario))
+                                                                       .ToList();                    
+
+                    list.ForEach(x => x.Modalidades =
+                                      listModalidades.Where(l => l.IdFuncionario == x.Id)
+                                                     .ToList());
+                }
+                    
+
+                return Mapper.Map<List<FuncionarioModel>>(list);
             }
         }
     }
