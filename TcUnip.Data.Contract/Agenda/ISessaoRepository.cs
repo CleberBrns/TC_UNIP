@@ -7,8 +7,8 @@ namespace TcUnip.Data.Contract.Agenda
     public interface ISessaoRepository : IRepositoryBase<SessaoModel>
     {
         SessaoModel GetById(int id);
-        List<SessaoModel> ListAgendaPeriodo(PesquisaModel pesquisaModel);
-        List<SessaoModel> ListAgendaPeriodoFuncionario(PesquisaModel pesquisaModel);
-        List<SessaoModel> ListAgendaPeriodoPaciente(PesquisaModel pesquisaModel);
+        List<SessaoModel> ListSessoesPeriodo(PesquisaModel pesquisaModel);
+        List<SessaoModel> ListSessoesPeriodoFuncionario(PesquisaModel pesquisaModel);
+        List<SessaoModel> ListSessoesPeriodoPaciente(PesquisaModel pesquisaModel);
     }
 }

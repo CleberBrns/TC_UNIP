@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -29,7 +28,7 @@ namespace TcUnip.Data.Repositories.Agenda
             }
         }
 
-        public List<SessaoModel> ListAgendaPeriodo(PesquisaModel pesquisaModel)
+        public List<SessaoModel> ListSessoesPeriodo(PesquisaModel pesquisaModel)
         {
             using (var context = new TcUnipContext())
             {
@@ -44,7 +43,7 @@ namespace TcUnip.Data.Repositories.Agenda
             }
         }
 
-        public List<SessaoModel> ListAgendaPeriodoFuncionario(PesquisaModel pesquisaModel)
+        public List<SessaoModel> ListSessoesPeriodoFuncionario(PesquisaModel pesquisaModel)
         {
             using (var context = new TcUnipContext())
             {
@@ -61,7 +60,7 @@ namespace TcUnip.Data.Repositories.Agenda
             }
         }
 
-        public List<SessaoModel> ListAgendaPeriodoPaciente(PesquisaModel pesquisaModel)
+        public List<SessaoModel> ListSessoesPeriodoPaciente(PesquisaModel pesquisaModel)
         {
             using (var context = new TcUnipContext())
             {

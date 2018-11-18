@@ -38,7 +38,7 @@ namespace TcUnip.Service.Agenda
         public Result<List<SessaoModel>> ListAgendaDoDia()
         {
             var result = new Result<List<SessaoModel>>();
-            result.Value = _sessaoRepository.ListAgendaPeriodo(configuraPesquia.GetPesquisaDoDia());
+            result.Value = _sessaoRepository.ListSessoesPeriodo(configuraPesquia.GetPesquisaDoDia());
 
             return result;
         }
@@ -47,7 +47,7 @@ namespace TcUnip.Service.Agenda
         {
             pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
             var result = new Result<List<SessaoModel>>();
-            result.Value = _sessaoRepository.ListAgendaPeriodo(pesquisaModel);
+            result.Value = _sessaoRepository.ListSessoesPeriodo(pesquisaModel);
 
             return result;
         }
@@ -56,7 +56,7 @@ namespace TcUnip.Service.Agenda
         {
             pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
             var result = new Result<List<SessaoModel>>();
-            result.Value = _sessaoRepository.ListAgendaPeriodoFuncionario(pesquisaModel);
+            result.Value = _sessaoRepository.ListSessoesPeriodoFuncionario(pesquisaModel);
 
             return result;
         }
@@ -65,7 +65,7 @@ namespace TcUnip.Service.Agenda
         {
             pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
             var result = new Result<List<SessaoModel>>();
-            result.Value = _sessaoRepository.ListAgendaPeriodoPaciente(pesquisaModel);
+            result.Value = _sessaoRepository.ListSessoesPeriodoPaciente(pesquisaModel);
 
             return result;
         }

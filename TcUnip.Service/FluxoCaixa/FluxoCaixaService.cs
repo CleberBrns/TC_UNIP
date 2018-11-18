@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TcUnip.Data.Contract.Agenda;
 using TcUnip.Data.Contract.FluxoCaixa;
 using TcUnip.Model.Agenda;
@@ -14,6 +12,7 @@ namespace TcUnip.Service.FluxoCaixa
 {
     public class FluxoCaixaService : IFluxoCaixaService
     {
+        readonly Util.ConfiguraPesquisa configuraPesquia = new Util.ConfiguraPesquisa();
         #region Propriedades e Construtor
 
         readonly ICaixaRepository _caixaRepository;
@@ -45,18 +44,16 @@ namespace TcUnip.Service.FluxoCaixa
         public Result<List<CaixaModel>> ListCaixaDoDia()
         {
             var result = new Result<List<CaixaModel>>();
-            result.Value = _caixaRepository.Lista(x => x.Data.Date == DateTime.Now.Date)
-                                            .ToList();
+            result.Value = _caixaRepository.ListCaixaPeriodo(configuraPesquia.GetPesquisaDoDia());
 
             return result;
         }
 
         public Result<List<CaixaModel>> ListCaixaPeriodo(PesquisaModel pesquisaModel)
         {
+            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
             var result = new Result<List<CaixaModel>>();
-            result.Value = _caixaRepository.Lista(x => x.Data.Date >= pesquisaModel.DataIncio.Date &&
-                                                        x.Data.Date <= pesquisaModel.DataFim.Date)
-                                           .ToList();
+            result.Value = _caixaRepository.ListCaixaPeriodo(pesquisaModel);
 
             return result;
         }
@@ -136,9 +133,7 @@ namespace TcUnip.Service.FluxoCaixa
         public Result<List<ReciboModel>> ListRecibosDoDia()
         {
             var result = new Result<List<ReciboModel>>();
-            var listSessoes = _sessaoRepository.Lista(x => !x.Excluido &&
-                                                         x.Data.Date == DateTime.Now.Date)
-                                               .ToList();
+            var listSessoes = _sessaoRepository.ListSessoesPeriodo(configuraPesquia.GetPesquisaDoDia());
 
             result.Value = ConfiguraListaRecibo(listSessoes);
 
@@ -147,11 +142,9 @@ namespace TcUnip.Service.FluxoCaixa
 
         public Result<List<ReciboModel>> ListRecibosPeriodo(PesquisaModel pesquisaModel)
         {
+            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
             var result = new Result<List<ReciboModel>>();
-            var listSessoes = _sessaoRepository.Lista(x => !x.Excluido &&
-                                                            x.Data.Date >= pesquisaModel.DataIncio.Date &&
-                                                            x.Data.Date <= pesquisaModel.DataFim.Date)
-                                               .ToList();
+            var listSessoes = _sessaoRepository.ListSessoesPeriodo(pesquisaModel);
 
             result.Value = ConfiguraListaRecibo(listSessoes);
 
@@ -160,13 +153,9 @@ namespace TcUnip.Service.FluxoCaixa
 
         public Result<List<ReciboModel>> ListRecibosPeriodoFuncionario(PesquisaModel pesquisaModel)
         {
+            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
             var result = new Result<List<ReciboModel>>();
-            var listSessoes = _sessaoRepository.Lista(x => !x.Excluido &&
-                                                         x.Data.Date >= pesquisaModel.DataIncio.Date &&
-                                                         x.Data.Date <= pesquisaModel.DataFim.Date &&
-                                                         x.Funcionario.Pessoa.Cpf == pesquisaModel.CpfPesquisa,
-                                                         x => x.Funcionario.Pessoa)
-                                               .ToList();
+            var listSessoes = _sessaoRepository.ListSessoesPeriodoFuncionario(pesquisaModel);
 
             result.Value = ConfiguraListaRecibo(listSessoes);
 
@@ -175,18 +164,16 @@ namespace TcUnip.Service.FluxoCaixa
 
         public Result<List<ReciboModel>> ListRecibosPeriodoPaciente(PesquisaModel pesquisaModel)
         {
+            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
             var result = new Result<List<ReciboModel>>();
-            var listSessoes = _sessaoRepository.Lista(x => !x.Excluido &&
-                                                         x.Data.Date >= pesquisaModel.DataIncio.Date &&
-                                                         x.Data.Date <= pesquisaModel.DataFim.Date &&
-                                                         x.Paciente.Pessoa.Cpf == pesquisaModel.CpfPesquisa,
-                                                         x => x.Paciente.Pessoa)
-                                               .ToList();
+            var listSessoes = _sessaoRepository.ListSessoesPeriodoPaciente(pesquisaModel);
 
             result.Value = ConfiguraListaRecibo(listSessoes);
 
             return result;
         }
+
+        #region Métodos Privados
 
         /// <summary>
         /// Configura o Model Sessão para carregar os dados do Recibo
@@ -233,6 +220,8 @@ namespace TcUnip.Service.FluxoCaixa
 
             return listaConfigurada.OrderBy(l => l.Data).ToList();
         }
+
+        #endregion
 
         #endregion
     }
