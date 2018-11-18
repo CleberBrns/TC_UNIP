@@ -294,7 +294,7 @@ namespace TcUnip.Service.Cadastro
         public Result<FuncionarioModel> GetFuncionario(int id)
         {
             var result = new Result<FuncionarioModel>();
-            result.Value = _funcionarioRepository.SelecionarUm(x => x.Id == id);
+            result.Value = _funcionarioRepository.GetById(id);
 
             if (result.Value == null)
             {
@@ -308,7 +308,7 @@ namespace TcUnip.Service.Cadastro
         public Result<List<FuncionarioModel>> ListFuncionario()
         {
             var result = new Result<List<FuncionarioModel>>();
-            result.Value = _funcionarioRepository.Lista(x => !x.Excluido, x => x.Pessoa, x => x.Modalidades).ToList();
+            result.Value = _funcionarioRepository.ListFuncionarios();
 
             return result;
         }
@@ -316,7 +316,7 @@ namespace TcUnip.Service.Cadastro
         public Result<List<FuncionarioModel>> ListProfissionais()
         {
             var result = new Result<List<FuncionarioModel>>();
-            result.Value = _funcionarioRepository.Lista(x => !x.Excluido).ToList();
+            result.Value = _funcionarioRepository.ListProfissionais();
 
             return result;
         }
@@ -393,9 +393,9 @@ namespace TcUnip.Service.Cadastro
             var result = new Result<bool>();
 
             var cpfExistente = false;
-            var usuario = _funcionarioRepository.SelecionarUm(x => x.Pessoa.Cpf == model.Pessoa.Cpf &&
-                                                               x.Id != model.Id, u => u.Pessoa);
-            if (usuario != null)
+            var usuario = _funcionarioRepository.GetByCpf(model.Pessoa.Cpf);
+                                                 
+            if (usuario != null && usuario.Id != model.Id)
             {
                 result.Message = "CPF vinculado a outro Funcionário. Não é permitido sua utilização";
                 result.Status = false;
