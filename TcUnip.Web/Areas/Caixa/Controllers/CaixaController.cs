@@ -34,6 +34,7 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 
         public ActionResult ListaCaixaDoDia()
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
             ViewBag.Usuario = GetUsuarioSession().Item1;
 
             string msgExibicao = string.Empty;
@@ -63,6 +64,7 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 
         public ActionResult ListaCaixaPorDatas(string dataInicio, string dataFim)
         {
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
             ViewBag.Usuario = GetUsuarioSession().Item1;
 
             string msgExibicao = string.Empty;
@@ -104,7 +106,9 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 
             //var model = new Model.Contabil.Caixa();
             //var defaultObj = model.GetModelDefault();
-            return PartialView("_Gerenciar", new CaixaModel());
+            return PartialView("_Gerenciar", new CaixaModel {
+                Data = DateTime.Now
+            });
         }
 
         [HttpGet]

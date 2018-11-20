@@ -50,7 +50,7 @@
                         @Html.Label("Débito - R$", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-6">
                             <input type="text" autocomplete="off" class="form-control alinhamentoSelect valor" 
-                                   id="debito" style="width: 60%" name="Debito" />
+                                   id="debito" style="width: 60%" name="DebitoCadastro" />
                             <span class="field-validation-valid text-danger" id="validaDebito" data-valmsg-replace="true"></span>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                         @Html.Label("Crédito - R$", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-6">
                             <input type="text" autocomplete="off" class="form-control alinhamentoSelect valor" 
-                                   id="credito" style="width: 60%" name="Credito" />
+                                   id="credito" style="width: 60%" name="CreditoCadastro" />
                             <span class="field-validation-valid text-danger" id="validaCredito" data-valmsg-replace="true"></span>
                         </div>
                     </div>
@@ -173,7 +173,7 @@
                 if (validacao.campoNulo(descricao, validaDescricao))
                     ehValido = false;
 
-                if (debito.length == 0 && credito.length == 0) {
+                if (debito.length == 0 || credito.length == 0) {
 
                     swal({
                         title: '',

@@ -27,9 +27,9 @@
                         <tr>
                             <td>@itemModel.Data.ToShortDateString()</td>
                             <td>@itemModel.Descricao</td>
-                            <td>R$ @itemModel.Debito</td>
-                            <td>R$ @itemModel.Credito</td>
-                            <td>R$ @itemModel.Saldo</td>
+                            <td>@itemModel.Debito.ToString("C")</td>
+                            <td>@itemModel.Credito.ToString("C")</td>
+                            <td>@itemModel.Saldo.ToString("C")</td>
                         </tr>
                     }
                 </tbody>

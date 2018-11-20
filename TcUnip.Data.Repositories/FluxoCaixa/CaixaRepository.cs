@@ -32,6 +32,7 @@ namespace TcUnip.Data.Repositories.FluxoCaixa
                     context.Caixa.Where(x => x.Data >= pesquisaModel.DataIncio &&
                                              x.Data <= pesquisaModel.DataFim)
                                   .AsNoTracking()
+                                  .OrderBy(x => x.Data)
                                   .ToList()
                     );
             }

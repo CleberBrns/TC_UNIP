@@ -44,7 +44,9 @@ namespace TcUnip.Service.FluxoCaixa
         public Result<List<CaixaModel>> ListCaixaDoDia()
         {
             var result = new Result<List<CaixaModel>>();
-            result.Value = _caixaRepository.ListCaixaPeriodo(configuraPesquia.GetPesquisaDoDia());
+
+            var list = ConfiguraSaldoCaixa(_caixaRepository.ListCaixaPeriodo(configuraPesquia.GetPesquisaDoDia()));
+            result.Value = list;
 
             return result;
         }
@@ -53,7 +55,9 @@ namespace TcUnip.Service.FluxoCaixa
         {
             pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
             var result = new Result<List<CaixaModel>>();
-            result.Value = _caixaRepository.ListCaixaPeriodo(pesquisaModel);
+
+            var list = ConfiguraSaldoCaixa(_caixaRepository.ListCaixaPeriodo(pesquisaModel));
+            result.Value = list;
 
             return result;
         }
@@ -64,30 +68,48 @@ namespace TcUnip.Service.FluxoCaixa
             result.Value = false;
             result.Status = false;
 
-            if (model.Id != 0)
+            model.Credito = Convert.ToDecimal(model.CreditoCadastro);
+            model.Debito = Convert.ToDecimal(model.DebitoCadastro);
+
+            if (model.Credito <= 0 || model.Debito <= 0)
             {
-                model = _caixaRepository.Salvar(model);
-                if (model.Id != 0)
+                if (model.Credito == 0)
                 {
-                    result.Message = "Registro salvo com sucesso!";
-                    result.Value = true;
-                    result.Status = true;
+                    result.Message = "Valor inválido para o Crédito!";
                 }
-                else
-                    result.Message = "Falha ao salvar o registro!";
+
+                if (model.Debito == 0)
+                {
+                    result.Message = "Valor inválido para o Débito!";
+                }
             }
             else
             {
-                result.Value = _caixaRepository.Atualizar(model);
-
-                if (result.Value)
+                if (model.Id == 0)
                 {
-                    result.Message = "Registro atualizado com sucesso!";
-                    result.Value = true;
-                    result.Status = true;
+                    model = _caixaRepository.Salvar(model);
+                    if (model.Id != 0)
+                    {
+                        result.Message = "Registro salvo com sucesso!";
+                        result.Value = true;
+                        result.Status = true;
+                    }
+                    else
+                        result.Message = "Falha ao salvar o registro!";
                 }
                 else
-                    result.Message = "Falha ao atualizar o registro!";
+                {
+                    result.Value = _caixaRepository.Atualizar(model);
+
+                    if (result.Value)
+                    {
+                        result.Message = "Registro atualizado com sucesso!";
+                        result.Value = true;
+                        result.Status = true;
+                    }
+                    else
+                        result.Message = "Falha ao atualizar o registro!";
+                }
             }
 
             return result;
@@ -109,6 +131,23 @@ namespace TcUnip.Service.FluxoCaixa
                 result.Message = "Falha ao excluir o registro!";
 
             return result;
+        }
+
+        private List<CaixaModel> ConfiguraSaldoCaixa(List<CaixaModel> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                var isFirst = i == 0;
+                var itemLista = list[i];
+                var saldoAnterior = !isFirst ? list[(i - 1)].Saldo : 0;
+
+                itemLista.Saldo = itemLista.Credito - itemLista.Debito;
+
+                if (!isFirst)
+                    itemLista.Saldo += saldoAnterior;
+            }
+
+            return list;
         }
 
         #endregion

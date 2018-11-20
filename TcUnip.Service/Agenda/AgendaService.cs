@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TcUnip.Data.Contract.Agenda;
+using TcUnip.Data.Contract.FluxoCaixa;
 using TcUnip.Model.Agenda;
 using TcUnip.Model.Common;
 using TcUnip.Service.Contract.Agenda;
@@ -13,10 +14,12 @@ namespace TcUnip.Service.Agenda
         readonly Util.ConfiguraPesquisa configuraPesquia = new Util.ConfiguraPesquisa();
         #region Propriedades e Construtor        
         readonly ISessaoRepository _sessaoRepository;
+        readonly ICaixaRepository _caixaRepository;
 
-        public AgendaService(ISessaoRepository sessaoRepository)
+        public AgendaService(ISessaoRepository sessaoRepository, ICaixaRepository caixaRepository)
         {
             this._sessaoRepository = sessaoRepository;
+            this._caixaRepository = caixaRepository;
         }
 
         #endregion
@@ -76,11 +79,12 @@ namespace TcUnip.Service.Agenda
             result.Value = false;
             result.Status = false;
 
-            if (model.Id != 0)
+            if (model.Id == 0)
             {
                 model = _sessaoRepository.Salvar(model);
                 if (model.Id != 0)
                 {
+                    InsereRegistroCaixa(model);
                     result.Message = "Sessão salvo com sucesso!";
                     result.Value = true;
                     result.Status = true;
@@ -103,6 +107,17 @@ namespace TcUnip.Service.Agenda
             }
 
             return result;
+        }
+
+        private void InsereRegistroCaixa(SessaoModel model)
+        {
+            var registroCaixa =
+                new Model.FluxoCaixa.CaixaModel {
+                    Data = model.Data,
+                    Credito = model.Valor,
+                    Descricao = "Sessão de " + model.Modalidade.Nome +
+                                "para o paciente " + model.Paciente.Pessoa.Nome
+                };
         }
 
         public Result<bool> Exclui(int id)
