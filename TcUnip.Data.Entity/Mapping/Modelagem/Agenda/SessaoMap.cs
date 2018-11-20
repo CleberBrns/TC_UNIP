@@ -23,7 +23,7 @@ namespace TcUnip.Data.Entity.Mapping.Modelagem.Agenda
             Property(x => x.IdPaciente)
                 .IsRequired();
 
-            Property(x => x.IdFuncioario)
+            Property(x => x.IdFuncionario)
                 .IsRequired();
 
             Property(x => x.IdModalidade)

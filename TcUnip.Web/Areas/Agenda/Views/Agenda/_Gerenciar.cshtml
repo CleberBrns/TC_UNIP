@@ -35,25 +35,25 @@
                             @Html.Label("Paciente", htmlAttributes: new { @class = "control-label col-md-3" })
                         </div>
                         <div class="col-md-8">
-                            <select class="form-control alinhamentoSelect" id="paciente" name="Paciente.Pessoa.Cpf">
+                            <select class="form-control alinhamentoSelect" id="paciente" name="IdPaciente">
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listPacientes)
                                 {
-                                    if (Model.Paciente != null && !string.IsNullOrEmpty(Model.Paciente.Pessoa.Cpf))
+                                    if (Model.Paciente != null)
                                     {
-                                        if (Model.Paciente.Pessoa.Cpf == item.Pessoa.Cpf)
+                                        if (Model.Paciente.Id == item.Id)
                                         {
-                                            <option value="@item.Pessoa.Cpf" selected="selected">@item.Pessoa.Nome</option>
+                                            <option value="@item.Id" selected="selected">@item.Pessoa.Nome</option>
                                         }
                                         else
                                         {
-                                            <option value="@item.Pessoa.Cpf">@item.Pessoa.Nome</option>
+                                            <option value="@item.Id">@item.Pessoa.Nome</option>
                                         }
 
                                     }
                                     else
                                     {
-                                        <option value="@item.Pessoa.Cpf">@item.Pessoa.Nome</option>
+                                        <option value="@item.Id">@item.Pessoa.Nome</option>
                                     }
                                 }
                             </select>
@@ -65,25 +65,25 @@
                             @Html.Label("Profissional", htmlAttributes: new { @class = "control-label col-md-3" })
                         </div>
                         <div class="col-md-8">
-                            <select class="form-control alinhamentoSelect" id="profissional" name="Funcionario.Pessoa.Cpf">
+                            <select class="form-control alinhamentoSelect" id="profissional" name="IdFuncionario">
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listProfissionais)
                                 {
-                                    if (Model.Funcionario != null && !string.IsNullOrEmpty(Model.Funcionario.Pessoa.Cpf))
+                                    if (Model.Funcionario != null)
                                     {
-                                        if (Model.Funcionario.Pessoa.Cpf == item.Pessoa.Cpf)
+                                        if (Model.Id == item.Id)
                                         {
-                                            <option value="@item.Pessoa.Cpf" selected="selected">@item.Pessoa.Nome</option>
+                                            <option value="@item.Id" selected="selected">@item.Pessoa.Nome</option>
                                         }
                                         else
                                         {
-                                            <option value="@item.Pessoa.Cpf">@item.Pessoa.Nome</option>
+                                            <option value="@item.Id">@item.Pessoa.Nome</option>
                                         }
 
                                     }
                                     else
                                     {
-                                        <option value="@item.Pessoa.Cpf">@item.Pessoa.Nome</option>
+                                        <option value="@item.Id">@item.Pessoa.Nome</option>
                                     }
                                 }
                             </select>
@@ -97,7 +97,7 @@
                         <div class="col-md-8">
                             @if (Model.Id > 0)
                             {
-                                <select class="form-control alinhamentoSelect" id="modalidades" name="Modalidade" style="width: 60%">
+                                <select class="form-control alinhamentoSelect" id="modalidades" name="IdModalidade" style="width: 60%">
                                     <option value="0">-- Selecione --</option>
                                     @foreach (var item in listModalidades)
                                     {
@@ -114,7 +114,7 @@
                             }
                             else
                             {
-                                <select class="form-control alinhamentoSelect" id="modalidades" name="Modalidade" style="width: 60%">
+                                <select class="form-control alinhamentoSelect" id="modalidades" name="IdModalidade" style="width: 60%">
                                     <option value="0">-- Selecione --</option>
                                 </select>
                             }
@@ -202,7 +202,7 @@
         $(".close").on('click', function () {
             gerenciarAgenda.CloseModal();
         });
-
+        
         var gerenciarAgenda = {
 
             CarregaModalidades: function (selected) {
@@ -212,11 +212,11 @@
 
                 if (selected !== "0") {
                     $.getJSON("@Url.Action("GetModalidadesProfissional", "Agenda")",
-                        { cpf: selected },
+                        { id: selected },
                         function (result) {
                             $.each(result, function () {
                             $('#modalidades').append('<option value=' +
-                              this.Value + '>' + this.Name + '</option>');
+                              this.IntValue + '>' + this.Name + '</option>');
                         });
                     }).fail(function (jqXHR, textStatus, errorThrown) {
                         validacao.errorAjax(jqXHR, textStatus, errorThrown);

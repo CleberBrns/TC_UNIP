@@ -18,7 +18,7 @@ namespace TcUnip.Data.Entity.Modelagem.Agenda
         public virtual Paciente Paciente { get; set; }
 
         [ForeignKey("Funcionario")]
-        public int IdFuncioario { get; set; }
+        public int IdFuncionario { get; set; }
         public virtual Funcionario Funcionario { get; set; }
 
         [ForeignKey("Modalidade")]

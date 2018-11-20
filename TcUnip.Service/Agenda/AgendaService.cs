@@ -79,31 +79,38 @@ namespace TcUnip.Service.Agenda
             result.Value = false;
             result.Status = false;
 
-            if (model.Id == 0)
+            if (model.Valor < 100)
             {
-                model = _sessaoRepository.Salvar(model);
-                if (model.Id != 0)
-                {
-                    InsereRegistroCaixa(model);
-                    result.Message = "Sessão salvo com sucesso!";
-                    result.Value = true;
-                    result.Status = true;
-                }
-                else
-                    result.Message = "Falha ao salvar o Sessão!";
+                result.Message = "O valor mínimo de uma Sessão é de R$100!";
             }
             else
             {
-                result.Value = _sessaoRepository.Atualizar(model);
-
-                if (result.Value)
+                if (model.Id == 0)
                 {
-                    result.Message = "Sessão atualizado com sucesso!";
-                    result.Value = true;
-                    result.Status = true;
+                    model = _sessaoRepository.Salvar(model);
+                    if (model.Id != 0)
+                    {
+                        InsereRegistroCaixa(model);
+                        result.Message = "Sessão salvo com sucesso!";
+                        result.Value = true;
+                        result.Status = true;
+                    }
+                    else
+                        result.Message = "Falha ao salvar o Sessão!";
                 }
                 else
-                    result.Message = "Falha ao atualizar o Sessão!";
+                {
+                    result.Value = _sessaoRepository.Atualizar(model);
+
+                    if (result.Value)
+                    {
+                        result.Message = "Sessão atualizado com sucesso!";
+                        result.Value = true;
+                        result.Status = true;
+                    }
+                    else
+                        result.Message = "Falha ao atualizar o Sessão!";
+                }
             }
 
             return result;

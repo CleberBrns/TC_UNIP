@@ -14,13 +14,10 @@ namespace TcUnip.Model.Agenda
         public int IdPaciente { get; set; }
         public PacienteModel Paciente { get; set; }
 
-        public int IdFuncioario { get; set; }
+        public int IdFuncionario { get; set; }
         public virtual FuncionarioModel Funcionario { get; set; }
 
         public int IdModalidade { get; set; }
         public virtual ModalidadeModel Modalidade { get; set; }
-
-        public int IdStatus { get; set; }
-        public virtual StatusSessaoModel StatusSessao { get; set; }
     }
 }
