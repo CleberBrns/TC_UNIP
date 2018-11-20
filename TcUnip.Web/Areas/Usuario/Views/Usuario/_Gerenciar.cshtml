@@ -15,16 +15,16 @@
     {
         <div class="form-horizontal">
             <input type="hidden" name="Id" id="Id" value=@Model.Id>
-            @if (!string.IsNullOrEmpty(Model.Email))
+            @if (Model.Id != 0)
             {                
-                <input type="hidden" name="Email" id="hddEmail" value="@Model.Email">
+                <input type="hidden" name="IdFuncionario" id="IdFuncionario" value="@Model.IdFuncionario">
             }
             <input type="hidden" name="Permissoes" id="hddPermissao">
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="campos" style="padding: 2% 0 2% 5%">
                 <div class="form-group">
-                    @if (string.IsNullOrEmpty(Model.Email))
+                    @if (Model.Id == 0)
                     {
                         <div id="divPreenchimento">
                             @Html.Label("Preenchimento Automático", htmlAttributes: new { @class = "control-label col-md-3" })
@@ -40,7 +40,9 @@
                                         {
                                             if (Model.Cpf == item.Pessoa.Cpf)
                                             {
-                                                <option value="@item.Pessoa.Cpf" email="@item.Pessoa.Email"
+                                                <option value="@item.Id" 
+                                                        cpf="@item.Pessoa.Cpf"
+                                                        email="@item.Pessoa.Email"
                                                         modalidade="@item.Modalidades.FirstOrDefault().Modalidade.Nome"
                                                         selected="selected">
                                                     @item.Pessoa.Nome
@@ -48,7 +50,9 @@
                                             }
                                             else
                                             {
-                                                <option value="@item.Pessoa.Cpf" email="@item.Pessoa.Email"
+                                                <option value="@item.Id" 
+                                                        cpf="@item.Pessoa.Cpf"
+                                                        email="@item.Pessoa.Email"
                                                         modalidade="@item.Modalidades.FirstOrDefault().Modalidade.Nome">
                                                     @item.Pessoa.Nome
                                                 </option>
@@ -188,9 +192,11 @@
 
     $("#funcionarios").on('change', function () {
 
+        
         var selecionado = $(this).find(':selected');
         if (selecionado.val() !== "0") {
-            var cpf = selecionado.attr("value");
+            
+            var cpf = selecionado.attr("cpf");
             var email = selecionado.attr("email");
             var permissao = selecionado.attr("modalidade");
             UsuarioGerenciar.preenchimentoAutomatico($("#cpf"), cpf, $("#hddCpf"), true);
@@ -208,7 +214,7 @@
 
         permissaoProfissional: function (permissao) {
             if (permissao !== undefined && permissao !== "") {
-                $('#perfil option[value="PROFISSIONAL"]').prop("selected", true);
+                $('#perfil option[value="3"]').prop("selected", true);
                 $("#perfil").prop('disabled', true);
             }
             else {
@@ -221,6 +227,7 @@
 
         preenchimentoAutomatico: function (field, value, hidenField, desabilitar) {
 
+            
             $(field).val(value);
             $(hidenField).val(value);
 
@@ -248,6 +255,12 @@
                 IdTipoPerfil: $("#perfil").val(),
                 Ativo: $("#status").val().trim()                
             };
+
+            if ((dadosSalvar.IdFuncionario == undefined || dadosSalvar.IdFuncionario == 0) &&
+                $("#IdFuncionario") != undefined && $("#IdFuncionario").val() != 0)
+            {
+                dadosSalvar.IdFuncionario = $("#IdFuncionario").val();
+            }
 
             $.ajax({
                 url: "@Url.Action("Salvar", "Usuario")",

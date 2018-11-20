@@ -102,7 +102,9 @@ namespace TcUnip.Service.Cadastro
             }
             else
             {
-                model.IdFuncionario = model.IdFuncionario.Value == 0  ? (int?)null : model.IdFuncionario;
+                if (model.IdFuncionario != null && model.IdFuncionario == 0)
+                    model.IdFuncionario = model.IdFuncionario.Value == 0 ? (int?)null : model.IdFuncionario;
+
                 model.Excluido = false;
                 if (model.Id == 0)
                 {                    

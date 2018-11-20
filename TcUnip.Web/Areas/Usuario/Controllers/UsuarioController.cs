@@ -218,7 +218,8 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
                 }
 
                 listFuncionarios = listFuncionarios.Select(l => new FuncionarioModel
-                {    
+                {
+                    Id = l.Id,
                     Pessoa = new PessoaModel
                     {
                         Nome = l.Pessoa.Nome,
