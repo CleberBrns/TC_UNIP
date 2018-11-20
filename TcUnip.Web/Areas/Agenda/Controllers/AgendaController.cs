@@ -395,7 +395,7 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
 
         private string GetDescricaoEvento(SessaoModel agenda)
         {
-            return "Sessão de " + agenda.Modalidade + ", " +
+            return "Sessão de " + agenda.Modalidade.Nome + ", " +
                    " agendada para o Paciente " + agenda.Paciente.Pessoa.Nome +
                    " com o Profissional " + agenda.Funcionario.Pessoa.Nome;                 
         }

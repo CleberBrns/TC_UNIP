@@ -71,18 +71,8 @@ namespace TcUnip.Service.FluxoCaixa
             model.Credito = Convert.ToDecimal(model.CreditoCadastro);
             model.Debito = Convert.ToDecimal(model.DebitoCadastro);
 
-            if (model.Credito <= 0 || model.Debito <= 0)
-            {
-                if (model.Credito == 0)
-                {
-                    result.Message = "Valor inválido para o Crédito!";
-                }
-
-                if (model.Debito == 0)
-                {
-                    result.Message = "Valor inválido para o Débito!";
-                }
-            }
+            if (model.Credito <= 0 && model.Debito <= 0)
+                result.Message = "É obrigatório incluir valor nos campos Crédito ou Débito!";
             else
             {
                 if (model.Id == 0)

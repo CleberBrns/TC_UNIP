@@ -28,6 +28,7 @@
     {
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <input type="hidden" value="@Model.Id" name="Id" />
             <div class="campos" style="padding: 2% 0 2% 5%">
                 <div class="form-group">
                     <div class="form-group">
@@ -41,7 +42,7 @@
                                 {
                                     if (Model.Paciente != null)
                                     {
-                                        if (Model.Paciente.Id == item.Id)
+                                        if (Model.IdPaciente == item.Id)
                                         {
                                             <option value="@item.Id" selected="selected">@item.Pessoa.Nome</option>
                                         }
@@ -71,7 +72,7 @@
                                 {
                                     if (Model.Funcionario != null)
                                     {
-                                        if (Model.Id == item.Id)
+                                        if (Model.IdFuncionario == item.Id)
                                         {
                                             <option value="@item.Id" selected="selected">@item.Pessoa.Nome</option>
                                         }
@@ -143,7 +144,7 @@
                                 <option value="0">-- Selecione --</option>
                                 @foreach (var item in listHorarios)
                                 {
-                                    if (Model.Data.ToLongTimeString() == item.Value)
+                                    if (Model.Data.ToShortTimeString() == item.Value)
                                     {
                                         <option value="@item.Value" selected="selected">@item.Name</option>
                                     }
@@ -160,7 +161,7 @@
                         @Html.Label("Valor - R$", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-6">
                             <input type="text" autocomplete="off" class="form-control alinhamentoSelect" id="valor" style="width: 60%" name="Valor"
-                                   value="@Model.Valor" />
+                                   value="@Model.Valor.ToString("C").Replace("R$ ", string.Empty)" />
                             <span class="field-validation-valid text-danger" id="validaValor" data-valmsg-replace="true"></span>
                         </div>
                     </div>

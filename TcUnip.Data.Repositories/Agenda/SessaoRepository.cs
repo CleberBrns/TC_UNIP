@@ -37,6 +37,8 @@ namespace TcUnip.Data.Repositories.Agenda
                                               x.Data >= pesquisaModel.DataIncio &&
                                               x.Data <= pesquisaModel.DataFim)
                                   .Include(x => x.Modalidade)
+                                  .Include(x => x.Paciente.Pessoa)                                  
+                                  .Include(x => x.Funcionario.Pessoa)
                                   .AsNoTracking()
                                   .ToList()
                     );

@@ -85,11 +85,15 @@ namespace TcUnip.Service.Agenda
             }
             else
             {
+                model.Data = Convert.ToDateTime(String.Format("{0} {1}", 
+                                                model.Data.ToShortDateString(), model.Horario));
+
                 if (model.Id == 0)
                 {
                     model = _sessaoRepository.Salvar(model);
                     if (model.Id != 0)
                     {
+                        model = _sessaoRepository.GetById(model.Id);
                         InsereRegistroCaixa(model);
                         result.Message = "Sessão salvo com sucesso!";
                         result.Value = true;
@@ -125,6 +129,8 @@ namespace TcUnip.Service.Agenda
                     Descricao = "Sessão de " + model.Modalidade.Nome +
                                 "para o paciente " + model.Paciente.Pessoa.Nome
                 };
+
+            _caixaRepository.Salvar(registroCaixa);
         }
 
         public Result<bool> Exclui(int id)

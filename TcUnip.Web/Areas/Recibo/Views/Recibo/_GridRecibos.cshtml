@@ -30,7 +30,7 @@
                         <td>@itemModel.Data.ToShortDateString()</td>
                         <td>@itemModel.Data.ToShortTimeString()</td>
                         <td>@itemModel.Profissional</td>
-                        <td>R$ @itemModel.Valor</td>
+                        <td>@itemModel.Valor.ToString("C")</td>
                         <td class="text-center">
                             <a class="btnEditar" id-registro="@itemModel.IdSessao" title="Editar"
                                onclick="indexRecibo.modalVisualizar(this)"
