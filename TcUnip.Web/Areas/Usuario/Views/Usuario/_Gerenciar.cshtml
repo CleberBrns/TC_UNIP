@@ -136,7 +136,7 @@
                             <option value="0">-- Selecione --</option>
                             @foreach (var item in listStatus)
                             {
-                                if (Model.Ativo == Convert.ToBoolean(item.Value))
+                                if (Model.Id > 0 && Model.Ativo == Convert.ToBoolean(item.Value))
                                 {
                                     <option value="@item.Value" selected="selected">@item.Name</option>
                                 }

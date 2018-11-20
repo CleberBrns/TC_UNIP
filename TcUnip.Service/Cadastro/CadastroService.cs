@@ -219,7 +219,9 @@ namespace TcUnip.Service.Cadastro
             }
             else
             {
-                if (model.Id != 0)
+                model.Pessoa.Ativo = true;
+                model.Excluido = false;
+                if (model.Id == 0)
                 {
                     model = _pacienteRepository.Salvar(model);
                     if (model.Id != 0)
@@ -339,8 +341,9 @@ namespace TcUnip.Service.Cadastro
             }
             else
             {
-                model.Modalidades = ConfiguraModalidades(model.IdsModalidades, model.Id);
+                model.Modalidades = ConfiguraModalidades(model.IdsModalidades, model.Id);                
                 model.Pessoa.Ativo = true;
+                model.Excluido = false;
                 if (model.Id == 0)
                 {
                     model = _funcionarioRepository.Salvar(model);

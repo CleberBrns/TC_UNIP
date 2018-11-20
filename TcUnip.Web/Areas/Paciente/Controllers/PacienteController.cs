@@ -65,7 +65,14 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
 
             //var model = new PacienteModel();
             //var defaultObj = model.GetModelDefault();
-            return PartialView("_Gerenciar", new PacienteModel());
+            return PartialView("_Gerenciar", new PacienteModel {
+                Id = 0,
+                Excluido = false,
+                Pessoa = new PessoaModel
+                {
+
+                }
+            });
         }
 
         [HttpGet]
