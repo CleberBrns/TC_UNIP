@@ -427,17 +427,8 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
         {
             var listModalidadesSelect = new List<DataSelectControl>();
             var listModalidade = new List<ModalidadeModel>();
-            var listModalidadesSession = GetListModalidadesSession();
 
-            if (listModalidadesSession.Item2)
-                listModalidade = listModalidadesSession.Item1;
-            else
-            {
-                SessionModalidades sessionModalidades = new SessionModalidades();
-                listModalidade = _commonProxy.ListModalidades().Value;
-                sessionModalidades.AddListToSession(listModalidade, Constants.ConstSessions.listModalidades);
-            }
-
+            listModalidade = _commonProxy.ListModalidades().Value;
             listModalidadesSelect = listModalidade.Select(l => new DataSelectControl
             {
                 Name = l.Nome,

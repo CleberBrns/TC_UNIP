@@ -219,7 +219,7 @@ namespace TcUnip.Service.FluxoCaixa
                 CpfPaciente = modelRetorno.Paciente.Pessoa.Cpf,
                 Profissional = modelRetorno.Funcionario.Pessoa.Nome,
                 Data = modelRetorno.Data,
-                Valor = modelRetorno.Valor.ToString(),
+                Valor = modelRetorno.Valor.ToString("C"),
                 ModalidadeSessao = modelRetorno.Modalidade.Nome
             };
 
@@ -242,7 +242,7 @@ namespace TcUnip.Service.FluxoCaixa
                                            CpfPaciente = r.Paciente.Pessoa.Cpf,
                                            Profissional = r.Funcionario.Pessoa.Nome,
                                            Data = r.Data,
-                                           Valor = r.Valor.ToString(),
+                                           Valor = r.Valor.ToString("C"),
                                            ModalidadeSessao = r.Modalidade.Nome
                                        })
                                        .ToList();

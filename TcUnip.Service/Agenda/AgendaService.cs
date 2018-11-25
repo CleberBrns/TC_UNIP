@@ -127,7 +127,7 @@ namespace TcUnip.Service.Agenda
                     Data = model.Data,
                     Credito = model.Valor,
                     Descricao = "Sessão de " + model.Modalidade.Nome +
-                                "para o paciente " + model.Paciente.Pessoa.Nome
+                                " para o(a) paciente " + model.Paciente.Pessoa.Nome
                 };
 
             _caixaRepository.Salvar(registroCaixa);

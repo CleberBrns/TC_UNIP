@@ -98,8 +98,6 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
 
         public ActionResult ModalVisualizar(int id)
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
-
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
@@ -132,8 +130,6 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
 
         public ActionResult ModalVisualizarImpressao(int id)
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
-
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 
@@ -169,7 +165,7 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
         private List<ReciboModel> FiltraListaPorPerfil(List<ReciboModel> listRecibos)
         {
             if (listRecibos.Count > 0 &&
-                Constants.ConstPermissoes.profissional.Equals(GetUsuarioSession().Item1.TipoPerfil.Permissao.FirstOrDefault()))
+                Constants.ConstPermissoes.profissional.Equals(GetUsuarioSession().Item1.TipoPerfil.Permissao))
             {
                 listRecibos = 
                     listRecibos.Where(l => l.Profissional.Equals(GetUsuarioSession().Item1.Funcionario.Pessoa.Nome))

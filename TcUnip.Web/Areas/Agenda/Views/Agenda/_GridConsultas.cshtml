@@ -29,48 +29,65 @@
                 <tbody>
                     @foreach (var itemModel in Model)
                     {
-                    <tr>
-                        <td>@itemModel.Paciente.Pessoa.Nome</td>
-                        <td>@itemModel.Data.ToShortDateString()</td>
-                        <td>@itemModel.Data.ToShortTimeString()</td>
-                        <td>@itemModel.Funcionario.Pessoa.Nome</td>
-                        <td>@itemModel.Valor.ToString("C")</td>
-                        @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
+                        <tr>
+                            <td>@itemModel.Paciente.Pessoa.Nome</td>
+                            <td>@itemModel.Data.ToShortDateString()</td>
+                            <td>@itemModel.Data.ToShortTimeString()</td>
+                            <td>@itemModel.Funcionario.Pessoa.Nome</td>
+                            <td>@itemModel.Valor.ToString("C")</td>
+                            @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
 
-                        {
-                            <td class="text-center">
-                                <a class="btnEditar" id-registro="@itemModel.Id" title="Editar" onclick="indexAgenda.modalEditar(this)"
-                                   style="cursor: pointer;">
-                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                </a>
-                            </td>
-                            <td class="text-center">
-                                <a class="btnExcluir" id-registro="@itemModel.Id"
-                                   nome-registro="Dia @itemModel.Data.ToShortDateString() as @itemModel.Data.ToShortTimeString() h"
-                                   data-registro="@itemModel.Data.ToShortDateString()"
-                                   title="Excluir" onclick="indexAgenda.excluir(this, false)" style="cursor: pointer;">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                </a>
-                            </td>
-                        }
-                    </tr>
+                            {
+                                <td class="text-center">
+                                    <a class="btnEditar" id-registro="@itemModel.Id" title="Editar" onclick="indexAgenda.modalEditar(this)"
+                                       style="cursor: pointer;">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a class="btnExcluir" id-registro="@itemModel.Id"
+                                       nome-registro="Dia @itemModel.Data.ToShortDateString() as @itemModel.Data.ToShortTimeString() h"
+                                       data-registro="@itemModel.Data.ToShortDateString()"
+                                       title="Excluir" onclick="indexAgenda.excluir(this, false)" style="cursor: pointer;">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            }
+                        </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
 
-    <script>
+    if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
+    {
+        <script>
 
-        $("#gridAgenda").DataTable({
-            language: {
-                url: "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
-            },
-            "columnDefs": [
-                { "targets": [5, 6], "orderable": false, "searchable": false }
-            ],
-            "aaSorting": []
-        });
+            $("#gridAgenda").DataTable({
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+                },
+                "columnDefs": [
+                    { "targets": [5, 6], "orderable": false, "searchable": false }
+                ],
+                "aaSorting": []
+            });
 
-    </script>
+        </script>
+    }
+    else
+    {
+        <script>
+
+            $("#gridAgenda").DataTable({
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+                },
+                "aaSorting": []
+            });
+
+        </script>
+    }
+
 }
