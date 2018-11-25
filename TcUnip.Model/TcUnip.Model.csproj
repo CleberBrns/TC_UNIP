@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,7 +46,6 @@
     <Compile Include="Common\ModalidadeModel.cs" />
     <Compile Include="Common\PesquisaModel.cs" />
     <Compile Include="Agenda\SessaoModel.cs" />
-    <Compile Include="Agenda\StatusSessaoModel.cs" />
     <Compile Include="Cadastro\FuncionarioModel.cs" />
     <Compile Include="Cadastro\ModalidadeFuncionarioModel.cs" />
     <Compile Include="Cadastro\PacienteModel.cs" />

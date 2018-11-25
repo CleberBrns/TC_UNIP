@@ -228,6 +228,22 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
                     },
                     Modalidades = l.Modalidades
                 }).ToList();
+
+                listFuncionarios.ForEach(l => {
+                    if (l.Modalidades == null || l.Modalidades.Count <= 0)
+                    {
+                        l.Modalidades = new List<ModalidadeFuncionarioModel>
+                        {
+                            new ModalidadeFuncionarioModel
+                            {
+                                Modalidade = new Model.Common.ModalidadeModel
+                                {
+                                    Nome = string.Empty
+                                }
+                            }
+                        };
+                    }
+                });
             }
 
             return listFuncionarios;

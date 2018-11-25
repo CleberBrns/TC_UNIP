@@ -55,6 +55,9 @@ namespace TcUnip.AppApi.Controllers
         [Route("api/Cadastro/SalvaUsuario")]
         public IHttpActionResult SalvaUsuario(UsuarioModel model)
         {
+            if (!ModelState.IsValid)
+                return new InvalidListMessageResult(ModelState);
+
             var retorno = _cadastroService.SalvaUsuario(model);
 
             if (!retorno.Status)
@@ -107,6 +110,9 @@ namespace TcUnip.AppApi.Controllers
         [Route("api/Cadastro/SalvaPaciente")]
         public IHttpActionResult SalvaPaciente(PacienteModel model)
         {
+            if (!ModelState.IsValid)
+                return new InvalidListMessageResult(ModelState);
+
             var retorno = _cadastroService.SalvaPaciente(model);
 
             if (!retorno.Status)
@@ -171,6 +177,9 @@ namespace TcUnip.AppApi.Controllers
         [Route("api/Cadastro/SalvaFuncionario")]
         public IHttpActionResult SalvaFuncionario(FuncionarioModel model)
         {
+            if (!ModelState.IsValid)
+                return new InvalidListMessageResult(ModelState);
+
             var retorno = _cadastroService.SalvaFuncionario(model);
 
             if (!retorno.Status)

@@ -78,6 +78,9 @@ namespace TcUnip.AppApi.Controllers
         [Route("api/Agenda/SalvaAgenda")]
         public IHttpActionResult SalvaAgenda(SessaoModel model)
         {
+            if (!ModelState.IsValid)
+                return new InvalidListMessageResult(ModelState);
+
             var retorno = _agendaService.Salva(model);
 
             if (!retorno.Status)

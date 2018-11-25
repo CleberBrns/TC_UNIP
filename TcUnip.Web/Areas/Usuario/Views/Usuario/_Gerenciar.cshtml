@@ -43,7 +43,7 @@
                                                 <option value="@item.Id" 
                                                         cpf="@item.Pessoa.Cpf"
                                                         email="@item.Pessoa.Email"
-                                                        modalidade="@item.Modalidades.FirstOrDefault().Modalidade.Nome"
+                                                        modalidade="@item.Modalidades.FirstOrDefault().Modalidade.Nome"                                                      
                                                         selected="selected">
                                                     @item.Pessoa.Nome
                                                 </option>
@@ -76,7 +76,7 @@
                     <div class="col-md-8">
                         @if (string.IsNullOrEmpty(Model.Cpf))
                         {
-                            <input type="text" autocomplete="off" class="form-control" id="cpf" 
+                            <input type="text" autocomplete="off" class="form-control" id="cpf"
                                    name="Cpf" value="@Model.Cpf" style="width: 40%" />
                         }
                         else

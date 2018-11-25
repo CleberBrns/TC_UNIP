@@ -56,6 +56,9 @@ namespace TcUnip.AppApi.Controllers
         [Route("api/FluxoCaixa/SalvaCaixa")]
         public IHttpActionResult SalvaCaixa(CaixaModel model)
         {
+            if (!ModelState.IsValid)
+                return new InvalidListMessageResult(ModelState);
+
             var retorno = _fluxoCaixaService.SalvaCaixa(model);
 
             if (!retorno.Status)
