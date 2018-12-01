@@ -26,7 +26,7 @@ namespace TcUnip.Model.FluxoCaixa
         public decimal Credito { get; set; }
         public decimal Saldo { get; set; }
 
-        public int IdSessao { get; set; }
+        public int? IdSessao { get; set; }
         public SessaoModel Sessao { get; set; } 
     }
 }

@@ -155,6 +155,8 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 
             try
             {
+                model.Data = ConfiguraData(model.Data);
+
                 var resultService = _fluxoCaixaProxy.SalvaCaixa(model);
 
                 msgExibicao = resultService.Message;
@@ -169,6 +171,14 @@ namespace TcUnip.Web.Areas.Caixa.Controllers
 
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
+        }
+
+        private DateTime ConfiguraData(DateTime data)
+        {
+            if (data.Date.ToShortTimeString() == "00:00")            
+                return data.Date.Add(TimeSpan.Parse(DateTime.Now.ToShortTimeString()));            
+
+            return data;
         }
     }
 }

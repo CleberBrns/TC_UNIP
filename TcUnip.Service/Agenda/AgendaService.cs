@@ -105,9 +105,11 @@ namespace TcUnip.Service.Agenda
                 else
                 {
                     result.Value = _sessaoRepository.Atualizar(model);
-
                     if (result.Value)
                     {
+                        model = _sessaoRepository.GetById(model.Id);
+                        AtualizaRegistroCaixa(model);
+
                         result.Message = "Sessão atualizado com sucesso!";
                         result.Value = true;
                         result.Status = true;
@@ -120,12 +122,29 @@ namespace TcUnip.Service.Agenda
             return result;
         }
 
+        private void AtualizaRegistroCaixa(SessaoModel model)
+        {
+            var registroCaixaSessao = _caixaRepository.GetByIdSessao(model.Id);
+
+            if (registroCaixaSessao != null)
+            {
+                if (registroCaixaSessao.Credito != model.Valor)
+                {
+                    registroCaixaSessao.Credito = model.Valor;
+                    _caixaRepository.Atualizar(registroCaixaSessao);
+                }
+            }
+            else            
+                InsereRegistroCaixa(model);                  
+        }
+
         private void InsereRegistroCaixa(SessaoModel model)
         {
             var registroCaixa =
                 new Model.FluxoCaixa.CaixaModel {
                     Data = model.Data,
                     Credito = model.Valor,
+                    IdSessao = model.Id,
                     Descricao = "Sessão de " + model.Modalidade.Nome +
                                 " para o(a) paciente " + model.Paciente.Pessoa.Nome
                 };

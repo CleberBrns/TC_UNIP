@@ -8,5 +8,6 @@ namespace TcUnip.Data.Contract.FluxoCaixa
     {
         List<CaixaModel> ListCaixaPeriodo(PesquisaModel pesquisaModel);
         CaixaModel GetById(int id);
+        CaixaModel GetByIdSessao(int idSessao);
     }
 }

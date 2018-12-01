@@ -21,7 +21,8 @@
 {
     using (Html.BeginForm())
     {
-        <div class="form-horizontal">            
+        <div class="form-horizontal">    
+            <input type="hidden" name="IdSessao" value="@Model.IdSessao" />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="campos" style="padding: 2% 0 2% 5%">
                 <div class="form-group">
@@ -173,24 +174,11 @@
                 if (validacao.campoNulo(descricao, validaDescricao))
                     ehValido = false;
 
-                if (debito.length == 0 || credito.length == 0) {
+                if (debito.length == 0 && credito.length == 0) {
 
                     swal({
                         title: '',
                         text: 'É obrigatório o preenchimento do campo Crédito ou Débito',
-                        type: 'warning',
-                        confirmButtonColor: '#10386B',
-                        allowOutsideClick: false
-                    });
-
-                    ehValido = false;
-                }
-
-                if (debito == 0 && credito == 0) {
-
-                    swal({
-                        title: '',
-                        text: 'É obrigatório incluir valor no campo Crédito ou Débito',
                         type: 'warning',
                         confirmButtonColor: '#10386B',
                         allowOutsideClick: false

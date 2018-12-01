@@ -72,9 +72,12 @@ namespace TcUnip.Service.FluxoCaixa
             model.Debito = Convert.ToDecimal(model.DebitoCadastro);
 
             if (model.Credito <= 0 && model.Debito <= 0)
-                result.Message = "É obrigatório incluir valor nos campos Crédito ou Débito!";
+                result.Message = "É obrigatório incluir valor nos campos Crédito ou Débito!";            
             else
             {
+                if (model.IdSessao != null && model.IdSessao == 0)
+                    model.IdSessao = model.IdSessao.Value == 0 ? (int?)null : model.IdSessao;
+
                 if (model.Id == 0)
                 {
                     model = _caixaRepository.Salvar(model);

@@ -38,7 +38,7 @@ namespace TcUnip.Web.Controllers
         public Tuple<List<ModalidadeModel>, bool> GetListModalidadesSession()
         {
             SessionModalidades sessionModalidades = new SessionModalidades();
-            return sessionModalidades.GetListFromSession(Constants.ConstSessions.listTipoPerfil);
+            return sessionModalidades.GetListFromSession(Constants.ConstSessions.listModalidades);
         }
 
         public void BadRequestCustomizado(int statusCode)
