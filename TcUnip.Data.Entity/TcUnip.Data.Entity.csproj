@@ -61,6 +61,10 @@
     <Compile Include="Migrations\201811201701425_Initial.Designer.cs">
       <DependentUpon>201811201701425_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812012016468_Inclusao_Relacionamento_Caxa_x_Sessao.cs" />
+    <Compile Include="Migrations\201812012016468_Inclusao_Relacionamento_Caxa_x_Sessao.Designer.cs">
+      <DependentUpon>201812012016468_Inclusao_Relacionamento_Caxa_x_Sessao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modelagem\Cadastro\ModalidadeFuncionario.cs" />
     <Compile Include="Modelagem\Cadastro\TipoPerfil.cs" />
     <Compile Include="Mapping\Modelagem\Cadastro\UsuarioMap.cs" />
@@ -91,6 +95,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201811201701425_Initial.resx">
       <DependentUpon>201811201701425_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812012016468_Inclusao_Relacionamento_Caxa_x_Sessao.resx">
+      <DependentUpon>201812012016468_Inclusao_Relacionamento_Caxa_x_Sessao.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

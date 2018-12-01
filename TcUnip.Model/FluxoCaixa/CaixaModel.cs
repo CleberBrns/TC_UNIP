@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TcUnip.Model.Agenda;
 
 namespace TcUnip.Model.FluxoCaixa
 {
@@ -24,5 +25,8 @@ namespace TcUnip.Model.FluxoCaixa
         public decimal Debito { get; set; }
         public decimal Credito { get; set; }
         public decimal Saldo { get; set; }
+
+        public int IdSessao { get; set; }
+        public SessaoModel Sessao { get; set; } 
     }
 }

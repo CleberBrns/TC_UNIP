@@ -23,6 +23,11 @@ namespace TcUnip.Data.Entity.Mapping.Modelagem.FluxoCaixa
 
             Property(x => x.Debito)
                 .IsRequired();
+
+            HasOptional(x => x.Sessao);
+
+            Property(x => x.IdSessao)
+                .IsOptional();
         }
     }
 }
