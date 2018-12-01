@@ -128,11 +128,11 @@ namespace TcUnip.Service.Agenda
 
             if (registroCaixaSessao != null)
             {
-                if (registroCaixaSessao.Credito != model.Valor)
-                {
-                    registroCaixaSessao.Credito = model.Valor;
-                    _caixaRepository.Atualizar(registroCaixaSessao);
-                }
+                registroCaixaSessao.Credito = model.Valor;
+                registroCaixaSessao.Descricao = "Sessão de " + model.Modalidade.Nome +
+                                                " para o(a) paciente " + model.Paciente.Pessoa.Nome;
+
+                _caixaRepository.Atualizar(registroCaixaSessao);
             }
             else            
                 InsereRegistroCaixa(model);                  
