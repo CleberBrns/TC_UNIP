@@ -226,7 +226,7 @@ var validacao = {
 
     errorAjax: function (jqXhr, textStatus, errorThrown) {
 
-        debugger;
+        
         var showLogOnConsole = true;
 
         if (jqXhr.responseJSON !== undefined && jqXhr.responseJSON !== null) {

@@ -25,7 +25,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 
         public ActionResult Listagem()
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.administracao);
 
             var userInfo = GetUsuarioSession();
 
@@ -47,17 +47,6 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 
                 list = ConfiguraListaExibicao(list);
 
-                //Não lista os usuários com perfil Administracao, quando o usuário logado não for um Administrador
-                if (!Constants.ConstPermissoes.administracao.Contains(userInfo.Item1.TipoPerfil.Permissao))
-                {
-                    if (list.Count > 0)
-                    {
-                        list = list.Where(l =>
-                            l.TipoPerfil.Permissao != Constants.ConstPermissoes.administracao)
-                                   .ToList();
-                    }
-                }
-
                 return PartialView("_Listagem", list);
             }
             catch (Exception ex)
@@ -73,11 +62,11 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
 
         public ActionResult ModalCadastrar()
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.administracao);
             
             ViewBag.Usuario = GetUsuarioSession().Item1;
             ViewBag.ListStatus = GetListStatus();
-            ViewBag.ListPerfil = GetListPerfil(true);
+            ViewBag.ListPerfil = GetListPerfil();
             ViewBag.ListFuncionarios = GetListFuncionarios();
 
             //var model = new UsuarioModel();
@@ -89,7 +78,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
         [HttpGet]
         public ActionResult ModalEditar(int id)
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.administracao);
 
             ViewBag.Usuario = GetUsuarioSession().Item1;
             string msgExibicao = string.Empty;
@@ -98,7 +87,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
             try
             {
                 ViewBag.ListStatus = GetListStatus();
-                ViewBag.ListPerfil = GetListPerfil(true);
+                ViewBag.ListPerfil = GetListPerfil();
                 ViewBag.ListFuncionarios = GetListFuncionarios();
 
                 var resultService = _cadastroProxy.GetUsuario(id);
@@ -126,7 +115,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
         [HttpPost]
         public ActionResult Salvar(UsuarioModel model)
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.administracao);
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
@@ -152,7 +141,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
         [HttpPost]
         public ActionResult Excluir(int id)
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.administracao);
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
@@ -182,9 +171,6 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
             //Seleciona somente os itens há serem exibidos para melhor performance
             if (list != null && list.Count > 0)
             {
-                //var modelFuncionario = new FuncionarioModel();
-                //var newFuncionario = modelFuncionario.GetModelDefault();
-
                 list = list.Select(l =>
                 new UsuarioModel
                 {
@@ -265,7 +251,7 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
             return constants.ListStatus();
         }
 
-        private List<DataSelectControl> GetListPerfil(bool filtroPerfil = false)
+        private List<DataSelectControl> GetListPerfil()
         {
             var listPerfil = new List<DataSelectControl>();
             var listTipoPerfil = new List<TipoPerfilModel>();
@@ -286,14 +272,6 @@ namespace TcUnip.Web.Areas.Usuario.Controllers
                                                 IntValue = l.Id
                                             })
                                        .ToList();
-
-            if (filtroPerfil)
-            {
-                var usuario = GetUsuarioSession().Item1;
-                //Não lista o Perfil Administrador caso o usuário não seja um Administrador
-                if (!usuario.TipoPerfil.Permissao.Equals(Constants.ConstPermissoes.administracao))
-                    listPerfil = listPerfil.Where(l => l.Value != Constants.ConstPermissoes.administracao).ToList();
-            }
 
             return listPerfil;            
         }

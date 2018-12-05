@@ -29,11 +29,14 @@
                                         Pacientes
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#" name="tabFuncionarios" class="abaFuncionarios" carregado="false">
-                                        Funcionários
-                                    </a>
-                                </li>
+                                if (ConstPermissoes.administracao.Contains(user.TipoPerfil.Permissao))
+                                {
+                                    <li>
+                                        <a href="#" name="tabFuncionarios" class="abaFuncionarios" carregado="false">
+                                            Funcionários
+                                        </a>
+                                    </li>
+                                }
                                 <li>
                                     <a href="#" name="tabCaixa" class="abaCaixa" carregado="false">
                                         Caixa
@@ -45,7 +48,7 @@
                                     Recibos
                                 </a>
                             </li>
-                            @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
+                            @if (ConstPermissoes.administracao.Contains(user.TipoPerfil.Permissao))
                             {
                                 <li>
                                     <a href="#" name="tabUsuarios" class="abaUsuarios" carregado="false">
@@ -64,11 +67,14 @@
                             @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
                             {
                                 <div id="tabPacientes"></div>
-                                <div id="tabFuncionarios"></div>
+                                if (ConstPermissoes.administracao.Contains(user.TipoPerfil.Permissao))
+                                {
+                                    <div id="tabFuncionarios"></div>
+                                }
                                 <div id="tabCaixa"></div>
                             }
                             <div id="tabRecibos"></div>
-                            @if (ConstPermissoes.gerenciamento.Contains(user.TipoPerfil.Permissao))
+                            @if (ConstPermissoes.administracao.Contains(user.TipoPerfil.Permissao))
                             {
                                 <div id="tabUsuarios"></div>
                             }

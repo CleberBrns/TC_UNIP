@@ -35,7 +35,7 @@
             $('#calendario').fullCalendar({
                 timeFormat: 'HH:mm',
                 header: {
-                    left: 'customPrevButton,customNextButton  today',
+                    left: 'customPrevButton,customNextButton  customTodayButton',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },                
@@ -71,6 +71,25 @@
                     calendarioAgenda.visualizarEventoCalendario(evento);
                 },
                 customButtons: {
+                    customTodayButton: {
+                        text: 'hoje',
+                        click: function () {
+                            
+                            var moment = $('#calendario').fullCalendar('getDate');
+                            var dataPosicaoCalendario = moment.format("L");
+
+                            $('#calendario').fullCalendar('today');
+                          
+                            moment = $('#calendario').fullCalendar('getDate');
+                            var dataAtual = moment.format("L");                            
+
+                            /*Se a data atual for diferente da data da posição do calendário, 
+                             * os dados do dia atual são carregados*/
+                            if (dataAtual != dataPosicaoCalendario) {
+                                calendarioAgenda.carregaCalendarioMes(dataAtual);
+                            }                            
+                        }  
+                    },
                     customPrevButton: {
                         text: '<',
                         click: function () {                            

@@ -141,7 +141,7 @@ namespace TcUnip.Web.Areas.Paciente.Controllers
         [HttpPost]
         public ActionResult Excluir(int id)
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.administracao);
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;

@@ -26,7 +26,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 
         public ActionResult Listagem()
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.administracao);
 
             var userInfo = GetUsuarioSession();
 
@@ -65,7 +65,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
 
         public ActionResult ModalCadastrar()
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.administracao);
 
             ViewBag.Usuario = GetUsuarioSession().Item1;
 
@@ -88,7 +88,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
         [HttpGet]
         public ActionResult ModalEditar(int id)
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.administracao);
 
             ViewBag.Usuario = GetUsuarioSession().Item1;
 
@@ -126,7 +126,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
         [HttpPost]
         public ActionResult Salvar(FuncionarioModel model)
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.administracao);
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
@@ -152,7 +152,7 @@ namespace TcUnip.Web.Areas.Funcionario.Controllers
         [HttpPost]
         public ActionResult Excluir(int id)
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.administracao);
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
