@@ -30,12 +30,15 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
 
             ViewBag.Usuario = userInfo.Item1;
 
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
+
             return PartialView("_Index");
         }
 
         public ActionResult ListaRecibosDoDia()
         {
             ViewBag.Usuario = GetUsuarioSession().Item1;
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
@@ -44,7 +47,7 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
             {
                 var resultService = _fluxoCaixaProxy.ListRecibosDoDia();
 
-                var list = FiltraListaPorPerfil(resultService.Value);
+                var list = resultService.Value;
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha!" : string.Empty;
@@ -65,6 +68,7 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
         public ActionResult ListaRecibosPorDatas(string dataInicio, string dataFim)
         {
             ViewBag.Usuario = GetUsuarioSession().Item1;
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
@@ -78,7 +82,7 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
 
                 var resultService = _fluxoCaixaProxy.ListRecibosPeriodo(dadosPesquisa);
 
-                var list = FiltraListaPorPerfil(resultService.Value);
+                var list = resultService.Value;
 
                 msgExibicao = resultService.Message;
                 msgAnalise = !resultService.Status ? "Falha!" : string.Empty;
@@ -102,6 +106,7 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
             string msgAnalise = string.Empty;
 
             ViewBag.Usuario = GetUsuarioSession().Item1;
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
             try
             {
@@ -134,6 +139,7 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
             string msgAnalise = string.Empty;
 
             ViewBag.Usuario = GetUsuarioSession().Item1;
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
             try
             {
@@ -159,23 +165,5 @@ namespace TcUnip.Web.Areas.Recibo.Controllers
             var mensagensRetorno = mensagens.ConfiguraMensagemRetorno(msgExibicao, msgAnalise);
             return Json(new { mensagensRetorno }, JsonRequestBehavior.AllowGet);
         }
-
-        #region Métodos Privados
-
-        private List<ReciboModel> FiltraListaPorPerfil(List<ReciboModel> listRecibos)
-        {
-            if (listRecibos.Count > 0 &&
-                Constants.ConstPermissoes.profissional.Equals(GetUsuarioSession().Item1.TipoPerfil.Permissao))
-            {
-                listRecibos = 
-                    listRecibos.Where(l => l.Profissional.Equals(GetUsuarioSession().Item1.Funcionario.Pessoa.Nome))
-                               .ToList();
-            }
-
-            return listRecibos;
-        }
-
-        #endregion
-
     }
 }

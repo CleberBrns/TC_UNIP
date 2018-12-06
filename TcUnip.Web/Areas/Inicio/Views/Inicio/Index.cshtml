@@ -39,15 +39,15 @@
                                 }
                                 <li>
                                     <a href="#" name="tabCaixa" class="abaCaixa" carregado="false">
-                                        Caixa
+                                        Receita
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" name="tabRecibos" class="abaRecibos" carregado="false">
+                                        Recibos
                                     </a>
                                 </li>
                             }
-                            <li>
-                                <a href="#" name="tabRecibos" class="abaRecibos" carregado="false">
-                                    Recibos
-                                </a>
-                            </li>
                             @if (ConstPermissoes.administracao.Contains(user.TipoPerfil.Permissao))
                             {
                                 <li>
@@ -72,8 +72,8 @@
                                     <div id="tabFuncionarios"></div>
                                 }
                                 <div id="tabCaixa"></div>
+                                <div id="tabRecibos"></div>
                             }
-                            <div id="tabRecibos"></div>
                             @if (ConstPermissoes.administracao.Contains(user.TipoPerfil.Permissao))
                             {
                                 <div id="tabUsuarios"></div>

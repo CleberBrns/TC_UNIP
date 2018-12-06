@@ -67,7 +67,7 @@ namespace TcUnip.Service.Cadastro
                 if (retorno != null)
                 {
                     if (retorno.Excluido)
-                        result.Message = "Usuário excluído!";
+                        result.Message = "Usuário removido!";
                     else if (!retorno.Ativo)
                         result.Message = "Usuário inativo!";
                     else if (model.Senha != retorno.Senha)

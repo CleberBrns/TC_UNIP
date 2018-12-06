@@ -238,7 +238,6 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
         public ActionResult ModalEditar(int id)
         {
             ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
-
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
 

@@ -361,18 +361,20 @@
                         ehValido = false;
                     }
 
-                    if (dataDois < dataUm) {
+                    if (ehValido) {
+                        if (dataDois < dataUm) {
 
-                        swal({
-                            title: '',
-                            text: "A Data final não pode ser menor que a inicial.",
-                            type: 'warning',
-                            confirmButtonColor: '#10386B',
-                            allowOutsideClick: false
-                        });
+                            swal({
+                                title: '',
+                                text: "A Data final não pode ser menor que a inicial.",
+                                type: 'warning',
+                                confirmButtonColor: '#10386B',
+                                allowOutsideClick: false
+                            });
 
-                        ehValido = false;
-                    }
+                            ehValido = false;
+                        }
+                    }                  
 
                     return ehValido;
                 }
