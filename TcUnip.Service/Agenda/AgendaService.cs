@@ -48,27 +48,36 @@ namespace TcUnip.Service.Agenda
 
         public Result<List<SessaoModel>> ListAgendaPeriodo(PesquisaModel pesquisaModel)
         {
-            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
+            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);            
             var result = new Result<List<SessaoModel>>();
             result.Value = _sessaoRepository.ListSessoesPeriodo(pesquisaModel);
+
+            if (result.Value.Count > 0)
+                result.Value = result.Value.Where(x => !x.Excluido).ToList();
 
             return result;
         }
 
         public Result<List<SessaoModel>> ListAgendaPeriodoFuncionario(PesquisaModel pesquisaModel)
         {
-            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
+            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);            
             var result = new Result<List<SessaoModel>>();
             result.Value = _sessaoRepository.ListSessoesPeriodoFuncionario(pesquisaModel);
+
+            if (result.Value.Count > 0)
+                result.Value = result.Value.Where(x => !x.Excluido).ToList();
 
             return result;
         }
 
         public Result<List<SessaoModel>> ListAgendaPeriodoPaciente(PesquisaModel pesquisaModel)
         {
-            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
+            pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);            
             var result = new Result<List<SessaoModel>>();
             result.Value = _sessaoRepository.ListSessoesPeriodoPaciente(pesquisaModel);
+
+            if (result.Value.Count > 0)
+                result.Value = result.Value.Where(x => !x.Excluido).ToList();
 
             return result;
         }

@@ -33,8 +33,7 @@ namespace TcUnip.Data.Repositories.Agenda
             using (var context = new TcUnipContext())
             {
                 return Mapper.Map<List<SessaoModel>>(
-                    context.Sessao.Where(x => !x.Excluido &&
-                                              x.Data >= pesquisaModel.DataIncio &&
+                    context.Sessao.Where(x => x.Data >= pesquisaModel.DataIncio &&
                                               x.Data <= pesquisaModel.DataFim)
                                   .Include(x => x.Modalidade)
                                   .Include(x => x.Paciente.Pessoa)                                  
@@ -50,8 +49,7 @@ namespace TcUnip.Data.Repositories.Agenda
             using (var context = new TcUnipContext())
             {
                 return Mapper.Map<List<SessaoModel>>(
-                    context.Sessao.Where(x => !x.Excluido &&
-                                              x.Data.Date >= pesquisaModel.DataIncio.Date &&
+                    context.Sessao.Where(x => x.Data.Date >= pesquisaModel.DataIncio.Date &&
                                               x.Data.Date <= pesquisaModel.DataFim.Date &&
                                               x.Funcionario.Pessoa.Cpf == pesquisaModel.CpfPesquisa)
                                   .Include(x => x.Funcionario.Pessoa)  
@@ -67,8 +65,7 @@ namespace TcUnip.Data.Repositories.Agenda
             using (var context = new TcUnipContext())
             {
                 return Mapper.Map<List<SessaoModel>>(
-                    context.Sessao.Where(x => !x.Excluido &&
-                                              x.Data.Date >= pesquisaModel.DataIncio.Date &&
+                    context.Sessao.Where(x => x.Data.Date >= pesquisaModel.DataIncio.Date &&
                                               x.Data.Date <= pesquisaModel.DataFim.Date &&
                                               x.Paciente.Pessoa.Cpf == pesquisaModel.CpfPesquisa)
                                   .Include(x => x.Paciente.Pessoa)
