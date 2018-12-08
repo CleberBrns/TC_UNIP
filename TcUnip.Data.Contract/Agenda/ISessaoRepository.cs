@@ -9,6 +9,7 @@ namespace TcUnip.Data.Contract.Agenda
         SessaoModel GetById(int id);
         List<SessaoModel> ListSessoesPeriodo(PesquisaModel pesquisaModel);
         List<SessaoModel> ListSessoesPeriodoFuncionario(PesquisaModel pesquisaModel);
-        List<SessaoModel> ListSessoesPeriodoPaciente(PesquisaModel pesquisaModel);
+        List<SessaoModel> ListSessoesPeriodoCpfPaciente(PesquisaModel pesquisaModel);
+        List<SessaoModel> ListSessoesPeriodoIdPaciente(PesquisaModel pesquisaModel);
     }
 }

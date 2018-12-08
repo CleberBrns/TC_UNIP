@@ -198,7 +198,7 @@ namespace TcUnip.Service.FluxoCaixa
         {
             pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);
             var result = new Result<List<ReciboModel>>();
-            var listSessoes = _sessaoRepository.ListSessoesPeriodoPaciente(pesquisaModel);
+            var listSessoes = _sessaoRepository.ListSessoesPeriodoCpfPaciente(pesquisaModel);
 
             result.Value = ConfiguraListaRecibo(listSessoes);
 

@@ -74,7 +74,7 @@ namespace TcUnip.Service.Agenda
         {
             pesquisaModel = configuraPesquia.ConfiguraDatasPesquisa(pesquisaModel);            
             var result = new Result<List<SessaoModel>>();
-            result.Value = _sessaoRepository.ListSessoesPeriodoPaciente(pesquisaModel);
+            result.Value = _sessaoRepository.ListSessoesPeriodoCpfPaciente(pesquisaModel);
 
             if (result.Value.Count > 0)
                 result.Value = result.Value.Where(x => !x.Excluido).ToList();
@@ -84,6 +84,7 @@ namespace TcUnip.Service.Agenda
 
         public Result<bool> Salva(SessaoModel model)
         {
+            var podeSalvar = true;
             var result = new Result<bool>();
             result.Value = false;
             result.Status = false;
@@ -97,35 +98,60 @@ namespace TcUnip.Service.Agenda
                 model.Data = Convert.ToDateTime(String.Format("{0} {1}", 
                                                 model.Data.ToShortDateString(), model.Horario));
 
-                if (model.Id == 0)
-                {
-                    model = _sessaoRepository.Salvar(model);
-                    if (model.Id != 0)
-                    {
-                        model = _sessaoRepository.GetById(model.Id);
-                        InsereRegistroCaixa(model);
-                        result.Message = "Sessão salvo com sucesso!";
-                        result.Value = true;
-                        result.Status = true;
-                    }
-                    else
-                        result.Message = "Falha ao salvar o Sessão!";
-                }
-                else
-                {
-                    result.Value = _sessaoRepository.Atualizar(model);
-                    if (result.Value)
-                    {
-                        model = _sessaoRepository.GetById(model.Id);
-                        AtualizaRegistroCaixa(model);
 
-                        result.Message = "Sessão atualizado com sucesso!";
-                        result.Value = true;
-                        result.Status = true;
+                var pesquisaModel = new PesquisaModel
+                {
+                    IdPesquisa = model.IdPaciente,
+                    DataIncio = model.Data,
+                    DataFim = model.Data.AddHours(1)   
+                };
+
+                var sessoesPaciente = _sessaoRepository.ListSessoesPeriodoIdPaciente(pesquisaModel);
+
+                if (sessoesPaciente.Count > 0)
+                {
+                    if (model.Id != 0)
+                        sessoesPaciente = sessoesPaciente.Where(x => x.Id != model.Id).ToList();
+
+                    if (sessoesPaciente.Count > 0)
+                    {
+                        result.Message = "O Paciente já possui Sessão marcada para o dia e hora selecionados!";
+                        podeSalvar = false;
+                    }                    
+                }
+
+                if(podeSalvar)
+                {
+                    if (model.Id == 0)
+                    {
+                        model = _sessaoRepository.Salvar(model);
+                        if (model.Id != 0)
+                        {
+                            model = _sessaoRepository.GetById(model.Id);
+                            InsereRegistroCaixa(model);
+                            result.Message = "Sessão salva com sucesso!";
+                            result.Value = true;
+                            result.Status = true;
+                        }
+                        else
+                            result.Message = "Falha ao salvar a Sessão!";
                     }
                     else
-                        result.Message = "Falha ao atualizar o Sessão!";
-                }
+                    {
+                        result.Value = _sessaoRepository.Atualizar(model);
+                        if (result.Value)
+                        {
+                            model = _sessaoRepository.GetById(model.Id);
+                            AtualizaRegistroCaixa(model);
+
+                            result.Message = "Sessão atualizada com sucesso!";
+                            result.Value = true;
+                            result.Status = true;
+                        }
+                        else
+                            result.Message = "Falha ao atualizar a Sessão!";
+                    }
+                }               
             }
 
             return result;

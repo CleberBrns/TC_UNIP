@@ -49,8 +49,8 @@ namespace TcUnip.Data.Repositories.Agenda
             using (var context = new TcUnipContext())
             {
                 return Mapper.Map<List<SessaoModel>>(
-                    context.Sessao.Where(x => x.Data.Date >= pesquisaModel.DataIncio.Date &&
-                                              x.Data.Date <= pesquisaModel.DataFim.Date &&
+                    context.Sessao.Where(x => x.Data >= pesquisaModel.DataIncio &&
+                                              x.Data <= pesquisaModel.DataFim &&
                                               x.Funcionario.Pessoa.Cpf == pesquisaModel.CpfPesquisa)
                                   .Include(x => x.Funcionario.Pessoa)  
                                   .Include(x => x.Modalidade)
@@ -60,14 +60,31 @@ namespace TcUnip.Data.Repositories.Agenda
             }
         }
 
-        public List<SessaoModel> ListSessoesPeriodoPaciente(PesquisaModel pesquisaModel)
+        public List<SessaoModel> ListSessoesPeriodoCpfPaciente(PesquisaModel pesquisaModel)
         {
             using (var context = new TcUnipContext())
             {
                 return Mapper.Map<List<SessaoModel>>(
-                    context.Sessao.Where(x => x.Data.Date >= pesquisaModel.DataIncio.Date &&
-                                              x.Data.Date <= pesquisaModel.DataFim.Date &&
+                    context.Sessao.Where(x => x.Data >= pesquisaModel.DataIncio &&
+                                              x.Data <= pesquisaModel.DataFim &&
                                               x.Paciente.Pessoa.Cpf == pesquisaModel.CpfPesquisa)
+                                  .Include(x => x.Paciente.Pessoa)
+                                  .Include(x => x.Modalidade)
+                                  .AsNoTracking()
+                                  .ToList()
+                    );
+            }
+        }
+
+        public List<SessaoModel> ListSessoesPeriodoIdPaciente(PesquisaModel pesquisaModel)
+        {
+            using (var context = new TcUnipContext())
+            {
+                return Mapper.Map<List<SessaoModel>>(
+                    context.Sessao.Where(x => !x.Excluido &&
+                                              x.Data >= pesquisaModel.DataIncio &&
+                                              x.Data <= pesquisaModel.DataFim &&
+                                              x.Paciente.Id == pesquisaModel.IdPesquisa)
                                   .Include(x => x.Paciente.Pessoa)
                                   .Include(x => x.Modalidade)
                                   .AsNoTracking()
