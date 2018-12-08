@@ -291,7 +291,7 @@ namespace TcUnip.Web.Areas.Agenda.Controllers
         [HttpPost]
         public ActionResult Excluir(int id)
         {
-            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.administracao);
+            ValidaAutorizaoAcessoUsuario(Constants.ConstPermissoes.gerenciamento);
 
             string msgExibicao = string.Empty;
             string msgAnalise = string.Empty;
